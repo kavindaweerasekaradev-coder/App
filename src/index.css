@@ -1,0 +1,143 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+/*
+ * Velora design tokens.
+ * Colours are RGB channels so Tailwind can apply alpha (e.g. bg-primary/10).
+ * Contrast notes (WCAG AA, normal text ≥ 4.5:1):
+ *   ink-2 on bg  ≈ 6.9:1 (light) / 8.6:1 (dark)
+ *   ink-3 on bg  ≈ 4.7:1 (light) / 5.2:1 (dark)
+ *   primary-fg on primary ≈ 9.6:1 (light) / 6.2:1 (dark)
+ *   accent-fg on accent ≈ 13:1 — lime is only ever a fill, never text on light surfaces.
+ */
+:root,
+[data-theme='light'] {
+  color-scheme: light;
+  --bg: 250 248 243;
+  --surface: 255 255 255;
+  --surface-2: 243 240 233;
+  --line: 229 225 216;
+  --ink: 22 26 23;
+  --ink-2: 82 90 85;
+  --ink-3: 108 115 110;
+  --primary: 30 77 59;
+  --primary-fg: 255 255 255;
+  --primary-soft: 226 236 229;
+  --primary-ink: 30 77 59;
+  --accent: 200 242 74;
+  --accent-fg: 24 38 8;
+  --success: 30 120 72;
+  --success-soft: 222 240 228;
+  --warning: 156 90 8;
+  --warning-soft: 252 239 214;
+  --danger: 185 50 40;
+  --danger-soft: 251 228 225;
+  --map-land: 241 238 230;
+  --map-water: 205 223 226;
+  --map-park: 219 232 214;
+  --map-road: 255 255 255;
+  --map-major: 236 222 186;
+}
+
+[data-theme='dark'] {
+  color-scheme: dark;
+  --bg: 18 20 19;
+  --surface: 27 30 28;
+  --surface-2: 36 40 37;
+  --line: 48 53 50;
+  --ink: 237 238 234;
+  --ink-2: 172 178 173;
+  --ink-3: 138 145 140;
+  --primary: 47 107 82;
+  --primary-fg: 255 255 255;
+  --primary-soft: 31 52 43;
+  --primary-ink: 150 214 180;
+  --accent: 200 242 74;
+  --accent-fg: 24 38 8;
+  --success: 120 206 156;
+  --success-soft: 27 54 40;
+  --warning: 240 184 96;
+  --warning-soft: 58 44 22;
+  --danger: 250 140 128;
+  --danger-soft: 62 30 28;
+  --map-land: 30 34 32;
+  --map-water: 22 36 42;
+  --map-park: 32 46 37;
+  --map-road: 52 58 55;
+  --map-major: 76 72 56;
+}
+
+@layer base {
+  html {
+    -webkit-tap-highlight-color: transparent;
+    text-size-adjust: 100%;
+  }
+  body {
+    @apply bg-bg text-ink font-sans text-body antialiased;
+    font-feature-settings: 'tnum' 0;
+  }
+  :focus-visible {
+    @apply outline-none ring-2 ring-primary-ink ring-offset-2 ring-offset-bg;
+  }
+  .tabular {
+    font-variant-numeric: tabular-nums;
+  }
+}
+
+@layer components {
+  .card {
+    @apply rounded-lg bg-surface shadow-card;
+  }
+  .label {
+    @apply text-caption font-semibold uppercase tracking-[0.08em] text-ink-3;
+  }
+  .no-scrollbar {
+    scrollbar-width: none;
+  }
+  .no-scrollbar::-webkit-scrollbar {
+    display: none;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+  }
+}
+
+/* Range slider: filled track in brand green, solid thumb. */
+.velora-range::-webkit-slider-runnable-track {
+  height: 6px;
+  border-radius: 999px;
+  background: linear-gradient(to right, rgb(var(--primary)) var(--fill), rgb(var(--surface-2)) var(--fill));
+}
+.velora-range::-moz-range-track {
+  height: 6px;
+  border-radius: 999px;
+  background: linear-gradient(to right, rgb(var(--primary)) var(--fill), rgb(var(--surface-2)) var(--fill));
+}
+.velora-range::-webkit-slider-thumb {
+  -webkit-appearance: none;
+  margin-top: -9px;
+  height: 24px;
+  width: 24px;
+  border-radius: 999px;
+  background: rgb(var(--surface));
+  border: 2px solid rgb(var(--primary));
+  box-shadow: 0 2px 6px rgb(0 0 0 / 0.15);
+}
+.velora-range::-moz-range-thumb {
+  height: 20px;
+  width: 20px;
+  border-radius: 999px;
+  background: rgb(var(--surface));
+  border: 2px solid rgb(var(--primary));
+}
+.velora-range:focus-visible::-webkit-slider-thumb {
+  box-shadow: 0 0 0 4px rgb(var(--primary) / 0.25);
+}
