@@ -21,6 +21,18 @@ npm run format     # Prettier
 
 The app uses hash-based routing and a relative base path, so `dist/` can be served from any static host or sub-folder.
 
+### On an iPhone
+
+Velora is a web app, so it runs in Safari with no App Store install.
+
+- **Same Wi‑Fi:** run `npm run dev -- --host`, then open the `Network:` address Vite prints (e.g. `http://192.168.1.20:5173`) in Safari on your iPhone.
+- **Anywhere:** deploy `dist/` to any static host (Netlify Drop, Vercel, GitHub Pages, Cloudflare Pages) and open the URL.
+- **Make it feel like an app:** in Safari tap **Share → Add to Home Screen**. It opens full-screen with the Velora icon, using the included web app manifest and Apple touch icon.
+
+A native App Store build would need a wrapper such as Capacitor, plus Xcode on a Mac and an Apple Developer account.
+
+`npm run build -- --mode artifact --outDir dist-artifact` makes a variant that keeps navigation in memory instead of the URL, for hosts that don't allow URL hashes.
+
 ### Trying it out
 
 1. Go through onboarding: vehicle, charging preferences and location. Each form validates its fields — try submitting empty fields or a bad registration such as `bad plate`.
