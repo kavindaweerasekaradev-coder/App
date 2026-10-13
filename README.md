@@ -1,15 +1,15 @@
-# Purrly — 3D cat hero
+# Purrly — cat food hero
 
 ![Hero preview](docs/hero-preview.png)
 
-A landing-page hero for a cat food brand: a crowd of soft, toy-like 3D cats
-(built with [three.js](https://threejs.org)) peeking up under the headline.
+A landing-page hero for a cat food brand: a crowd of animated-movie-style cats
+squeezing together for a selfie under the headline.
 
-- Cats pop up on load, breathe, blink, twitch their ears and wave their paws
-- Every cat follows your cursor with its head and eyes
-- Click ("pet") a cat to make it hop and send up hearts
-- Responsive: fits the whole crowd on desktop, focuses the middle cats on phones
-- Respects `prefers-reduced-motion` and pauses rendering when off-screen
+- The cats rise in on load and gently breathe
+- The picture tilts softly toward your cursor
+- Click ("pet") the cats to squish them and send up hearts
+- Responsive: on phones the crowd bleeds past the edges so the middle cats stay big
+- Respects `prefers-reduced-motion`
 
 ## Run it
 
@@ -23,19 +23,10 @@ npm run build    # production build in dist/
 
 | File | What it does |
 | --- | --- |
-| `index.html` | Nav, headline, buttons and the `#cat-stage` container |
-| `src/style.css` | Layout, buttons, mobile menu, heart animation |
-| `src/cats.js` | The 3D scene: cat builder, crowd config and animation loop |
+| `index.html` | Nav, headline, buttons and the cat artwork |
+| `public/hero-cats.webp` | The cat crowd render (white background, 16:9) |
+| `src/style.css` | Layout, buttons, mobile menu, tilt/breathe/heart animations |
+| `src/hero-art.js` | Cursor tilt and click-to-pet hearts |
 
-### Customising the cats
-
-Each cat is one entry in the `CROWD` array in `src/cats.js`:
-
-```js
-{ at: [0.1, -1.45, 1.8], s: 1.45, fur: '#f7923a', stripes: '#c9581c',
-  pattern: 'tabby', iris: '#4fae64', glasses: '#ff6fa8', mouth: 'open', collar: '#ffffff' }
-```
-
-Options: `fur`, `cream` (muzzle/chest), `stripes`, `pattern` (`'tabby'` | `'calico'`),
-`mask` (Siamese face), `iris`, `whiskers`, `mouth: 'open'`, and accessories
-`glasses`, `collar`, `bow`, `cap` (each takes a colour) and `paw` (`-1` / `1` raises a paw).
+To swap the artwork, replace `public/hero-cats.webp` with any 16:9 image on a
+white background; the white is blended away so the card's warm glow shows through.

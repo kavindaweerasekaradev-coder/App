@@ -1,5 +1,5 @@
 import './style.css';
-import { mountCatStage } from './cats.js';
+import { mountHeroArt } from './hero-art.js';
 
 const toggle = document.querySelector('.nav__toggle');
 const menu = document.getElementById('nav-menu');
@@ -9,4 +9,4 @@ toggle.addEventListener('click', () => {
   menu.classList.toggle('is-open', !open);
 });
 
-mountCatStage(document.getElementById('cat-stage'));
+mountHeroArt(document.getElementById('cat-stage'));
