@@ -1,0 +1,143 @@
+/*
+ * Design tokens. Every colour in the app is referenced by role through these
+ * variables so light and dark are swapped in one place.
+ *
+ * Chart series (--cat-*) were validated with the dataviz palette checker in
+ * this exact order, against --surface in each mode: lightness band, chroma,
+ * adjacent-pair CVD separation and normal-vision separation all pass.
+ */
+:root {
+  color-scheme: light;
+
+  --font-sans: 'Plus Jakarta Sans Variable', 'Plus Jakarta Sans', system-ui, -apple-system, 'Segoe UI', sans-serif;
+
+  /* Planes */
+  --bg: #ecede8;
+  --surface: #ffffff;
+  --surface-2: #f4f5f1;
+  --surface-3: #eaece6;
+  --overlay: rgba(16, 20, 13, 0.36);
+
+  /* Ink */
+  --ink: #10140d;
+  --ink-2: #4a5045;
+  --ink-3: #7c8276;
+  --ink-inverse: #ffffff;
+
+  /* Lines */
+  --line: #e7e9e2;
+  --line-strong: #d6d9d0;
+
+  /* Brand */
+  --brand: #bdee7c;
+  --brand-strong: #a7e05c;
+  --brand-soft: #eef9e0;
+  --brand-tint: rgba(255, 255, 255, 0.5);
+  --brand-deep: #1d3b0f;
+  --brand-deep-hover: #2a5216;
+  --on-brand-deep: #ffffff;
+  --on-brand: #10200a;
+
+  /* Semantic text */
+  --pos: #1c7a2b;
+  --neg: #c7362f;
+  --pos-soft: #e7f5e3;
+  --neg-soft: #fcebe9;
+
+  /* Status (reserved; always paired with an icon + label) */
+  --status-good: #0ca30c;
+  --status-warning: #e39a07;
+  --status-critical: #d03b3b;
+
+  /* Chart series */
+  --cat-1: #3d7a22;
+  --cat-2: #3f83d6;
+  --cat-3: #e8702f;
+  --cat-4: #7d63dc;
+  --cat-5: #b8830f;
+  --cat-other: #a9ada3;
+  --series-in: var(--cat-1);
+  --series-out: var(--cat-2);
+  --track: #eceee8;
+  --grid: #eceee8;
+
+  /* Shape & depth */
+  --r-xs: 10px;
+  --r-sm: 14px;
+  --r-md: 20px;
+  --r-lg: 28px;
+  --r-pill: 999px;
+  --shadow-card: 0 1px 0 rgba(16, 20, 13, 0.03), 0 8px 24px -12px rgba(16, 20, 13, 0.08);
+  --shadow-pop: 0 24px 64px -16px rgba(16, 20, 13, 0.28), 0 2px 6px rgba(16, 20, 13, 0.06);
+  --focus: 0 0 0 3px rgba(167, 224, 92, 0.7);
+
+  --ease: cubic-bezier(0.2, 0.8, 0.2, 1);
+}
+
+@media (prefers-color-scheme: dark) {
+  :root:not([data-theme='light']) {
+    color-scheme: dark;
+    --bg: #0c0d0b;
+    --surface: #17191b;
+    --surface-2: #1f2224;
+    --surface-3: #282b2e;
+    --overlay: rgba(0, 0, 0, 0.6);
+    --ink: #f1f3ee;
+    --ink-2: #b9bdb3;
+    --ink-3: #8b9086;
+    --ink-inverse: #10140d;
+    --line: #26292c;
+    --line-strong: #33373a;
+    --brand-soft: rgba(189, 238, 124, 0.12);
+    --brand-deep: #bdee7c;
+    --brand-deep-hover: #cdf59a;
+    --on-brand-deep: #10200a;
+    --pos: #6fcf5a;
+    --neg: #f07b72;
+    --pos-soft: rgba(111, 207, 90, 0.14);
+    --neg-soft: rgba(240, 123, 114, 0.14);
+    --cat-1: #4f9a2c;
+    --cat-2: #3f83d6;
+    --cat-3: #e2672a;
+    --cat-4: #8572e0;
+    --cat-5: #bf8812;
+    --cat-other: #5f645b;
+    --track: #25282b;
+    --grid: #25282b;
+    --shadow-card: 0 1px 0 rgba(255, 255, 255, 0.02);
+    --shadow-pop: 0 24px 64px -16px rgba(0, 0, 0, 0.7);
+  }
+}
+
+:root[data-theme='dark'] {
+  color-scheme: dark;
+  --bg: #0c0d0b;
+  --surface: #17191b;
+  --surface-2: #1f2224;
+  --surface-3: #282b2e;
+  --overlay: rgba(0, 0, 0, 0.6);
+  --ink: #f1f3ee;
+  --ink-2: #b9bdb3;
+  --ink-3: #8b9086;
+  --ink-inverse: #10140d;
+  --line: #26292c;
+  --line-strong: #33373a;
+  --brand-soft: rgba(189, 238, 124, 0.12);
+  --brand-deep: #bdee7c;
+  --brand-deep-hover: #cdf59a;
+  --on-brand-deep: #10200a;
+  --pos: #6fcf5a;
+  --neg: #f07b72;
+  --pos-soft: rgba(111, 207, 90, 0.14);
+  --neg-soft: rgba(240, 123, 114, 0.14);
+  --cat-1: #4f9a2c;
+  --cat-2: #3f83d6;
+  --cat-3: #e2672a;
+  --cat-4: #8572e0;
+  --cat-5: #bf8812;
+  --cat-other: #5f645b;
+  --track: #25282b;
+  --grid: #25282b;
+  --shadow-card: 0 1px 0 rgba(255, 255, 255, 0.02);
+  --shadow-pop: 0 24px 64px -16px rgba(0, 0, 0, 0.7);
+}
