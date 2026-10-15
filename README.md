@@ -8,11 +8,22 @@ Built with React + TypeScript + Vite, set in **Plus Jakarta Sans**.
 
 ## Run it
 
+Requires **Node.js 20.19+ or 22.12+** (LTS 22 recommended).
+
 ```bash
 npm install
 npm run dev      # http://localhost:5173
 npm run build    # typecheck + production build into dist/
 ```
+
+### In VS Code
+
+1. Open the project folder (`File → Open Folder…`).
+2. Open a terminal (`` Ctrl+` ``) and run `npm install` once.
+3. Press **F5** and pick **Run Ledgr (Chrome)** — it starts the dev server and
+   opens the app with breakpoints working in your `.tsx` files.
+   Or just run `npm run dev` in the terminal and Ctrl/Cmd-click the
+   `http://localhost:5173` link.
 
 ## What's in the MVP
 
