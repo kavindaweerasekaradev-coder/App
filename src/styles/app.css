@@ -85,6 +85,12 @@ ul {
   top: 16px;
 }
 
+/* Fully invisible until focused, even when the app is transformed (e.g. by the tour camera). */
+.skip-link:not(:focus) {
+  clip-path: inset(50%);
+  opacity: 0;
+}
+
 .muted {
   color: var(--ink-3);
 }
