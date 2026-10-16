@@ -1,5 +1,5 @@
-import { useCallback, useEffect, useRef, useState } from 'react'
-import { RotateCcw } from 'lucide-react'
+import { lazy, Suspense, useCallback, useEffect, useRef, useState } from 'react'
+import { Play, RotateCcw } from 'lucide-react'
 import { FinanceProvider, useFinance } from './state/store'
 import { DisplayProvider } from './state/display'
 import { useTheme } from './hooks/useTheme'
@@ -10,6 +10,9 @@ import { TransactionsPage } from './pages/TransactionsPage'
 import { BudgetsPage } from './pages/BudgetsPage'
 import { GoalsPage } from './pages/GoalsPage'
 import type { Page } from './types'
+
+// Three.js + GSAP only load when someone actually plays the tour.
+const Showcase = lazy(() => import('./showcase/Showcase'))
 
 type Dialog = { kind: 'add' } | { kind: 'fund'; goalId?: string } | { kind: 'newGoal' } | null
 
@@ -25,11 +28,15 @@ function Shell() {
   const { theme, toggle } = useTheme()
   const [page, setPage] = useState<Page>(pageFromHash)
   const [dialog, setDialog] = useState<Dialog>(null)
+  const [touring, setTouring] = useState(() => window.location.hash === '#/tour')
   const searchRef = useRef<HTMLInputElement>(null)
   const focusSearch = useRef(false)
 
   useEffect(() => {
-    const onHash = () => setPage(pageFromHash())
+    const onHash = () => {
+      setPage(pageFromHash())
+      if (window.location.hash === '#/tour') setTouring(true)
+    }
     window.addEventListener('hashchange', onHash)
     return () => window.removeEventListener('hashchange', onHash)
   }, [])
@@ -83,9 +90,14 @@ function Shell() {
 
       <footer className="app-footer">
         <span>Ledgr · demo data is stored only in this browser.</span>
-        <button type="button" className="btn btn--ghost btn--sm" onClick={() => dispatch({ type: 'reset' })}>
-          <RotateCcw size={14} /> Reset demo
-        </button>
+        <div className="app-footer__actions">
+          <button type="button" className="btn btn--soft btn--sm" onClick={() => (window.location.hash = '#/tour')}>
+            <Play size={13} fill="currentColor" /> Watch the tour
+          </button>
+          <button type="button" className="btn btn--ghost btn--sm" onClick={() => dispatch({ type: 'reset' })}>
+            <RotateCcw size={14} /> Reset demo
+          </button>
+        </div>
       </footer>
 
       <BottomNav page={page} onNavigate={navigate} />
@@ -93,6 +105,17 @@ function Shell() {
       {dialog?.kind === 'add' && <AddTransactionModal onClose={close} />}
       {dialog?.kind === 'fund' && <FundGoalModal onClose={close} goalId={dialog.goalId} />}
       {dialog?.kind === 'newGoal' && <NewGoalModal onClose={close} />}
+
+      {touring && (
+        <Suspense fallback={<div className="tour-loading" aria-label="Loading tour" />}>
+          <Showcase
+            onExit={() => {
+              setDialog(null)
+              setTouring(false)
+            }}
+          />
+        </Suspense>
+      )}
     </div>
   )
 }

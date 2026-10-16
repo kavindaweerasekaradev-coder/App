@@ -14,6 +14,7 @@ type Action =
   | { type: 'deleteGoal'; id: string }
   | { type: 'setCurrency'; currency: Currency }
   | { type: 'reset' }
+  | { type: 'restore'; state: FinanceState }
 
 const uid = () => Math.random().toString(36).slice(2, 10)
 
@@ -53,6 +54,8 @@ function reducer(state: FinanceState, action: Action): FinanceState {
       return { ...state, currency: action.currency }
     case 'reset':
       return createSeedState()
+    case 'restore':
+      return action.state
   }
 }
 

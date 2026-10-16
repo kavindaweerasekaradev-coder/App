@@ -121,6 +121,18 @@ ul {
   }
 }
 
+.app-footer__actions {
+  display: flex;
+  gap: 8px;
+}
+
+.tour-loading {
+  position: fixed;
+  inset: 0;
+  z-index: 1000;
+  background: #070806;
+}
+
 .app-footer {
   display: flex;
   justify-content: space-between;
@@ -1801,6 +1813,8 @@ ul {
   z-index: 50;
   display: grid;
   place-items: center;
+  /* Without this the track sizes to the panel's content and overflows narrow screens. */
+  grid-template-columns: minmax(0, 1fr);
   padding: 16px;
   background: var(--overlay);
   backdrop-filter: blur(4px);

@@ -38,6 +38,30 @@ Add transactions from anywhere (top-bar **Add**). Everything recalculates
 live and is saved to `localStorage`; **Reset demo** in the footer restores the
 seeded data.
 
+## Guided 3D tour
+
+Click **Watch the tour** in the footer, or open `/#/tour`.
+
+A procedurally modelled 3D bee (three.js) flies over the **live** app and walks
+through it: it switches currencies, approves a charge, logs a transaction,
+edits a budget, funds a goal and flips to dark mode — real clicks on the real
+UI, choreographed on one GSAP timeline.
+
+- Cinematic intro and finale, iris reveal, 3D camera tilt/zoom/depth-of-field
+  applied to the real interface, soft real-time shadow of the bee on the UI,
+  glowing trail, sparks, light streaks and motion-blur ghosts.
+- Your data, theme and currency are snapshotted before the tour and restored
+  after it (Skip, Esc, or "Explore the app").
+- Responsive (smaller bee, bottom captions on phones) and toned down for
+  `prefers-reduced-motion`.
+- three.js and GSAP live in a lazy chunk, so the dashboard itself stays light.
+- Add `?capture` to the URL (`/?capture#/tour`) to drive the tour frame by
+  frame via `window.__tour.step(ms)` — used to export a smooth video.
+
+Code lives in `src/showcase/`: `bee.ts` (model + wing animation),
+`scene.ts` (renderer, lights, shadows, particles, flight physics),
+`director.ts` (the storyboard timeline), `Showcase.tsx` (overlay + lifecycle).
+
 ## Design notes
 
 - **Tokens first.** All colour lives in `src/styles/tokens.css` as roles, with a
