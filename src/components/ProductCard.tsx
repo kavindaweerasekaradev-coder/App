@@ -1,9 +1,9 @@
-import { FoodArt } from '../art/FoodArt'
 import type { Product } from '../data/menu'
 import { lkr } from '../lib/pricing'
 import { useStore } from '../state/store'
 import { useUi } from '../state/ui'
 import { useQuickAdd } from '../state/useQuickAdd'
+import { FoodPhoto } from './FoodPhoto'
 import { Icon } from './Icon'
 
 export function TagList({ product }: { product: Product }) {
@@ -39,7 +39,7 @@ export function ProductCard({ product, variant = 'grid' }: { product: Product; v
         </span>
       )}
       <button type="button" className="product-card__art" onClick={open} tabIndex={-1} aria-hidden="true">
-        <FoodArt art={product.art} seed={product.id} />
+        <FoodPhoto photo={product.photo} width={300} />
       </button>
       <div className="product-card__body">
         <h3 className="product-card__name">

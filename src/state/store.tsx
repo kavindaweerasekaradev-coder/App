@@ -1,4 +1,5 @@
 import { createContext, useContext, useEffect, useMemo, useReducer, type ReactNode } from 'react'
+import { PRODUCT_BY_ID } from '../data/menu'
 import { computeTotals, type CartItem, type Fulfilment, type Totals } from '../lib/pricing'
 
 export interface Location {
@@ -53,7 +54,16 @@ const initial: State = { fulfilment: 'delivery', location: null, cart: [], coupo
 function load(): State {
   try {
     const raw = localStorage.getItem(STORAGE_KEY)
-    if (raw) return { ...initial, ...JSON.parse(raw) }
+    if (raw) {
+      const saved: State = { ...initial, ...JSON.parse(raw) }
+      // Drop items that are no longer on the menu so old carts and orders still render.
+      const known = (i: CartItem) => i.productId in PRODUCT_BY_ID
+      return {
+        ...saved,
+        cart: saved.cart.filter(known),
+        orders: saved.orders.map((o) => ({ ...o, items: o.items.filter(known) })).filter((o) => o.items.length > 0),
+      }
+    }
   } catch {
     // Storage can be unavailable (private mode, blocked site data); start fresh.
   }

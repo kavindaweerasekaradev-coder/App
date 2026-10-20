@@ -1,11 +1,11 @@
 import { useEffect, useState } from 'react'
 import { HOTLINE, STORE_BY_ID } from '../data/stores'
-import { FoodArt } from '../art/FoodArt'
 import { PRODUCT_BY_ID } from '../data/menu'
 import { newKey } from '../lib/id'
 import { describeItem, lineTotal, lkr } from '../lib/pricing'
 import { useStore } from '../state/store'
 import { useUi } from '../state/ui'
+import { FoodPhoto } from './FoodPhoto'
 import { Icon, type IconName } from './Icon'
 
 // Progress is sped up for the demo: each stage starts this many seconds after ordering.
@@ -150,7 +150,7 @@ export function OrderTracking({ id }: { id: string }) {
               return (
                 <li key={i.key} className="cart-line">
                   <div className="cart-line__art">
-                    <FoodArt art={p.art} seed={p.id} />
+                    <FoodPhoto photo={p.photo} width={64} />
                   </div>
                   <div className="cart-line__main">
                     <div className="cart-line__top">

@@ -1,5 +1,4 @@
 import { useState } from 'react'
-import { FoodArt } from '../art/FoodArt'
 import {
   CRUSTS,
   EXTRA_CHEESE_PRICE,
@@ -17,6 +16,7 @@ import { describeItem, lkr, unitPrice, type CartItem } from '../lib/pricing'
 import { useStore } from '../state/store'
 import { useUi } from '../state/ui'
 import { Dialog } from './Dialog'
+import { FoodPhoto } from './FoodPhoto'
 import { Icon } from './Icon'
 import { TagList } from './ProductCard'
 
@@ -109,7 +109,7 @@ function CustomizerSheet({ productId, editKey, drafts }: { productId: string; ed
     >
       <div className="customizer__hero">
         <div className="customizer__art">
-          <FoodArt art={product.art} seed={product.id} />
+          <FoodPhoto photo={product.photo} width={200} />
         </div>
         <div>
           <p className="eyebrow">{editing ? 'Edit your pizza' : 'Make it yours'}</p>

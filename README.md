@@ -1,18 +1,8 @@
 # Domino’s Sri Lanka: ordering redesign (concept)
 
-A clean, warm redesign of the Domino’s Sri Lanka online ordering site. The look takes its cue from soft, illustrated marketplace designs: cream backgrounds, rounded cards and hand-drawn food art. The flow is rebuilt around the most common UX problems with pizza-ordering sites.
+A clean, warm redesign of the Domino’s Sri Lanka online ordering site. The look takes its cue from soft marketplace designs: cream backgrounds, rounded cards and real food photography. The flow is rebuilt around the most common UX problems with pizza-ordering sites.
 
 > Design concept only. Not affiliated with or endorsed by Domino’s Pizza. Menu items, prices, stores and the hotline number are placeholders.
-
-![Home](docs/screenshots/home.png)
-
-| Customise | Cart | Checkout |
-| --- | --- | --- |
-| ![Customiser](docs/screenshots/customizer.png) | ![Cart](docs/screenshots/cart.png) | ![Checkout](docs/screenshots/checkout.png) |
-
-| Tracking | Mobile |
-| --- | --- |
-| ![Tracking](docs/screenshots/tracking.png) | ![Mobile home](docs/screenshots/mobile-home.png) |
 
 ## Run it
 
@@ -21,6 +11,7 @@ npm install
 npm run dev      # http://localhost:5173
 npm test         # pricing, deals and phone-number rules
 npm run build
+npm run check:photos   # confirms every food photo loads from Unsplash
 ```
 
 ## UX issues fixed
@@ -52,8 +43,31 @@ src/
   data/        menu, sizes, crusts, stores (placeholder data)
   lib/         pricing + deals, phone parsing, hash router
   state/       cart/location/orders store (saved in localStorage), UI state
-  art/         SVG food illustrations and hero scene (no image files)
   components/  header, home, customiser, cart, checkout, tracking, dialogs
 ```
 
 Built with React, TypeScript and Vite. Fonts are self-hosted (Plus Jakarta Sans, Bricolage Grotesque).
+
+## Photos
+
+All food photos are free photos from [Unsplash](https://unsplash.com), used under the [Unsplash License](https://unsplash.com/license). They load from Unsplash at the size each spot needs. If a photo can’t load, a plain tile is shown instead. The photo IDs live in `src/data/menu.ts`. For a production site, replace them with your own product photography.
+
+| Item | Photo | Photographer |
+| --- | --- | --- |
+| Hero | [vHRFraV4U00](https://unsplash.com/photos/vHRFraV4U00) | Fabrizio Pullara |
+| Devilled Chicken | [ZXpVJ5G_TtY](https://unsplash.com/photos/ZXpVJ5G_TtY) | Omar Hakeem |
+| Pepperoni Classic | [VzMuY7TEy68](https://unsplash.com/photos/VzMuY7TEy68) | Brett Jordan |
+| Kochchi Paneer | [viyma_vheho](https://unsplash.com/photos/viyma_vheho) | VD Photography |
+| Smoky BBQ Chicken | [MqT0asuoIcU](https://unsplash.com/photos/MqT0asuoIcU) | Chad Montano |
+| Hot & Spicy Chicken | [LppAkC7s6u4](https://unsplash.com/photos/LppAkC7s6u4) | See photo page |
+| Tomato & Rocket | [A4EtgLN1_Fw](https://unsplash.com/photos/A4EtgLN1_Fw) | See photo page |
+| Veggie Paradise | [aV1agxacxUw](https://unsplash.com/photos/aV1agxacxUw) | Shoeib Abolhassani |
+| Margherita | [wgq8NVyXsYY](https://unsplash.com/photos/wgq8NVyXsYY) | Luigi Boccardo |
+| Chicken Sausage Feast | [0XxRSfDgTBI](https://unsplash.com/photos/0XxRSfDgTBI) | See photo page |
+| Garlic Bread | [yl33be56sbg](https://unsplash.com/photos/yl33be56sbg) | Louis Hansel |
+| Hot Chicken Wings | [gE28aTnlqJA](https://unsplash.com/photos/gE28aTnlqJA) | Chad Montano |
+| Crispy Fries | [lv7H9OKj_f4](https://unsplash.com/photos/lv7H9OKj_f4) | Vera Cho |
+| Penne Pasta | [aeESmmFKH0M](https://unsplash.com/photos/aeESmmFKH0M) | Pixzolo Photography |
+| Chocolate Fudge Cake | [lsqPDLZMy2I](https://unsplash.com/photos/lsqPDLZMy2I) | See photo page |
+| Cola | [zJnhOqGDru0](https://unsplash.com/photos/zJnhOqGDru0) | blackieshoot |
+| Lemon Iced Tea | [FM253_03JJw](https://unsplash.com/photos/FM253_03JJw) | An Nguyen |

@@ -61,9 +61,9 @@ export const DEALS: Deal[] = [
   },
   {
     code: 'SWEET',
-    title: 'Free Choco Lava Cake',
+    title: 'Free Chocolate Fudge Cake',
     summary: 'With orders of Rs 4,500 or more.',
-    terms: ['Add a Lava Cake to your cart', 'One free cake per order', 'Minimum order Rs 4,500'],
+    terms: ['Add a Fudge Cake to your cart', 'One free cake per order', 'Minimum order Rs 4,500'],
   },
   {
     code: 'PICKUP15',
@@ -108,11 +108,16 @@ function evaluate(code: string, cart: CartItem[], subtotal: number, fulfilment: 
       return { deal, saving }
     }
     case 'SWEET': {
-      const hasCake = cart.some((i) => i.productId === 'lava-cake')
-      const cake = unitPrice({ key: '', productId: 'lava-cake', qty: 1 })
+      const hasCake = cart.some((i) => i.productId === 'fudge-cake')
+      const cake = unitPrice({ key: '', productId: 'fudge-cake', qty: 1 })
       if (subtotal < 4500)
-        return { deal, saving: 0, potential: subtotal >= 3000 ? cake : undefined, reason: `Add ${lkr(4500 - subtotal)} more to get a free Choco Lava Cake.` }
-      if (!hasCake) return { deal, saving: 0, potential: cake, reason: 'Add a Choco Lava Cake. It’s on us with this order.' }
+        return {
+          deal,
+          saving: 0,
+          potential: subtotal >= 3000 ? cake : undefined,
+          reason: `Add ${lkr(4500 - subtotal)} more to get a free Chocolate Fudge Cake.`,
+        }
+      if (!hasCake) return { deal, saving: 0, potential: cake, reason: 'Add a Chocolate Fudge Cake. It’s on us with this order.' }
       return { deal, saving: cake }
     }
     case 'PICKUP15': {

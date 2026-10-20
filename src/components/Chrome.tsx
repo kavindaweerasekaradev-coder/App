@@ -109,7 +109,11 @@ export function Footer() {
         </div>
       </div>
       <p className="container site-footer__legal small muted">
-        Design concept for a redesigned ordering experience. Not affiliated with or endorsed by Domino’s Pizza.
+        Design concept for a redesigned ordering experience. Not affiliated with or endorsed by Domino’s Pizza. Food photos from{' '}
+        <a href="https://unsplash.com" target="_blank" rel="noreferrer">
+          Unsplash
+        </a>
+        .
       </p>
     </footer>
   )

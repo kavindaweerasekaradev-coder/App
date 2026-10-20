@@ -1,10 +1,10 @@
 import { useState } from 'react'
-import { FoodArt } from '../art/FoodArt'
 import { PRODUCT_BY_ID } from '../data/menu'
 import { STORE_BY_ID } from '../data/stores'
 import { FREE_DELIVERY_FROM, MIN_DELIVERY_ORDER, checkCoupon, describeItem, lineTotal, lkr, type CartItem, type Totals } from '../lib/pricing'
 import { useStore } from '../state/store'
 import { useUi } from '../state/ui'
+import { FoodPhoto } from './FoodPhoto'
 import { Icon } from './Icon'
 
 export function CartLines({ editable = true }: { editable?: boolean }) {
@@ -28,7 +28,7 @@ export function CartLines({ editable = true }: { editable?: boolean }) {
         return (
           <li key={item.key} className="cart-line">
             <div className="cart-line__art">
-              <FoodArt art={p.art} seed={p.id} />
+              <FoodPhoto photo={p.photo} width={64} />
             </div>
             <div className="cart-line__main">
               <div className="cart-line__top">

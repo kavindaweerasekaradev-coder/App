@@ -1,7 +1,7 @@
 export type SizeId = 'personal' | 'medium' | 'large'
 export type CrustId = 'hand' | 'thin' | 'pan' | 'burst'
 export type CategoryId = 'pizza' | 'sides' | 'desserts' | 'drinks'
-export type Tag = 'veg' | 'spicy' | 'chicken' | 'seafood' | 'new'
+export type Tag = 'veg' | 'spicy' | 'chicken' | 'new'
 
 export type Topping =
   | 'pepperoni'
@@ -19,9 +19,11 @@ export type Topping =
   | 'sausage'
   | 'corn'
 
-export type SideArt = 'garlic-bread' | 'wings' | 'wedges' | 'pasta' | 'lava' | 'cola' | 'tea' | 'water'
-
-export type Art = { kind: 'pizza'; toppings: Topping[]; sauce?: 'tomato' | 'bbq' | 'white' } | { kind: SideArt }
+/** A free photo from Unsplash (unsplash.com/photos/<id>), used under the Unsplash License. */
+export interface Photo {
+  id: string
+  by?: string
+}
 
 interface BaseProduct {
   id: string
@@ -29,7 +31,7 @@ interface BaseProduct {
   description: string
   tags: Tag[]
   badge?: string
-  art: Art
+  photo: Photo
 }
 
 export interface PizzaProduct extends BaseProduct {
@@ -92,7 +94,7 @@ export const PRODUCTS: Product[] = [
     tags: ['chicken', 'spicy'],
     badge: 'Most loved',
     prices: { personal: 1190, medium: 2490, large: 3690 },
-    art: { kind: 'pizza', toppings: ['chicken', 'onion', 'capsicum', 'chilli'] },
+    photo: { id: 'ZXpVJ5G_TtY', by: 'Omar Hakeem' },
   },
   {
     id: 'pepperoni-classic',
@@ -102,53 +104,53 @@ export const PRODUCTS: Product[] = [
     tags: ['chicken'],
     badge: 'Classic',
     prices: { personal: 1090, medium: 2290, large: 3390 },
-    art: { kind: 'pizza', toppings: ['pepperoni'] },
+    photo: { id: 'VzMuY7TEy68', by: 'Brett Jordan' },
   },
   {
     id: 'kochchi-paneer',
     category: 'pizza',
     name: 'Kochchi Paneer',
-    description: 'Paneer tikka, red onion and fiery kochchi chilli. A local favourite.',
+    description: 'Paneer, capsicum, olives, baby corn and fiery jalapeño. A local favourite.',
     tags: ['veg', 'spicy', 'new'],
     badge: 'New',
     prices: { personal: 1090, medium: 2290, large: 3390 },
-    art: { kind: 'pizza', toppings: ['paneer', 'onion', 'jalapeno', 'chilli'] },
+    photo: { id: 'viyma_vheho', by: 'VD Photography' },
   },
   {
     id: 'bbq-chicken',
     category: 'pizza',
     name: 'Smoky BBQ Chicken',
-    description: 'BBQ-glazed chicken, red onion and sweet corn on a smoky barbecue base.',
+    description: 'Smoked chicken, pineapple and red onion on a smoky barbecue base.',
     tags: ['chicken'],
     prices: { personal: 1190, medium: 2490, large: 3690 },
-    art: { kind: 'pizza', toppings: ['chicken', 'onion', 'corn'], sauce: 'bbq' },
+    photo: { id: 'MqT0asuoIcU', by: 'Chad Montano' },
   },
   {
     id: 'hot-spicy-chicken',
     category: 'pizza',
     name: 'Hot & Spicy Chicken',
-    description: 'Spicy chicken, jalapeño, onion and red chilli. For those who like it hot.',
+    description: 'Spicy chicken, fresh greens and red chilli. For those who like it hot.',
     tags: ['chicken', 'spicy'],
     prices: { personal: 1190, medium: 2490, large: 3690 },
-    art: { kind: 'pizza', toppings: ['chicken', 'jalapeno', 'onion', 'chilli'] },
+    photo: { id: 'LppAkC7s6u4' },
   },
   {
-    id: 'chilli-prawn',
+    id: 'tomato-rocket',
     category: 'pizza',
-    name: 'Chilli Prawn',
-    description: 'Tender prawns tossed in garlic chilli butter with capsicum and onion.',
-    tags: ['seafood', 'spicy'],
-    prices: { personal: 1390, medium: 2890, large: 4190 },
-    art: { kind: 'pizza', toppings: ['prawn', 'capsicum', 'onion', 'chilli'] },
+    name: 'Tomato & Rocket',
+    description: 'Juicy tomatoes, mozzarella and fresh rocket on a thin, crispy base.',
+    tags: ['veg'],
+    prices: { personal: 990, medium: 2090, large: 3090 },
+    photo: { id: 'A4EtgLN1_Fw' },
   },
   {
     id: 'veggie-paradise',
     category: 'pizza',
     name: 'Veggie Paradise',
-    description: 'Mushroom, capsicum, black olives, onion and juicy tomato.',
+    description: 'Red and green capsicum, onion and plenty of melted cheese.',
     tags: ['veg'],
     prices: { personal: 990, medium: 2090, large: 3090 },
-    art: { kind: 'pizza', toppings: ['mushroom', 'capsicum', 'olive', 'onion', 'tomato'] },
+    photo: { id: 'aV1agxacxUw', by: 'Shoeib Abolhassani' },
   },
   {
     id: 'margherita',
@@ -157,68 +159,68 @@ export const PRODUCTS: Product[] = [
     description: 'Simply mozzarella, tomato sauce and fresh basil. Light and always right.',
     tags: ['veg'],
     prices: { personal: 890, medium: 1890, large: 2790 },
-    art: { kind: 'pizza', toppings: ['tomato', 'basil'] },
+    photo: { id: 'wgq8NVyXsYY', by: 'Luigi Boccardo' },
   },
   {
     id: 'chicken-sausage-feast',
     category: 'pizza',
     name: 'Chicken Sausage Feast',
-    description: 'Chicken sausage, chicken pepperoni, mushroom and a creamy white sauce.',
+    description: 'Chicken sausage and chicken pepperoni piled high on extra mozzarella.',
     tags: ['chicken'],
     prices: { personal: 1290, medium: 2690, large: 3890 },
-    art: { kind: 'pizza', toppings: ['sausage', 'pepperoni', 'mushroom'], sauce: 'white' },
+    photo: { id: '0XxRSfDgTBI' },
   },
   {
     id: 'garlic-bread',
     category: 'sides',
     name: 'Garlic Bread',
-    description: 'Freshly baked breadsticks brushed with garlic butter and herbs.',
+    description: 'Freshly baked bread brushed with garlic butter and herbs.',
     tags: ['veg'],
     price: 690,
     unit: '8 pcs',
-    art: { kind: 'garlic-bread' },
+    photo: { id: 'yl33be56sbg', by: 'Louis Hansel' },
   },
   {
     id: 'chicken-wings',
     category: 'sides',
     name: 'Hot Chicken Wings',
-    description: 'Oven-roasted wings in a sticky hot glaze.',
+    description: 'Crispy wings tossed in a sticky chilli glaze.',
     tags: ['chicken', 'spicy'],
     badge: 'Most loved',
     price: 1290,
     unit: '6 pcs',
-    art: { kind: 'wings' },
+    photo: { id: 'gE28aTnlqJA', by: 'Chad Montano' },
   },
   {
-    id: 'potato-wedges',
+    id: 'fries',
     category: 'sides',
-    name: 'Potato Wedges',
-    description: 'Crispy seasoned wedges with a garlic mayo dip.',
+    name: 'Crispy Fries',
+    description: 'Golden, crispy and lightly salted.',
     tags: ['veg'],
-    price: 690,
+    price: 590,
     unit: 'Regular',
-    art: { kind: 'wedges' },
+    photo: { id: 'lv7H9OKj_f4', by: 'Vera Cho' },
   },
   {
-    id: 'chicken-pasta',
+    id: 'penne-pasta',
     category: 'sides',
-    name: 'Creamy Chicken Pasta',
-    description: 'Penne in a creamy white sauce with chicken and mushroom.',
-    tags: ['chicken'],
-    price: 1390,
+    name: 'Penne Pasta',
+    description: 'Penne baked in our rich house sauce.',
+    tags: [],
+    price: 1290,
     unit: 'Bowl',
-    art: { kind: 'pasta' },
+    photo: { id: 'aeESmmFKH0M', by: 'Pixzolo Photography' },
   },
   {
-    id: 'lava-cake',
+    id: 'fudge-cake',
     category: 'desserts',
-    name: 'Choco Lava Cake',
-    description: 'Warm chocolate cake with a gooey molten centre.',
+    name: 'Chocolate Fudge Cake',
+    description: 'Rich, moist chocolate cake. The perfect finish.',
     tags: ['veg'],
     badge: 'Sweet pick',
     price: 590,
-    unit: '1 pc',
-    art: { kind: 'lava' },
+    unit: '1 slice',
+    photo: { id: 'lsqPDLZMy2I' },
   },
   {
     id: 'cola',
@@ -228,29 +230,22 @@ export const PRODUCTS: Product[] = [
     tags: ['veg'],
     price: 450,
     unit: '1.5 L',
-    art: { kind: 'cola' },
+    photo: { id: 'zJnhOqGDru0', by: 'blackieshoot' },
   },
   {
     id: 'iced-tea',
     category: 'drinks',
     name: 'Lemon Iced Tea',
-    description: 'Ceylon tea, a squeeze of lemon, lightly sweetened.',
+    description: 'Ceylon black tea, a squeeze of lemon, lightly sweetened.',
     tags: ['veg'],
     price: 390,
     unit: '500 ml',
-    art: { kind: 'tea' },
-  },
-  {
-    id: 'water',
-    category: 'drinks',
-    name: 'Mineral Water',
-    description: 'Still water.',
-    tags: ['veg'],
-    price: 150,
-    unit: '1 L',
-    art: { kind: 'water' },
+    photo: { id: 'FM253_03JJw', by: 'An Nguyen' },
   },
 ]
+
+/** Large hero photo: a Neapolitan-style pizza on a wooden table. */
+export const HERO_PHOTO: Photo = { id: 'vHRFraV4U00', by: 'Fabrizio Pullara' }
 
 export const PRODUCT_BY_ID: Record<string, Product> = Object.fromEntries(PRODUCTS.map((p) => [p.id, p]))
 
@@ -262,6 +257,5 @@ export const TAG_LABEL: Record<Tag, string> = {
   veg: 'Veg',
   spicy: 'Spicy',
   chicken: 'Chicken',
-  seafood: 'Seafood',
   new: 'New',
 }

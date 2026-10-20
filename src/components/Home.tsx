@@ -1,24 +1,20 @@
 import { useMemo, useRef, useState } from 'react'
-import { FoodArt } from '../art/FoodArt'
-import { HeroScene } from '../art/HeroScene'
-import { CATEGORIES, PRODUCTS, PRODUCT_BY_ID, type CategoryId, type Product } from '../data/menu'
+import { CATEGORIES, HERO_PHOTO, PRODUCTS, PRODUCT_BY_ID, type CategoryId, type Product } from '../data/menu'
 import { STORE_BY_ID } from '../data/stores'
 import { newKey } from '../lib/id'
 import { scrollToSection } from '../lib/dom'
 import { DEALS, describeItem, lkr } from '../lib/pricing'
 import { useStore } from '../state/store'
 import { useUi } from '../state/ui'
+import { FoodPhoto } from './FoodPhoto'
 import { Icon } from './Icon'
 import { ProductCard } from './ProductCard'
 
 type Filter = 'veg' | 'spicy'
 
 function Hero({ query, setQuery, onSearch }: { query: string; setQuery: (q: string) => void; onSearch: () => void }) {
-  const hero = PRODUCT_BY_ID['devilled-chicken']
-  const { openProduct } = useUi()
   return (
     <section className="hero container" aria-labelledby="hero-title">
-      <HeroScene />
       <div className="hero__copy">
         <span className="pill">
           <Icon name="sparkle" size={14} /> Hot & fresh in about 30 minutes
@@ -47,18 +43,16 @@ function Hero({ query, setQuery, onSearch }: { query: string; setQuery: (q: stri
           </button>
         </form>
       </div>
-      <button type="button" className="hero__pizza" onClick={() => openProduct(hero.id)} aria-label={`Order ${hero.name}`}>
-        <span className="hero__pizza-art">
-          <FoodArt art={hero.art} seed={hero.id} />
-        </span>
-        <span className="hero__sticker">
+      <div className="hero__photo">
+        <FoodPhoto photo={HERO_PHOTO} width={560} alt="A freshly baked pizza on a wooden table" eager />
+        <button type="button" className="hero__sticker" onClick={() => scrollToSection('deals')}>
           <span className="hero__sticker-label">
-            <Icon name="sparkle" size={12} /> Most loved
+            <Icon name="tag" size={12} /> Today’s deal
           </span>
-          <strong>{hero.name}</strong>
-          <span>from {lkr(hero.category === 'pizza' ? hero.prices.personal : 0)}</span>
-        </span>
-      </button>
+          <strong>2 Medium pizzas for {lkr(3990)}</strong>
+          <span>No code needed</span>
+        </button>
+      </div>
     </section>
   )
 }
@@ -245,7 +239,7 @@ function OrderAgain() {
           return (
             <li key={i.key} className="again-item">
               <span className="again-item__art">
-                <FoodArt art={p.art} seed={p.id} />
+                <FoodPhoto photo={p.photo} width={56} />
               </span>
               <span className="again-item__text">
                 <strong>{p.name}</strong>
@@ -349,7 +343,7 @@ export function Home() {
   }, [query, category, filters])
 
   const browsing = !query.trim() && category === 'all' && filters.size === 0
-  const loved = ['devilled-chicken', 'pepperoni-classic', 'kochchi-paneer', 'chicken-wings', 'chilli-prawn', 'veggie-paradise'].map((id) => PRODUCT_BY_ID[id])
+  const loved = ['devilled-chicken', 'pepperoni-classic', 'kochchi-paneer', 'chicken-wings', 'bbq-chicken', 'veggie-paradise'].map((id) => PRODUCT_BY_ID[id])
 
   const scrollToMenu = () => scrollToSection('menu')
 
