@@ -1,7 +1,8 @@
 import { CartDrawer } from './components/CartDrawer'
 import { Checkout } from './components/Checkout'
-import { Footer, MobileCartBar, OfflineBanner, Toast } from './components/Chrome'
+import { MobileCartBar, OfflineBanner, Toast } from './components/Chrome'
 import { Customizer } from './components/Customizer'
+import { Footer } from './components/Footer'
 import { Header } from './components/Header'
 import { Home } from './components/Home'
 import { LocationDialog } from './components/LocationDialog'
@@ -26,7 +27,7 @@ function Page() {
       )}
       {route.name === 'checkout' && <Checkout />}
       {route.name === 'order' && <OrderTracking id={route.id} />}
-      <Footer />
+      <Footer route={route} />
       {route.name === 'home' && <MobileCartBar />}
       <CartDrawer />
       <Customizer />

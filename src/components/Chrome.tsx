@@ -1,9 +1,7 @@
 import { useEffect, useState } from 'react'
-import { HOTLINE } from '../data/stores'
-import { FREE_DELIVERY_FROM, MIN_DELIVERY_ORDER, lkr } from '../lib/pricing'
+import { lkr } from '../lib/pricing'
 import { useStore } from '../state/store'
 import { useUi } from '../state/ui'
-import { Logo } from './Header'
 import { Icon } from './Icon'
 
 export function Toast() {
@@ -79,42 +77,5 @@ export function MobileCartBar() {
         <span>{lkr(totals.total)}</span>
       </button>
     </div>
-  )
-}
-
-export function Footer() {
-  return (
-    <footer className="site-footer">
-      <div className="container site-footer__inner">
-        <div>
-          <Logo />
-          <p className="muted small">Hot, fresh pizza from 50+ stores across Sri Lanka.</p>
-        </div>
-        <div>
-          <h2 className="site-footer__h">Help</h2>
-          <ul>
-            <li>
-              <a href={`tel:${HOTLINE.replace(/\s/g, '')}`}>Hotline {HOTLINE}</a>
-            </li>
-            <li>Open daily, 10:00 am – 11:00 pm</li>
-          </ul>
-        </div>
-        <div>
-          <h2 className="site-footer__h">Good to know</h2>
-          <ul>
-            <li>All prices include taxes</li>
-            <li>Minimum delivery order {lkr(MIN_DELIVERY_ORDER)}</li>
-            <li>Free delivery over {lkr(FREE_DELIVERY_FROM)}</li>
-          </ul>
-        </div>
-      </div>
-      <p className="container site-footer__legal small muted">
-        Design concept for a redesigned ordering experience. Not affiliated with or endorsed by Domino’s Pizza. Food photos from{' '}
-        <a href="https://unsplash.com" target="_blank" rel="noreferrer">
-          Unsplash
-        </a>
-        .
-      </p>
-    </footer>
   )
 }

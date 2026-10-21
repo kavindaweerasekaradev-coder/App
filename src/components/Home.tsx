@@ -1,16 +1,16 @@
-import { useMemo, useRef, useState } from 'react'
+import { useEffect, useMemo, useRef, useState } from 'react'
 import { CATEGORIES, PRODUCTS, PRODUCT_BY_ID, type CategoryId, type Product } from '../data/menu'
 import { STORE_BY_ID } from '../data/stores'
 import { newKey } from '../lib/id'
-import { scrollToSection } from '../lib/dom'
+import { onShowMenuCategory, scrollToSection } from '../lib/dom'
 import { MOTION_OK, ScrollTrigger, gsap, useGSAP } from '../lib/gsap'
 import { describeItem, lkr } from '../lib/pricing'
 import { useStore } from '../state/store'
 import { useUi } from '../state/ui'
+import { Deals } from './Deals'
 import { FoodPhoto } from './FoodPhoto'
 import { Hero } from './Hero'
 import { Icon } from './Icon'
-import { Deals } from './Deals'
 import { ProductCard } from './ProductCard'
 
 type Filter = 'veg' | 'spicy'
@@ -288,6 +288,18 @@ export function Home() {
 
   // Wait a frame: changing filters can hide the sections above the menu, which moves it.
   const scrollToMenu = () => requestAnimationFrame(() => scrollToSection('menu'))
+
+  // Links elsewhere on the page (like the footer) can ask for a category.
+  useEffect(
+    () =>
+      onShowMenuCategory((c) => {
+        setQuery('')
+        setFilters(new Set())
+        setCategory(c as CategoryId)
+        requestAnimationFrame(() => scrollToSection('menu'))
+      }),
+    [],
+  )
 
   // Cards, panels and headings fade up as they scroll into view; re-run when the visible set changes.
   const scope = useRef<HTMLDivElement>(null)
