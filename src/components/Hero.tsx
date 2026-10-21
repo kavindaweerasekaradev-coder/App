@@ -188,7 +188,7 @@ export function Hero() {
                     key={id}
                     type="button"
                     className={`hero__orbit hero__orbit--${i}`}
-                    onClick={() => quickAdd(id)}
+                    onClick={(e) => quickAdd(id, { from: e.currentTarget.querySelector<HTMLElement>('.hero__orbit-photo') })}
                     aria-label={`Add ${p.name}, ${lkr(fromPrice(p))}`}
                   >
                     <span className="hero__orbit-photo">
