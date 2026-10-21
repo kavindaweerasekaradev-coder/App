@@ -46,7 +46,7 @@ src/
   components/  header, home, customiser, cart, checkout, tracking, dialogs
 ```
 
-Built with React, TypeScript and Vite. Fonts are self-hosted (Plus Jakarta Sans, Bricolage Grotesque).
+Built with React, TypeScript and Vite, with [GSAP](https://gsap.com) (ScrollTrigger, SplitText) for the hero intro, scroll effects and reveal animations. All motion is skipped when the visitor’s device is set to reduce motion. Fonts are self-hosted (Plus Jakarta Sans, Bricolage Grotesque).
 
 ## Photos
 

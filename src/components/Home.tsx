@@ -1,61 +1,18 @@
 import { useMemo, useRef, useState } from 'react'
-import { CATEGORIES, HERO_PHOTO, PRODUCTS, PRODUCT_BY_ID, type CategoryId, type Product } from '../data/menu'
+import { CATEGORIES, PRODUCTS, PRODUCT_BY_ID, type CategoryId, type Product } from '../data/menu'
 import { STORE_BY_ID } from '../data/stores'
 import { newKey } from '../lib/id'
 import { scrollToSection } from '../lib/dom'
+import { MOTION_OK, ScrollTrigger, gsap, useGSAP } from '../lib/gsap'
 import { DEALS, describeItem, lkr } from '../lib/pricing'
 import { useStore } from '../state/store'
 import { useUi } from '../state/ui'
 import { FoodPhoto } from './FoodPhoto'
+import { Hero } from './Hero'
 import { Icon } from './Icon'
 import { ProductCard } from './ProductCard'
 
 type Filter = 'veg' | 'spicy'
-
-function Hero({ query, setQuery, onSearch }: { query: string; setQuery: (q: string) => void; onSearch: () => void }) {
-  return (
-    <section className="hero container" aria-labelledby="hero-title">
-      <div className="hero__copy">
-        <span className="pill">
-          <Icon name="sparkle" size={14} /> Hot & fresh in about 30 minutes
-        </span>
-        <h1 id="hero-title">
-          Pizza made fresh,
-          <br />
-          <span className="accent">delivered your way</span>
-        </h1>
-        <p className="hero__sub">Browse the full menu with real prices. Pick delivery or pickup whenever you’re ready. The best deal is applied for you.</p>
-        <form
-          className="search"
-          role="search"
-          onSubmit={(e) => {
-            e.preventDefault()
-            onSearch()
-          }}
-        >
-          <Icon name="search" size={20} />
-          <label htmlFor="menu-search" className="sr-only">
-            Search the menu
-          </label>
-          <input id="menu-search" type="search" value={query} onChange={(e) => setQuery(e.target.value)} placeholder="Search pizzas, sides, “spicy”, “veg”…" />
-          <button type="submit" className="btn btn--primary">
-            Search
-          </button>
-        </form>
-      </div>
-      <div className="hero__photo">
-        <FoodPhoto photo={HERO_PHOTO} width={560} alt="A freshly baked pizza on a wooden table" eager />
-        <button type="button" className="hero__sticker" onClick={() => scrollToSection('deals')}>
-          <span className="hero__sticker-label">
-            <Icon name="tag" size={12} /> Today’s deal
-          </span>
-          <strong>2 Medium pizzas for {lkr(3990)}</strong>
-          <span>No code needed</span>
-        </button>
-      </div>
-    </section>
-  )
-}
 
 function Toolbar({
   category,
@@ -347,8 +304,25 @@ export function Home() {
 
   const scrollToMenu = () => scrollToSection('menu')
 
+  // Cards, panels and headings fade up as they scroll into view; re-run when the visible set changes.
+  const scope = useRef<HTMLDivElement>(null)
+  useGSAP(
+    () => {
+      gsap.matchMedia().add(MOTION_OK, () => {
+        const targets = gsap.utils.toArray<HTMLElement>('.section__head, .menu__group-title, .panel, .product-card, .info-card', scope.current)
+        gsap.set(targets, { opacity: 0, y: 36 })
+        ScrollTrigger.batch(targets, {
+          start: 'top 92%',
+          once: true,
+          onEnter: (batch) => gsap.to(batch, { opacity: 1, y: 0, duration: 0.7, ease: 'power3.out', stagger: 0.07, overwrite: true }),
+        })
+      })
+    },
+    { scope, dependencies: [results, browsing], revertOnUpdate: true },
+  )
+
   return (
-    <>
+    <div ref={scope}>
       <Hero query={query} setQuery={setQuery} onSearch={scrollToMenu} />
       <Toolbar
         category={category}
@@ -417,6 +391,6 @@ export function Home() {
       </section>
 
       <InfoBar />
-    </>
+    </div>
   )
 }
