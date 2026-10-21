@@ -4,12 +4,13 @@ import { STORE_BY_ID } from '../data/stores'
 import { newKey } from '../lib/id'
 import { scrollToSection } from '../lib/dom'
 import { MOTION_OK, ScrollTrigger, gsap, useGSAP } from '../lib/gsap'
-import { DEALS, describeItem, lkr } from '../lib/pricing'
+import { describeItem, lkr } from '../lib/pricing'
 import { useStore } from '../state/store'
 import { useUi } from '../state/ui'
 import { FoodPhoto } from './FoodPhoto'
 import { Hero } from './Hero'
 import { Icon } from './Icon'
+import { Deals } from './Deals'
 import { ProductCard } from './ProductCard'
 
 type Filter = 'veg' | 'spicy'
@@ -109,43 +110,6 @@ function Rail({ title, note, products }: { title: string; note: string; products
           <Icon name="chevronRight" />
         </button>
       </div>
-    </section>
-  )
-}
-
-function Deals() {
-  const { setCartOpen } = useUi()
-  const { state } = useStore()
-  return (
-    <section id="deals" className="panel panel--deals" aria-labelledby="deals-title">
-      <div className="panel__head">
-        <div>
-          <h2 id="deals-title">Today’s deals</h2>
-          <p className="muted small">No codes needed. We apply the one that saves you most.</p>
-        </div>
-        {state.cart.length > 0 && (
-          <button type="button" className="link-btn" onClick={() => setCartOpen(true)}>
-            See my savings <Icon name="chevronRight" size={16} />
-          </button>
-        )}
-      </div>
-      <ul className="deal-grid">
-        {DEALS.map((d, i) => (
-          <li key={d.code} className={`deal-card deal-card--${i}`}>
-            <span className="deal-card__code">{d.code}</span>
-            <h3>{d.title}</h3>
-            <p className="small">{d.summary}</p>
-            <details>
-              <summary>Terms</summary>
-              <ul>
-                {d.terms.map((t) => (
-                  <li key={t}>{t}</li>
-                ))}
-              </ul>
-            </details>
-          </li>
-        ))}
-      </ul>
     </section>
   )
 }
@@ -322,7 +286,8 @@ export function Home() {
   const browsing = !query.trim() && category === 'all' && filters.size === 0
   const loved = ['devilled-chicken', 'pepperoni-classic', 'kochchi-paneer', 'chicken-wings', 'bbq-chicken', 'veggie-paradise'].map((id) => PRODUCT_BY_ID[id])
 
-  const scrollToMenu = () => scrollToSection('menu')
+  // Wait a frame: changing filters can hide the sections above the menu, which moves it.
+  const scrollToMenu = () => requestAnimationFrame(() => scrollToSection('menu'))
 
   // Cards, panels and headings fade up as they scroll into view; re-run when the visible set changes.
   const scope = useRef<HTMLDivElement>(null)
@@ -360,8 +325,13 @@ export function Home() {
       {browsing && (
         <>
           <Rail title={store ? `Most loved in ${store.city}` : 'Most loved right now'} note="Based on what people near you order" products={loved} />
-          <div className="container two-up">
-            <Deals />
+          <Deals
+            onPickPizzas={() => {
+              setCategory('pizza')
+              scrollToMenu()
+            }}
+          />
+          <div className="container">
             <OrderAgain />
           </div>
         </>

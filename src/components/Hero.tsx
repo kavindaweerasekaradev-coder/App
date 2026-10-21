@@ -1,9 +1,10 @@
-import { useEffect, useId, useRef, useState } from 'react'
+import { useId, useRef, useState } from 'react'
 import { PRODUCT_BY_ID, type PizzaProduct } from '../data/menu'
 import { scrollToSection } from '../lib/dom'
 import { MOTION_OK, gsap, SplitText, useGSAP } from '../lib/gsap'
 import { lkr } from '../lib/pricing'
 import { useQuickAdd } from '../state/useQuickAdd'
+import { useUntilMidnight } from '../state/useUntilMidnight'
 import { FoodPhoto } from './FoodPhoto'
 import { Icon } from './Icon'
 
@@ -20,22 +21,6 @@ const TICKER = [
   'Prices include all taxes',
   '50+ stores islandwide',
 ]
-
-/** Time left until midnight, when today's deal ends. */
-function useUntilMidnight() {
-  const calc = () => {
-    const end = new Date()
-    end.setHours(24, 0, 0, 0)
-    const s = Math.max(0, Math.floor((end.getTime() - Date.now()) / 1000))
-    return [Math.floor(s / 3600), Math.floor((s % 3600) / 60), s % 60].map((n) => String(n).padStart(2, '0')).join(':')
-  }
-  const [left, setLeft] = useState(calc)
-  useEffect(() => {
-    const t = window.setInterval(() => setLeft(calc()), 1000)
-    return () => window.clearInterval(t)
-  }, [])
-  return left
-}
 
 export function Hero() {
   const root = useRef<HTMLElement>(null)
