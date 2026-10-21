@@ -244,9 +244,6 @@ export const PRODUCTS: Product[] = [
   },
 ]
 
-/** Large hero photo: a Neapolitan-style pizza on a wooden table. */
-export const HERO_PHOTO: Photo = { id: 'vHRFraV4U00', by: 'Fabrizio Pullara' }
-
 export const PRODUCT_BY_ID: Record<string, Product> = Object.fromEntries(PRODUCTS.map((p) => [p.id, p]))
 
 export function fromPrice(p: Product): number {

@@ -54,7 +54,6 @@ All food photos are free photos from [Unsplash](https://unsplash.com), used unde
 
 | Item | Photo | Photographer |
 | --- | --- | --- |
-| Hero | [vHRFraV4U00](https://unsplash.com/photos/vHRFraV4U00) | Fabrizio Pullara |
 | Devilled Chicken | [ZXpVJ5G_TtY](https://unsplash.com/photos/ZXpVJ5G_TtY) | Omar Hakeem |
 | Pepperoni Classic | [VzMuY7TEy68](https://unsplash.com/photos/VzMuY7TEy68) | Brett Jordan |
 | Kochchi Paneer | [viyma_vheho](https://unsplash.com/photos/viyma_vheho) | VD Photography |

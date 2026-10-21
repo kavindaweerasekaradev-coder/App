@@ -3,7 +3,7 @@
 import { readFileSync } from 'node:fs'
 
 const source = readFileSync(new URL('../src/data/menu.ts', import.meta.url), 'utf8')
-const ids = [...source.matchAll(/photo:\s*\{\s*id:\s*'([\w-]+)'|HERO_PHOTO: Photo = \{ id: '([\w-]+)'/g)].map((m) => m[1] ?? m[2])
+const ids = [...source.matchAll(/photo:\s*\{\s*id:\s*'([\w-]+)'/g)].map((m) => m[1])
 
 let failed = 0
 for (const id of ids) {
