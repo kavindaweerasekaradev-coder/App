@@ -19,11 +19,17 @@ function Toolbar({
   setCategory,
   filters,
   toggleFilter,
+  query,
+  setQuery,
+  onSearch,
 }: {
   category: CategoryId | 'all'
   setCategory: (c: CategoryId | 'all') => void
   filters: Set<Filter>
   toggleFilter: (f: Filter) => void
+  query: string
+  setQuery: (q: string) => void
+  onSearch: () => void
 }) {
   const chips: { id: CategoryId | 'all'; label: string }[] = [{ id: 'all', label: 'All' }, ...CATEGORIES]
   return (
@@ -60,6 +66,20 @@ function Toolbar({
             <Icon name="flame" size={15} /> Spicy
           </button>
         </div>
+        <form
+          className="toolbar__search"
+          role="search"
+          onSubmit={(e) => {
+            e.preventDefault()
+            onSearch()
+          }}
+        >
+          <Icon name="search" size={18} />
+          <label htmlFor="menu-search" className="sr-only">
+            Search the menu
+          </label>
+          <input id="menu-search" type="search" value={query} onChange={(e) => setQuery(e.target.value)} placeholder="Search pizzas, “spicy”, “veg”…" />
+        </form>
       </div>
     </div>
   )
@@ -323,7 +343,7 @@ export function Home() {
 
   return (
     <div ref={scope}>
-      <Hero query={query} setQuery={setQuery} onSearch={scrollToMenu} />
+      <Hero />
       <Toolbar
         category={category}
         setCategory={(c) => {
@@ -332,6 +352,9 @@ export function Home() {
         }}
         filters={filters}
         toggleFilter={toggleFilter}
+        query={query}
+        setQuery={setQuery}
+        onSearch={scrollToMenu}
       />
 
       {browsing && (
