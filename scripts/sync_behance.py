@@ -180,7 +180,7 @@ def main():
         enrich(p)
         save_cover(p)
         p["title"] = clean_title(p["title"])
-        p["description"] = clean_description(p["description"])[:400]
+        p["description"] = clean_description(p["description"])
         print(f"  {p['id']}  {p['title']}  cover={'yes' if p['cover'] else 'no'}")
         time.sleep(1)
 
