@@ -76,6 +76,19 @@
     }
   });
 
+  // Case study filters
+  var filterBtns = document.querySelectorAll('.cs-filter button');
+  var csCards = document.querySelectorAll('.cs-card');
+  filterBtns.forEach(function (btn) {
+    btn.addEventListener('click', function () {
+      var f = btn.dataset.filter;
+      filterBtns.forEach(function (b) { b.setAttribute('aria-pressed', String(b === btn)); });
+      csCards.forEach(function (card) {
+        card.hidden = f !== 'all' && card.dataset.cat !== f;
+      });
+    });
+  });
+
   // Footer year
   document.getElementById('year').textContent = new Date().getFullYear();
 })();
