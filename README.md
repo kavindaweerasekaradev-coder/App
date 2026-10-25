@@ -33,6 +33,9 @@ scripts/sync_behance.py        # Behance import, run by .github/workflows/behanc
   To feature a different project, copy a card and use another entry from `assets/data/behance-projects.json`
   (its `cover`, `url`, title and description).
 
+- **Caching:** the pages load `style.css?v=…` and `main.js?v=…`. After changing either file, bump the
+  `v=` value in `index.html` and `case-studies/*.html` so browsers fetch the new version straight away.
+
 ## Behance sync
 
 The **Sync Behance projects** GitHub Action reads the public RSS feed of
