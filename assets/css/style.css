@@ -376,7 +376,13 @@ details[open] .acc-icon::after { transform: rotate(0); }
 .job li::before { content: ""; position: absolute; left: 0; top: 8px; width: 8px; height: 8px; border-radius: 50%; background: var(--lime); box-shadow: inset 0 0 0 1px rgba(14, 14, 14, .15); }
 
 .edu { margin-top: 20px; display: grid; grid-template-columns: 1fr 1fr; gap: 20px; }
-.edu__card { display: flex; gap: 18px; align-items: center; padding: 24px; border-radius: var(--radius); border: 1px solid var(--border); }
+.edu__card { display: flex; gap: 18px; align-items: center; padding: 24px; border-radius: var(--radius); border: 1px solid var(--border); transition: border-color .2s, transform .3s var(--ease); }
+.edu__card:hover { border-color: var(--ink); transform: translateY(-2px); }
+.edu__card > div { flex: 1; min-width: 0; }
+.edu__site { display: inline-block; margin-top: 8px; font-size: 13px; font-weight: 500; color: var(--text); }
+.edu__card:hover .edu__site { text-decoration: underline; text-underline-offset: 3px; }
+.edu__arrow { width: 40px; height: 40px; border-radius: 50%; display: grid; place-items: center; flex-shrink: 0; background: var(--gray); transition: background-color .25s, transform .3s var(--ease); }
+.edu__card:hover .edu__arrow { background: var(--lime); transform: rotate(45deg); }
 .edu__icon { width: 48px; height: 48px; border-radius: 50%; display: grid; place-items: center; background: var(--ink); flex-shrink: 0; }
 .edu__icon svg { width: 22px; height: 22px; fill: none; stroke: var(--lime); stroke-width: 1.8; stroke-linecap: round; stroke-linejoin: round; }
 .edu__card h3 { font-size: 18px; letter-spacing: -0.02em; line-height: 1.25; }
@@ -460,6 +466,8 @@ details[open] .acc-icon::after { transform: rotate(0); }
   .stat { min-height: 0; gap: 28px; padding: 20px; }
   .stat__value { font-size: 40px; }
   .services__visual { min-height: 500px; }
+  .edu__arrow { display: none; }
+  .edu__card { padding: 20px; }
   .float-chip { font-size: 14px; }
   .stat__icon { width: 38px; height: 38px; }
   .cs-page-cover { padding: 12px; border-radius: var(--radius-lg); }
