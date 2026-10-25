@@ -447,6 +447,18 @@ button { font: inherit; color: inherit; background: none; border: 0; cursor: poi
   background: var(--ink); color: #fff; font-size: 12px; font-weight: 600; letter-spacing: .06em; text-transform: uppercase;
 }
 
+/* Lead (full-width) case study */
+.cs-card--hero { grid-column: 1 / -1; }
+.cs-card--hero .cs-card__link { flex-direction: row; }
+.cs-card--hero .cs-cover { flex: 1.5; height: clamp(320px, 32vw, 420px); }
+.cs-card__body--hero { flex: 1; flex-direction: column; align-items: flex-start; justify-content: space-between; gap: 28px; padding: clamp(20px, 3vw, 40px); }
+.cs-card__body--hero h3 { margin-top: 10px; font-size: clamp(28px, 3vw, 40px); letter-spacing: -0.04em; line-height: 1.05; }
+.cs-card__eyebrow { font-size: 12px !important; font-weight: 600; letter-spacing: .1em; text-transform: uppercase; color: var(--text-subtle) !important; }
+.cs-card__desc { margin: 14px 0 18px !important; font-size: 15px !important; max-width: 420px; }
+.cs-card__cta { display: inline-flex; align-items: center; gap: 12px; height: 52px; padding: 0 6px 0 22px; border-radius: 999px; background: var(--ink); color: #fff; font-size: 13px; font-weight: 500; letter-spacing: .06em; text-transform: uppercase; }
+.cs-card__cta .cs-card__arrow { background: var(--lime); }
+.cs-cover__badge--lime { background: var(--lime); color: var(--ink); }
+
 /* Device mocks inside covers */
 .cs-phone, .cs-browser { background: #fff; transform: translateY(14%); transition: transform .5s var(--ease); box-shadow: 0 24px 50px rgba(14, 14, 14, .22); }
 .cs-card:hover .cs-phone, .cs-card:hover .cs-browser { transform: translateY(8%); }
@@ -481,6 +493,27 @@ button { font: inherit; color: inherit; background: none; border: 0; cursor: poi
 .cs-browser .trio b { height: 46px; border-radius: 8px; }
 .cs-browser b.tile--wide { height: 70px; background: linear-gradient(120deg, var(--c1), var(--accent)); }
 .cs-browser .body--landing .main { padding: 14px 16px; }
+
+/* Finance dashboard cover (lead case study) */
+.cs-browser--finance { width: 86%; height: 82%; background: #12151d; }
+.cs-browser--finance .bar { background: #1b1f2a; }
+.cs-browser--finance .bar i { background: #343a4a; }
+.cs-browser--finance .side { background: #161a23; border-right-color: #232838; }
+.cs-browser--finance .side b { background: #2a3040; }
+.cs-browser--finance .side b:first-child { background: var(--lime); }
+.cs-browser--finance .main { gap: 12px; }
+.fin-top { display: flex; gap: 10px; }
+.fin-balance { flex: 1; padding: 12px 14px; border-radius: 10px; background: #1b2030; display: grid; gap: 2px; }
+.fin-balance span { font-size: 10px; color: #8b93a7; }
+.fin-balance strong { font-size: clamp(16px, 1.8vw, 24px); font-weight: 600; color: #fff; letter-spacing: -0.03em; }
+.fin-balance em { font-style: normal; font-size: 10px; font-weight: 600; color: var(--lime); }
+.fin-donut { width: clamp(60px, 6vw, 84px); aspect-ratio: 1; border-radius: 50%; flex-shrink: 0; align-self: center;
+  background: radial-gradient(circle, #12151d 52%, transparent 53%), conic-gradient(var(--lime) 0 42%, #5c8dff 0 70%, #ff7a45 0 86%, #2a3040 0); }
+.fin-bars { height: clamp(60px, 7vw, 100px); display: flex; align-items: flex-end; gap: 6%; padding: 0 4px; }
+.fin-bars b { flex: 1; height: var(--h) !important; border-radius: 4px 4px 0 0 !important; background: #2a3040 !important; }
+.fin-bars b:nth-child(6) { background: var(--lime) !important; }
+.fin-rows { display: grid; gap: 6px; }
+.cs-browser--finance .fin-rows b { background: #232838; }
 
 /* ---------- Services ---------- */
 .services { display: grid; grid-template-columns: 1fr 1.15fr; gap: 20px; }
@@ -625,6 +658,8 @@ details[open] .acc-icon::after { transform: rotate(0); }
   .work-head { flex-direction: column; align-items: flex-start; }
   .cs-head { flex-direction: column; align-items: flex-start; }
   .cs-head__side { align-items: flex-start; }
+  .cs-card--hero .cs-card__link { flex-direction: column; }
+  .cs-card--hero .cs-cover { flex: none; }
   .services { grid-template-columns: 1fr; }
   .services__visual { min-height: 420px; }
   .jobs, .edu { grid-template-columns: 1fr; }
@@ -644,6 +679,9 @@ details[open] .acc-icon::after { transform: rotate(0); }
   .bento, .projects, .process { grid-template-columns: 1fr; }
   .cs-grid { grid-template-columns: 1fr; }
   .cs-card--featured { grid-column: auto; }
+  .cs-card--hero .cs-cover { height: 300px; }
+  .cs-browser--finance { width: 94%; }
+  .cs-card__cta { width: 100%; justify-content: space-between; }
   .cs-devices .cs-phone--back { display: none; }
   .cs-filter { max-width: 100%; overflow-x: auto; scrollbar-width: none; }
   .cs-cover { height: 260px; }
