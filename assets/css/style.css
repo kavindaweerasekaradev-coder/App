@@ -301,6 +301,23 @@ button { font: inherit; color: inherit; background: none; border: 0; cursor: poi
 .cs-more { display: flex; justify-content: space-between; align-items: flex-end; gap: 24px; flex-wrap: wrap; padding: clamp(28px, 4vw, 48px); border-radius: var(--radius-lg); background: var(--gray); }
 .cs-more__links { display: flex; flex-wrap: wrap; gap: 10px; }
 
+/* ---------- Project detail pages ---------- */
+.cs-back { gap: 8px; }
+.cs-back svg { width: 16px; height: 16px; transition: transform .25s var(--ease); }
+.cs-back:hover svg { transform: translateX(-3px); }
+.pj-tags { display: flex; flex-wrap: wrap; gap: 8px; }
+.pj-tags li { padding: 6px 14px; border-radius: 999px; background: var(--gray); font-size: 13px; font-weight: 500; }
+.pj-overview { display: grid; gap: 18px; }
+.pj-overview > p:not(.cs-overview__text) { max-width: 680px; font-size: clamp(16px, 1.4vw, 18px); color: var(--text-muted); }
+.pj-cta {
+  position: relative; overflow: hidden; display: flex; justify-content: space-between; align-items: flex-end; gap: 32px; flex-wrap: wrap;
+  padding: clamp(32px, 5vw, 64px); border-radius: var(--radius-xl); color: #fff;
+  background: radial-gradient(60% 80% at 100% 100%, rgba(212, 245, 92, .18), transparent 70%), radial-gradient(50% 70% at 0% 0%, rgba(47, 107, 255, .35), transparent 70%), #0b0c10;
+}
+.pj-cta__title { margin-top: 16px; font-size: clamp(32px, 4.4vw, 56px); letter-spacing: -0.045em; }
+.pj-cta__title .soft { color: rgba(255, 255, 255, .5); }
+.pj-cta__text { margin-top: 14px; max-width: 460px; color: rgba(255, 255, 255, .72); }
+
 /* ---------- Services ---------- */
 .services { display: grid; grid-template-columns: 1fr 1.15fr; gap: 20px; }
 .services__visual {
@@ -467,6 +484,7 @@ details[open] .acc-icon::after { transform: rotate(0); }
   .stat__value { font-size: 40px; }
   .services__visual { min-height: 500px; }
   .edu__arrow { display: none; }
+  .pj-cta .btn { width: 100%; justify-content: space-between; }
   .edu__card { padding: 20px; }
   .float-chip { font-size: 14px; }
   .stat__icon { width: 38px; height: 38px; }
