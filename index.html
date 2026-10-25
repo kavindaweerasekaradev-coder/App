@@ -33,7 +33,6 @@
 
       <nav class="nav__links" id="nav-links" aria-label="Primary">
         <a href="#work">Work</a>
-        <a href="#case-studies">Case studies</a>
         <a href="#about">About</a>
         <a href="#services">Services</a>
         <a href="#experience">Experience</a>
@@ -196,333 +195,86 @@
       </div>
     </section>
 
-    <!-- ===================== WORK ===================== -->
+    <!-- ===================== RECENT WORK ===================== -->
     <!--
-      TIP: Replace the mock inside each .p-card__media with a real screenshot:
-      <img class="p-card__img" src="assets/img/projects/my-project.jpg" alt="...">
-      and point the "View case" link at the Behance / Figma case study.
+      Covers come from Behance via the "Sync Behance projects" GitHub Action
+      (assets/img/behance/<project id>.*). To feature a different project, copy a
+      card and point it at another entry in assets/data/behance-projects.json.
     -->
     <section class="section section--flush-top" id="work">
       <div class="container">
-        <div class="work-head">
-          <div class="reveal">
-            <a class="pill" href="https://www.behance.net/kavindalakmal" target="_blank" rel="noopener">See more on Behance</a>
-            <h2 class="work-head__title">Selected products &amp;<br /><strong>case studies</strong></h2>
+        <div class="rw-head reveal">
+          <div>
+            <h2 class="rw-title">Recent work</h2>
+            <p class="rw-lead">Products and case studies I've designed recently, from research to high-fidelity UI.</p>
           </div>
-          <div class="work-head__side reveal">
-            <p>Highlights from my work across product companies and agencies. Full case studies live on Behance and in my Figma portfolio.</p>
-            <a class="pill" href="https://www.figma.com/proto/RMqa2FraKGlYhtH3ISDRjc/Portfolio--Kavinda-Weerasekara-?node-id=1-8&amp;viewport=243%2C384%2C0.69&amp;t=yT2epmaLwfGMbdYS-1&amp;scaling=scale-down&amp;content-scaling=fixed&amp;page-id=0%3A1" target="_blank" rel="noopener">Figma portfolio</a>
-          </div>
+          <a class="pill" href="https://www.behance.net/kavindalakmal" target="_blank" rel="noopener">View all on Behance ↗</a>
         </div>
 
-        <div class="projects">
-          <!-- Project 1: Personal Finance Dashboard (opens the case study page) -->
-          <article class="p-card p-card--wide reveal">
-            <div class="p-card__media p-card__media--finance">
-              <a class="p-card__stretch" href="case-studies/personal-finance-dashboard.html" aria-label="Open the Personal Finance Dashboard case study"></a>
-              <span class="p-card__icon" aria-hidden="true"><svg viewBox="0 0 24 24"><path d="M4 20V10M10 20V4M16 20v-7M22 20H2"/></svg></span>
-              <a class="p-card__cta" href="case-studies/personal-finance-dashboard.html">View case study ↗</a>
-              <div class="cs-browser cs-browser--finance" aria-hidden="true">
-                <div class="bar"><i></i><i></i><i></i></div>
-                <div class="body">
-                  <div class="side"><b></b><b></b><b></b><b></b></div>
-                  <div class="main">
-                    <div class="fin-top">
-                      <div class="fin-balance"><span>Total balance</span><strong>$24,560</strong><em>+8.2%</em></div>
-                      <div class="fin-donut"></div>
-                    </div>
-                    <div class="fin-bars"><b style="--h: 45%"></b><b style="--h: 70%"></b><b style="--h: 55%"></b><b style="--h: 85%"></b><b style="--h: 60%"></b><b style="--h: 95%"></b><b style="--h: 72%"></b></div>
-                    <div class="fin-rows"><b></b><b class="w70"></b></div>
-                  </div>
-                </div>
+        <div class="rw-grid">
+          <article class="rw-card reveal">
+            <a class="rw-card__link" href="case-studies/personal-finance-dashboard.html">
+              <div class="rw-card__media">
+                <img src="assets/img/behance/257350815.png" alt="Personal Finance Dashboard cover" width="808" height="632" loading="lazy" />
+                <ul class="rw-tags"><li>Dashboard</li><li class="rw-tag--accent">Case study</li><li class="rw-tag--new">New</li></ul>
               </div>
-              <p class="p-card__chip">Personal Finance<br />Dashboard</p>
-            </div>
-            <div class="p-card__body">
-              <div class="p-card__meta"><span>UI/UX case study</span><span>Dashboard</span></div>
-              <p class="p-card__desc">A UI/UX case study for a dashboard that helps people manage their personal finances. Open the case study to see the project.</p>
-              <ul class="tags"><li>Dashboard</li><li>Personal finance</li><li>UI/UX</li><li>Case study</li></ul>
-            </div>
-          </article>
-
-          <!-- Project 2 -->
-          <article class="p-card reveal">
-            <div class="p-card__media p-card__media--yellow">
-              <span class="p-card__icon" aria-hidden="true"><svg viewBox="0 0 24 24"><rect x="3" y="3" width="7" height="7" rx="1.5"/><rect x="14" y="3" width="7" height="7" rx="1.5"/><rect x="3" y="14" width="7" height="7" rx="1.5"/><circle cx="17.5" cy="17.5" r="3.5"/></svg></span>
-              <a class="p-card__cta" href="https://www.behance.net/kavindalakmal" target="_blank" rel="noopener">View case ↗</a>
-              <div class="mock-ds">
-                <div class="mock-ds__row">
-                  <span class="sw sw--1"></span><span class="sw sw--2"></span><span class="sw sw--3"></span><span class="sw sw--4"></span>
-                </div>
-                <div class="mock-ds__row">
-                  <span class="mpill mpill--solid">Button</span><span class="mpill">Secondary</span>
-                </div>
-                <div class="mock-ds__row">
-                  <span class="toggle"></span><span class="check"></span><span class="input"></span>
-                </div>
-                <div class="mock-ds__type"><span>Aa</span><span>Aa</span><span>Aa</span></div>
-              </div>
-              <p class="p-card__chip">Dashboard design<br />system, 100+ components</p>
-            </div>
-            <div class="p-card__body">
-              <div class="p-card__meta"><span>Axis Tech Lanka</span><span>Design System</span></div>
-              <p class="p-card__desc">A scalable Figma system of tokens, reusable components and UI patterns that kept every screen consistent and sped up handoff.</p>
-              <ul class="tags"><li>Design Tokens</li><li>Components</li><li>Figma</li></ul>
-            </div>
-          </article>
-
-          <!-- Project 3 -->
-          <article class="p-card reveal">
-            <div class="p-card__media p-card__media--ink">
-              <span class="p-card__icon" aria-hidden="true"><svg viewBox="0 0 24 24"><path d="M12 3l1.9 5.1L19 10l-5.1 1.9L12 17l-1.9-5.1L5 10l5.1-1.9z"/><path d="M19 15l.8 2.2L22 18l-2.2.8L19 21l-.8-2.2L16 18l2.2-.8z"/></svg></span>
-              <a class="p-card__cta" href="https://dribbble.com/Kavindalakmal" target="_blank" rel="noopener">View shots ↗</a>
-              <div class="mock-ai">
-                <div class="mock-ai__msg mock-ai__msg--user">Summarise this week's tickets</div>
-                <div class="mock-ai__msg"><span class="spark">✦</span><b></b><b class="w80"></b><b class="w60"></b></div>
-                <div class="mock-ai__input"><span></span><i>↑</i></div>
-              </div>
-              <p class="p-card__chip">AI-powered workflows<br />for transformation</p>
-            </div>
-            <div class="p-card__body">
-              <div class="p-card__meta"><span>Axis Tech Lanka</span><span>AI / Workflows</span></div>
-              <p class="p-card__desc">Introduced AI-powered workflows into the product and the design process, pairing Claude AI with Figma to explore ideas faster.</p>
-              <ul class="tags"><li>AI UX</li><li>Workflow Design</li><li>Prototyping</li></ul>
-            </div>
-          </article>
-
-          <!-- Project 4 -->
-          <article class="p-card p-card--wide reveal">
-            <div class="p-card__media p-card__media--orange">
-              <span class="p-card__icon" aria-hidden="true"><svg viewBox="0 0 24 24"><circle cx="6" cy="6" r="3"/><circle cx="18" cy="18" r="3"/><path d="M9 6h5a4 4 0 0 1 4 4v5"/></svg></span>
-              <a class="p-card__cta" href="https://www.figma.com/proto/RMqa2FraKGlYhtH3ISDRjc/Portfolio--Kavinda-Weerasekara-?node-id=1-8&amp;viewport=243%2C384%2C0.69&amp;t=yT2epmaLwfGMbdYS-1&amp;scaling=scale-down&amp;content-scaling=fixed&amp;page-id=0%3A1" target="_blank" rel="noopener">View case ↗</a>
-              <div class="mock-stack">
-                <div class="mock-flow">
-                  <div class="node node--start">Persona</div><span class="edge"></span>
-                  <div class="node">User flow</div><span class="edge"></span>
-                  <div class="node">Wireframe</div><span class="edge"></span>
-                  <div class="node node--end">Hi-fi UI</div>
-                </div>
-                <div class="mock-wire">
-                  <b class="wf-hero"></b>
-                  <div class="cols"><b></b><b></b><b></b></div>
-                  <b class="line"></b><b class="line w60"></b>
-                </div>
-              </div>
-              <p class="p-card__chip">Client websites &amp; apps,<br />research to hi-fi</p>
-            </div>
-            <div class="p-card__body">
-              <div class="p-card__meta"><span>Nimi Tech · Empite Solutions</span><span>2021 – 2025</span></div>
-              <p class="p-card__desc">Turned client requirements into user-centred websites and apps through personas, user flows, information architecture, WCAG-aware wireframes and polished UI, validated with usability testing.</p>
-              <ul class="tags"><li>UX Research</li><li>IA</li><li>Usability Testing</li><li>Accessibility</li></ul>
-            </div>
-          </article>
-        </div>
-
-        <div class="progress-row reveal">
-          <div class="progress-row__line"><span></span></div>
-          <a class="pill" href="https://dribbble.com/Kavindalakmal" target="_blank" rel="noopener">More on Dribbble</a>
-          <a class="icon-btn" href="https://www.behance.net/kavindalakmal" target="_blank" rel="noopener" aria-label="More work on Behance">
-            <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6"/></svg>
-          </a>
-        </div>
-      </div>
-    </section>
-
-    <!-- ===================== CASE STUDIES ===================== -->
-    <!--
-      Projects from https://www.behance.net/kavindalakmal
-      To use a real cover, replace the contents of .cs-cover with
-      <img class="cs-cover__img" src="assets/img/case-studies/flowsync.jpg" alt="FlowSync cover">
-      and point the card's href at the project's behance.net/gallery/... URL.
-    -->
-    <section class="section section--flush-top" id="case-studies">
-      <div class="container">
-        <div class="cs-head">
-          <div class="reveal">
-            <p class="label">Case studies</p>
-            <h2 class="cs-head__title">Projects from<br /><strong>my Behance</strong></h2>
-          </div>
-          <div class="cs-head__side reveal">
-            <div class="cs-filter" role="group" aria-label="Filter case studies">
-              <button type="button" aria-pressed="true" data-filter="all">All</button>
-              <button type="button" aria-pressed="false" data-filter="mobile">Mobile apps</button>
-              <button type="button" aria-pressed="false" data-filter="web">Web &amp; dashboards</button>
-            </div>
-            <a class="pill" href="https://www.behance.net/kavindalakmal" target="_blank" rel="noopener">View Behance profile ↗</a>
-          </div>
-        </div>
-
-        <div class="cs-grid">
-          <!-- Personal Finance Dashboard (lead case study) -->
-          <article class="cs-card cs-card--hero reveal" data-cat="web">
-            <a class="cs-card__link" href="case-studies/personal-finance-dashboard.html">
-              <div class="cs-cover cs-cover--dark" style="--c1: #26324a; --c2: #0b0d12; --accent: #d4f55c;">
-                <span class="cs-cover__icon" aria-hidden="true"><svg viewBox="0 0 24 24"><path d="M4 20V10M10 20V4M16 20v-7M22 20H2"/></svg></span>
-                <span class="cs-cover__badge cs-cover__badge--lime">Featured case study</span>
-                <div class="cs-browser cs-browser--finance">
-                  <div class="bar"><i></i><i></i><i></i></div>
-                  <div class="body">
-                    <div class="side"><b></b><b></b><b></b><b></b></div>
-                    <div class="main">
-                      <div class="fin-top">
-                        <div class="fin-balance"><span>Total balance</span><strong>$24,560</strong><em>+8.2%</em></div>
-                        <div class="fin-donut" aria-hidden="true"></div>
-                      </div>
-                      <div class="fin-bars" aria-hidden="true"><b style="--h: 45%"></b><b style="--h: 70%"></b><b style="--h: 55%"></b><b style="--h: 85%"></b><b style="--h: 60%"></b><b style="--h: 95%"></b><b style="--h: 72%"></b></div>
-                      <div class="fin-rows"><b></b><b class="w70"></b></div>
-                    </div>
-                  </div>
-                </div>
-              </div>
-              <div class="cs-card__body cs-card__body--hero">
-                <div>
-                  <p class="cs-card__eyebrow">Dashboard · UI/UX case study</p>
-                  <h3>Personal Finance Dashboard</h3>
-                  <p class="cs-card__desc">A UI/UX case study for a dashboard that helps people manage their personal finances.</p>
-                  <ul class="tags"><li>Dashboard</li><li>Personal finance</li><li>UI/UX</li></ul>
-                </div>
-                <span class="cs-card__cta">Read case study <span class="cs-card__arrow" aria-hidden="true"><svg viewBox="0 0 24 24"><path d="M7 17 17 7M8 7h9v9"/></svg></span></span>
-              </div>
+              <h3 class="rw-card__title">Personal Finance Dashboard</h3>
+              <p class="rw-card__desc">A calm personal-finance dashboard built around one question: “Am I okay this month?”</p>
             </a>
           </article>
 
-          <!-- Kids Store App -->
-          <article class="cs-card cs-card--featured reveal" data-cat="mobile">
-            <a class="cs-card__link" href="https://www.behance.net/kavindalakmal" target="_blank" rel="noopener">
-              <div class="cs-cover" style="--c1: #ffe07a; --c2: #ff9f43; --accent: #ff7a45;">
-                <span class="cs-cover__icon" aria-hidden="true"><svg viewBox="0 0 24 24"><path d="M6 7h12l-1 13H7z"/><path d="M9 7a3 3 0 0 1 6 0"/></svg></span>
-                <span class="cs-cover__badge">UX case study</span>
-                <div class="cs-devices">
-                  <div class="cs-phone"><i></i><b class="tile"></b><b class="w70"></b><div class="duo"><b></b><b></b></div><b></b></div>
-                  <div class="cs-phone cs-phone--back"><i></i><div class="duo"><b class="sq"></b><b class="sq"></b></div><b class="w70"></b><b class="tile tile--sm"></b></div>
-                </div>
+          <article class="rw-card reveal">
+            <a class="rw-card__link" href="https://www.behance.net/gallery/255103139/Wanderly-Making-Travel-Planning-Simple" target="_blank" rel="noopener">
+              <div class="rw-card__media">
+                <img src="assets/img/behance/255103139.png" alt="Wanderly cover" width="808" height="632" loading="lazy" />
+                <ul class="rw-tags"><li>Travel platform</li><li class="rw-tag--new">New</li></ul>
               </div>
-              <div class="cs-card__body">
-                <div>
-                  <h3>Kids Store App</h3>
-                  <p>Mobile app · UX case study</p>
-                </div>
-                <span class="cs-card__arrow" aria-hidden="true"><svg viewBox="0 0 24 24"><path d="M7 17 17 7M8 7h9v9"/></svg></span>
-              </div>
+              <h3 class="rw-card__title">Wanderly</h3>
+              <p class="rw-card__desc">A travel discovery and planning platform that makes trip planning simple and inspiring.</p>
             </a>
           </article>
 
-          <!-- FlowSync -->
-          <article class="cs-card reveal" data-cat="web">
-            <a class="cs-card__link" href="https://www.behance.net/kavindalakmal" target="_blank" rel="noopener">
-              <div class="cs-cover" style="--c1: #e9fbb0; --c2: #c4ec4a; --accent: #0e0e0e;">
-                <span class="cs-cover__icon" aria-hidden="true"><svg viewBox="0 0 24 24"><path d="M6 3h9l3 3v15H6z"/><path d="M9 10h6M9 14h6M9 18h3"/></svg></span>
-                <div class="cs-browser"><div class="bar"><i></i><i></i><i></i></div><div class="body"><div class="side"><b></b><b></b><b></b></div><div class="main"><div class="duo"><b class="tile"></b><b></b></div><b class="w70"></b><b></b></div></div></div>
+          <article class="rw-card reveal">
+            <a class="rw-card__link" href="https://www.behance.net/gallery/251811817/Lumora-Gamified-Trivia-Learning-App-UX-Case-Study" target="_blank" rel="noopener">
+              <div class="rw-card__media">
+                <img src="assets/img/behance/251811817.png" alt="Lumora cover" width="808" height="632" loading="lazy" />
+                <ul class="rw-tags"><li>Mobile app</li><li class="rw-tag--accent">Case study</li></ul>
               </div>
-              <div class="cs-card__body">
-                <div>
-                  <h3>FlowSync</h3>
-                  <p>Payment &amp; invoicing platform</p>
-                </div>
-                <span class="cs-card__arrow" aria-hidden="true"><svg viewBox="0 0 24 24"><path d="M7 17 17 7M8 7h9v9"/></svg></span>
-              </div>
+              <h3 class="rw-card__title">Lumora</h3>
+              <p class="rw-card__desc">A gamified, mobile-first trivia app that turns learning into a rewarding experience.</p>
             </a>
           </article>
 
-          <!-- CoreHR -->
-          <article class="cs-card reveal" data-cat="web">
-            <a class="cs-card__link" href="https://www.behance.net/kavindalakmal" target="_blank" rel="noopener">
-              <div class="cs-cover" style="--c1: #cfe1ff; --c2: #5c8dff; --accent: #2f6bff;">
-                <span class="cs-cover__icon" aria-hidden="true"><svg viewBox="0 0 24 24"><circle cx="9" cy="8" r="3.5"/><path d="M2.5 20a6.5 6.5 0 0 1 13 0"/><path d="M16 4.5a3.5 3.5 0 0 1 0 7M18 14a6.5 6.5 0 0 1 3.5 6"/></svg></span>
-                <div class="cs-browser"><div class="bar"><i></i><i></i><i></i></div><div class="body"><div class="side"><b></b><b></b><b></b></div><div class="main"><div class="trio"><b class="tile"></b><b></b><b></b></div><b></b><b class="w70"></b></div></div></div>
+          <article class="rw-card reveal">
+            <a class="rw-card__link" href="https://www.behance.net/gallery/226135551/FlowSync-Payment-Invoicing-Platform-%28UI-UX-Design%29" target="_blank" rel="noopener">
+              <div class="rw-card__media">
+                <img src="assets/img/behance/226135551.png" alt="FlowSync cover" width="808" height="632" loading="lazy" />
+                <ul class="rw-tags"><li>Fintech</li><li>Web platform</li></ul>
               </div>
-              <div class="cs-card__body">
-                <div>
-                  <h3>CoreHR</h3>
-                  <p>HR management system</p>
-                </div>
-                <span class="cs-card__arrow" aria-hidden="true"><svg viewBox="0 0 24 24"><path d="M7 17 17 7M8 7h9v9"/></svg></span>
-              </div>
+              <h3 class="rw-card__title">FlowSync</h3>
+              <p class="rw-card__desc">An ACH payment and invoicing platform that streamlines financial operations for SMBs.</p>
             </a>
           </article>
 
-          <!-- MedConnect -->
-          <article class="cs-card reveal" data-cat="web">
-            <a class="cs-card__link" href="https://www.behance.net/kavindalakmal" target="_blank" rel="noopener">
-              <div class="cs-cover" style="--c1: #d3f5e6; --c2: #5ccfa0; --accent: #16a36b;">
-                <span class="cs-cover__icon" aria-hidden="true"><svg viewBox="0 0 24 24"><path d="M3 12h4l2-5 4 10 2-5h6"/></svg></span>
-                <div class="cs-browser"><div class="bar"><i></i><i></i><i></i></div><div class="body"><div class="side"><b></b><b></b><b></b></div><div class="main"><b class="tile tile--wide"></b><div class="duo"><b></b><b></b></div><b class="w70"></b></div></div></div>
+          <article class="rw-card reveal">
+            <a class="rw-card__link" href="https://www.behance.net/gallery/212043297/TravelSphere-Branding-Mobile-App" target="_blank" rel="noopener">
+              <div class="rw-card__media">
+                <img src="assets/img/behance/212043297.png" alt="TravelSphere cover" width="808" height="632" loading="lazy" />
+                <ul class="rw-tags"><li>Branding</li><li>Mobile app</li></ul>
               </div>
-              <div class="cs-card__body">
-                <div>
-                  <h3>MedConnect</h3>
-                  <p>Healthcare management portal</p>
-                </div>
-                <span class="cs-card__arrow" aria-hidden="true"><svg viewBox="0 0 24 24"><path d="M7 17 17 7M8 7h9v9"/></svg></span>
-              </div>
+              <h3 class="rw-card__title">TravelSphere</h3>
+              <p class="rw-card__desc">A travel app for discovering, planning and booking trips, with its own brand identity.</p>
             </a>
           </article>
 
-          <!-- TravelSphere -->
-          <article class="cs-card reveal" data-cat="mobile">
-            <a class="cs-card__link" href="https://www.behance.net/kavindalakmal" target="_blank" rel="noopener">
-              <div class="cs-cover" style="--c1: #c6ecff; --c2: #3aa7e8; --accent: #0b7fc4;">
-                <span class="cs-cover__icon" aria-hidden="true"><svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="9"/><path d="M3 12h18M12 3c2.5 2.6 3.8 5.6 3.8 9s-1.3 6.4-3.8 9c-2.5-2.6-3.8-5.6-3.8-9S9.5 5.6 12 3z"/></svg></span>
-                <div class="cs-phone"><i></i><b class="tile tile--tall"></b><b class="w70"></b><b></b></div>
+          <article class="rw-card reveal">
+            <a class="rw-card__link" href="https://www.behance.net/gallery/208563083/CoreHR-HR-Management-System" target="_blank" rel="noopener">
+              <div class="rw-card__media">
+                <img src="assets/img/behance/208563083.png" alt="CoreHR cover" width="808" height="632" loading="lazy" />
+                <ul class="rw-tags"><li>HR system</li><li>Web app</li></ul>
               </div>
-              <div class="cs-card__body">
-                <div>
-                  <h3>TravelSphere</h3>
-                  <p>Branding &amp; mobile app</p>
-                </div>
-                <span class="cs-card__arrow" aria-hidden="true"><svg viewBox="0 0 24 24"><path d="M7 17 17 7M8 7h9v9"/></svg></span>
-              </div>
-            </a>
-          </article>
-
-          <!-- Unity -->
-          <article class="cs-card reveal" data-cat="mobile">
-            <a class="cs-card__link" href="https://www.behance.net/kavindalakmal" target="_blank" rel="noopener">
-              <div class="cs-cover cs-cover--dark" style="--c1: #2a3142; --c2: #0e0f14; --accent: #d4f55c;">
-                <span class="cs-cover__icon" aria-hidden="true"><svg viewBox="0 0 24 24"><path d="M3 10 12 4l9 6M5 10v8M9.5 10v8M14.5 10v8M19 10v8M3 20h18"/></svg></span>
-                <div class="cs-phone"><i></i><b class="tile"></b><div class="duo"><b></b><b></b></div><b class="w70"></b><b></b></div>
-              </div>
-              <div class="cs-card__body">
-                <div>
-                  <h3>Unity</h3>
-                  <p>Banking app</p>
-                </div>
-                <span class="cs-card__arrow" aria-hidden="true"><svg viewBox="0 0 24 24"><path d="M7 17 17 7M8 7h9v9"/></svg></span>
-              </div>
-            </a>
-          </article>
-
-          <!-- E-Wallet App -->
-          <article class="cs-card reveal" data-cat="mobile">
-            <a class="cs-card__link" href="https://www.behance.net/kavindalakmal" target="_blank" rel="noopener">
-              <div class="cs-cover" style="--c1: #e4dbff; --c2: #8e72ff; --accent: #6a4cf5;">
-                <span class="cs-cover__icon" aria-hidden="true"><svg viewBox="0 0 24 24"><path d="M3 7a2 2 0 0 1 2-2h13v4"/><rect x="3" y="7" width="18" height="13" rx="2"/><circle cx="16.5" cy="13.5" r="1.5"/></svg></span>
-                <div class="cs-phone"><i></i><b class="tile tile--card"></b><b class="w70"></b><b></b><b class="w70"></b></div>
-              </div>
-              <div class="cs-card__body">
-                <div>
-                  <h3>E-Wallet App</h3>
-                  <p>Mobile wallet app</p>
-                </div>
-                <span class="cs-card__arrow" aria-hidden="true"><svg viewBox="0 0 24 24"><path d="M7 17 17 7M8 7h9v9"/></svg></span>
-              </div>
-            </a>
-          </article>
-
-          <!-- Car Rental Landing Page -->
-          <article class="cs-card reveal" data-cat="web">
-            <a class="cs-card__link" href="https://www.behance.net/gallery/148870837/Car-Rental-Landing-Page" target="_blank" rel="noopener">
-              <div class="cs-cover" style="--c1: #ffd2b3; --c2: #ff7a45; --accent: #0e0e0e;">
-                <span class="cs-cover__icon" aria-hidden="true"><svg viewBox="0 0 24 24"><path d="M5 16V11l2-5h10l2 5v5M3 16h18v3H3z"/><circle cx="7.5" cy="16.5" r="1.5"/><circle cx="16.5" cy="16.5" r="1.5"/></svg></span>
-                <div class="cs-browser"><div class="bar"><i></i><i></i><i></i></div><div class="body body--landing"><div class="main"><b class="w70"></b><b class="tile tile--wide"></b><div class="trio"><b></b><b></b><b></b></div></div></div></div>
-              </div>
-              <div class="cs-card__body">
-                <div>
-                  <h3>Car Rental</h3>
-                  <p>Landing page</p>
-                </div>
-                <span class="cs-card__arrow" aria-hidden="true"><svg viewBox="0 0 24 24"><path d="M7 17 17 7M8 7h9v9"/></svg></span>
-              </div>
+              <h3 class="rw-card__title">CoreHR</h3>
+              <p class="rw-card__desc">An HR management system for scheduling, tasks, performance tracking and employee engagement.</p>
             </a>
           </article>
         </div>

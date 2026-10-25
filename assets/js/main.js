@@ -19,17 +19,10 @@
     if (e.key === 'Escape') setMenu(false);
   });
 
-  // Nav border on scroll + work progress line
+  // Nav border on scroll
   var nav = document.querySelector('.nav');
-  var work = document.getElementById('work');
-  var progress = document.querySelector('.progress-row__line span');
   function onScroll() {
     nav.classList.toggle('is-scrolled', window.scrollY > 8);
-    if (progress) {
-      var r = work.getBoundingClientRect();
-      var done = (window.innerHeight - r.top) / (r.height + window.innerHeight);
-      progress.style.width = Math.min(100, Math.max(8, done * 100)) + '%';
-    }
   }
   window.addEventListener('scroll', onScroll, { passive: true });
   onScroll();
@@ -74,19 +67,6 @@
     } else {
       done(email);
     }
-  });
-
-  // Case study filters
-  var filterBtns = document.querySelectorAll('.cs-filter button');
-  var csCards = document.querySelectorAll('.cs-card');
-  filterBtns.forEach(function (btn) {
-    btn.addEventListener('click', function () {
-      var f = btn.dataset.filter;
-      filterBtns.forEach(function (b) { b.setAttribute('aria-pressed', String(b === btn)); });
-      csCards.forEach(function (card) {
-        card.hidden = f !== 'all' && card.dataset.cat !== f;
-      });
-    });
   });
 
   // Footer year
