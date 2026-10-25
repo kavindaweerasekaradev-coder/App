@@ -49,6 +49,24 @@
       });
     }, { rootMargin: '-45% 0px -50% 0px' });
     document.querySelectorAll('main section[id]').forEach(function (s) { spy.observe(s); });
+
+    // Count stat numbers up when they come into view
+    var reduceMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+    var counter = new IntersectionObserver(function (entries) {
+      entries.forEach(function (entry) {
+        if (!entry.isIntersecting) return;
+        counter.unobserve(entry.target);
+        var el = entry.target, end = +el.dataset.count, start = null;
+        function step(t) {
+          if (start === null) start = t;
+          var k = Math.min(1, (t - start) / 1200);
+          el.textContent = Math.round(end * (1 - Math.pow(1 - k, 3)));
+          if (k < 1) requestAnimationFrame(step);
+        }
+        requestAnimationFrame(step);
+      });
+    }, { threshold: 0.6 });
+    if (!reduceMotion) document.querySelectorAll('[data-count]').forEach(function (el) { counter.observe(el); });
   } else {
     document.querySelectorAll('.reveal').forEach(function (el) { el.classList.add('is-visible'); });
   }
