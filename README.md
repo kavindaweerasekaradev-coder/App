@@ -15,25 +15,30 @@ python3 -m http.server 8000
 ## Structure
 
 ```
-index.html                     # All page content and sections
+index.html                     # Home page: hero, about, recent work, services, experience, contact
+case-studies/                  # One page per on-site case study
 assets/css/style.css           # Styles; design tokens (colors, radius, fonts) at the top
-assets/js/main.js              # Mobile menu, scroll reveal, progress line, copy email
+assets/js/main.js              # Mobile menu, scroll reveal, copy email
 assets/img/kavinda.jpg         # Profile photo
-assets/img/favicon.svg
+assets/img/behance/            # Project covers imported from Behance
+assets/data/behance-projects.json        # Projects imported from Behance
 assets/docs/Kavinda-Weerasekara-CV.pdf   # Linked from the "Download CV" buttons
+scripts/sync_behance.py        # Behance import, run by .github/workflows/behance-sync.yml
 ```
 
 ## Customising
 
 - **Colors and fonts:** edit the variables in `:root` at the top of `style.css` (lime accent, sky-blue gradients, Inter).
-- **Projects:** each project in the `#work` section has a CSS mock preview. To use a real screenshot, swap the
-  inner content of `.project__media` for `<img src="assets/img/projects/your-image.jpg" alt="...">`
-  and point the "View case study" link at the Behance or Figma case study.
+- **Recent work:** the `#work` section shows six projects with covers from `assets/img/behance/`.
+  To feature a different project, copy a card and use another entry from `assets/data/behance-projects.json`
+  (its `cover`, `url`, title and description).
 
-- **Case studies:** the `#case-studies` section lists projects from [Behance](https://www.behance.net/kavindalakmal).
-  To use a real cover, swap the inner content of `.cs-cover` for
-  `<img class="cs-cover__img" src="assets/img/case-studies/name.jpg" alt="...">` and point the card link at the
-  project's `behance.net/gallery/...` URL. Each card's `data-cat` (`mobile` or `web`) controls the filter buttons.
+## Behance sync
+
+The **Sync Behance projects** GitHub Action reads the public RSS feed of
+[behance.net/kavindalakmal](https://www.behance.net/kavindalakmal), downloads each project's cover and updates
+`assets/data/behance-projects.json`. It runs daily, or on demand from the repo's **Actions** tab, and
+commits any changes. Behance's feed only lists recent projects, so older ones are kept from earlier runs.
 
 ## Deploy to GitHub Pages
 
