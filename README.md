@@ -30,6 +30,11 @@ assets/docs/Kavinda-Weerasekara-CV.pdf   # Linked from the "Download CV" buttons
   inner content of `.project__media` for `<img src="assets/img/projects/your-image.jpg" alt="...">`
   and point the "View case study" link at the Behance or Figma case study.
 
+- **Case studies:** the `#case-studies` section lists projects from [Behance](https://www.behance.net/kavindalakmal).
+  To use a real cover, swap the inner content of `.cs-cover` for
+  `<img class="cs-cover__img" src="assets/img/case-studies/name.jpg" alt="...">` and point the card link at the
+  project's `behance.net/gallery/...` URL. Each card's `data-cat` (`mobile` or `web`) controls the filter buttons.
+
 ## Deploy to GitHub Pages
 
 Repo **Settings → Pages → Build and deployment → Deploy from a branch**, pick the branch and `/ (root)`.
