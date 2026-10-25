@@ -107,9 +107,16 @@ def meta(page, prop):
     return None
 
 
+_enrich_blocked = False
+
+
 def enrich(project):
-    page = fetch(project["url"])
+    global _enrich_blocked
+    if _enrich_blocked:
+        return
+    page = fetch(project["url"], retries=1)
     if not page:
+        _enrich_blocked = True
         return
     title = meta(page, "og:title")
     if title:
@@ -122,6 +129,17 @@ def enrich(project):
         project["cover_src"] = image
 
 
+def clean_title(title):
+    # The feed turns em dashes into " ? "
+    return re.sub(r"\s\?\s", " — ", title).strip()
+
+
+def clean_description(text):
+    # "Project Name: X Project Type: Y Objective: Z" -> "Z"
+    m = re.match(r"\s*Project Name:.*?Objective:\s*(.+)", text, re.S)
+    return (m.group(1) if m else text).strip()
+
+
 def save_cover(project):
     src = project.pop("cover_src", None)
     project["cover"] = None
@@ -130,9 +148,15 @@ def save_cover(project):
     ext = os.path.splitext(src.split("?")[0])[1].lower()
     if ext not in (".jpg", ".jpeg", ".png", ".gif", ".webp"):
         ext = ".jpg"
-    data = fetch(src, binary=True)
+    data = None
+    if "/projects/404/" in src:
+        data = fetch(src.replace("/projects/404/", "/projects/808/"), binary=True, retries=1)
+    data = data or fetch(src, binary=True)
     if not data:
         return
+    for old in os.listdir(COVER_DIR):
+        if os.path.splitext(old)[0] == project["id"]:
+            os.remove(os.path.join(COVER_DIR, old))
     path = os.path.join(COVER_DIR, project["id"] + ext)
     with open(path, "wb") as f:
         f.write(data)
@@ -155,9 +179,17 @@ def main():
     for p in projects:
         enrich(p)
         save_cover(p)
-        p["description"] = p["description"][:400]
+        p["title"] = clean_title(p["title"])
+        p["description"] = clean_description(p["description"])[:400]
         print(f"  {p['id']}  {p['title']}  cover={'yes' if p['cover'] else 'no'}")
         time.sleep(1)
+
+    known = {p["id"] for p in projects}
+    if os.path.exists(DATA_FILE):
+        with open(DATA_FILE, encoding="utf-8") as f:
+            previous = json.load(f).get("projects", [])
+        projects += [p for p in previous if p["id"] not in known]
+    projects.sort(key=lambda p: p.get("published") or "", reverse=True)
 
     with open(DATA_FILE, "w", encoding="utf-8") as f:
         json.dump({"username": USERNAME, "source": source, "projects": projects}, f, indent=2, ensure_ascii=False)
