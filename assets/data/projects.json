@@ -1,0 +1,139 @@
+[
+  {
+    "slug": "personal-finance-dashboard",
+    "behance_id": "257350815",
+    "name": "Personal Finance Dashboard",
+    "subtitle": "Ledgr, personal finance made calm",
+    "kind": "UI/UX case study",
+    "lead": "A calm personal-finance dashboard, delivered as a responsive, fully interactive prototype.",
+    "card_text": "A calm personal-finance dashboard built around one question: “Am I okay this month?”",
+    "tags": ["Dashboard", "Case study", "Personal finance"],
+    "facts": [["Year", "2026"], ["Type", "UI/UX case study"], ["Deliverable", "Responsive interactive prototype"], ["Focus", "Personal finance"]],
+    "statement": "Ledgr is designed around one question: “Am I okay this month?”",
+    "overview": [
+      "It answers with one hero number, honest comparisons and plain-language insights, plus a guided 3D tour, all delivered as a responsive, fully interactive prototype."
+    ],
+    "highlights_title": "What makes Ledgr calm",
+    "highlights": [
+      {"title": "One hero number", "text": "A single figure answers the core question at a glance."},
+      {"title": "Honest comparisons", "text": "Clear comparisons put this month's numbers in context."},
+      {"title": "Plain-language insights", "text": "Insights written in everyday language instead of finance jargon."},
+      {"title": "Guided 3D tour", "text": "A guided tour walks people through a fully interactive, responsive prototype."}
+    ]
+  },
+  {
+    "slug": "wanderly",
+    "behance_id": "255103139",
+    "name": "Wanderly",
+    "subtitle": "Making travel planning simple",
+    "kind": "UI/UX design",
+    "lead": "A modern travel discovery and planning platform that makes trip planning simple, inspiring and effortless.",
+    "card_text": "A travel discovery and planning platform that makes trip planning simple and inspiring.",
+    "tags": ["Travel platform", "Planning", "UI/UX"],
+    "facts": [["Year", "2026"], ["Type", "UI/UX design"], ["Product", "Travel discovery & planning platform"], ["Focus", "Trip planning"]],
+    "statement": "Discover, save, plan and visualise a whole trip in one seamless experience.",
+    "overview": [
+      "Wanderly is a modern travel discovery and planning platform designed to make trip planning simple, inspiring, and effortless.",
+      "The project explores how users can discover destinations, save travel ideas, build personalised itineraries, and visualise their journeys in one seamless experience."
+    ],
+    "highlights_title": "One place for the whole trip",
+    "highlights": [
+      {"title": "Discover destinations", "text": "Explore destinations that spark the next trip."},
+      {"title": "Save travel ideas", "text": "Keep ideas together until you're ready to plan."},
+      {"title": "Personalised itineraries", "text": "Build itineraries that fit each trip and traveller."},
+      {"title": "Visualise the journey", "text": "See the whole trip come together in one experience."}
+    ]
+  },
+  {
+    "slug": "lumora",
+    "behance_id": "251811817",
+    "name": "Lumora",
+    "subtitle": "Gamified trivia learning app",
+    "kind": "UX case study",
+    "lead": "A mobile-first trivia platform that turns learning into an engaging and rewarding experience.",
+    "card_text": "A gamified, mobile-first trivia app that turns learning into a rewarding experience.",
+    "tags": ["Mobile app", "Case study", "Gamification"],
+    "facts": [["Year", "2026"], ["Type", "End-to-end UX case study"], ["Platform", "Mobile app"], ["Scope", "Research to high-fidelity UI"]],
+    "statement": "Learn, compete and grow through an intuitive and enjoyable experience.",
+    "overview": [
+      "Lumora is a mobile-first trivia platform designed to transform learning into an engaging and rewarding experience.",
+      "This end-to-end UX case study covers the complete product design journey, including user research, information architecture, branding, design systems, wireframes, and high-fidelity mobile interfaces."
+    ],
+    "highlights_title": "Designed to keep learning fun",
+    "highlights": [
+      {"title": "Gamification", "text": "Game mechanics woven into learning."},
+      {"title": "Personalised challenges", "text": "Challenges tailored to each learner."},
+      {"title": "Leaderboards", "text": "Leaderboards that let learners compete."},
+      {"title": "Seamless rewards", "text": "A reward system that celebrates progress."}
+    ]
+  },
+  {
+    "slug": "flowsync",
+    "behance_id": "226135551",
+    "name": "FlowSync",
+    "subtitle": "Payment & invoicing platform",
+    "kind": "UI/UX design",
+    "lead": "A next-gen ACH payment and invoicing platform that streamlines financial operations for SMBs.",
+    "card_text": "An ACH payment and invoicing platform that streamlines financial operations for SMBs.",
+    "tags": ["Fintech", "Web platform", "UI/UX"],
+    "facts": [["Year", "2025"], ["Type", "UI/UX design"], ["Product", "ACH payments & invoicing"], ["Audience", "Small & medium businesses"]],
+    "statement": "Payments and invoicing, streamlined for small and medium businesses.",
+    "overview": [
+      "FlowSync is a next-gen ACH payment and invoicing platform designed to streamline financial operations for SMBs.",
+      "From secure logins to automated invoicing and fraud control, FlowSync puts users back in control of their payments."
+    ],
+    "highlights_title": "From login to getting paid",
+    "highlights": [
+      {"title": "Secure logins", "text": "A secure way into the platform."},
+      {"title": "ACH payments", "text": "Send and receive ACH payments in one place."},
+      {"title": "Automated invoicing", "text": "Invoicing that runs automatically."},
+      {"title": "Fraud control", "text": "Controls that keep payments safe."}
+    ]
+  },
+  {
+    "slug": "travelsphere",
+    "behance_id": "212043297",
+    "name": "TravelSphere",
+    "subtitle": "Branding & mobile app",
+    "kind": "Branding & UI/UX",
+    "lead": "A travel app that makes discovering, planning and booking trips simple and enjoyable.",
+    "card_text": "A travel app for discovering, planning and booking trips, with its own brand identity.",
+    "tags": ["Branding", "Mobile app", "Travel"],
+    "facts": [["Year", "2024"], ["Type", "Branding & UI/UX"], ["Platform", "Mobile app"], ["Focus", "Travel planning & booking"]],
+    "statement": "Transforming travel planning into an effortless and inspiring experience.",
+    "overview": [
+      "TravelSphere is a travel app designed to make discovering, planning, and booking trips simple and enjoyable.",
+      "It empowers people to explore the world confidently, with tools to organise every travel detail in one place, and tailors suggestions to match each traveller's style, whether that's adventure, romance, or cultural experiences."
+    ],
+    "highlights_title": "Everything for the trip, in one app",
+    "highlights": [
+      {"title": "Personalised recommendations", "text": "Destination ideas matched to your travel style."},
+      {"title": "Customisable itineraries", "text": "Plans that are easy to shape around you."},
+      {"title": "One-stop booking", "text": "Flights, hotels and activities booked in one hub."},
+      {"title": "A brand to match", "text": "A brand identity designed alongside the app."}
+    ]
+  },
+  {
+    "slug": "corehr",
+    "behance_id": "208563083",
+    "name": "CoreHR",
+    "subtitle": "HR management system",
+    "kind": "UI/UX design",
+    "lead": "A comprehensive HR management system that streamlines HR processes within organisations.",
+    "card_text": "An HR management system for scheduling, tasks, performance tracking and employee engagement.",
+    "tags": ["HR system", "Web app", "Dashboard"],
+    "facts": [["Year", "2024"], ["Type", "UI/UX design"], ["Product", "HR management system"], ["Users", "HR teams & employees"]],
+    "statement": "HR processes, streamlined for the whole organisation.",
+    "overview": [
+      "CoreHR is a comprehensive Human Resource Management System (HRMS) designed to streamline and enhance the efficiency of HR processes within organisations.",
+      "The system aims to provide a user-friendly interface for both HR professionals and employees, supporting scheduling, task management, performance tracking, and employee engagement."
+    ],
+    "highlights_title": "Core HR work, in one system",
+    "highlights": [
+      {"title": "Scheduling", "text": "Manage schedules in one place."},
+      {"title": "Task management", "text": "Organise and track HR tasks."},
+      {"title": "Performance tracking", "text": "Track performance across the organisation."},
+      {"title": "Employee engagement", "text": "Features that support employee engagement."}
+    ]
+  }
+]
