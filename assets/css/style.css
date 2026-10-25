@@ -313,17 +313,26 @@ button { font: inherit; color: inherit; background: none; border: 0; cursor: poi
 .services__visual-text { position: relative; z-index: 1; display: grid; gap: 12px; max-width: 360px; }
 .services__visual-text p:last-child { font-size: clamp(22px, 2.2vw, 28px); font-weight: 500; letter-spacing: -0.03em; line-height: 1.15; }
 .float-chip {
-  position: absolute; display: inline-flex; align-items: center; gap: 8px; padding: 10px 18px 10px 12px;
+  position: absolute; display: inline-flex; align-items: center; gap: 10px; padding: 7px 18px 7px 7px;
   border-radius: 999px; background: #fff; color: var(--ink); font-weight: 500; font-size: 15px;
   box-shadow: 0 14px 30px rgba(10, 40, 100, .2); animation: float 6s ease-in-out infinite;
 }
-.float-chip--1 { top: 14%; left: 10%; }
-.float-chip--2 { top: 24%; right: 10%; animation-delay: -2s; }
-.float-chip--3 { top: 40%; left: 22%; animation-delay: -4s; padding-left: 18px; }
-.float-chip--4 { top: 8%; right: 30%; animation-delay: -1s; padding-left: 18px; }
-.float-chip--5 { top: 52%; right: 16%; animation-delay: -3s; padding-left: 18px; background: var(--lime); }
-.float-chip .spark { color: var(--blue); font-size: 16px; }
-.figma-mark { width: 22px; height: 22px; border-radius: 50%; background: conic-gradient(#f24e1e 0 25%, #a259ff 0 50%, #0acf83 0 75%, #1abcfe 0); }
+.float-chip--1 { top: 9%; left: 8%; }
+.float-chip--2 { top: 6%; right: 12%; animation-delay: -1s; }
+.float-chip--3 { top: 24%; left: 38%; animation-delay: -2s; }
+.float-chip--4 { top: 38%; left: 9%; animation-delay: -4s; }
+.float-chip--5 { top: 44%; right: 9%; animation-delay: -3s; }
+.float-chip--6 { top: 58%; left: 32%; animation-delay: -5s; }
+.tool-logo { width: 30px; height: 30px; border-radius: 9px; display: grid; place-items: center; flex-shrink: 0; background: var(--gray); }
+.tool-logo svg { width: 18px; height: 18px; }
+.tool-logo--figma svg { width: 13px; height: 19px; }
+.tool-logo--framer, .tool-logo--cursor { background: var(--ink); }
+.tool-logo--framer svg { width: 15px; height: 15px; }
+.tool-logo--claude { background: #faf0eb; }
+.tool-logo--miro { background: #ffd02f; }
+.tool-logo--miro svg { width: 15px; height: 15px; }
+.tool-logo--webflow { background: #146ef5; }
+.tool-logo--webflow svg { width: 17px; height: 17px; }
 @keyframes float { 50% { transform: translateY(-10px); } }
 
 .services__panel { padding: clamp(28px, 4vw, 48px); border-radius: var(--radius-lg); background: var(--gray); }
@@ -450,6 +459,8 @@ details[open] .acc-icon::after { transform: rotate(0); }
   .stats { gap: 12px; }
   .stat { min-height: 0; gap: 28px; padding: 20px; }
   .stat__value { font-size: 40px; }
+  .services__visual { min-height: 500px; }
+  .float-chip { font-size: 14px; }
   .stat__icon { width: 38px; height: 38px; }
   .cs-page-cover { padding: 12px; border-radius: var(--radius-lg); }
   .rw-tags li { padding: 5px 12px; font-size: 12px; }
