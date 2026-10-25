@@ -25,7 +25,7 @@ assets/docs/Kavinda-Weerasekara-CV.pdf   # Linked from the "Download CV" buttons
 
 ## Customising
 
-- **Colors and fonts:** edit the variables in `:root` at the top of `style.css` (lime accent, sky-blue gradients, Inter Tight + Geist Mono).
+- **Colors and fonts:** edit the variables in `:root` at the top of `style.css` (lime accent, sky-blue gradients, Inter).
 - **Projects:** each project in the `#work` section has a CSS mock preview. To use a real screenshot, swap the
   inner content of `.project__media` for `<img src="assets/img/projects/your-image.jpg" alt="...">`
   and point the "View case study" link at the Behance or Figma case study.
