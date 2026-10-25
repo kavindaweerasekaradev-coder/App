@@ -17,7 +17,7 @@ python3 -m http.server 8000
 ```
 index.html                     # All page content and sections
 assets/css/style.css           # Styles; design tokens (colors, radius, fonts) at the top
-assets/js/main.js              # Theme toggle, mobile menu, scroll reveal, copy email
+assets/js/main.js              # Mobile menu, scroll reveal, progress line, copy email
 assets/img/kavinda.jpg         # Profile photo
 assets/img/favicon.svg
 assets/docs/Kavinda-Weerasekara-CV.pdf   # Linked from the "Download CV" buttons
@@ -25,7 +25,7 @@ assets/docs/Kavinda-Weerasekara-CV.pdf   # Linked from the "Download CV" buttons
 
 ## Customising
 
-- **Colors and fonts:** edit the variables in `:root` (light) and `[data-theme="dark"]` at the top of `style.css`.
+- **Colors and fonts:** edit the variables in `:root` at the top of `style.css` (lime accent, sky-blue gradients, Inter Tight + Geist Mono).
 - **Projects:** each project in the `#work` section has a CSS mock preview. To use a real screenshot, swap the
   inner content of `.project__media` for `<img src="assets/img/projects/your-image.jpg" alt="...">`
   and point the "View case study" link at the Behance or Figma case study.

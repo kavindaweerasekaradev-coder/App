@@ -1,18 +1,5 @@
 (function () {
-  var root = document.documentElement;
-  root.classList.add('js');
-
-  // Theme toggle (remembers choice)
-  var themeBtn = document.getElementById('theme-toggle');
-  function currentTheme() {
-    if (root.dataset.theme) return root.dataset.theme;
-    return window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light';
-  }
-  themeBtn.addEventListener('click', function () {
-    var next = currentTheme() === 'dark' ? 'light' : 'dark';
-    root.dataset.theme = next;
-    try { localStorage.setItem('theme', next); } catch (e) {}
-  });
+  document.documentElement.classList.add('js');
 
   // Mobile menu
   var burger = document.getElementById('nav-burger');
@@ -32,9 +19,18 @@
     if (e.key === 'Escape') setMenu(false);
   });
 
-  // Nav border on scroll
+  // Nav border on scroll + work progress line
   var nav = document.querySelector('.nav');
-  function onScroll() { nav.classList.toggle('is-scrolled', window.scrollY > 8); }
+  var work = document.getElementById('work');
+  var progress = document.querySelector('.progress-row__line span');
+  function onScroll() {
+    nav.classList.toggle('is-scrolled', window.scrollY > 8);
+    if (progress) {
+      var r = work.getBoundingClientRect();
+      var done = (window.innerHeight - r.top) / (r.height + window.innerHeight);
+      progress.style.width = Math.min(100, Math.max(8, done * 100)) + '%';
+    }
+  }
   window.addEventListener('scroll', onScroll, { passive: true });
   onScroll();
 
@@ -50,7 +46,7 @@
     }, { threshold: 0.12, rootMargin: '0px 0px -40px 0px' });
     document.querySelectorAll('.reveal').forEach(function (el) { revealer.observe(el); });
 
-    var navLinks = links.querySelectorAll('a');
+    var navLinks = links.querySelectorAll('a[href^="#"]');
     var spy = new IntersectionObserver(function (entries) {
       entries.forEach(function (entry) {
         if (!entry.isIntersecting) return;
