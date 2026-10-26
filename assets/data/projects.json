@@ -60,7 +60,22 @@
       "src": "assets/img/case-studies/ledgr/00-cover.webp",
       "width": 1600,
       "height": 1150
-    }
+    },
+    "accent": "#bdee7c",
+    "card_tags": [
+      [
+        "Dashboard",
+        ""
+      ],
+      [
+        "Case study",
+        "dark"
+      ],
+      [
+        "New",
+        "lime"
+      ]
+    ]
   },
   {
     "slug": "wanderly",
@@ -116,6 +131,17 @@
         "title": "Visualise the journey",
         "text": "See the whole trip come together in one experience."
       }
+    ],
+    "accent": "#37a18f",
+    "card_tags": [
+      [
+        "Travel platform",
+        ""
+      ],
+      [
+        "New",
+        "lime"
+      ]
     ]
   },
   {
@@ -172,6 +198,17 @@
         "title": "Seamless rewards",
         "text": "A reward system that celebrates progress."
       }
+    ],
+    "accent": "#c9c2b6",
+    "card_tags": [
+      [
+        "Mobile app",
+        ""
+      ],
+      [
+        "Case study",
+        "dark"
+      ]
     ]
   },
   {
@@ -228,6 +265,17 @@
         "title": "Fraud control",
         "text": "Controls that keep payments safe."
       }
+    ],
+    "accent": "#2ebd85",
+    "card_tags": [
+      [
+        "Fintech",
+        ""
+      ],
+      [
+        "Web platform",
+        ""
+      ]
     ]
   },
   {
@@ -284,6 +332,17 @@
         "title": "A brand to match",
         "text": "A brand identity designed alongside the app."
       }
+    ],
+    "accent": "#4a6cf7",
+    "card_tags": [
+      [
+        "Branding",
+        ""
+      ],
+      [
+        "Mobile app",
+        ""
+      ]
     ]
   },
   {
@@ -340,6 +399,17 @@
         "title": "Employee engagement",
         "text": "Features that support employee engagement."
       }
+    ],
+    "accent": "#95a4fc",
+    "card_tags": [
+      [
+        "HR system",
+        ""
+      ],
+      [
+        "Web app",
+        ""
+      ]
     ]
   }
 ]
