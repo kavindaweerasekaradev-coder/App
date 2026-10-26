@@ -236,6 +236,7 @@ def render(p, prev_p, next_p, version):
   <meta property="og:type" content="article" />
   <meta property="og:image" content="../{p['cover']}" />
 
+  <link rel="icon" href="../assets/img/favicon.svg" type="image/svg+xml" />
   <link rel="icon" href="../assets/img/favicon-32.png" sizes="32x32" type="image/png" />
   <link rel="icon" href="../assets/img/favicon-192.png" sizes="192x192" type="image/png" />
   <link rel="apple-touch-icon" href="../assets/img/apple-touch-icon.png" />
@@ -252,7 +253,7 @@ def render(p, prev_p, next_p, version):
   <header class="nav" id="top">
     <div class="container nav__inner">
       <a href="../index.html" class="nav__logo" aria-label="Kavinda Weerasekara — home">
-        <img class="nav__logo-mark" src="../assets/img/logo-avatar.jpg" alt="" width="36" height="36" />
+        <svg class="nav__logo-mark" viewBox="0 0 64 64" width="36" height="36" aria-hidden="true"><rect width="64" height="64" rx="16" fill="#0e0e0e"/><g fill="none" stroke="#fff" stroke-width="6.5" stroke-linecap="round" stroke-linejoin="round"><path d="M19 17v30"/><path d="M38 17 23.5 32 38 47"/></g><circle class="nav__logo-dot" cx="47" cy="44" r="4.5" fill="#d4f55c"/></svg>
         Kavinda
       </a>
 
