@@ -50,6 +50,23 @@
     }, { rootMargin: '-45% 0px -50% 0px' });
     document.querySelectorAll('main section[id]').forEach(function (s) { spy.observe(s); });
 
+    // Case study chapter menu: highlight the chapter being read
+    var chapterLinks = document.querySelectorAll('.cs-chapters a');
+    if (chapterLinks.length) {
+      var scroller = document.querySelector('.cs-chapters__scroll');
+      var chapterSpy = new IntersectionObserver(function (entries) {
+        entries.forEach(function (entry) {
+          if (!entry.isIntersecting) return;
+          chapterLinks.forEach(function (a) {
+            var on = a.getAttribute('href') === '#' + entry.target.id;
+            a.classList.toggle('is-active', on);
+            if (on) scroller.scrollTo({ left: a.offsetLeft - 16, behavior: 'smooth' });
+          });
+        });
+      }, { rootMargin: '-40% 0px -55% 0px' });
+      document.querySelectorAll('.cs-chapter[id]').forEach(function (s) { chapterSpy.observe(s); });
+    }
+
     // Count stat numbers up when they come into view
     var reduceMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
     var counter = new IntersectionObserver(function (entries) {
