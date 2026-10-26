@@ -1,0 +1,604 @@
+[
+  {
+    "id": "overview",
+    "num": "01",
+    "label": "Overview",
+    "title": "A calmer way to check on your money.",
+    "lead": "Ledgr is a responsive personal-finance dashboard MVP. It brings balance, spending, income, budgets and savings goals into one quiet view, and turns raw numbers into plain-language answers.",
+    "blocks": [
+      {
+        "type": "facts",
+        "items": [
+          {
+            "label": "My role",
+            "title": "UI/UX designer",
+            "text": "Product framing, information architecture, UI, design system, interaction and motion design, working prototype."
+          },
+          {
+            "label": "Platform",
+            "title": "Responsive web",
+            "text": "Desktop 12-column grid, tablet 6-column, phone single column with a floating tab bar."
+          },
+          {
+            "label": "Scope",
+            "title": "MVP · 4 core screens",
+            "text": "Overview, Transactions, Budgets, Goals, plus quick-add flows, light & dark themes and a guided tour."
+          },
+          {
+            "label": "Prototype",
+            "title": "Fully interactive",
+            "text": "Built in React + TypeScript, set in Plus Jakarta Sans; 3D guided tour with Three.js & GSAP."
+          }
+        ]
+      },
+      {
+        "type": "duo",
+        "a": {
+          "label": "The challenge",
+          "text": "Finance apps show everything, so people understand nothing, and opening them becomes a source of anxiety."
+        },
+        "b": {
+          "label": "The outcome",
+          "text": "One hero number, honest comparisons, insights in plain language, and every key action within one tap."
+        }
+      }
+    ]
+  },
+  {
+    "id": "problem",
+    "num": "02",
+    "label": "The problem",
+    "title": "“Am I okay this month?”",
+    "lead": "That’s the real question behind almost every visit to a finance app. Most dashboards answer it with a wall of charts. I framed four friction points to design against:",
+    "blocks": [
+      {
+        "type": "cards",
+        "items": [
+          {
+            "title": "Information overload",
+            "text": "Every widget competes for attention, so the single number people care about gets lost."
+          },
+          {
+            "title": "Unfair comparisons",
+            "text": "Mid-month, half a month is compared with all of last month, so users always look like they’re overspending."
+          },
+          {
+            "title": "Hidden leaks",
+            "text": "New subscriptions and recurring charges slip through unnoticed until they add up."
+          },
+          {
+            "title": "Logging feels like a chore",
+            "text": "Manual entry is slow and fiddly, so people stop keeping their picture up to date."
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "id": "audience",
+    "num": "03",
+    "label": "Who it’s for",
+    "title": "Designed for the busy, not the obsessive.",
+    "lead": "Ledgr isn’t for spreadsheet power users. It’s for people who want a quick, reassuring check-in, and a nudge only when something needs attention.",
+    "blocks": [
+      {
+        "type": "persona",
+        "name": "“Alex”, the busy professional",
+        "meta": "Proto-persona · 28–40 · salaried + freelance income",
+        "cols": [
+          {
+            "title": "Goals",
+            "items": [
+              "Know at a glance if the month is on track",
+              "Save steadily for a few clear goals",
+              "Spot unusual spending early"
+            ]
+          },
+          {
+            "title": "Frustrations",
+            "items": [
+              "Dashboards that need decoding",
+              "Guilt-inducing red numbers",
+              "Forgotten subscriptions"
+            ]
+          }
+        ]
+      },
+      {
+        "type": "quote",
+        "label": "Job to be done",
+        "text": "When I open my finance app, I want to know straight away whether I’m on track, so I can either relax or adjust before it’s too late."
+      },
+      {
+        "type": "list",
+        "title": "How might we…",
+        "items": [
+          "…answer “am I okay?” in under five seconds?",
+          "…make comparisons feel fair, not judgemental?",
+          "…make logging and saving feel rewarding?"
+        ]
+      }
+    ]
+  },
+  {
+    "id": "principles",
+    "num": "04",
+    "label": "Design principles",
+    "title": "Five rules every screen had to follow.",
+    "lead": "These principles turned the problem framing into concrete UI decisions, and settled debates whenever a new widget wanted attention.",
+    "blocks": [
+      {
+        "type": "rows",
+        "items": [
+          {
+            "title": "One hero number",
+            "text": "The total balance is the only oversized figure on the screen, and the cents are softened. Your eye reads “$115K” first, then the details: a clear answer before any analysis."
+          },
+          {
+            "title": "Colour has a job",
+            "text": "Lime is reserved for celebration: the savings goal closest to completion, active navigation and the primary shortcut. Spending it anywhere else would dilute the reward."
+          },
+          {
+            "title": "Honest data is good UX",
+            "text": "Mid-month comparisons use the same day of last month, never a half month against a full one. Category colours keep a fixed order, so a category’s colour never changes when filters do."
+          },
+          {
+            "title": "Say it, don’t chart it",
+            "text": "Ledgr finds the category that moved most and states it in one sentence. Past a +200% change it switches from a percentage to a dollar amount, because “+1,700%” means nothing to anyone."
+          },
+          {
+            "title": "Protect the moment",
+            "text": "New recurring charges are pulled to the top of the activity list for a one-tap decision. That’s the moment the app actually saves someone money."
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "id": "ia",
+    "num": "05",
+    "label": "Information architecture",
+    "title": "Four destinations. One-tap actions everywhere.",
+    "lead": "A flat structure keeps every screen within one tap. High-frequency actions (add a transaction, fund a goal, switch currency or theme) are global, not buried in pages.",
+    "blocks": [
+      {
+        "type": "columns",
+        "items": [
+          {
+            "title": "Overview",
+            "items": [
+              "Total balance · currency · privacy",
+              "Top savings goal",
+              "Spending + insight",
+              "Income + 6-mo trend",
+              "Activity & review queue",
+              "Cash flow · Budgets · Accounts"
+            ]
+          },
+          {
+            "title": "Transactions",
+            "items": [
+              "Search",
+              "Filter: in/out · category · month",
+              "Day-grouped ledger",
+              "Delete · pending labels"
+            ]
+          },
+          {
+            "title": "Budgets",
+            "items": [
+              "Monthly summary",
+              "Category tiles + status",
+              "Daily allowance left",
+              "Inline limit editing"
+            ]
+          },
+          {
+            "title": "Goals",
+            "items": [
+              "Progress + on-track status",
+              "Monthly amount needed",
+              "Add money",
+              "Create / delete goal"
+            ]
+          }
+        ]
+      },
+      {
+        "type": "chips",
+        "label": "Global",
+        "items": [
+          "Add transaction",
+          "Fund a goal",
+          "Light / dark",
+          "USD · EUR · LKR"
+        ]
+      },
+      {
+        "type": "steps",
+        "label": "Core flow · log a transaction",
+        "items": [
+          "Tap “Add” anywhere",
+          "Type the amount",
+          "Who it was paid to",
+          "Pick a category",
+          "Every number updates live"
+        ]
+      }
+    ]
+  },
+  {
+    "id": "layout",
+    "num": "06",
+    "label": "Layout & hierarchy",
+    "title": "Read it top-left to bottom-right, like a story.",
+    "lead": "A 12-column grid gives every card a role: Know where you stand, Celebrate progress, Understand what changed, Act on it, then Plan ahead.",
+    "blocks": [
+      {
+        "type": "steps",
+        "items": [
+          "Know · 7 cols",
+          "Celebrate · 5 cols",
+          "Understand",
+          "Act · review queue",
+          "Plan ahead"
+        ]
+      },
+      {
+        "type": "cards",
+        "items": [
+          {
+            "title": "12 → 6 → 1 columns",
+            "text": "Desktop, tablet and phone layouts reuse the same cards, with spans changing per breakpoint."
+          },
+          {
+            "title": "28 px radius, 20 px gutters",
+            "text": "Generous, consistent rhythm keeps a dense dashboard feeling calm."
+          },
+          {
+            "title": "Card anatomy",
+            "text": "Icon chip, title, one action. Every card has the same header, so it scans in a second."
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "id": "colour",
+    "num": "07",
+    "label": "Colour",
+    "title": "Warm neutrals, one confident accent.",
+    "lead": "All colour is defined as role-based tokens, so light and dark themes switch in one place, and data colours never get borrowed for UI chrome.",
+    "blocks": [
+      {
+        "type": "swatches",
+        "items": [
+          {
+            "name": "Lime",
+            "token": "--brand",
+            "hex": "#BDEE7C"
+          },
+          {
+            "name": "Lime strong",
+            "token": "--brand-strong",
+            "hex": "#A7E05C"
+          },
+          {
+            "name": "Deep green",
+            "token": "--brand-deep",
+            "hex": "#1D3B0F"
+          },
+          {
+            "name": "Ink",
+            "token": "--ink",
+            "hex": "#10140D"
+          },
+          {
+            "name": "Canvas",
+            "token": "--bg",
+            "hex": "#ECEDE8"
+          },
+          {
+            "name": "Surface",
+            "token": "--surface",
+            "hex": "#FFFFFF"
+          },
+          {
+            "name": "Ink 2",
+            "token": "--ink-2",
+            "hex": "#4A5045"
+          },
+          {
+            "name": "Ink 3",
+            "token": "--ink-3",
+            "hex": "#7C8276"
+          }
+        ]
+      },
+      {
+        "type": "cards",
+        "items": [
+          {
+            "title": "Data visualisation · fixed order",
+            "text": "Housing, Food & dining, Transport, Shopping, Entertainment, Other. Validated for colour-vision deficiency as adjacent pairs, separately for light and dark surfaces. A neutral “Other” keeps the donut’s first and last colours apart."
+          },
+          {
+            "title": "Status · always icon + label",
+            "text": "On track, Near limit and Over budget never rely on colour alone."
+          },
+          {
+            "title": "Dark theme · hand-tuned, not inverted",
+            "text": "Surfaces #0C0D0B and #17191B, and lime becomes the primary action."
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "id": "type",
+    "num": "08",
+    "label": "Type & components",
+    "title": "Plus Jakarta Sans, all the way down.",
+    "lead": "A geometric sans that feels modern and precise for numbers, with warmth in its curves. Large figures use proportional digits; columns use tabular figures so they line up.",
+    "blocks": [
+      {
+        "type": "typescale",
+        "items": [
+          {
+            "spec": "Hero figure 68 / Medium / −4.5%",
+            "sample": "$115,899.97",
+            "use": "Balance",
+            "size": 68,
+            "weight": 500,
+            "track": -0.045
+          },
+          {
+            "spec": "Display 40 / Medium / −3.5%",
+            "sample": "$8,097.94",
+            "use": "Card figures",
+            "size": 40,
+            "weight": 500,
+            "track": -0.035
+          },
+          {
+            "spec": "Page title 32 / Semibold / −3%",
+            "sample": "Budgets",
+            "use": "Page headers",
+            "size": 32,
+            "weight": 600,
+            "track": -0.03
+          },
+          {
+            "spec": "Card title 17 / Semibold",
+            "sample": "Spending",
+            "use": "Card headers",
+            "size": 17,
+            "weight": 600,
+            "track": 0
+          },
+          {
+            "spec": "Body 15 / Regular",
+            "sample": "Shopping is up $382 vs Sep",
+            "use": "Insights, lists",
+            "size": 15,
+            "weight": 400,
+            "track": 0
+          },
+          {
+            "spec": "Caption 13 / Medium",
+            "sample": "Total balance · 4 accounts",
+            "use": "Labels, meta",
+            "size": 13,
+            "weight": 500,
+            "track": 0
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "id": "overview-screen",
+    "num": "09",
+    "label": "Key screen · Overview",
+    "title": "Everything that matters, nothing that doesn’t.",
+    "lead": "Balance, progress, spending, income, activity, cash flow, budgets and accounts on one page, each card answering exactly one question.",
+    "blocks": [
+      {
+        "type": "image",
+        "src": "assets/img/behance/257350815.png",
+        "alt": "Ledgr overview dashboard on desktop and phone",
+        "width": 808,
+        "height": 632
+      }
+    ]
+  },
+  {
+    "id": "spending",
+    "num": "10",
+    "label": "Understanding spending",
+    "title": "Explore when you want. Get the answer when you don’t.",
+    "lead": "Charts are there for people who want to dig in, with hover read-outs and a table view, but the headline is always written in plain language.",
+    "blocks": [
+      {
+        "type": "cards",
+        "items": [
+          {
+            "title": "Hover to focus",
+            "text": "Hovering a category dims the rest and turns the centre of the donut into a read-out."
+          },
+          {
+            "title": "Fair deltas",
+            "text": "“↑ 17.1% vs same day in Sep”: comparisons always say what they’re compared with."
+          },
+          {
+            "title": "Tooltips with the net",
+            "text": "Each month shows in, out and the net result, colour-coded and labelled."
+          },
+          {
+            "title": "Chart ⇄ table",
+            "text": "One toggle swaps the chart for an accessible table with exact values."
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "id": "log-flow",
+    "num": "11",
+    "label": "Log a transaction",
+    "title": "From “Add” to updated dashboard in seconds.",
+    "lead": "A big amount field first, because that’s what people remember. Then payee, then one-tap category chips. Clear errors, and smart defaults for account and date.",
+    "blocks": [
+      {
+        "type": "steps",
+        "items": [
+          "Open. Expense is pre-selected and the amount field leads the form.",
+          "Fill. Category chips with icons are faster than a dropdown.",
+          "Done. It appears in Activity, and balance, spending and budgets all recalculate."
+        ]
+      },
+      {
+        "type": "quote",
+        "label": "Errors that help",
+        "text": "Validation runs on save, not while typing. Messages say what to do (“Enter an amount greater than zero”) and appear in a calm, tinted banner instead of a wall of red."
+      }
+    ]
+  },
+  {
+    "id": "budgets-goals",
+    "num": "12",
+    "label": "Budgets & goals",
+    "title": "Plan ahead without the guilt trip.",
+    "lead": "Budgets show pace, status and what’s left per day. Goals turn savings into progress you can see, with the exact monthly amount needed to finish on time.",
+    "blocks": [
+      {
+        "type": "duo",
+        "a": {
+          "label": "Budgets · from the prototype",
+          "text": "$3,277 of $4,140 spent, with $863 left: about $62 a day for the 14 days remaining."
+        },
+        "b": {
+          "label": "Goals · from the prototype",
+          "text": "$34,792 saved toward $88,400 across 4 goals, with one-tap amounts to fund a goal."
+        }
+      }
+    ]
+  },
+  {
+    "id": "dark-mode",
+    "num": "13",
+    "label": "Dark mode",
+    "title": "Calm by day, beautiful by night.",
+    "lead": "A hand-tuned dark theme, not an inverted one. Surfaces step up in lightness for depth, chart colours are re-validated against the dark background, and lime becomes the primary action colour.",
+    "blocks": [
+      {
+        "type": "themes"
+      }
+    ]
+  },
+  {
+    "id": "responsive",
+    "num": "14",
+    "label": "Responsive",
+    "title": "Built for the thumb, not shrunk for it.",
+    "lead": "On phones the same cards stack into one column, navigation moves to a floating bottom tab bar, and quick-add opens as a bottom sheet within easy reach.",
+    "blocks": [
+      {
+        "type": "breakpoints",
+        "items": [
+          {
+            "label": "Desktop",
+            "note": "12-column grid",
+            "cols": 12
+          },
+          {
+            "label": "Tablet",
+            "note": "6-column grid",
+            "cols": 6
+          },
+          {
+            "label": "Phone",
+            "note": "Single column + floating tab bar",
+            "cols": 1
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "id": "accessibility",
+    "num": "15",
+    "label": "Accessibility",
+    "title": "Small details that make it trustworthy.",
+    "lead": "Money is personal and stressful. These details make sure Ledgr is legible, predictable and private for everyone.",
+    "blocks": [
+      {
+        "type": "cards",
+        "items": [
+          {
+            "title": "Colour-blind-safe charts",
+            "text": "Palette checked for CVD separation in both themes."
+          },
+          {
+            "title": "Never colour alone",
+            "text": "Statuses pair icon, label and colour; charts have legends."
+          },
+          {
+            "title": "Keyboard friendly",
+            "text": "Visible focus rings, a skip link, focus moves into dialogs and returns on close; Escape closes them."
+          },
+          {
+            "title": "Screen-reader labels",
+            "text": "Icon buttons, charts and progress bars are all labelled."
+          },
+          {
+            "title": "Reduced motion",
+            "text": "Animations are minimised when the OS asks for it."
+          },
+          {
+            "title": "Privacy mode",
+            "text": "One tap masks every amount, for checking your balance in public."
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "id": "outcome",
+    "num": "16",
+    "label": "Outcome & next steps",
+    "title": "A working MVP, ready to put in front of users.",
+    "lead": "Ledgr shipped as a fully interactive, responsive prototype, not just static mockups, so the next step can be real usability testing.",
+    "blocks": [
+      {
+        "type": "columns",
+        "items": [
+          {
+            "title": "Delivered",
+            "items": [
+              "4 core screens + 3 quick-action flows",
+              "Light & dark themes",
+              "Desktop, tablet & phone layouts",
+              "Token-based design system",
+              "Guided 3D tour + launch film"
+            ]
+          },
+          {
+            "title": "What I’d validate next",
+            "items": [
+              "Usability test: can users answer “am I okay?” in 5 s?",
+              "Do plain-language insights beat charts?",
+              "Is the review queue noticed and trusted?",
+              "First-run onboarding with the tour"
+            ]
+          }
+        ]
+      },
+      {
+        "type": "quote",
+        "label": "What I learned",
+        "text": "Good finance UX isn’t about showing more data. It’s about removing the anxiety of reading it. Prototyping in code surfaced details (like unfair mid-month comparisons) that static mockups would have hidden."
+      }
+    ]
+  }
+]

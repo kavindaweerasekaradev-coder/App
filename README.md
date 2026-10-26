@@ -47,6 +47,10 @@ overview, highlights) plus the cover, link and year from the Behance import. Aft
 python3 scripts/build_projects.py
 ```
 
+A project can also have a full case study: point its `case_study` field at a JSON file of chapters in
+`assets/data/case-studies/` (see `ledgr.json`) and the page renders those chapters, with a sticky chapter
+menu, instead of the short overview and highlights.
+
 To add a project, add an entry to `projects.json` with its Behance `behance_id`, rebuild, and add a card
 for it in the Recent work section of `index.html`.
 
