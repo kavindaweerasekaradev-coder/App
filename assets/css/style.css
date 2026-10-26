@@ -413,6 +413,19 @@ button { font: inherit; color: inherit; background: none; border: 0; cursor: poi
 .cs-blk-bp figcaption { margin-top: 12px; font-size: 13px; color: var(--text-muted); }
 .cs-blk-bp figcaption strong { display: block; font-size: 15px; color: var(--text); }
 
+/* Figma boards: shown on wide screens; the text version stays for screen readers and phones */
+.cs-board { margin: 0; }
+.cs-board img { display: block; width: 100%; height: auto; border-radius: var(--radius-lg); box-shadow: 0 1px 2px rgba(14, 14, 14, .04), 0 12px 32px rgba(14, 14, 14, .06); }
+@media (min-width: 901px) {
+  .cs-study { padding: 24px 0 clamp(48px, 6vw, 80px); }
+  .cs-chapter.has-board { padding: 12px 0; border-bottom: 0; }
+  .cs-board-ui { display: none; }
+  .has-board .cs-chapter__text { position: absolute; width: 1px; height: 1px; margin: -1px; overflow: hidden; clip: rect(0 0 0 0); white-space: nowrap; }
+}
+@media (max-width: 900px) {
+  .cs-board { display: none; }
+}
+
 /* ---------- Services ---------- */
 .services { display: grid; grid-template-columns: 1fr 1.15fr; gap: 20px; }
 .services__visual {

@@ -51,6 +51,10 @@ A project can also have a full case study: point its `case_study` field at a JSO
 `assets/data/case-studies/` (see `ledgr.json`) and the page renders those chapters, with a sticky chapter
 menu, instead of the short overview and highlights.
 
+Chapters can also carry a `board` image (a full case-study board exported from Figma, shown on wide
+screens while the text stays available to screen readers) and a `board_ui` crop that phones show
+alongside the text. Ledgr's boards live in `assets/img/case-studies/ledgr/`.
+
 To add a project, add an entry to `projects.json` with its Behance `behance_id`, rebuild, and add a card
 for it in the Recent work section of `index.html`.
 
