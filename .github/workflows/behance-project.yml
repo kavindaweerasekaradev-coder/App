@@ -1,0 +1,47 @@
+name: Import a Behance project
+
+on:
+  workflow_dispatch:
+    inputs:
+      url:
+        description: "Behance project URL (https://www.behance.net/gallery/<id>/<slug>)"
+        required: true
+
+permissions:
+  contents: write
+
+concurrency:
+  group: behance-project
+  cancel-in-progress: false
+
+jobs:
+  import:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 20
+
+      - name: Install Playwright
+        run: |
+          npm install --no-save playwright@1.63.0
+          npx playwright install --with-deps chromium
+
+      - name: Import project
+        env:
+          PROJECT_URL: ${{ inputs.url }}
+        run: node scripts/fetch_behance_project.mjs "$PROJECT_URL"
+
+      - name: Commit changes
+        run: |
+          if [ -z "$(git status --porcelain assets/data/behance-raw)" ]; then
+            echo "No changes."
+            exit 0
+          fi
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add assets/data/behance-raw
+          git commit -m "Import Behance project"
+          git push
