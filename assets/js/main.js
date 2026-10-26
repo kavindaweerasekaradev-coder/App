@@ -104,6 +104,21 @@
     }
   });
 
+  // Hero: the honeycomb spotlight follows the pointer
+  var hero = document.querySelector('.hero');
+  if (hero && window.matchMedia('(hover: hover) and (pointer: fine)').matches) {
+    var frame = 0, px = 0, py = 0;
+    hero.addEventListener('pointermove', function (e) {
+      var r = hero.getBoundingClientRect();
+      px = e.clientX - r.left; py = e.clientY - r.top;
+      if (!frame) frame = requestAnimationFrame(function () {
+        hero.style.setProperty('--mx', px + 'px');
+        hero.style.setProperty('--my', py + 'px');
+        frame = 0;
+      });
+    });
+  }
+
   // Footer year
   document.getElementById('year').textContent = new Date().getFullYear();
 })();
