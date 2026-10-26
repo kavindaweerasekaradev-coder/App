@@ -32,15 +32,22 @@ def asset_version():
     return m.group(1) if m else "1"
 
 
-def card(p, label):
-    return f"""          <article class="rw-card">
-            <a class="rw-card__link" href="{p['slug']}.html">
+def card(p, num, prefix="", label=None):
+    """A Recent work card. Used on the home page and for previous/next links on project pages."""
+    href = prefix + "case-studies/" + p["slug"] + ".html" if prefix == "" else p["slug"] + ".html"
+    tags = "".join(f'<li class="rw-tag--{s}">{e(t)}</li>' if s else f"<li>{e(t)}</li>" for t, s in p["card_tags"])
+    meta = label or f"{p['year']} · {p['card_tags'][0][0]}"
+    return f"""          <article class="rw-card reveal" style="--accent: {p['accent']}">
+            <a class="rw-card__link" href="{href}">
               <div class="rw-card__media">
-                <img src="../{p['cover']}" alt="{e(p['name'])} cover" width="808" height="632" loading="lazy" />
+                <img src="{prefix}{p['cover']}" alt="{e(p['name'])} cover" width="808" height="632" loading="lazy" />
+                <ul class="rw-tags">{tags}</ul>
+                <span class="rw-card__view" aria-hidden="true">View {ARROW}</span>
               </div>
               <div class="rw-card__body">
-                <div>
-                  <p class="rw-card__meta">{label}</p>
+                <span class="rw-card__num" aria-hidden="true">{num:02d}</span>
+                <div class="rw-card__info">
+                  <p class="rw-card__meta">{e(meta)}</p>
                   <h3 class="rw-card__title">{e(p['name'])}</h3>
                   <p class="rw-card__desc">{e(p['card_text'])}</p>
                 </div>
@@ -48,6 +55,19 @@ def card(p, label):
               </div>
             </a>
           </article>"""
+
+
+def update_home(projects):
+    path = os.path.join(ROOT, "index.html")
+    with open(path, encoding="utf-8") as f:
+        page = f.read()
+    start = page.index("<!-- rw-cards:start")
+    start = page.index("\n", start) + 1
+    end = page.index("<!-- rw-cards:end -->")
+    cards = "\n\n".join(card(p, i) for i, p in enumerate(projects, 1))
+    with open(path, "w", encoding="utf-8") as f:
+        f.write(page[:start] + cards + "\n" + page[end:])
+    print("updated index.html (Recent work cards)")
 
 
 def lis(items):
@@ -323,8 +343,8 @@ def render(p, prev_p, next_p, version):
           </a>
         </div>
         <div class="rw-grid">
-{card(prev_p, 'Previous project')}
-{card(next_p, 'Next project')}
+{card(prev_p, prev_p['num'], '../', 'Previous project')}
+{card(next_p, next_p['num'], '../', 'Next project')}
         </div>
       </div>
     </section>
@@ -385,6 +405,9 @@ def main():
             with open(os.path.join(ROOT, p["case_study"]), encoding="utf-8") as f:
                 p["case_study_data"] = json.load(f)
 
+    for i, p in enumerate(projects, 1):
+        p["num"] = i
+    update_home(projects)
     version = asset_version()
     os.makedirs(OUT_DIR, exist_ok=True)
     for i, p in enumerate(projects):

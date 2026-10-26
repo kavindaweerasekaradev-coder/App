@@ -55,6 +55,9 @@ Chapters can also carry a `board` image (a full case-study board exported from F
 screens while the text stays available to screen readers) and a `board_ui` crop that phones show
 alongside the text. Ledgr's boards live in `assets/img/case-studies/ledgr/`.
 
+The Recent work cards in `index.html` (between the `rw-cards` markers) are generated from the same file,
+including each card's `accent` colour and `card_tags`, so rebuilding also updates the home page.
+
 To add a project, add an entry to `projects.json` with its Behance `behance_id`, rebuild, and add a card
 for it in the Recent work section of `index.html`.
 

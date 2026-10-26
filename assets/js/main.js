@@ -104,6 +104,15 @@
     }
   });
 
+  // Project cards: the "View" badge follows the pointer over the cover
+  document.querySelectorAll('.rw-card__media').forEach(function (media) {
+    media.addEventListener('pointermove', function (e) {
+      var r = media.getBoundingClientRect();
+      media.style.setProperty('--x', (e.clientX - r.left) + 'px');
+      media.style.setProperty('--y', (e.clientY - r.top) + 'px');
+    });
+  });
+
   // Footer year
   document.getElementById('year').textContent = new Date().getFullYear();
 })();
