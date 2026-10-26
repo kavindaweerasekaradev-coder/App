@@ -1,0 +1,191 @@
+[
+  {
+    "id": "overview",
+    "num": "01",
+    "label": "Overview",
+    "title": "Wanderly is a trip planning platform that brings destination discovery, day by day itinerary building, and trip tracking into one connected experience.",
+    "lead": "The goal was simple to state and hard to execute and let someone go from \"I want to go to Italy\" to a fully mapped, day by day plan without ever leaving the product or opening a spreadsheet.",
+    "blocks": [
+      {
+        "type": "quote",
+        "label": "This case study",
+        "text": "This case study walks through the problem, the design decisions behind the core flows, and the system that ties them together."
+      },
+      {
+        "type": "image",
+        "src": "assets/img/case-studies/wanderly/01-laptop.webp",
+        "alt": "Wanderly home page on a laptop",
+        "width": 1600,
+        "height": 1553
+      }
+    ]
+  },
+  {
+    "id": "problem",
+    "num": "02",
+    "label": "The problem",
+    "title": "Everything is disconnected, making trip planning feel complicated.",
+    "lead": "Planning a trip often means using too many different tools one for inspiration, another for the itinerary, spreadsheets for the budget, maps for directions, and chats for coordinating with others.",
+    "blocks": [
+      {
+        "type": "cards",
+        "items": [
+          {
+            "title": "Inspiration and planning are separate",
+            "text": "Users struggle to turn travel ideas into an actual plan."
+          },
+          {
+            "title": "Itineraries lack context",
+            "text": "Simple lists don’t show how places connect or whether the route is practical."
+          }
+        ]
+      },
+      {
+        "type": "quote",
+        "label": "As a result",
+        "text": "Users spend more time organizing their trip than enjoying the experience."
+      }
+    ]
+  },
+  {
+    "id": "goals",
+    "num": "03",
+    "label": "Goals",
+    "title": "Four goals guided the design.",
+    "blocks": [
+      {
+        "type": "steps",
+        "items": [
+          "Make trip planning fast and easy.",
+          "Let users build trips step by step.",
+          "Show trips on a map so users can understand the route.",
+          "Give users one place to manage all their trips."
+        ]
+      }
+    ]
+  },
+  {
+    "id": "design-system",
+    "num": "04",
+    "label": "Design system",
+    "title": "Plus Jakarta Sans",
+    "lead": "Typography isn't just about style—it's about creating clarity, hierarchy, and effortless readability throughout every interaction.",
+    "blocks": [
+      {
+        "type": "swatches",
+        "items": [
+          {
+            "name": "#696888",
+            "token": "",
+            "hex": "#696888"
+          },
+          {
+            "name": "#050505",
+            "token": "",
+            "hex": "#050505"
+          },
+          {
+            "name": "#FFFFFF",
+            "token": "",
+            "hex": "#FFFFFF"
+          },
+          {
+            "name": "#6200EE",
+            "token": "",
+            "hex": "#6200EE"
+          }
+        ]
+      },
+      {
+        "type": "chips",
+        "label": "Character",
+        "items": [
+          "Modern",
+          "Clean",
+          "Highly Readable"
+        ]
+      }
+    ]
+  },
+  {
+    "id": "desktop",
+    "num": "05",
+    "label": "Desktop view",
+    "title": "From \"I want to go to Italy\" to a fully mapped, day by day plan.",
+    "lead": "The core flows on desktop: discovering trips on the home page, creating a trip, adding itinerary items, planning each day on the map, managing trips and viewing trip details.",
+    "blocks": [
+      {
+        "type": "image",
+        "src": "assets/img/case-studies/wanderly/03-home.webp",
+        "alt": "Wanderly home page with trip search, trip types, trending trips and destinations",
+        "width": 1600,
+        "height": 3329
+      },
+      {
+        "type": "image",
+        "src": "assets/img/case-studies/wanderly/04-create-trip.webp",
+        "alt": "Create a New Trip dialog over the home page",
+        "width": 1600,
+        "height": 3168
+      },
+      {
+        "type": "image",
+        "src": "assets/img/case-studies/wanderly/05-add-item.webp",
+        "alt": "Trip planning with the Add New Item dialog",
+        "width": 1600,
+        "height": 2140
+      },
+      {
+        "type": "image",
+        "src": "assets/img/case-studies/wanderly/06-trip-planning.webp",
+        "alt": "Trip planning: day-by-day itinerary next to a map of the route",
+        "width": 1600,
+        "height": 2140
+      },
+      {
+        "type": "image",
+        "src": "assets/img/case-studies/wanderly/07-trips.webp",
+        "alt": "Trips page listing planned trips",
+        "width": 1600,
+        "height": 2228
+      },
+      {
+        "type": "image",
+        "src": "assets/img/case-studies/wanderly/08-trip-details.webp",
+        "alt": "Trip details page for Enchanting Italy Journey with itinerary, map and guide",
+        "width": 1600,
+        "height": 2872
+      },
+      {
+        "type": "image",
+        "src": "assets/img/case-studies/wanderly/11-laptop-trips.webp",
+        "alt": "Wanderly trips page on a laptop",
+        "width": 1600,
+        "height": 1021
+      }
+    ]
+  },
+  {
+    "id": "mobile",
+    "num": "06",
+    "label": "Mobile responsive",
+    "title": "The same flows, on mobile.",
+    "lead": "Home, trip creation, itinerary planning and trip details, adapted for small screens.",
+    "blocks": [
+      {
+        "type": "image",
+        "src": "assets/img/case-studies/wanderly/09-mobile-a.webp",
+        "alt": "Wanderly mobile screens: home, create trip, add item and trip details",
+        "width": 1600,
+        "height": 4183
+      },
+      {
+        "type": "image",
+        "src": "assets/img/case-studies/wanderly/10-mobile-b.webp",
+        "alt": "Wanderly mobile screens: trip planning and add item",
+        "width": 1600,
+        "height": 2793
+      }
+    ]
+  }
+]

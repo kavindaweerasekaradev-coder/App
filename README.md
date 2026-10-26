@@ -62,6 +62,12 @@ including each card's `accent` colour and `card_tags`, so rebuilding also update
 To add a project, add an entry to `projects.json` with its Behance `behance_id`, rebuild, and add a card
 for it in the Recent work section of `index.html`.
 
+## Importing a full Behance project
+
+Behance blocks simple requests, so the **Import a Behance project** workflow (Actions tab → Run workflow, paste
+the project URL) opens the page in headless Chrome and commits its text and full-size images to
+`assets/data/behance-raw/<id>/`. Use those to write the project's case-study file, then delete the raw images.
+
 ## Behance sync
 
 The **Sync Behance projects** GitHub Action reads the public RSS feed of
