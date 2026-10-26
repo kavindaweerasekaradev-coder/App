@@ -55,7 +55,12 @@
     ],
     "case_study": "assets/data/case-studies/ledgr.json",
     "extra_fonts": "Plus+Jakarta+Sans:wght@400;500;600",
-    "hero_title": "Ledgr"
+    "hero_title": "Ledgr",
+    "cover_image": {
+      "src": "assets/img/case-studies/ledgr/00-cover.webp",
+      "width": 1600,
+      "height": 1150
+    }
   },
   {
     "slug": "wanderly",

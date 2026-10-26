@@ -42,7 +42,12 @@
           "text": "One hero number, honest comparisons, insights in plain language, and every key action within one tap."
         }
       }
-    ]
+    ],
+    "board": {
+      "src": "assets/img/case-studies/ledgr/01-overview.webp",
+      "width": 1600,
+      "height": 1055
+    }
   },
   {
     "id": "problem",
@@ -72,7 +77,12 @@
           }
         ]
       }
-    ]
+    ],
+    "board": {
+      "src": "assets/img/case-studies/ledgr/02-problem.webp",
+      "width": 1600,
+      "height": 995
+    }
   },
   {
     "id": "audience",
@@ -118,7 +128,12 @@
           "…make logging and saving feel rewarding?"
         ]
       }
-    ]
+    ],
+    "board": {
+      "src": "assets/img/case-studies/ledgr/03-audience.webp",
+      "width": 1600,
+      "height": 960
+    }
   },
   {
     "id": "principles",
@@ -152,7 +167,12 @@
           }
         ]
       }
-    ]
+    ],
+    "board": {
+      "src": "assets/img/case-studies/ledgr/04-principles.webp",
+      "width": 1600,
+      "height": 2600
+    }
   },
   {
     "id": "ia",
@@ -225,7 +245,12 @@
           "Every number updates live"
         ]
       }
-    ]
+    ],
+    "board": {
+      "src": "assets/img/case-studies/ledgr/05-ia.webp",
+      "width": 1600,
+      "height": 1445
+    }
   },
   {
     "id": "layout",
@@ -261,7 +286,17 @@
           }
         ]
       }
-    ]
+    ],
+    "board": {
+      "src": "assets/img/case-studies/ledgr/06-layout.webp",
+      "width": 1600,
+      "height": 1569
+    },
+    "board_ui": {
+      "src": "assets/img/case-studies/ledgr/06-layout-ui.webp",
+      "width": 1000,
+      "height": 641
+    }
   },
   {
     "id": "colour",
@@ -332,7 +367,12 @@
           }
         ]
       }
-    ]
+    ],
+    "board": {
+      "src": "assets/img/case-studies/ledgr/07-colour.webp",
+      "width": 1600,
+      "height": 1309
+    }
   },
   {
     "id": "type",
@@ -394,7 +434,12 @@
           }
         ]
       }
-    ]
+    ],
+    "board": {
+      "src": "assets/img/case-studies/ledgr/08-type.webp",
+      "width": 1600,
+      "height": 1365
+    }
   },
   {
     "id": "overview-screen",
@@ -402,15 +447,17 @@
     "label": "Key screen · Overview",
     "title": "Everything that matters, nothing that doesn’t.",
     "lead": "Balance, progress, spending, income, activity, cash flow, budgets and accounts on one page, each card answering exactly one question.",
-    "blocks": [
-      {
-        "type": "image",
-        "src": "assets/img/behance/257350815.png",
-        "alt": "Ledgr overview dashboard on desktop and phone",
-        "width": 808,
-        "height": 632
-      }
-    ]
+    "blocks": [],
+    "board": {
+      "src": "assets/img/case-studies/ledgr/09-overview-screen.webp",
+      "width": 1600,
+      "height": 2056
+    },
+    "board_ui": {
+      "src": "assets/img/case-studies/ledgr/09-overview-screen-ui.webp",
+      "width": 1000,
+      "height": 1028
+    }
   },
   {
     "id": "spending",
@@ -440,7 +487,17 @@
           }
         ]
       }
-    ]
+    ],
+    "board": {
+      "src": "assets/img/case-studies/ledgr/10-spending.webp",
+      "width": 1600,
+      "height": 1340
+    },
+    "board_ui": {
+      "src": "assets/img/case-studies/ledgr/10-spending-ui.webp",
+      "width": 1000,
+      "height": 384
+    }
   },
   {
     "id": "log-flow",
@@ -462,7 +519,17 @@
         "label": "Errors that help",
         "text": "Validation runs on save, not while typing. Messages say what to do (“Enter an amount greater than zero”) and appear in a calm, tinted banner instead of a wall of red."
       }
-    ]
+    ],
+    "board": {
+      "src": "assets/img/case-studies/ledgr/11-log-flow.webp",
+      "width": 1600,
+      "height": 1512
+    },
+    "board_ui": {
+      "src": "assets/img/case-studies/ledgr/11-log-flow-ui.webp",
+      "width": 1000,
+      "height": 384
+    }
   },
   {
     "id": "budgets-goals",
@@ -482,7 +549,17 @@
           "text": "$34,792 saved toward $88,400 across 4 goals, with one-tap amounts to fund a goal."
         }
       }
-    ]
+    ],
+    "board": {
+      "src": "assets/img/case-studies/ledgr/12-budgets-goals.webp",
+      "width": 1600,
+      "height": 1263
+    },
+    "board_ui": {
+      "src": "assets/img/case-studies/ledgr/12-budgets-goals-ui.webp",
+      "width": 1000,
+      "height": 556
+    }
   },
   {
     "id": "dark-mode",
@@ -494,7 +571,17 @@
       {
         "type": "themes"
       }
-    ]
+    ],
+    "board": {
+      "src": "assets/img/case-studies/ledgr/13-dark-mode.webp",
+      "width": 1600,
+      "height": 1977
+    },
+    "board_ui": {
+      "src": "assets/img/case-studies/ledgr/13-dark-mode-ui.webp",
+      "width": 1000,
+      "height": 1049
+    }
   },
   {
     "id": "responsive",
@@ -523,7 +610,17 @@
           }
         ]
       }
-    ]
+    ],
+    "board": {
+      "src": "assets/img/case-studies/ledgr/14-responsive.webp",
+      "width": 1600,
+      "height": 1225
+    },
+    "board_ui": {
+      "src": "assets/img/case-studies/ledgr/14-responsive-ui.webp",
+      "width": 1000,
+      "height": 518
+    }
   },
   {
     "id": "accessibility",
@@ -561,7 +658,12 @@
           }
         ]
       }
-    ]
+    ],
+    "board": {
+      "src": "assets/img/case-studies/ledgr/15-accessibility.webp",
+      "width": 1600,
+      "height": 1075
+    }
   },
   {
     "id": "outcome",

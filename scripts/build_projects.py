@@ -157,19 +157,35 @@ def render_summary(p):
 """
 
 
-def chapters(cs):
-    nav = "".join(f'<a href="#{c["id"]}">{c["num"]} · {e(c["label"])}</a>' for c in cs)
-    body = "\n".join(
-        f"""      <section class="cs-chapter" id="{c['id']}">
-        <div class="container cs-chapter__inner">
-          <div class="cs-chapter__side reveal"><p class="label">{c['num']} · {e(c['label'])}</p></div>
-          <div class="cs-chapter__main">
-            <h2 class="cs-chapter__title reveal">{e(c['title'])}</h2>
-            <p class="cs-chapter__lead reveal">{e(c['lead'])}</p>
-            {''.join(f'<div class="cs-chapter__block reveal">{block(b)}</div>' for b in c['blocks'])}
+def chapter(c):
+    """One chapter. With a Figma board, wide screens show the board and keep the text for
+    screen readers; narrow screens show the text, plus a cropped screen image if there is one."""
+    board = c.get("board")
+    ui = c.get("board_ui")
+    board_html = (f'<figure class="cs-board" aria-hidden="true"><img src="../{board["src"]}" alt="" '
+                  f'width="{board["width"]}" height="{board["height"]}" loading="lazy" /></figure>') if board else ""
+    ui_html = (f'<figure class="cs-blk-image cs-board-ui"><img src="../{ui["src"]}" '
+               f'alt="{e(c["label"])} screens from the Ledgr prototype" width="{ui["width"]}" height="{ui["height"]}" '
+               f'loading="lazy" /></figure>') if ui else ""
+    blocks = "".join(f'<div class="cs-chapter__block reveal">{block(b)}</div>' for b in c["blocks"])
+    return f"""      <section class="cs-chapter{' has-board' if board else ''}" id="{c['id']}">
+        <div class="container">
+          {board_html}
+          <div class="cs-chapter__inner cs-chapter__text">
+            <div class="cs-chapter__side reveal"><p class="label">{c['num']} · {e(c['label'])}</p></div>
+            <div class="cs-chapter__main">
+              <h2 class="cs-chapter__title reveal">{e(c['title'])}</h2>
+              <p class="cs-chapter__lead reveal">{e(c['lead'])}</p>
+              {ui_html}{blocks}
+            </div>
           </div>
         </div>
-      </section>""" for c in cs)
+      </section>"""
+
+
+def chapters(cs):
+    nav = "".join(f'<a href="#{c["id"]}">{c["num"]} · {e(c["label"])}</a>' for c in cs)
+    body = "\n".join(chapter(c) for c in cs)
     return f"""    <!-- ===================== CASE STUDY ===================== -->
     <nav class="cs-chapters" aria-label="Case study chapters">
       <div class="container"><div class="cs-chapters__scroll">{nav}</div></div>
@@ -182,6 +198,7 @@ def chapters(cs):
 
 
 def render(p, prev_p, next_p, version):
+    cover = p.get("cover_image") or {"src": p["cover"], "width": 808, "height": 632}
     middle = chapters(p["case_study_data"]) if p.get("case_study_data") else render_summary(p)
     extra_fonts = "&family=" + p["extra_fonts"] if p.get("extra_fonts") else ""
     facts = "\n".join(
@@ -271,7 +288,7 @@ def render(p, prev_p, next_p, version):
     <!-- ===================== COVER ===================== -->
     <section class="container">
       <figure class="cs-page-cover reveal">
-        <img src="../{p['cover']}" alt="{e(p['name'])} cover" width="808" height="632" />
+        <img src="../{cover['src']}" alt="{e(p['name'])} cover" width="{cover['width']}" height="{cover['height']}" />
       </figure>
     </section>
 
