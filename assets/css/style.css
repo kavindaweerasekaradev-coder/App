@@ -230,15 +230,15 @@ button { font: inherit; color: inherit; background: none; border: 0; cursor: poi
 
 /* Logo strip */
 .logos { margin-top: clamp(56px, 7vw, 88px); overflow: hidden; -webkit-mask-image: linear-gradient(90deg, transparent, #000 10%, #000 90%, transparent); mask-image: linear-gradient(90deg, transparent, #000 10%, #000 90%, transparent); }
-.logos__track { display: flex; gap: 64px; width: max-content; animation: slide 36s linear infinite; }
-.logos__track span { display: inline-flex; align-items: center; gap: 10px; font-size: 20px; font-weight: 600; letter-spacing: -0.03em; color: #b4b4b4; white-space: nowrap; }
-.logo-glyph { width: 26px; height: 26px; background: #c4c4c4; flex-shrink: 0; }
-.logo-glyph--1 { border-radius: 50%; }
-.logo-glyph--2 { border-radius: 8px 50% 8px 50%; }
-.logo-glyph--3 { clip-path: polygon(50% 0, 100% 100%, 0 100%); }
-.logo-glyph--4 { border-radius: 6px; transform: rotate(45deg) scale(.8); }
-.logo-glyph--5 { border-radius: 50% 50% 6px 6px; }
-.logo-glyph--6 { clip-path: polygon(25% 0, 75% 0, 100% 50%, 75% 100%, 25% 100%, 0 50%); }
+.logos__track { display: flex; gap: 72px; width: max-content; animation: slide 36s linear infinite; }
+.logos__track { align-items: center; }
+.logo { display: inline-flex; align-items: center; gap: 12px; flex-shrink: 0; white-space: nowrap; filter: grayscale(1); opacity: .55; transition: filter .35s, opacity .35s; }
+.logo:hover { filter: none; opacity: 1; }
+.logo-img { display: block; width: auto; }
+.logo-img--sq { height: 52px; }
+.logo-img--wide { height: 38px; }
+.logo-img--nimi { height: 48px; }
+.logo-name { font-size: 20px; font-weight: 600; letter-spacing: -0.03em; color: var(--ink); }
 
 /* ---------- Recent work ---------- */
 .rw-head { display: flex; justify-content: space-between; align-items: flex-end; gap: 24px; flex-wrap: wrap; margin-bottom: clamp(32px, 4vw, 48px); }
@@ -631,6 +631,11 @@ details[open] .acc-icon::after { transform: rotate(0); }
   .stats { gap: 12px; }
   .stat { min-height: 0; gap: 28px; padding: 20px; }
   .stat__value { font-size: 40px; }
+  .logos__track { gap: 48px; }
+  .logo-img--sq { height: 42px; }
+  .logo-img--wide { height: 30px; }
+  .logo-img--nimi { height: 38px; }
+  .logo-name { font-size: 17px; }
   .services__visual { min-height: 500px; }
   .edu__arrow { display: none; }
   .cs-blk-facts, .cs-blk-duo, .cs-blk-persona__cols, .cs-blk-themes, .cs-blk-cards--2col { grid-template-columns: 1fr; }
