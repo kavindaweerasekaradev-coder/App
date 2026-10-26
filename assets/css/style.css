@@ -359,6 +359,7 @@ button { font: inherit; color: inherit; background: none; border: 0; cursor: poi
 .cs-blk-persona__avatar { width: 52px; height: 52px; border-radius: 50%; display: grid; place-items: center; background: var(--lime); font-size: 20px; font-weight: 600; flex-shrink: 0; }
 .cs-blk-persona h4 { font-size: 20px; font-weight: 600; letter-spacing: -0.02em; }
 .cs-blk-persona__head p { font-size: 14px; color: var(--text-muted); }
+.cs-blk-persona__bio { margin-top: 18px; color: var(--text-muted); }
 .cs-blk-persona__cols { margin-top: 24px; display: grid; grid-template-columns: 1fr 1fr; gap: 24px; }
 .cs-blk-persona ul, .cs-blk-list ul, .cs-blk-columns ul { margin-top: 10px; display: grid; gap: 8px; }
 .cs-blk-persona li, .cs-blk-list li, .cs-blk-columns li { position: relative; padding-left: 18px; color: var(--text-muted); font-size: 15px; }
@@ -413,6 +414,7 @@ button { font: inherit; color: inherit; background: none; border: 0; cursor: poi
 
 /* Figma boards: shown on wide screens; the text version stays for screen readers and phones */
 .cs-board { margin: 0; }
+.cs-board-ui img { width: auto; max-width: 100%; max-height: 72vh; margin: 0 auto; }
 .cs-board img { display: block; width: 100%; height: auto; border-radius: var(--radius-lg); box-shadow: 0 1px 2px rgba(14, 14, 14, .04), 0 12px 32px rgba(14, 14, 14, .06); }
 @media (min-width: 901px) {
   .cs-study { padding: 24px 0 clamp(48px, 6vw, 80px); }

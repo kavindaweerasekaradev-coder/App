@@ -78,6 +78,81 @@
     ]
   },
   {
+    "slug": "lumora",
+    "behance_id": "251811817",
+    "name": "Lumora",
+    "subtitle": "Gamified trivia learning app",
+    "kind": "UX case study",
+    "lead": "A gamified mobile trivia platform designed to help users learn, compete, and grow through engaging quizzes, rewards, and personalized challenges.",
+    "card_text": "A gamified, mobile-first trivia app that turns learning into a rewarding experience.",
+    "tags": [
+      "Mobile App",
+      "UX Design",
+      "UI Design",
+      "Gamification",
+      "EdTech"
+    ],
+    "facts": [
+      [
+        "Published",
+        "Jun 2026"
+      ],
+      [
+        "Category",
+        "Mobile App Design / EdTech"
+      ],
+      [
+        "Platform",
+        "Mobile app"
+      ],
+      [
+        "Designed by",
+        "Kavinda Weerasekara"
+      ]
+    ],
+    "statement": "Learn, compete and grow through an intuitive and enjoyable experience.",
+    "overview": [
+      "Lumora is a mobile-first trivia platform designed to transform learning into an engaging and rewarding experience.",
+      "This end-to-end UX case study covers the complete product design journey, including user research, information architecture, branding, design systems, wireframes, and high-fidelity mobile interfaces."
+    ],
+    "highlights_title": "Designed to keep learning fun",
+    "highlights": [
+      {
+        "title": "Gamification",
+        "text": "Game mechanics woven into learning."
+      },
+      {
+        "title": "Personalised challenges",
+        "text": "Challenges tailored to each learner."
+      },
+      {
+        "title": "Leaderboards",
+        "text": "Leaderboards that let learners compete."
+      },
+      {
+        "title": "Seamless rewards",
+        "text": "A reward system that celebrates progress."
+      }
+    ],
+    "accent": "#c9c2b6",
+    "card_tags": [
+      [
+        "Mobile app",
+        ""
+      ],
+      [
+        "Case study",
+        "dark"
+      ]
+    ],
+    "case_study": "assets/data/case-studies/lumora.json",
+    "cover_image": {
+      "src": "assets/img/case-studies/lumora/00-cover.webp",
+      "width": 1400,
+      "height": 806
+    }
+  },
+  {
     "slug": "wanderly",
     "behance_id": "255103139",
     "name": "Wanderly",
@@ -141,73 +216,6 @@
       [
         "New",
         "lime"
-      ]
-    ]
-  },
-  {
-    "slug": "lumora",
-    "behance_id": "251811817",
-    "name": "Lumora",
-    "subtitle": "Gamified trivia learning app",
-    "kind": "UX case study",
-    "lead": "A mobile-first trivia platform that turns learning into an engaging and rewarding experience.",
-    "card_text": "A gamified, mobile-first trivia app that turns learning into a rewarding experience.",
-    "tags": [
-      "Mobile app",
-      "Case study",
-      "Gamification"
-    ],
-    "facts": [
-      [
-        "Year",
-        "2026"
-      ],
-      [
-        "Type",
-        "End-to-end UX case study"
-      ],
-      [
-        "Platform",
-        "Mobile app"
-      ],
-      [
-        "Scope",
-        "Research to high-fidelity UI"
-      ]
-    ],
-    "statement": "Learn, compete and grow through an intuitive and enjoyable experience.",
-    "overview": [
-      "Lumora is a mobile-first trivia platform designed to transform learning into an engaging and rewarding experience.",
-      "This end-to-end UX case study covers the complete product design journey, including user research, information architecture, branding, design systems, wireframes, and high-fidelity mobile interfaces."
-    ],
-    "highlights_title": "Designed to keep learning fun",
-    "highlights": [
-      {
-        "title": "Gamification",
-        "text": "Game mechanics woven into learning."
-      },
-      {
-        "title": "Personalised challenges",
-        "text": "Challenges tailored to each learner."
-      },
-      {
-        "title": "Leaderboards",
-        "text": "Leaderboards that let learners compete."
-      },
-      {
-        "title": "Seamless rewards",
-        "text": "A reward system that celebrates progress."
-      }
-    ],
-    "accent": "#c9c2b6",
-    "card_tags": [
-      [
-        "Mobile app",
-        ""
-      ],
-      [
-        "Case study",
-        "dark"
       ]
     ]
   },
