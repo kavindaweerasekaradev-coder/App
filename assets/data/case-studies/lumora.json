@@ -1,0 +1,635 @@
+[
+  {
+    "id": "overview",
+    "num": "01",
+    "label": "Overview",
+    "title": "Transforming learning into an engaging trivia experience.",
+    "lead": "Lumora is a mobile-first trivia platform designed to make learning more engaging, interactive, and rewarding. By combining knowledge-based challenges with gamification mechanics, users can test their skills, compete with others, earn achievements, and track their growth through a seamless mobile experience.",
+    "blocks": [
+      {
+        "type": "quote",
+        "label": "The idea",
+        "text": "The goal was to create an experience that feels less like studying and more like playing, encouraging users to return daily and continuously expand their knowledge."
+      },
+      {
+        "type": "image",
+        "src": "assets/img/case-studies/lumora/01-mockup.webp",
+        "alt": "Lumora home screen on an iPhone",
+        "width": 1320,
+        "height": 933
+      },
+      {
+        "type": "image",
+        "src": "assets/img/case-studies/lumora/02-brand.webp",
+        "alt": "Lumora logo with the tagline Learn. Play. Compete. Grow, next to the Invite Friends screen",
+        "width": 1320,
+        "height": 713
+      }
+    ]
+  },
+  {
+    "id": "typography",
+    "num": "02",
+    "label": "Typography",
+    "title": "Plus Jakarta Sans",
+    "lead": "Typography isn't just about style—it's about creating clarity, hierarchy, and effortless readability throughout every interaction.",
+    "board": {
+      "src": "assets/img/case-studies/lumora/03-typography.webp",
+      "width": 1320,
+      "height": 687
+    },
+    "blocks": [
+      {
+        "type": "chips",
+        "label": "Character",
+        "items": [
+          "Modern",
+          "Clean",
+          "Highly Readable"
+        ]
+      }
+    ]
+  },
+  {
+    "id": "challenge",
+    "num": "03",
+    "label": "The challenge",
+    "title": "Many learning and trivia applications struggle to keep users engaged after the first few interactions.",
+    "lead": "As a result, users often abandon learning platforms before developing long-term habits.",
+    "board": {
+      "src": "assets/img/case-studies/lumora/04-challenge.webp",
+      "width": 1399,
+      "height": 699
+    },
+    "blocks": [
+      {
+        "type": "list",
+        "title": "Common challenges included",
+        "items": [
+          "Low retention rates",
+          "Repetitive learning experiences",
+          "Lack of meaningful rewards",
+          "Weak competitive elements",
+          "Limited personalization",
+          "Poor visibility of progress"
+        ]
+      }
+    ]
+  },
+  {
+    "id": "goal",
+    "num": "04",
+    "label": "The goal",
+    "title": "The primary objective was to design a platform that motivates users to learn consistently through engagement, competition, and rewards.",
+    "board": {
+      "src": "assets/img/case-studies/lumora/05-goal.webp",
+      "width": 1399,
+      "height": 890
+    },
+    "board_ui": {
+      "src": "assets/img/case-studies/lumora/05-goal-ui.webp",
+      "width": 455,
+      "height": 830
+    },
+    "blocks": [
+      {
+        "type": "list",
+        "title": "Objectives",
+        "items": [
+          "Increase user engagement",
+          "Encourage daily participation",
+          "Create meaningful progression",
+          "Improve quiz completion rates",
+          "Foster healthy competition",
+          "Build long-term learning habits"
+        ]
+      }
+    ]
+  },
+  {
+    "id": "research",
+    "num": "05",
+    "label": "Research & discovery",
+    "title": "Research was conducted by analyzing existing trivia platforms, studying user behavior, and identifying factors that contribute to user motivation.",
+    "board": {
+      "src": "assets/img/case-studies/lumora/06-research.webp",
+      "width": 1320,
+      "height": 1142
+    },
+    "blocks": [
+      {
+        "type": "cards",
+        "items": [
+          {
+            "title": "Users Prefer Short Sessions",
+            "text": "Users were more likely to engage with quizzes that could be completed within a few minutes."
+          },
+          {
+            "title": "Progress Drives Motivation",
+            "text": "Visible achievements and progress indicators encouraged continued participation."
+          },
+          {
+            "title": "Competition Increases Retention",
+            "text": "Leaderboards and rankings created a sense of achievement and encouraged repeat visits."
+          },
+          {
+            "title": "Rewards Build Habits",
+            "text": "Badges, points, streaks, and achievements increased user motivation over time."
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "id": "problem",
+    "num": "06",
+    "label": "Problem & solution",
+    "title": "How might we create a learning platform that transforms knowledge acquisition into a rewarding and competitive experience while maintaining simplicity and accessibility?",
+    "lead": "Lumora combines personalized learning paths, engaging trivia challenges, competitive rankings, and achievement systems into a unified mobile experience.",
+    "board": {
+      "src": "assets/img/case-studies/lumora/07-problem.webp",
+      "width": 1321,
+      "height": 1484
+    },
+    "board_ui": {
+      "src": "assets/img/case-studies/lumora/07-problem-ui.webp",
+      "width": 1000,
+      "height": 646
+    },
+    "blocks": [
+      {
+        "type": "list",
+        "title": "The platform allows users to",
+        "items": [
+          "Discover quizzes based on interests",
+          "Participate in daily challenges",
+          "Earn points and achievements",
+          "Compete on leaderboards",
+          "Track learning progress"
+        ]
+      }
+    ]
+  },
+  {
+    "id": "ia",
+    "num": "07",
+    "label": "Information architecture",
+    "title": "Eight sections, reachable from the primary navigation.",
+    "board": {
+      "src": "assets/img/case-studies/lumora/08-ia.webp",
+      "width": 1320,
+      "height": 590
+    },
+    "blocks": [
+      {
+        "type": "columns",
+        "items": [
+          {
+            "title": "Authentication",
+            "items": [
+              "Splash Screen",
+              "Welcome",
+              "Login",
+              "Sign Up",
+              "Forgot Password"
+            ]
+          },
+          {
+            "title": "Home",
+            "items": [
+              "Daily Challenge",
+              "Recommended",
+              "Categories",
+              "Trending Quizzes",
+              "Continue Playing",
+              "Search"
+            ]
+          },
+          {
+            "title": "Categories",
+            "items": [
+              "All Categories",
+              "Sub Categories",
+              "Quiz List",
+              "Filters"
+            ]
+          },
+          {
+            "title": "Quiz",
+            "items": [
+              "Quiz Introduction",
+              "Questions",
+              "Answer Feedback",
+              "Progress Tracking",
+              "Quiz Results"
+            ]
+          },
+          {
+            "title": "Rewards",
+            "items": [
+              "XP & Coins",
+              "Achievements",
+              "Badges",
+              "Levels",
+              "Daily Streak",
+              "Claim Rewards"
+            ]
+          },
+          {
+            "title": "Leaderboard",
+            "items": [
+              "Global Leaderboard",
+              "Friends Leaderboard",
+              "Weekly Leaderboard",
+              "Top Players"
+            ]
+          },
+          {
+            "title": "Profile",
+            "items": [
+              "Overview",
+              "Statistics",
+              "Quiz History",
+              "Achievements",
+              "Saved Quizzes",
+              "Edit Profile"
+            ]
+          },
+          {
+            "title": "Settings",
+            "items": [
+              "Account Settings",
+              "Notifications",
+              "Privacy",
+              "Help & Support",
+              "About Lumora",
+              "Logout"
+            ]
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "id": "onboarding",
+    "num": "08",
+    "label": "Onboarding",
+    "title": "The onboarding process introduces users to the platform while collecting preference data to personalize content recommendations.",
+    "board": {
+      "src": "assets/img/case-studies/lumora/09-onboarding.webp",
+      "width": 1321,
+      "height": 2322
+    },
+    "board_ui": {
+      "src": "assets/img/case-studies/lumora/09-onboarding-ui.webp",
+      "width": 1000,
+      "height": 1182
+    },
+    "blocks": [
+      {
+        "type": "list",
+        "title": "Objectives",
+        "items": [
+          "Reduce friction",
+          "Increase personalization",
+          "Improve first-session engagement"
+        ]
+      }
+    ]
+  },
+  {
+    "id": "personas",
+    "num": "09",
+    "label": "User personas",
+    "title": "Two learners, two ways to play.",
+    "board": {
+      "src": "assets/img/case-studies/lumora/10-personas.webp",
+      "width": 1361,
+      "height": 1840
+    },
+    "blocks": [
+      {
+        "type": "persona",
+        "name": "Emily Carter, the Competitive Learner",
+        "meta": "Age 23 · Austin, Texas, USA · University Student",
+        "bio": "Emily enjoys learning through interactive experiences during her commute and lunch breaks. She is highly motivated by achievements, streaks, and friendly competition, making trivia apps part of her daily routine.",
+        "cols": [
+          {
+            "title": "Goals",
+            "items": [
+              "Learn new topics every day",
+              "Improve general knowledge",
+              "Maintain daily learning streaks",
+              "Compete on leaderboards"
+            ]
+          },
+          {
+            "title": "Needs",
+            "items": [
+              "Achievement system",
+              "Fast and intuitive experience",
+              "Progress dashboard"
+            ]
+          },
+          {
+            "title": "Frustrations",
+            "items": [
+              "Repetitive quizzes",
+              "Lack of motivation",
+              "Difficult quiz navigation",
+              "No visible progress tracking"
+            ]
+          }
+        ]
+      },
+      {
+        "type": "persona",
+        "name": "David Fernando, the Casual Professional",
+        "meta": "Age 31 · Seattle, USA · Software Engineer",
+        "bio": "David enjoys spending a few minutes each day learning something new during breaks. He values simplicity and prefers quick quiz sessions that fit into his busy schedule.",
+        "cols": [
+          {
+            "title": "Goals",
+            "items": [
+              "Learn in short sessions",
+              "Discover interesting topics",
+              "Track learning progress",
+              "Stay mentally active"
+            ]
+          },
+          {
+            "title": "Needs",
+            "items": [
+              "Quick access to quizzes",
+              "Personalized content",
+              "Simple navigation",
+              "Performance insights"
+            ]
+          },
+          {
+            "title": "Frustrations",
+            "items": [
+              "Long onboarding",
+              "Complex interfaces",
+              "Time-consuming quizzes",
+              "Poor recommendations"
+            ]
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "id": "authentication",
+    "num": "10",
+    "label": "Authentication",
+    "title": "The authentication experience was designed to provide quick and seamless access.",
+    "board": {
+      "src": "assets/img/case-studies/lumora/11-auth.webp",
+      "width": 1320,
+      "height": 1333
+    },
+    "board_ui": {
+      "src": "assets/img/case-studies/lumora/11-auth-ui.webp",
+      "width": 1000,
+      "height": 606
+    },
+    "blocks": [
+      {
+        "type": "chips",
+        "label": "Features",
+        "items": [
+          "Login",
+          "Registration",
+          "Password Recovery"
+        ]
+      }
+    ]
+  },
+  {
+    "id": "home",
+    "num": "11",
+    "label": "Personalized home",
+    "title": "The dashboard surfaces relevant quizzes, daily challenges, and recommendations based on user preferences.",
+    "lead": "The dashboard helps users immediately continue their learning journey.",
+    "board": {
+      "src": "assets/img/case-studies/lumora/12-home.webp",
+      "width": 1320,
+      "height": 1460
+    },
+    "board_ui": {
+      "src": "assets/img/case-studies/lumora/12-home-ui.webp",
+      "width": 1000,
+      "height": 667
+    },
+    "blocks": [
+      {
+        "type": "list",
+        "title": "Features",
+        "items": [
+          "Personalized Recommendations",
+          "Daily Challenges",
+          "Trending Categories",
+          "Progress Overview",
+          "Quick Start Quiz"
+        ]
+      }
+    ]
+  },
+  {
+    "id": "quiz",
+    "num": "12",
+    "label": "Quiz experience",
+    "title": "The quiz experience became the core focus of the product.",
+    "board": {
+      "src": "assets/img/case-studies/lumora/13-quiz.webp",
+      "width": 1320,
+      "height": 1320
+    },
+    "board_ui": {
+      "src": "assets/img/case-studies/lumora/13-quiz-ui.webp",
+      "width": 1000,
+      "height": 572
+    },
+    "blocks": [
+      {
+        "type": "columns",
+        "items": [
+          {
+            "title": "Design objectives",
+            "items": [
+              "Maintain concentration",
+              "Reduce distractions",
+              "Encourage completion",
+              "Progress Overview",
+              "Quick Start Quiz"
+            ]
+          },
+          {
+            "title": "Features",
+            "items": [
+              "Progress Tracking",
+              "Instant Feedback",
+              "Timer Support",
+              "Question Navigation",
+              "Visual Answer States"
+            ]
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "id": "results",
+    "num": "13",
+    "label": "Results & performance",
+    "title": "After each quiz, users receive a detailed performance breakdown.",
+    "lead": "This helps users understand their strengths and areas for improvement.",
+    "board": {
+      "src": "assets/img/case-studies/lumora/14-results.webp",
+      "width": 1320,
+      "height": 1514
+    },
+    "board_ui": {
+      "src": "assets/img/case-studies/lumora/14-results-ui.webp",
+      "width": 1000,
+      "height": 670
+    },
+    "blocks": [
+      {
+        "type": "list",
+        "title": "Information included",
+        "items": [
+          "Final Score",
+          "Correct Answers",
+          "Accuracy Rate",
+          "XP Earned",
+          "Achievement Progress"
+        ]
+      }
+    ]
+  },
+  {
+    "id": "leaderboards",
+    "num": "14",
+    "label": "Leaderboards",
+    "title": "Leaderboards create healthy competition among users.",
+    "lead": "Competition encourages users to continue improving and return regularly.",
+    "board": {
+      "src": "assets/img/case-studies/lumora/15-leaderboards.webp",
+      "width": 1320,
+      "height": 2511
+    },
+    "board_ui": {
+      "src": "assets/img/case-studies/lumora/15-leaderboards-ui.webp",
+      "width": 1000,
+      "height": 1512
+    },
+    "blocks": [
+      {
+        "type": "chips",
+        "label": "Ranking types",
+        "items": [
+          "Global Rankings",
+          "Weekly Rankings",
+          "Friends Rankings"
+        ]
+      }
+    ]
+  },
+  {
+    "id": "wallet",
+    "num": "15",
+    "label": "Wallet",
+    "title": "The Wallet screen centralizes users' rewards, balances, and transaction history into a single, easy-to-navigate interface.",
+    "lead": "By prioritizing clarity and transparency, users can quickly monitor their earnings, redeem rewards, and stay motivated through visible progress.",
+    "board": {
+      "src": "assets/img/case-studies/lumora/16-wallet.webp",
+      "width": 1320,
+      "height": 1449
+    },
+    "board_ui": {
+      "src": "assets/img/case-studies/lumora/16-wallet-ui.webp",
+      "width": 1000,
+      "height": 577
+    },
+    "blocks": [
+      {
+        "type": "list",
+        "title": "Highlights",
+        "items": [
+          "Real time balance",
+          "Reward redemption",
+          "Clean information hierarchy",
+          "Transparent reward tracking"
+        ]
+      }
+    ]
+  },
+  {
+    "id": "branding",
+    "num": "16",
+    "label": "Branding",
+    "title": "A strong product deserves a memorable identity.",
+    "lead": "The Lumora brand was designed to be flexible across both digital and physical mediums, creating a consistent experience wherever users interact with the brand.",
+    "board": {
+      "src": "assets/img/case-studies/lumora/17-branding.webp",
+      "width": 1320,
+      "height": 1975
+    },
+    "board_ui": {
+      "src": "assets/img/case-studies/lumora/17-branding-ui.webp",
+      "width": 1000,
+      "height": 1299
+    },
+    "blocks": []
+  },
+  {
+    "id": "outcome",
+    "num": "17",
+    "label": "Outcome",
+    "title": "The final product delivers a seamless learning experience where users can discover quizzes, test their knowledge, compete with others, and celebrate achievements through a visually engaging interface.",
+    "lead": "The design balances simplicity with motivation, ensuring users remain focused while enjoying every interaction.",
+    "blocks": [
+      {
+        "type": "columns",
+        "items": [
+          {
+            "title": "User impact",
+            "items": [
+              "Increased engagement through gamification",
+              "Clear visibility of learning progress",
+              "Improved quiz completion rates",
+              "Stronger motivation through rewards",
+              "More enjoyable learning experience"
+            ]
+          },
+          {
+            "title": "Business impact",
+            "items": [
+              "Higher daily active users",
+              "Improved retention",
+              "Longer average session duration",
+              "Increased challenge participation",
+              "Scalable product foundation"
+            ]
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "id": "reflection",
+    "num": "18",
+    "label": "Reflection",
+    "title": "Designing Lumora reinforced the importance of creating products that motivate users beyond functionality.",
+    "lead": "Rather than treating quizzes as isolated tasks, the experience was designed as a continuous journey where every interaction contributes to personal growth.",
+    "blocks": [
+      {
+        "type": "quote",
+        "label": "Curious minds never stop learning.",
+        "text": "The combination of personalization, progression, and competition transforms learning into a habit users genuinely enjoy."
+      }
+    ]
+  }
+]

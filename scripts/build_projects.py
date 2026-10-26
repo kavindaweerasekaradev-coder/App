@@ -93,8 +93,10 @@ def block(b):
             for n, i in enumerate(b["items"], 1)) + "</ol>"
     if t == "persona":
         cols = "".join(f'<div><p class="cs-blk-label">{e(c["title"])}</p><ul>{lis(c["items"])}</ul></div>' for c in b["cols"])
-        return (f'<div class="cs-blk-persona"><div class="cs-blk-persona__head"><span class="cs-blk-persona__avatar" aria-hidden="true">A</span>'
-                f'<div><h4>{e(b["name"])}</h4><p>{e(b["meta"])}</p></div></div><div class="cs-blk-persona__cols">{cols}</div></div>')
+        initial = b.get("initial") or b["name"].strip("“”\"' ")[0]
+        bio = f'<p class="cs-blk-persona__bio">{e(b["bio"])}</p>' if b.get("bio") else ""
+        return (f'<div class="cs-blk-persona"><div class="cs-blk-persona__head"><span class="cs-blk-persona__avatar" aria-hidden="true">{e(initial)}</span>'
+                f'<div><h4>{e(b["name"])}</h4><p>{e(b["meta"])}</p></div></div>{bio}<div class="cs-blk-persona__cols">{cols}</div></div>')
     if t == "quote":
         return f'<blockquote class="cs-blk-quote"><p class="cs-blk-label">{e(b["label"])}</p><p>{e(b["text"])}</p></blockquote>'
     if t == "list":
@@ -192,7 +194,7 @@ def chapter(c):
             <div class="cs-chapter__side reveal"><p class="label">{c['num']} · {e(c['label'])}</p></div>
             <div class="cs-chapter__main">
               <h2 class="cs-chapter__title reveal">{e(c['title'])}</h2>
-              <p class="cs-chapter__lead reveal">{e(c['lead'])}</p>
+              {f'<p class="cs-chapter__lead reveal">{e(c["lead"])}</p>' if c.get("lead") else ""}
               {ui_html}{blocks}
             </div>
           </div>
