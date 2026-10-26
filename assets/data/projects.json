@@ -157,13 +157,14 @@
     "behance_id": "255103139",
     "name": "Wanderly",
     "subtitle": "Making travel planning simple",
-    "kind": "UI/UX design",
+    "kind": "UI/UX case study",
     "lead": "A modern travel discovery and planning platform that makes trip planning simple, inspiring and effortless.",
     "card_text": "A travel discovery and planning platform that makes trip planning simple and inspiring.",
     "tags": [
-      "Travel platform",
-      "Planning",
-      "UI/UX"
+      "Product Design",
+      "UI/UX",
+      "Web Design",
+      "Travel"
     ],
     "facts": [
       [
@@ -171,16 +172,16 @@
         "2026"
       ],
       [
-        "Type",
-        "UI/UX design"
+        "Role",
+        "Product Designer (End-to-end UX/UI)"
       ],
       [
-        "Product",
-        "Travel discovery & planning platform"
+        "Platform",
+        "Responsive Web, desktop-first"
       ],
       [
-        "Focus",
-        "Trip planning"
+        "Tools",
+        "Figma, FigJam"
       ]
     ],
     "statement": "Discover, save, plan and visualise a whole trip in one seamless experience.",
@@ -217,7 +218,13 @@
         "New",
         "lime"
       ]
-    ]
+    ],
+    "case_study": "assets/data/case-studies/wanderly.json",
+    "cover_image": {
+      "src": "assets/img/case-studies/wanderly/00-cover.webp",
+      "width": 1600,
+      "height": 792
+    }
   },
   {
     "slug": "flowsync",

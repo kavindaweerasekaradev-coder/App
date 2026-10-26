@@ -114,7 +114,7 @@ def block(b):
     if t == "swatches":
         return '<ul class="cs-blk-swatches">' + "".join(
             f'<li><span class="cs-blk-swatches__chip" style="background:{i["hex"]}"></span>'
-            f'<strong>{e(i["name"])}</strong><code>{e(i["token"])}</code><code>{e(i["hex"])}</code></li>'
+            f'<strong>{e(i["name"])}</strong>' + "".join(f'<code>{e(v)}</code>' for v in (i.get("token"), i["hex"]) if v and v != i["name"]) + '</li>'
             for i in b["items"]) + "</ul>"
     if t == "typescale":
         return '<ul class="cs-blk-type">' + "".join(
