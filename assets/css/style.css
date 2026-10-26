@@ -54,9 +54,22 @@ a { color: inherit; text-decoration: none; }
 ul, ol { margin: 0; padding: 0; list-style: none; }
 h1, h2, h3 { margin: 0; line-height: 1.05; letter-spacing: -0.04em; font-weight: 500; }
 p { margin: 0; }
-button { font: inherit; color: inherit; background: none; border: 0; cursor: pointer; }
+button { font: inherit; color: inherit; background: none; border: 0; }
 :focus-visible { outline: 2px solid var(--blue); outline-offset: 3px; border-radius: 8px; }
 ::selection { background: var(--lime); color: var(--ink); }
+
+/* Bee cursor (assets/img/cursor). The hotspot is the tip of the antennae. */
+html {
+  cursor: url(../img/cursor/bee.png) 4 4, auto;
+  cursor: -webkit-image-set(url(../img/cursor/bee.png) 1x, url(../img/cursor/bee@2x.png) 2x) 4 4, auto;
+  cursor: image-set(url(../img/cursor/bee.png) 1x, url(../img/cursor/bee@2x.png) 2x) 4 4, auto;
+}
+a, button, summary, label, [role="button"] {
+  cursor: url(../img/cursor/bee-hover.png) 4 4, pointer;
+  cursor: -webkit-image-set(url(../img/cursor/bee-hover.png) 1x, url(../img/cursor/bee-hover@2x.png) 2x) 4 4, pointer;
+  cursor: image-set(url(../img/cursor/bee-hover.png) 1x, url(../img/cursor/bee-hover@2x.png) 2x) 4 4, pointer;
+}
+input, textarea, [contenteditable] { cursor: text; }
 
 .container { width: 100%; max-width: var(--container); margin: 0 auto; padding: 0 var(--gutter); }
 .soft { color: var(--text-subtle); }
@@ -467,7 +480,7 @@ button { font: inherit; color: inherit; background: none; border: 0; cursor: poi
 .accordion details { border-bottom: 1px solid #d9d9d5; }
 .accordion summary {
   display: flex; justify-content: space-between; align-items: center; gap: 16px;
-  padding: 20px 0; cursor: pointer; list-style: none;
+  padding: 20px 0; list-style: none;
   font-size: clamp(17px, 1.6vw, 20px); font-weight: 500; letter-spacing: -0.02em;
 }
 .accordion summary::-webkit-details-marker { display: none; }
