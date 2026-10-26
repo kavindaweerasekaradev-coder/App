@@ -128,8 +128,8 @@ button { font: inherit; color: inherit; background: none; border: 0; cursor: poi
 .nav.is-scrolled { border-bottom-color: var(--border); }
 .nav__inner { display: flex; align-items: center; justify-content: space-between; height: 76px; gap: 24px; }
 .nav__logo { display: inline-flex; align-items: center; gap: 10px; font-size: 20px; font-weight: 600; letter-spacing: -0.03em; }
-.nav__logo-mark { width: 34px; height: 34px; border-radius: 10px; display: grid; place-items: center; background: var(--ink); }
-.nav__logo-mark svg { width: 18px; fill: var(--lime); }
+.nav__logo-mark { width: 36px; height: 36px; border-radius: 50%; object-fit: cover; background: var(--ink); box-shadow: 0 0 0 2px #fff, 0 0 0 3.5px var(--lime); transition: transform .3s var(--ease); }
+.nav__logo:hover .nav__logo-mark { transform: rotate(-8deg) scale(1.05); }
 .nav__links { display: flex; gap: 32px; }
 .nav__links a {
   font-size: 12px; letter-spacing: .1em; text-transform: uppercase;
