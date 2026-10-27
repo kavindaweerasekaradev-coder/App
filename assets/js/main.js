@@ -88,6 +88,37 @@
     document.querySelectorAll('.reveal').forEach(function (el) { el.classList.add('is-visible'); });
   }
 
+  // Experience: role tabs + career bar
+  var careerTabs = document.querySelectorAll('.career__tab');
+  if (careerTabs.length) {
+    var segs = document.querySelectorAll('.career-bar__seg');
+    var selectJob = function (id, focus) {
+      careerTabs.forEach(function (t) {
+        var on = t.dataset.job === id;
+        t.setAttribute('aria-selected', String(on));
+        t.tabIndex = on ? 0 : -1;
+        document.getElementById(t.getAttribute('aria-controls')).hidden = !on;
+        if (on) {
+          if (focus) t.focus();
+          t.parentNode.scrollTo({ left: t.offsetLeft - 10, behavior: 'smooth' });
+        }
+      });
+      segs.forEach(function (s) { s.classList.toggle('is-active', s.dataset.job === id); });
+    };
+    careerTabs.forEach(function (t, i) {
+      t.addEventListener('click', function () { selectJob(t.dataset.job); });
+      t.addEventListener('keydown', function (e) {
+        var k = { ArrowDown: 1, ArrowRight: 1, ArrowUp: -1, ArrowLeft: -1 }[e.key];
+        if (e.key === 'Home') k = -i; else if (e.key === 'End') k = careerTabs.length - 1 - i;
+        if (k === undefined) return;
+        e.preventDefault();
+        selectJob(careerTabs[(i + k + careerTabs.length) % careerTabs.length].dataset.job, true);
+      });
+    });
+    segs.forEach(function (s) { s.addEventListener('click', function () { selectJob(s.dataset.job); }); });
+    selectJob(careerTabs[0].dataset.job);
+  }
+
   // Copy email
   var copyBtn = document.getElementById('copy-email');
   copyBtn.addEventListener('click', function () {

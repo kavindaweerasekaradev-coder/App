@@ -19,7 +19,7 @@
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet" />
-  <link rel="stylesheet" href="assets/css/style.css?v=20261027g" />
+  <link rel="stylesheet" href="assets/css/style.css?v=20261027h" />
 </head>
 <body>
   <a class="skip-link" href="#main">Skip to content</a>
@@ -398,49 +398,77 @@
           </a>
         </div>
 
-        <div class="jobs">
-          <article class="job reveal">
-            <div class="job__top"><span class="date-pill">Apr 2025 — Aug 2026</span><span class="job__no">01</span></div>
+        <div class="career reveal">
+          <div class="career-bar" aria-hidden="true">
+            <div class="career-bar__track"><button type="button" class="career-bar__seg" style="--m:7" data-job="arimac" tabindex="-1" aria-hidden="true"><span>Arimac</span></button><button type="button" class="career-bar__seg" style="--m:21" data-job="empite" tabindex="-1" aria-hidden="true"><span>Empite</span></button><span class="career-bar__gap" style="--m:2"></span><button type="button" class="career-bar__seg" style="--m:17" data-job="nimi" tabindex="-1" aria-hidden="true"><span>Nimi Tech</span></button><button type="button" class="career-bar__seg" style="--m:17" data-job="axis" tabindex="-1" aria-hidden="true"><span>Axis Tech</span></button></div>
+            <div class="career-bar__axis"><span style="left:0.00%">2021</span><span style="left:12.50%">2022</span><span style="left:31.25%">2023</span><span style="left:50.00%">2024</span><span style="left:68.75%">2025</span><span style="left:87.50%">2026</span><span class="career-bar__now">Today</span></div>
+          </div>
+          <div class="career__body">
+            <div class="career__tabs" role="tablist" aria-label="Roles">
+            <button type="button" class="career__tab" role="tab" id="tab-axis" aria-controls="job-axis" aria-selected="true" data-job="axis">
+              <span class="career__logo"><img src="assets/img/logos/axis-tech.png" alt="" width="121" height="120" loading="lazy" /></span>
+              <span class="career__tab-text"><strong>Senior UI/UX Designer</strong><span>Axis Tech</span></span>
+              <span class="career__tab-date">2025–26</span>
+            </button>
+            <button type="button" class="career__tab" role="tab" id="tab-nimi" aria-controls="job-nimi" aria-selected="false" tabindex="-1" data-job="nimi">
+              <span class="career__logo"><img src="assets/img/logos/nimi-tech.svg" alt="" width="1359" height="719" loading="lazy" /></span>
+              <span class="career__tab-text"><strong>UI/UX Designer</strong><span>Nimi Tech</span></span>
+              <span class="career__tab-date">2023–25</span>
+            </button>
+            <button type="button" class="career__tab" role="tab" id="tab-empite" aria-controls="job-empite" aria-selected="false" tabindex="-1" data-job="empite">
+              <span class="career__logo"><img src="assets/img/logos/empite.png" alt="" width="260" height="120" loading="lazy" /></span>
+              <span class="career__tab-text"><strong>UI/UX Designer</strong><span>Empite</span></span>
+              <span class="career__tab-date">2021–23</span>
+            </button>
+            <button type="button" class="career__tab" role="tab" id="tab-arimac" aria-controls="job-arimac" aria-selected="false" tabindex="-1" data-job="arimac">
+              <span class="career__logo"><img src="assets/img/logos/arimac.png" alt="" width="124" height="120" loading="lazy" /></span>
+              <span class="career__tab-text"><strong>Intern UI/UX Designer</strong><span>Arimac</span></span>
+              <span class="career__tab-date">2021</span>
+            </button>
+            </div>
+            <div class="career__panels">
+          <article class="career__panel" role="tabpanel" id="job-axis" aria-labelledby="tab-axis">
+            <span class="career__ghost" aria-hidden="true">2025</span>
+            <div class="career__panel-top">
+              <span class="career__dates">Apr 2025 — Aug 2026</span>
+              <span class="career__dur">1 yr 5 mos</span>
+            </div>
             <h3>Senior UI/UX Designer</h3>
-            <p class="job__company">Axis Tech Lanka (Pvt) Ltd</p>
-            <ul>
-              <li>Introduced AI-powered workflows as part of digital transformation initiatives.</li>
-              <li>Delivered a full-scale redesign of the product across mobile and web.</li>
-              <li>Built a full design system of components, design tokens and UI patterns.</li>
-              <li>Created a dashboard design system in Figma with 100+ reusable components.</li>
-            </ul>
+            <p class="career__company"><span class="career__logo career__logo--sm"><img src="assets/img/logos/axis-tech.png" alt="" width="121" height="120" loading="lazy" /></span>Axis Tech Lanka (Pvt) Ltd</p>
+            <ol class="career__list"><li><span>01</span>Introduced AI-powered workflows as part of digital transformation initiatives.</li><li><span>02</span>Delivered a full-scale redesign of the product across mobile and web.</li><li><span>03</span>Built a full design system of components, design tokens and UI patterns.</li><li><span>04</span>Created a dashboard design system in Figma with 100+ reusable components.</li></ol>
           </article>
-          <article class="job reveal">
-            <div class="job__top"><span class="date-pill">Nov 2023 — Mar 2025</span><span class="job__no">02</span></div>
+          <article class="career__panel" role="tabpanel" id="job-nimi" aria-labelledby="tab-nimi" hidden>
+            <span class="career__ghost" aria-hidden="true">2023</span>
+            <div class="career__panel-top">
+              <span class="career__dates">Nov 2023 — Mar 2025</span>
+              <span class="career__dur">1 yr 5 mos</span>
+            </div>
             <h3>UI/UX Designer</h3>
-            <p class="job__company">Nimi Tech Limited</p>
-            <ul>
-              <li>Provided creative direction and design feedback aligned with business goals.</li>
-              <li>Ran usability testing and iterated designs based on user insights.</li>
-              <li>Managed team workload and delegated tasks by strengths and priorities.</li>
-              <li>Partnered with clients, PMs and developers across the development lifecycle.</li>
-            </ul>
+            <p class="career__company"><span class="career__logo career__logo--sm"><img src="assets/img/logos/nimi-tech.svg" alt="" width="1359" height="719" loading="lazy" /></span>Nimi Tech Limited</p>
+            <ol class="career__list"><li><span>01</span>Provided creative direction and design feedback aligned with business goals.</li><li><span>02</span>Ran usability testing and iterated designs based on user insights.</li><li><span>03</span>Managed team workload and delegated tasks by strengths and priorities.</li><li><span>04</span>Partnered with clients, PMs and developers across the development lifecycle.</li></ol>
           </article>
-          <article class="job reveal">
-            <div class="job__top"><span class="date-pill">Dec 2021 — Aug 2023</span><span class="job__no">03</span></div>
+          <article class="career__panel" role="tabpanel" id="job-empite" aria-labelledby="tab-empite" hidden>
+            <span class="career__ghost" aria-hidden="true">2021</span>
+            <div class="career__panel-top">
+              <span class="career__dates">Dec 2021 — Aug 2023</span>
+              <span class="career__dur">1 yr 9 mos</span>
+            </div>
             <h3>UI/UX Designer</h3>
-            <p class="job__company">Empite Solutions Pvt Ltd</p>
-            <ul>
-              <li>Designed user-centred websites and applications for client business goals.</li>
-              <li>Created personas, user flows, information architecture and WCAG-compliant designs.</li>
-              <li>Produced mid- and high-fidelity UI focused on consistency and usability.</li>
-            </ul>
+            <p class="career__company"><span class="career__logo career__logo--sm"><img src="assets/img/logos/empite.png" alt="" width="260" height="120" loading="lazy" /></span>Empite Solutions Pvt Ltd</p>
+            <ol class="career__list"><li><span>01</span>Designed user-centred websites and applications for client business goals.</li><li><span>02</span>Created personas, user flows, information architecture and WCAG-compliant designs.</li><li><span>03</span>Produced mid- and high-fidelity UI focused on consistency and usability.</li></ol>
           </article>
-          <article class="job reveal">
-            <div class="job__top"><span class="date-pill">May 2021 — Nov 2021</span><span class="job__no">04</span></div>
+          <article class="career__panel" role="tabpanel" id="job-arimac" aria-labelledby="tab-arimac" hidden>
+            <span class="career__ghost" aria-hidden="true">2021</span>
+            <div class="career__panel-top">
+              <span class="career__dates">May 2021 — Nov 2021</span>
+              <span class="career__dur">7 mos</span>
+            </div>
             <h3>Intern UI/UX Designer</h3>
-            <p class="job__company">Arimac Lanka Pvt Ltd</p>
-            <ul>
-              <li>Created wireframes for mobile and web apps for early-stage product design.</li>
-              <li>Researched emerging design trends to bring fresh ideas into projects.</li>
-              <li>Supported projects from research through execution.</li>
-            </ul>
+            <p class="career__company"><span class="career__logo career__logo--sm"><img src="assets/img/logos/arimac.png" alt="" width="124" height="120" loading="lazy" /></span>Arimac Lanka Pvt Ltd</p>
+            <ol class="career__list"><li><span>01</span>Created wireframes for mobile and web apps for early-stage product design.</li><li><span>02</span>Researched emerging design trends to bring fresh ideas into projects.</li><li><span>03</span>Supported projects from research through execution.</li></ol>
           </article>
+            </div>
+          </div>
         </div>
 
         <div class="edu">
@@ -501,6 +529,6 @@
     </div>
   </footer>
 
-  <script src="assets/js/main.js?v=20261027g"></script>
+  <script src="assets/js/main.js?v=20261027h"></script>
 </body>
 </html>
