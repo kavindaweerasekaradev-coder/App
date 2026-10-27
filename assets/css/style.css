@@ -581,76 +581,34 @@ details[open] .acc-icon::after { transform: rotate(0); }
 /* ---------- Experience ---------- */
 .exp-head { display: flex; justify-content: space-between; align-items: flex-end; gap: 24px; flex-wrap: wrap; margin-bottom: clamp(32px, 4vw, 48px); }
 .exp-head__title { margin-top: 18px; font-size: clamp(36px, 5vw, 64px); }
-/* Career timeline */
-.career-bar { margin-bottom: 20px; padding: 22px 24px 18px; border-radius: var(--radius-lg); background: var(--gray); }
-.career-bar__track { display: flex; gap: 4px; height: 44px; }
-.career-bar__seg {
-  flex: var(--m) 1 0; min-width: 0; border: 0; border-radius: 12px; background: var(--gray-2); color: var(--text-muted);
-  font: 500 13px/1 var(--font-sans); text-align: left; padding: 0 12px; overflow: hidden; white-space: nowrap;
-  transition: background-color .35s var(--ease), color .35s var(--ease), flex-grow .6s var(--ease);
+/* Experience timeline */
+.tl { border-top: 1px solid var(--border); }
+.tl__item {
+  position: relative; display: grid; grid-template-columns: 220px minmax(0, 1fr); gap: 0 56px;
+  padding: clamp(28px, 3.2vw, 40px) 0; border-bottom: 1px solid var(--border);
 }
-.career-bar__seg span { display: block; overflow: hidden; text-overflow: ellipsis; }
-.career-bar__seg:hover { background: #dcdcd8; color: var(--text); }
-.career-bar__seg.is-active { background: var(--ink); color: #fff; }
-.career-bar__seg.is-active::before { content: ""; display: inline-block; vertical-align: middle; width: 6px; height: 6px; margin: -2px 8px 0 0; border-radius: 50%; background: var(--lime); float: left; margin-top: 4px; }
-.career-bar__gap { flex: var(--m) 1 0; border-radius: 12px; background: repeating-linear-gradient(-45deg, transparent 0 4px, rgba(14, 14, 14, .07) 4px 6px); }
-.career-bar__axis { position: relative; height: 18px; margin-top: 10px; font-size: 11.5px; letter-spacing: .06em; color: var(--text-subtle); }
-.career-bar__axis span { position: absolute; top: 0; padding-left: 7px; border-left: 1px solid #d4d4d0; line-height: 18px; }
-.career-bar__axis .career-bar__now { right: 0; border: 0; padding: 0; color: var(--text); font-weight: 600; }
-.career-bar__axis .career-bar__now::before { content: ""; display: inline-block; width: 6px; height: 6px; margin: 0 6px 1px 0; border-radius: 50%; background: var(--lime); box-shadow: 0 0 0 3px rgba(212, 245, 92, .35); }
-
-.career__body { display: grid; grid-template-columns: minmax(0, 380px) minmax(0, 1fr); gap: 20px; }
-.career__tabs { position: relative; display: flex; flex-direction: column; gap: 8px; padding: 10px; border-radius: var(--radius-lg); background: var(--gray); }
-.career__tab {
-  position: relative; flex: 1; display: flex; align-items: center; gap: 14px; width: 100%; padding: 14px; border: 0; border-radius: 18px;
-  background: transparent; color: var(--text); font: inherit; text-align: left;
-  transition: background-color .35s var(--ease), box-shadow .35s var(--ease), transform .35s var(--ease);
+.tl__item::before {
+  content: ""; position: absolute; left: 248px; top: 0; bottom: 0; width: 1px; background: var(--border);
 }
-.career__tab:hover { background: rgba(255, 255, 255, .6); }
-.career__tab[aria-selected="true"] { background: #fff; box-shadow: var(--shadow); }
-.career__tab[aria-selected="true"]::after { content: ""; position: absolute; left: -10px; top: 22px; bottom: 22px; width: 4px; border-radius: 0 4px 4px 0; background: var(--lime); }
-.career__tab:focus-visible { outline: 2px solid var(--ink); outline-offset: 2px; }
-.career__logo { flex: none; width: 48px; height: 48px; border-radius: 14px; background: #fff; display: grid; place-items: center; padding: 8px; box-shadow: inset 0 0 0 1px var(--border); }
-.career__logo img { width: 100%; height: 100%; object-fit: contain; }
-.career__tab-text { min-width: 0; flex: 1; display: grid; gap: 2px; }
-.career__tab-text strong { font-size: 15.5px; font-weight: 600; letter-spacing: -0.01em; }
-.career__tab-text span { font-size: 13.5px; color: var(--text-muted); }
-.career__tab-date { font-size: 12px; letter-spacing: .04em; color: var(--text-subtle); font-variant-numeric: tabular-nums; }
-
-.career__panels { min-width: 0; }
-.career__panel {
-  position: relative; overflow: hidden; isolation: isolate; height: 100%; padding: clamp(28px, 3.4vw, 44px);
-  border-radius: var(--radius-xl); background: var(--ink); color: #fff;
+.tl__item::after {
+  content: ""; position: absolute; left: 243px; top: calc(clamp(28px, 3.2vw, 40px) + 18px); width: 11px; height: 11px;
+  border-radius: 50%; background: var(--bg); box-shadow: inset 0 0 0 2px #c9c9c4;
 }
-.js .career__panel:not([hidden]) { animation: career-in .6s var(--ease); }
-@keyframes career-in { from { opacity: 0; transform: translateY(14px); } to { opacity: 1; transform: none; } }
-.career__panel::before {
-  content: ""; position: absolute; z-index: -1; right: -20%; top: -40%; width: 70%; aspect-ratio: 1; border-radius: 50%;
-  background: radial-gradient(closest-side, rgba(212, 245, 92, .22), transparent);
+.tl__item.is-latest::after { background: var(--lime); box-shadow: inset 0 0 0 2px var(--ink), 0 0 0 5px rgba(212, 245, 92, .35); }
+.tl__when { padding-top: 12px; }
+.tl__dates { font-size: 14px; font-weight: 500; font-variant-numeric: tabular-nums; }
+.tl__dur { margin-top: 4px; font-size: 13px; color: var(--text-subtle); }
+.tl__head { display: flex; align-items: center; gap: 16px; }
+.tl__logo {
+  flex: none; width: 48px; height: 48px; border-radius: 14px; background: #fff; display: grid; place-items: center;
+  padding: 8px; box-shadow: inset 0 0 0 1px var(--border);
 }
-.career__ghost {
-  position: absolute; z-index: -1; right: -0.04em; bottom: -0.2em; font-size: clamp(120px, 16vw, 220px); font-weight: 600;
-  letter-spacing: -0.07em; line-height: 1; color: rgba(255, 255, 255, .04); pointer-events: none;
-}
-.career__panel-top { display: flex; flex-wrap: wrap; align-items: center; gap: 8px; }
-.career__dates { padding: 7px 14px; border-radius: 999px; background: var(--lime); color: var(--ink); font-size: 12.5px; font-weight: 500; letter-spacing: .02em; }
-.career__dur { padding: 7px 14px; border-radius: 999px; background: rgba(255, 255, 255, .1); font-size: 12.5px; letter-spacing: .02em; }
-.career__panel h3 { margin-top: clamp(28px, 4vw, 48px); font-size: clamp(30px, 3.6vw, 48px); letter-spacing: -0.045em; line-height: 1.05; }
-.career__company { margin-top: 14px; display: flex; align-items: center; gap: 12px; color: rgba(255, 255, 255, .72); font-weight: 500; }
-.career__logo--sm { width: 36px; height: 36px; border-radius: 10px; padding: 6px; box-shadow: none; }
-.career__list { margin-top: clamp(24px, 3vw, 36px); display: grid; gap: 10px; }
-.career__list li {
-  display: grid; grid-template-columns: 36px 1fr; gap: 12px; align-items: baseline; padding: 14px 16px; border-radius: 16px;
-  background: rgba(255, 255, 255, .05); color: rgba(255, 255, 255, .78); font-size: 15px;
-  transition: background-color .3s var(--ease), color .3s var(--ease);
-}
-.career__list li:hover { background: rgba(255, 255, 255, .09); color: #fff; }
-.career__list li span { font-size: 12px; letter-spacing: .08em; color: var(--lime); font-variant-numeric: tabular-nums; }
-.js .career__panel:not([hidden]) .career__list li { animation: career-in .6s var(--ease) both; }
-.career__list li:nth-child(2) { animation-delay: 60ms !important; }
-.career__list li:nth-child(3) { animation-delay: 120ms !important; }
-.career__list li:nth-child(4) { animation-delay: 180ms !important; }
-html:not(.js) .career__panel[hidden] { display: block; margin-top: 20px; }
+.tl__logo img { width: 100%; height: 100%; object-fit: contain; }
+.tl__item h3 { font-size: clamp(20px, 2vw, 24px); letter-spacing: -0.03em; line-height: 1.2; }
+.tl__company { margin-top: 2px; color: var(--text-muted); font-size: 15px; }
+.tl__points { margin-top: 18px; padding-left: 64px; display: grid; gap: 8px; max-width: 760px; color: var(--text-muted); font-size: 15px; }
+.tl__points li { position: relative; padding-left: 18px; }
+.tl__points li::before { content: ""; position: absolute; left: 2px; top: .62em; width: 5px; height: 5px; border-radius: 50%; background: #c9c9c4; }
 
 .edu { margin-top: 20px; display: grid; grid-template-columns: 1fr 1fr; gap: 20px; }
 .edu__card { display: flex; gap: 18px; align-items: center; padding: 24px; border-radius: var(--radius); border: 1px solid var(--border); transition: border-color .2s, transform .3s var(--ease); }
@@ -707,12 +665,11 @@ html:not(.js) .career__panel[hidden] { display: block; margin-top: 20px; }
 }
 
 @media (max-width: 900px) {
-  .career__body { grid-template-columns: 1fr; }
-  .career__tabs { flex-direction: row; overflow-x: auto; scroll-snap-type: x mandatory; scrollbar-width: none; }
-  .career__tabs::-webkit-scrollbar { display: none; }
-  .career__tab { flex: 0 0 auto; width: auto; padding: 10px 16px 10px 10px; scroll-snap-align: start; }
-  .career__tab-date, .career__tab[aria-selected="true"]::after { display: none; }
-  .career__logo { width: 40px; height: 40px; border-radius: 12px; }
+  .tl__item { grid-template-columns: 1fr; gap: 14px; padding-left: 28px; }
+  .tl__item::before { left: 5px; }
+  .tl__item::after { left: 0; top: calc(clamp(28px, 3.2vw, 40px) + 4px); }
+  .tl__when { padding-top: 0; display: flex; gap: 10px; align-items: baseline; flex-wrap: wrap; }
+  .tl__dur { margin-top: 0; }
   .nav__burger { display: flex; }
   .nav__links {
     position: absolute; top: 76px; left: 0; right: 0;
@@ -740,10 +697,7 @@ html:not(.js) .career__panel[hidden] { display: block; margin-top: 20px; }
   .rw-head { align-items: flex-start; }
   .services__visual { min-height: 420px; }
   .edu { grid-template-columns: 1fr; }
-  .career-bar { padding: 16px 16px 12px; }
-  .career-bar__seg { padding: 0; font-size: 0; }
-  .career-bar__seg.is-active::before { display: none; }
-  .career-bar__axis span:nth-child(even):not(.career-bar__now) { display: none; }
+  .tl__points { padding-left: 0; }
 }
 
 @media (max-width: 640px) {
