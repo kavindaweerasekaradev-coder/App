@@ -286,7 +286,10 @@ a, button, summary, label, [role="button"] { cursor: pointer; }
 
 /* Logo strip */
 .logos { margin-top: clamp(56px, 7vw, 88px); overflow: hidden; -webkit-mask-image: linear-gradient(90deg, transparent, #000 10%, #000 90%, transparent); mask-image: linear-gradient(90deg, transparent, #000 10%, #000 90%, transparent); }
-.logos__track { display: flex; gap: 72px; width: max-content; animation: slide 36s linear infinite; }
+/* Spacing lives on each logo (not gap) so the duplicated half is exactly 50% wide and the loop is seamless */
+.logos__track { display: flex; width: max-content; animation: slide 36s linear infinite; }
+.logos:hover .logos__track { animation-play-state: paused; }
+.logos__track > .logo { margin-right: 72px; }
 .logos__track { align-items: center; }
 .logo { display: inline-flex; align-items: center; gap: 12px; flex-shrink: 0; white-space: nowrap; filter: grayscale(1); opacity: .55; transition: filter .35s, opacity .35s; }
 .logo:hover { filter: none; opacity: 1; }
@@ -759,6 +762,7 @@ details[open] .acc-icon::after { transform: rotate(0); }
 @media (prefers-reduced-motion: reduce) {
   *, *::before, *::after { animation: none !important; transition: none !important; scroll-behavior: auto !important; }
   .js .reveal { opacity: 1; transform: none; }
+  .logos__track { animation: slide 70s linear infinite !important; }
 }
 
 /* ---------- Responsive ---------- */
@@ -824,7 +828,7 @@ details[open] .acc-icon::after { transform: rotate(0); }
   .stats { gap: 12px; }
   .stat { min-height: 0; gap: 28px; padding: 20px; }
   .stat__value { font-size: 40px; }
-  .logos__track { gap: 48px; }
+  .logos__track > .logo { margin-right: 48px; }
   .logo-img--sq { height: 42px; }
   .logo-img--wide { height: 30px; }
   .logo-img--nimi { height: 38px; }
