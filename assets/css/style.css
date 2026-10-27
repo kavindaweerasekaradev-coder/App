@@ -496,27 +496,40 @@ a, button, summary, label, [role="button"] { cursor: pointer; }
 .services__visual-text { position: relative; z-index: 1; display: grid; gap: 12px; max-width: 360px; }
 .services__visual-text p:last-child { font-size: clamp(22px, 2.2vw, 28px); font-weight: 500; letter-spacing: -0.03em; line-height: 1.15; }
 .float-chip {
-  position: absolute; display: inline-flex; align-items: center; gap: 10px; padding: 7px 18px 7px 7px;
-  border-radius: 999px; background: #fff; color: var(--ink); font-weight: 500; font-size: 15px;
-  box-shadow: 0 14px 30px rgba(10, 40, 100, .2); animation: float 6s ease-in-out infinite;
+  position: absolute; z-index: 1; display: inline-flex; align-items: center; gap: 12px; padding: 8px 22px 8px 8px;
+  border-radius: 999px; background: #fff; color: var(--ink); font-weight: 500; font-size: 17px; letter-spacing: -0.01em;
+  box-shadow: 0 16px 36px rgba(10, 40, 100, .22); animation: float 6s ease-in-out infinite;
+  translate: var(--px, 0px) var(--py, 0px); transition: box-shadow .35s var(--ease);
 }
-.float-chip--1 { top: 9%; left: 8%; }
-.float-chip--2 { top: 6%; right: 12%; animation-delay: -1s; }
-.float-chip--3 { top: 24%; left: 38%; animation-delay: -2s; }
-.float-chip--4 { top: 38%; left: 9%; animation-delay: -4s; }
-.float-chip--5 { top: 44%; right: 9%; animation-delay: -3s; }
-.float-chip--6 { top: 58%; left: 32%; animation-delay: -5s; }
-.tool-logo { width: 30px; height: 30px; border-radius: 9px; display: grid; place-items: center; flex-shrink: 0; background: var(--gray); }
-.tool-logo svg { width: 18px; height: 18px; }
-.tool-logo--figma svg { width: 13px; height: 19px; }
+.float-chip:hover { box-shadow: 0 24px 50px rgba(10, 40, 100, .32); }
+.gsap .float-chip { animation: none; }
+.float-chip--1 { top: 8%; left: 7%; }
+.float-chip--2 { top: 5%; right: 8%; animation-delay: -1s; }
+.float-chip--3 { top: 24%; left: 36%; animation-delay: -2s; }
+.float-chip--4 { top: 39%; left: 6%; animation-delay: -4s; }
+.float-chip--5 { top: 45%; right: 6%; animation-delay: -3s; }
+.float-chip--6 { top: 60%; left: 30%; animation-delay: -5s; }
+.tool-logo { width: 46px; height: 46px; border-radius: 14px; display: grid; place-items: center; flex-shrink: 0; background: var(--gray); }
+.tool-logo svg { width: 26px; height: 26px; }
+.tool-logo--figma svg { width: 19px; height: 28px; }
 .tool-logo--framer, .tool-logo--cursor { background: var(--ink); }
-.tool-logo--framer svg { width: 15px; height: 15px; }
+.tool-logo--framer svg { width: 22px; height: 22px; }
 .tool-logo--claude { background: #faf0eb; }
 .tool-logo--miro { background: #ffd02f; }
-.tool-logo--miro svg { width: 15px; height: 15px; }
+.tool-logo--miro svg { width: 22px; height: 22px; }
 .tool-logo--webflow { background: #146ef5; }
-.tool-logo--webflow svg { width: 17px; height: 17px; }
+.tool-logo--webflow svg { width: 25px; height: 25px; }
 @keyframes float { 50% { transform: translateY(-10px); } }
+/* Slowly orbiting rings behind the tool chips */
+.services__orbit {
+  position: absolute; left: 50%; top: 38%; width: 120%; aspect-ratio: 1; translate: -50% -50%; border-radius: 50%;
+  border: 1px dashed rgba(255, 255, 255, .45); pointer-events: none;
+}
+.services__orbit--2 { width: 72%; border-style: solid; border-color: rgba(255, 255, 255, .28); }
+.services__orbit::after {
+  content: ""; position: absolute; top: -5px; left: 50%; width: 10px; height: 10px; border-radius: 50%;
+  background: #fff; box-shadow: 0 0 16px rgba(255, 255, 255, .9);
+}
 
 .services__panel { padding: clamp(28px, 4vw, 48px); border-radius: var(--radius-lg); background: var(--gray); }
 .services__title { margin-top: 18px; font-size: clamp(36px, 4vw, 52px); }
@@ -844,7 +857,10 @@ details[open] .acc-icon::after { transform: rotate(0); }
   .cs-chapters { top: 76px; }
   .pj-cta .btn { width: 100%; justify-content: space-between; }
 
-  .float-chip { font-size: 14px; }
+  .float-chip { font-size: 14px; gap: 9px; padding: 6px 16px 6px 6px; }
+  .tool-logo { width: 36px; height: 36px; border-radius: 11px; }
+  .tool-logo svg { width: 20px; height: 20px; }
+  .tool-logo--figma svg { width: 15px; height: 22px; }
   .stat__top .stat__icon { display: none; }
   .stat__top { min-height: 56px; }
   .stat__logos span { width: 34px; height: 34px; padding: 5px; }

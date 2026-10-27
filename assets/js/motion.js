@@ -109,6 +109,45 @@
       });
     });
 
+    // Toolkit chips: springy entrance, independent drifting, cursor parallax and orbiting rings
+    var visual = document.querySelector('.services__visual');
+    if (visual) {
+      var chips = gsap.utils.toArray('.float-chip', visual);
+      gsap.from(chips, {
+        scale: 0.3, autoAlpha: 0, rotation: function () { return gsap.utils.random(-25, 25); },
+        duration: 1.1, ease: 'back.out(2.2)', stagger: { each: 0.09, from: 'center' },
+        scrollTrigger: { trigger: visual, start: 'top 75%', once: true },
+        onComplete: function () {
+          chips.forEach(function (chip, i) {
+            gsap.to(chip, {
+              x: gsap.utils.random(-14, 14), y: gsap.utils.random(-18, -8), rotation: gsap.utils.random(-5, 5),
+              duration: gsap.utils.random(2.6, 4.2), ease: 'sine.inOut', repeat: -1, yoyo: true, delay: i * 0.15
+            });
+          });
+        }
+      });
+      gsap.utils.toArray('.services__orbit', visual).forEach(function (ring, i) {
+        gsap.to(ring, { rotation: i ? -360 : 360, duration: i ? 46 : 70, ease: 'none', repeat: -1 });
+      });
+      if (window.matchMedia('(pointer: fine)').matches) {
+        var depth = [0.9, 0.5, 1.2, 0.7, 1, 0.6];
+        visual.addEventListener('mousemove', function (e) {
+          var r = visual.getBoundingClientRect();
+          var dx = (e.clientX - r.left) / r.width - 0.5, dy = (e.clientY - r.top) / r.height - 0.5;
+          chips.forEach(function (chip, i) {
+            gsap.to(chip, { '--px': (dx * 46 * depth[i % depth.length]) + 'px', '--py': (dy * 46 * depth[i % depth.length]) + 'px', duration: 0.8, ease: 'power3.out', overwrite: 'auto' });
+          });
+        });
+        visual.addEventListener('mouseleave', function () {
+          gsap.to(chips, { '--px': '0px', '--py': '0px', duration: 1.2, ease: 'elastic.out(1, 0.5)', overwrite: 'auto' });
+        });
+        chips.forEach(function (chip) {
+          chip.addEventListener('mouseenter', function () { gsap.to(chip, { scale: 1.08, duration: 0.35, ease: 'power3.out', overwrite: false }); });
+          chip.addEventListener('mouseleave', function () { gsap.to(chip, { scale: 1, duration: 0.5, ease: 'power3.out', overwrite: false }); });
+        });
+      }
+    }
+
     // Magnetic buttons (mouse only)
     if (window.matchMedia('(pointer: fine)').matches) {
       document.querySelectorAll('.btn').forEach(function (btn) {
