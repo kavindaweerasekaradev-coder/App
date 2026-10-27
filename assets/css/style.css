@@ -130,6 +130,7 @@ a, button, summary, label, [role="button"] { cursor: pointer; }
 .nav.is-scrolled { border-bottom-color: var(--border); }
 .nav__inner { display: flex; align-items: center; justify-content: space-between; height: 76px; gap: 24px; }
 .nav__logo { display: inline-flex; align-items: center; gap: 10px; font-size: 20px; font-weight: 600; letter-spacing: -0.03em; }
+.nav__logo-text span { color: var(--text-subtle); font-weight: 500; }
 .nav__logo-mark { display: block; width: 36px; height: 36px; flex-shrink: 0; }
 .nav__logo-dot { transform-box: fill-box; transform-origin: center; transition: transform .35s var(--ease); }
 .nav__logo:hover .nav__logo-dot { transform: scale(1.35); }
