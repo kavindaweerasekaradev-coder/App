@@ -1,0 +1,147 @@
+[
+  {
+    "id": "overview", "num": "01", "label": "Project overview",
+    "title": "FlowSync is a next-gen ACH payment and invoicing platform designed to streamline financial operations for Small and Medium-sized Businesses.",
+    "lead": "From secure logins to automated invoicing and fraud control, FlowSync puts users back in control of their payments.",
+    "blocks": [
+      {"type": "image", "src": "assets/img/case-studies/flowsync/01-dashboard-laptop.webp", "alt": "FlowSync dashboard overview on a laptop", "width": 1600, "height": 1113}
+    ]
+  },
+  {
+    "id": "problem", "num": "02", "label": "The problem",
+    "title": "Users of traditional ACH platforms often face…",
+    "blocks": [
+      {"type": "cards", "items": [
+        {"title": "Outdated interfaces", "text": "Outdated interfaces and confusing workflows."},
+        {"title": "Unclear statuses", "text": "Unclear transaction statuses leading to follow-up delays."},
+        {"title": "Manual invoicing", "text": "Manual recurring invoicing, increasing admin burden."},
+        {"title": "Fragmented management", "text": "Fragmented customer and transaction management."},
+        {"title": "Limited fraud controls", "text": "Limited fraud controls, exposing businesses to risk."}
+      ]}
+    ]
+  },
+  {
+    "id": "solution", "num": "03", "label": "The solution",
+    "title": "FlowSync simplifies, automates, and secures ACH operations through a human-centered design approach.",
+    "blocks": [
+      {"type": "list", "title": "How it works", "items": ["One-click invoice creation with recurring payment support.", "Customer tokens for fast repeat transactions.", "Transparent statuses and real-time updates.", "Dynamic reporting dashboards.", "Customizable fraud controls."]},
+      {"type": "image", "src": "assets/img/case-studies/flowsync/03-brand.webp", "alt": "FlowSync logo next to a photo of two smiling business people", "width": 1600, "height": 933}
+    ]
+  },
+  {
+    "id": "process", "num": "04", "label": "My UX design process",
+    "title": "From user interviews to pixel-perfect delivery.",
+    "blocks": [
+      {"type": "cards", "items": [
+        {"title": "Empathize", "text": "Conducted interviews with 7 users (accountants, SMB owners, finance teams). Created empathy maps to understand emotions, goals, and frustrations."},
+        {"title": "Define", "text": "Conducted interviews with 7 users (accountants, SMB owners, finance teams). Created empathy maps to understand emotions, goals, and frustrations."},
+        {"title": "Ideate", "text": "Created multiple wireframe sketches. Co-designed dashboard and invoice flow with stakeholders."},
+        {"title": "Design", "text": "Designed a component-based UI system (accessibility-focused). Used clear call-to-actions and color-coded status tags."},
+        {"title": "Prototype & Test", "text": "Built and tested Figma prototypes with 12 users. Iterated based on usability testing feedback."},
+        {"title": "Handoff", "text": "Created dev-ready assets with design tokens and documentation. Supported implementation QA to ensure pixel-perfect delivery."}
+      ]}
+    ]
+  },
+  {
+    "id": "personas", "num": "05", "label": "User personas",
+    "title": "Hannah, Mark and Lisa.",
+    "blocks": [
+      {"type": "persona", "name": "Hannah", "meta": "Operations Manager", "cols": [
+        {"title": "Needs", "items": ["Streamlined payment reconciliation."]},
+        {"title": "Goal", "items": ["Save time and improve team oversight."]}
+      ]},
+      {"type": "persona", "name": "Mark", "meta": "Small Business Owner", "cols": [
+        {"title": "Needs", "items": ["Simple invoice creation and ACH payment tracking."]},
+        {"title": "Goal", "items": ["Speed up payments and reduce overhead."]}
+      ]},
+      {"type": "persona", "name": "Lisa", "meta": "Accountant", "cols": [
+        {"title": "Needs", "items": ["Reliable reporting and search/filter tools."]},
+        {"title": "Goal", "items": ["Ensure compliance and minimize manual reporting."]}
+      ]}
+    ]
+  },
+  {
+    "id": "secure-access", "num": "06", "label": "Secure user access",
+    "title": "Secure user access",
+    "blocks": [
+      {"type": "chips", "label": "Features", "items": ["Email/password login", "2FA", "Reset flows"]},
+      {"type": "image", "src": "assets/img/case-studies/flowsync/02-secure-access.webp", "alt": "FlowSync login screen on a laptop next to the mobile splash screen", "width": 1600, "height": 1111}
+    ]
+  },
+  {
+    "id": "dashboard", "num": "07", "label": "Unified dashboard",
+    "title": "Unified dashboard",
+    "blocks": [
+      {"type": "list", "title": "Features", "items": ["Recent transactions (Accepted, Settled, Returned)", "Quick actions (Create Invoice, Make Payment)", "Visual summaries"]},
+      {"type": "image", "src": "assets/img/case-studies/flowsync/04-unified-dashboard.webp", "alt": "FlowSync dashboard with quick stats, recent transactions, transaction trend and top customers", "width": 1600, "height": 1511}
+    ]
+  },
+  {
+    "id": "invoices", "num": "08", "label": "Invoice management",
+    "title": "Invoice management",
+    "blocks": [
+      {"type": "list", "title": "Features", "items": ["Customizable invoice builder", "Email-ready PDF preview", "Recurring payment setup"]},
+      {"type": "image", "src": "assets/img/case-studies/flowsync/06-invoice-tablet.webp", "alt": "FlowSync invoice management on a tablet", "width": 1600, "height": 1280},
+      {"type": "image", "src": "assets/img/case-studies/flowsync/08-invoice-laptop.webp", "alt": "FlowSync invoice list with paid, pending and overdue totals", "width": 1600, "height": 1173}
+    ]
+  },
+  {
+    "id": "reporting", "num": "09", "label": "Reporting",
+    "title": "Reporting",
+    "blocks": [
+      {"type": "chips", "label": "Features", "items": ["Interactive graphs and filters", "CSV/PDF export support"]},
+      {"type": "image", "src": "assets/img/case-studies/flowsync/09-reporting.webp", "alt": "FlowSync payment reporting and insights with transaction trend and payment success rate charts", "width": 1600, "height": 1431}
+    ]
+  },
+  {
+    "id": "fraud", "num": "10", "label": "Fraud controls",
+    "title": "Fraud controls",
+    "blocks": [
+      {"type": "list", "title": "Features", "items": ["Error logs (routing failures, velocity triggers)", "Custom rule builder", "Real-time alerts"]},
+      {"type": "image", "src": "assets/img/case-studies/flowsync/11-fraud.webp", "alt": "FlowSync fraud control screen with a suspicious transaction log", "width": 1600, "height": 1503}
+    ]
+  },
+  {
+    "id": "settings", "num": "11", "label": "Settings",
+    "title": "Settings",
+    "blocks": [
+      {"type": "list", "title": "Features", "items": ["Profile customization", "API key management for devs", "Notification preferences"]},
+      {"type": "image", "src": "assets/img/case-studies/flowsync/05-settings.webp", "alt": "FlowSync settings with the refer and earn rewards tab", "width": 1600, "height": 1315}
+    ]
+  },
+  {
+    "id": "typography", "num": "12", "label": "Typography",
+    "title": "Poppins",
+    "lead": "A geometric sans-serif typeface known for its clean and modern aesthetic. Poppins features balanced letterforms and consistent stroke widths, making it an excellent choice for digital interfaces. Its friendly yet professional appearance enhances readability and brings a sense of approachability to fintech platforms like FlowSync.",
+    "blocks": [
+      {"type": "image", "src": "assets/img/case-studies/flowsync/07-typography.webp", "alt": "Poppins Regular type specimen", "width": 1600, "height": 660}
+    ]
+  },
+  {
+    "id": "branding", "num": "13", "label": "Branding",
+    "title": "The FlowSync brand, beyond the screen.",
+    "blocks": [
+      {"type": "image", "src": "assets/img/case-studies/flowsync/10-brand-items.webp", "alt": "FlowSync branded coffee cup and teal notebooks", "width": 1600, "height": 886}
+    ]
+  },
+  {
+    "id": "outcomes", "num": "14", "label": "Outcomes",
+    "title": "Results after launch.",
+    "blocks": [
+      {"type": "cards", "items": [
+        {"title": "3x faster invoicing", "text": "3x faster invoice creation using templates and recurrence."},
+        {"title": "50% fewer tickets", "text": "50% fewer support tickets related to payment confusion."},
+        {"title": "75% better visibility", "text": "75% of users reported better visibility into transactions."},
+        {"title": "40% less fraud", "text": "Reduced fraud incidents by 40% using custom rule controls."}
+      ]}
+    ]
+  },
+  {
+    "id": "final-thoughts", "num": "15", "label": "Final thoughts",
+    "title": "FlowSync was built to fix what's broken in traditional ACH systems.",
+    "lead": "By addressing real user pain points, we've created a product that is not only functional but delightful to use. It's a platform that scales with business needs while offering trust, clarity, and ease. I'm excited to bring this level of thoughtful, data-driven design to your next product.",
+    "blocks": [
+      {"type": "image", "src": "assets/img/case-studies/flowsync/12-thank-you.webp", "alt": "Thank you for taking the time to view this. I hope you enjoyed exploring FlowSync as much as I enjoyed designing it!", "width": 1600, "height": 1153}
+    ]
+  }
+]
