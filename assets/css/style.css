@@ -658,6 +658,52 @@ details[open] .acc-icon::after { transform: rotate(0); }
 .footer__mono { font-size: 12px; letter-spacing: .08em; text-transform: uppercase; color: var(--text-subtle); }
 .footer__top:hover { color: var(--text); }
 
+/* Live products (company work) */
+.live__note { max-width: 440px; font-size: 13.5px; color: var(--text-subtle); }
+.live { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 20px; align-items: start; }
+.live__card {
+  display: flex; flex-direction: column; padding: clamp(24px, 2.6vw, 32px); border-radius: var(--radius-lg); background: var(--gray);
+  transition: background-color .3s var(--ease);
+}
+.live__card:hover { background: var(--gray-2); }
+.live__top { display: flex; justify-content: space-between; align-items: center; gap: 12px; }
+.live__cat { font-size: 12px; font-weight: 500; letter-spacing: .1em; text-transform: uppercase; color: var(--text-subtle); }
+.live__status {
+  display: inline-flex; align-items: center; gap: 7px; padding: 5px 11px; border-radius: 999px; background: #fff;
+  box-shadow: inset 0 0 0 1px var(--border); font-size: 12px; font-weight: 500;
+}
+.live__status i { width: 7px; height: 7px; border-radius: 50%; background: #3ccf6e; box-shadow: 0 0 0 3px rgba(60, 207, 110, .2); }
+.live__name { margin-top: clamp(28px, 3vw, 40px); font-size: clamp(28px, 2.8vw, 36px); letter-spacing: -0.04em; line-height: 1.05; }
+.live__chips { margin-top: 14px; display: flex; flex-wrap: wrap; gap: 6px; }
+.live__chips li { padding: 5px 11px; border-radius: 999px; background: #fff; box-shadow: inset 0 0 0 1px var(--border); font-size: 12.5px; }
+.live__text { margin-top: 18px; color: var(--text-muted); font-size: 15px; }
+.live__role { margin-top: 20px; border-top: 1px solid var(--border); interpolate-size: allow-keywords; }
+.live__role summary {
+  display: flex; justify-content: space-between; align-items: center; padding: 16px 0 0; cursor: pointer; list-style: none;
+  font-size: 15px; font-weight: 500;
+}
+.live__role summary::-webkit-details-marker { display: none; }
+.live__plus {
+  width: 32px; height: 32px; border-radius: 50%; display: grid; place-items: center; background: #fff;
+  box-shadow: inset 0 0 0 1px var(--border); transition: transform .4s var(--ease), background-color .3s var(--ease), color .3s var(--ease);
+}
+.live__plus svg { width: 14px; height: 14px; }
+.live__role[open] .live__plus { background: var(--ink); color: #fff; box-shadow: none; transform: rotate(45deg); }
+.live__role::details-content { height: 0; overflow: clip; transition: height .45s var(--ease), content-visibility .45s allow-discrete; }
+.live__role[open]::details-content { height: auto; }
+.live__role-body { padding-top: 14px; color: var(--text-muted); font-size: 14.5px; }
+.live__role-body ul { margin-top: 12px; display: grid; gap: 8px; }
+.live__role-body p + ul { margin-top: 12px; }
+.live__role-body li { position: relative; padding-left: 16px; }
+.live__role-body li::before { content: ""; position: absolute; left: 2px; top: .62em; width: 5px; height: 5px; border-radius: 50%; background: #c9c9c4; }
+.live__link {
+  align-self: flex-start; margin-top: 22px; display: inline-flex; align-items: center; gap: 10px; padding: 6px 6px 6px 16px;
+  border-radius: 999px; background: var(--ink); color: #fff; font-size: 14px; font-weight: 500;
+}
+.live__link-icon { width: 30px; height: 30px; border-radius: 50%; display: grid; place-items: center; background: var(--lime); color: var(--ink); transition: transform .35s var(--ease); }
+.live__link-icon svg { width: 14px; height: 14px; }
+.live__link:hover .live__link-icon { transform: rotate(45deg); }
+
 /* White chips and icons on gray cards get a hairline so they hold up on the light gray */
 .stat:not(.stat--ink):not(.stat--lime) .stat__icon, .stat__contrast, .rw-card__arrow, .acc-icon,
 .process__num, .process__icon, .process__tags li, .cs-blk-steps li:last-child span {
@@ -735,7 +781,7 @@ details[open] .acc-icon::after { transform: rotate(0); }
   .hero__ctas .btn { flex: 1 1 100%; justify-content: space-between; }
   .hero__ctas .btn--outline { justify-content: center; }
   .hero__role { font-size: 12px; }
-  .process, .rw-grid { grid-template-columns: 1fr; }
+  .process, .rw-grid, .live { grid-template-columns: 1fr; }
   .process__step:not(:last-child)::after { display: block; top: auto; right: auto; bottom: -24px; left: 50%; transform: translateX(-50%) rotate(90deg); }
   .process__ghost { font-size: 96px; }
   .stats { gap: 12px; }
