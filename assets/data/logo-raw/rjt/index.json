@@ -1,0 +1,35 @@
+{
+  "url": "https://www.rjt.ac.lk/",
+  "files": [
+    {
+      "file": "cand-04.png",
+      "kind": "icon 32x32",
+      "url": "https://www.rjt.ac.lk/wp-content/uploads/2026/07/cropped-Crest_finished_1-1-32x32.png"
+    },
+    {
+      "file": "cand-05.png",
+      "kind": "icon 192x192",
+      "url": "https://www.rjt.ac.lk/wp-content/uploads/2026/07/cropped-Crest_finished_1-1-192x192.png"
+    },
+    {
+      "file": "cand-06.png",
+      "kind": "apple-touch-icon",
+      "url": "https://www.rjt.ac.lk/wp-content/uploads/2026/07/cropped-Crest_finished_1-1-180x180.png"
+    },
+    {
+      "file": "cand-07.png",
+      "kind": "header img Rajarata University of Sri Lanka",
+      "url": "https://www.rjt.ac.lk/wp-content/uploads/2022/05/rjtc-logo-final-2.png"
+    },
+    {
+      "file": "og-image.png",
+      "kind": "og:image",
+      "url": "https://www.rjt.ac.lk/wp-content/uploads/2026/07/rjt-banner.png"
+    },
+    {
+      "file": "logo-shot.png",
+      "kind": "screenshot of header logo"
+    }
+  ],
+  "title": "Rajarata University of Sri Lanka - Rajarata University of Sri Lanka"
+}
