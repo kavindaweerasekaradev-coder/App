@@ -9,12 +9,12 @@ import fs from 'node:fs';
 import path from 'node:path';
 
 const sites = [
-  { slug: 'uom', url: 'https://uom.lk/' },
+  { slug: 'rjt', url: 'https://www.rjt.ac.lk/' },
 ];
 const apps = [];
 // Wikipedia infobox images (logos/seals) via the REST summary endpoint.
 const wiki = [
-  { slug: 'uom', title: 'University_of_Moratuwa' },
+  { slug: 'rjt', title: 'Rajarata_University_of_Sri_Lanka' },
 ];
 
 const root = path.join('assets', 'data', 'logo-raw');
