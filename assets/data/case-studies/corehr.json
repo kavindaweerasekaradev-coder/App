@@ -1,0 +1,97 @@
+[
+  {
+    "id": "overview", "num": "01", "label": "Client/Project",
+    "title": "CoreHR provides a comprehensive HR management solution, offering seamless employee tracking, attendance management, payroll processing, and task scheduling—all within an intuitive interface.",
+    "blocks": [
+      {"type": "image", "src": "assets/img/case-studies/corehr/01-brand.webp", "alt": "CoreHR logo on a light card next to a photo of a professional sitting in an office", "width": 1600, "height": 996}
+    ]
+  },
+  {
+    "id": "scope", "num": "02", "label": "Scope of Work",
+    "title": "The CoreHR design process involved creating core HR features, designing an intuitive interface, and ensuring seamless integration across various departments and functionalities.",
+    "lead": "The design journey was structured around key phases to ensure a user-centered and functional experience.",
+    "blocks": []
+  },
+  {
+    "id": "strategy", "num": "03", "label": "Sprints · Strategy",
+    "title": "Strategy",
+    "blocks": [
+      {"type": "cards", "items": [
+        {"title": "Goals", "text": "Establish a comprehensive HR management system focusing on efficiency and usability."},
+        {"title": "Functional", "text": "Address key HR challenges like attendance, payroll, and employee scheduling."}
+      ]}
+    ]
+  },
+  {
+    "id": "discovery", "num": "04", "label": "Sprints · Discovery",
+    "title": "Discovery",
+    "blocks": [
+      {"type": "cards", "items": [
+        {"title": "Research", "text": "Conducted interviews and surveys to understand the specific needs of HR managers and employees."},
+        {"title": "User Journey", "text": "Mapped user touchpoints to streamline HR processes and remove bottlenecks."},
+        {"title": "Interview", "text": "User-centered interviews to ensure the design aligns with end-user expectations."}
+      ]},
+      {"type": "quote", "label": "Understanding HR Challenges", "text": "We conducted comprehensive research to identify the pain points HR teams face, from managing schedules to handling payroll and employee data."},
+      {"type": "image", "src": "assets/img/case-studies/corehr/02-research.webp", "alt": "An HR professional with a clipboard interviewing a candidate across a table", "width": 1600, "height": 783}
+    ]
+  },
+  {
+    "id": "solution", "num": "05", "label": "Sprints · Solution",
+    "title": "Solution",
+    "blocks": [
+      {"type": "cards", "items": [
+        {"title": "UX Design", "text": "Focused on a responsive, mobile-friendly interface to cater to on-the-go HR professionals."},
+        {"title": "UI Concept", "text": "Clean, modern visual design to emphasize usability and enhance the overall experience."}
+      ]}
+    ]
+  },
+  {
+    "id": "assistant", "num": "06", "label": "Assistant",
+    "title": "Ready to simplify your HR tasks? Let's manage your work schedule, take care of payroll, or maybe explore employee data?",
+    "lead": "The CoreHR assistant provides quick responses to employee inquiries and supports HR teams with managing schedules, payroll, and employee data—all tailored to your company's needs.",
+    "blocks": [
+      {"type": "chips", "label": "Assistant", "items": ["Work schedule", "Payroll", "Employee data"]},
+      {"type": "image", "src": "assets/img/case-studies/corehr/03-dashboard.webp", "alt": "CoreHR dashboard on a desktop monitor with workforce stats, weekly attendance trend and today's priorities", "width": 1600, "height": 1324}
+    ]
+  },
+  {
+    "id": "simplicity", "num": "07", "label": "Reimagining HR",
+    "title": "Reimagining HR Simplicity",
+    "lead": "CoreHR is designed to simplify HR processes and provide a user-friendly experience for HR managers and employees alike.",
+    "blocks": [
+      {"type": "image", "src": "assets/img/case-studies/corehr/04-login.webp", "alt": "CoreHR login screen: Glad to Have You Back! with email, password and Access Your Dashboard button", "width": 1600, "height": 1014}
+    ]
+  },
+  {
+    "id": "typography", "num": "08", "label": "Typography & Colors",
+    "title": "Satoshi",
+    "lead": "A modern and highly legible sans-serif font, Satoshi is designed for versatility and functionality across both digital and print mediums. Its clean, geometric lines provide an excellent balance between aesthetics and readability, making it a perfect choice for professional platforms like CoreHR.",
+    "blocks": [
+      {"type": "image", "src": "assets/img/case-studies/corehr/05-satoshi.webp", "alt": "Satoshi Regular type specimen", "width": 1600, "height": 604},
+      {"type": "swatches", "items": [
+        {"name": "#95A5FD", "token": "", "hex": "#95A5FD"},
+        {"name": "#1C1C1C", "token": "", "hex": "#1C1C1C"},
+        {"name": "#FFFFFF", "token": "", "hex": "#FFFFFF"}
+      ]},
+      {"type": "image", "src": "assets/img/case-studies/corehr/06-departments.webp", "alt": "CoreHR departments page listing team members by team", "width": 1600, "height": 1129}
+    ]
+  },
+  {
+    "id": "dark-theme", "num": "09", "label": "Dark Theme Overview",
+    "title": "CoreHR's Dark Mode Vision",
+    "lead": "Highlight the user-centric reasoning behind introducing dark mode, focusing on usability, reducing eye strain, and offering a sleek, professional look.",
+    "blocks": [
+      {"type": "image", "src": "assets/img/case-studies/corehr/07-dark-laptop.webp", "alt": "CoreHR dashboard in dark mode on a laptop", "width": 1600, "height": 1010},
+      {"type": "quote", "label": "Focus on Simplicity", "text": "Prioritizing clean, modern UI elements that provide clarity and ease of navigation."},
+      {"type": "image", "src": "assets/img/case-studies/corehr/08-dark-pair.webp", "alt": "CoreHR logo on a dark card next to the dark-mode departments page on a laptop", "width": 1600, "height": 1006}
+    ]
+  },
+  {
+    "id": "branding", "num": "10", "label": "Branding",
+    "title": "Bringing CoreHR to Life",
+    "lead": "Our branded essentials ensure that CoreHR's identity isn't just digital—it's tangible, creating a lasting connection with the audience.",
+    "blocks": [
+      {"type": "image", "src": "assets/img/case-studies/corehr/09-merch.webp", "alt": "Periwinkle CoreHR cap and branded cups reading Reimagining HR Simplicity", "width": 1600, "height": 802}
+    ]
+  }
+]
