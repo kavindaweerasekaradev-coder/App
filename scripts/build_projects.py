@@ -261,6 +261,7 @@ def render(p, prev_p, next_p, version):
 
       <nav class="nav__links" id="nav-links" aria-label="Primary">
         <a href="../index.html#work" class="is-active">Work</a>
+        <a href="../index.html#live">Products</a>
         <a href="../index.html#about">About</a>
         <a href="../index.html#services">Services</a>
         <a href="../index.html#experience">Experience</a>
