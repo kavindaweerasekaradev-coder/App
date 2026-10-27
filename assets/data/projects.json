@@ -306,10 +306,12 @@
     "behance_id": "212043297",
     "name": "TravelSphere",
     "subtitle": "Branding & mobile app",
-    "kind": "Branding & UI/UX",
+    "kind": "UI/UX case study",
     "lead": "A travel app that makes discovering, planning and booking trips simple and enjoyable.",
     "card_text": "A travel app for discovering, planning and booking trips, with its own brand identity.",
     "tags": [
+      "UI/UX",
+      "App Design",
       "Branding",
       "Mobile app",
       "Travel"
@@ -320,16 +322,16 @@
         "2024"
       ],
       [
-        "Type",
-        "Branding & UI/UX"
+        "Category",
+        "Travel & Tourism Mobile Application"
       ],
       [
-        "Platform",
-        "Mobile app"
+        "Company",
+        "Nimi Technologies"
       ],
       [
-        "Focus",
-        "Travel planning & booking"
+        "Tools",
+        "Figma, Illustrator, Photoshop"
       ]
     ],
     "statement": "Transforming travel planning into an effortless and inspiring experience.",
@@ -366,7 +368,13 @@
         "Mobile app",
         ""
       ]
-    ]
+    ],
+    "case_study": "assets/data/case-studies/travelsphere.json",
+    "cover_image": {
+      "src": "assets/img/case-studies/travelsphere/00-cover.webp",
+      "width": 1600,
+      "height": 1552
+    }
   },
   {
     "slug": "corehr",

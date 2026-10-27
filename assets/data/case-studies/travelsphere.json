@@ -1,0 +1,167 @@
+[
+  {
+    "id": "about",
+    "num": "01",
+    "label": "About TravelSphere",
+    "title": "TravelSphere is your travel buddy—making trip planning easy and exploration exciting.",
+    "lead": "With personalized itineraries and quick bookings, it's all about connecting you to the world effortlessly.",
+    "blocks": [
+      {
+        "type": "image",
+        "src": "assets/img/case-studies/travelsphere/01-brand.webp",
+        "alt": "TravelSphere suitcase logo on a mint card next to a photo of a smiling traveller holding a map and a phone",
+        "width": 1600,
+        "height": 1111
+      }
+    ]
+  },
+  {
+    "id": "login",
+    "num": "02",
+    "label": "Login",
+    "title": "Effortless Entry, Exciting Journeys",
+    "lead": "TravelSphere's login screens are designed for a fast, welcoming, and secure entry. With a clean layout, easy login options (including social sign-ins), and travel-inspired visuals, these screens make accessing the app effortless and engaging, setting the tone for an exciting user journey from the start.",
+    "blocks": [
+      {
+        "type": "image",
+        "src": "assets/img/case-studies/travelsphere/02-login.webp",
+        "alt": "TravelSphere login screen: Welcome Back, Explorer! with Google and Apple sign-in",
+        "width": 1600,
+        "height": 1460
+      }
+    ]
+  },
+  {
+    "id": "discover",
+    "num": "03",
+    "label": "Discover",
+    "title": "Discover the World, One Trip at a Time.",
+    "blocks": [
+      {
+        "type": "image",
+        "src": "assets/img/case-studies/travelsphere/03-home.webp",
+        "alt": "TravelSphere home screen: Where will your next adventure take you? with destination search and top destinations",
+        "width": 1600,
+        "height": 1401
+      }
+    ]
+  },
+  {
+    "id": "personalisation",
+    "num": "04",
+    "label": "Personalisation",
+    "title": "Tailored to Your Style",
+    "lead": "Whether you're seeking adventure, romance, or cultural discovery, TravelSphere personalizes recommendations just for you. Explore travel categories and find trips that match your vibe.",
+    "blocks": [
+      {
+        "type": "image",
+        "src": "assets/img/case-studies/travelsphere/04-onboarding.webp",
+        "alt": "TravelSphere onboarding screen, Your next adventure is just a tap away, next to the splash screen",
+        "width": 1600,
+        "height": 1701
+      }
+    ]
+  },
+  {
+    "id": "typography",
+    "num": "05",
+    "label": "Typography & Colors",
+    "title": "Urbanist",
+    "lead": "A modern, clean, and highly versatile sans-serif font, Urbanist is ideal for a travel platform like TravelSphere. Its geometric yet friendly design lends itself to easy readability, enhancing the user experience across various devices. Urbanist's sleek lines and balanced proportions make it perfect for a visually engaging and functional app that aims to inspire and inform travelers.",
+    "blocks": [
+      {
+        "type": "image",
+        "src": "assets/img/case-studies/travelsphere/05-urbanist.webp",
+        "alt": "Urbanist Regular type specimen",
+        "width": 1600,
+        "height": 676
+      },
+      {
+        "type": "swatches",
+        "items": [
+          {
+            "name": "#2D2D58",
+            "token": "",
+            "hex": "#2D2D58"
+          },
+          {
+            "name": "#E2F4D9",
+            "token": "",
+            "hex": "#E2F4D9"
+          },
+          {
+            "name": "#181818",
+            "token": "",
+            "hex": "#181818"
+          },
+          {
+            "name": "#FFFFFF",
+            "token": "",
+            "hex": "#FFFFFF"
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "id": "ease",
+    "num": "06",
+    "label": "Designed for ease",
+    "title": "Designed for Ease and Enjoyment",
+    "lead": "A user-friendly interface that prioritizes simplicity and elegance. TravelSphere's design ensures a seamless, delightful experience for every traveler.",
+    "blocks": []
+  },
+  {
+    "id": "itineraries",
+    "num": "07",
+    "label": "Itineraries",
+    "title": "Smart Itineraries Made Easy",
+    "lead": "Our itinerary planner lets you effortlessly organize your travel days with a customizable, day-by-day schedule. Save your favorite activities and create a trip that's perfectly yours.",
+    "blocks": [
+      {
+        "type": "image",
+        "src": "assets/img/case-studies/travelsphere/06-itinerary.webp",
+        "alt": "Trip to Kyoto, Japan itinerary screen with day-by-day plan and a Book This Trip button",
+        "width": 1600,
+        "height": 1351
+      }
+    ]
+  },
+  {
+    "id": "branding",
+    "num": "08",
+    "label": "Branding",
+    "title": "Making Travel Planning Effortless",
+    "blocks": [
+      {
+        "type": "image",
+        "src": "assets/img/case-studies/travelsphere/07-family.webp",
+        "alt": "A mother and two children looking out to sea through binoculars",
+        "width": 1600,
+        "height": 854
+      },
+      {
+        "type": "image",
+        "src": "assets/img/case-studies/travelsphere/08-suitcase.webp",
+        "alt": "Mint TravelSphere-branded suitcase on a navy background",
+        "width": 1600,
+        "height": 1591
+      }
+    ]
+  },
+  {
+    "id": "result",
+    "num": "09",
+    "label": "Result",
+    "title": "TravelSphere brings ease and joy to travel planning, making every step feel effortless—from exploring new destinations to booking your dream trip.",
+    "blocks": [
+      {
+        "type": "image",
+        "src": "assets/img/case-studies/travelsphere/09-result.webp",
+        "alt": "TravelSphere home screen with exclusive offers and handpicked trips",
+        "width": 1600,
+        "height": 1849
+      }
+    ]
+  }
+]
