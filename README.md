@@ -21,7 +21,7 @@ assets/css/style.css           # Styles; design tokens (colors, radius, fonts) a
 assets/js/main.js              # Mobile menu, scroll reveal, copy email
 assets/img/kavinda.jpg         # Profile photo
 assets/img/favicon.svg         # The "K." mark; favicon-32/192.png and apple-touch-icon.png are PNG versions
-assets/img/cursor/             # Bee cursor: SVG sources plus 1x/2x PNGs (normal and hover)
+assets/img/bee.svg             # The little bee that flies across the hero
 assets/img/behance/            # Project covers imported from Behance
 assets/data/behance-projects.json        # Projects imported from Behance
 assets/data/projects.json      # Content for the project detail pages
