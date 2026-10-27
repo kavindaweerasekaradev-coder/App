@@ -426,7 +426,7 @@ a, button, summary, label, [role="button"] { cursor: pointer; }
 .cs-blk-chips { display: flex; align-items: center; flex-wrap: wrap; gap: 10px 14px; }
 .cs-blk-chips ul { display: flex; flex-wrap: wrap; gap: 8px; }
 .cs-blk-chips li { padding: 7px 14px; border-radius: 999px; background: var(--ink); color: #fff; font-size: 13px; font-weight: 500; }
-.cs-blk-steps ol { margin-top: 12px; display: grid; grid-template-columns: repeat(auto-fit, minmax(150px, 1fr)); gap: 12px; counter-reset: step; }
+.cs-blk-steps ol { margin-top: 12px; display: grid; grid-template-columns: repeat(auto-fit, minmax(150px, 1fr)); gap: 12px; }
 .cs-blk-steps li { display: grid; gap: 12px; align-content: start; padding: 18px; border-radius: var(--radius); border: 1px solid var(--border); font-size: 15px; font-weight: 500; line-height: 1.4; }
 .cs-blk-steps li span { width: 30px; height: 30px; border-radius: 50%; display: grid; place-items: center; background: var(--gray); font-size: 13px; font-weight: 600; }
 .cs-blk-steps li:last-child { background: var(--lime); border-color: var(--lime); }
@@ -532,12 +532,51 @@ details[open] .acc-icon { background: var(--lime); }
 details[open] .acc-icon::after { transform: rotate(0); }
 .accordion details p { padding: 0 48px 22px 0; color: var(--text-muted); font-size: 15px; }
 
-.process { margin-top: 20px; display: grid; grid-template-columns: repeat(4, 1fr); gap: 20px; }
-.process li { padding: 24px; border-radius: var(--radius); background: var(--gray); transition: background-color .3s; }
-.process li:hover { background: var(--gray-2); }
+.process { margin-top: 20px; display: grid; grid-template-columns: repeat(4, 1fr); gap: 20px; counter-reset: step; }
 .process__num { font-size: 12px; letter-spacing: .1em; padding: 4px 10px; border-radius: 999px; background: #fff; }
-.process h3 { margin: 28px 0 8px; font-size: 22px; letter-spacing: -0.03em; }
-.process p { color: var(--text-muted); font-size: 14.5px; }
+.process__step {
+  position: relative; display: flex; flex-direction: column; padding: 24px; border-radius: var(--radius-lg);
+  background: var(--gray); transition: background-color .4s var(--ease), color .4s var(--ease), transform .5s var(--ease), box-shadow .5s var(--ease);
+}
+.process__step:not(:last-child)::after {
+  content: ""; position: absolute; z-index: 2; top: 34px; right: -24px; width: 28px; height: 28px; border-radius: 50%;
+  background: #fff url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%230e0e0e' stroke-width='2.2' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='M5 12h14M13 6l6 6-6 6'/%3E%3C/svg%3E") center / 14px no-repeat;
+  box-shadow: 0 0 0 4px var(--bg);
+}
+.process__ghost {
+  position: absolute; right: 18px; bottom: 6px; font-size: 120px; font-weight: 600; letter-spacing: -0.06em; line-height: 1;
+  color: rgba(14, 14, 14, .045); pointer-events: none; transition: color .4s var(--ease), transform .6s var(--ease);
+}
+.process__head { display: flex; align-items: center; justify-content: space-between; }
+.process__icon {
+  width: 48px; height: 48px; border-radius: 16px; display: grid; place-items: center; background: #fff;
+  transition: background-color .4s var(--ease), color .4s var(--ease), transform .5s var(--ease);
+}
+.process__icon svg { width: 22px; height: 22px; stroke-width: 1.8; }
+.process__step:last-child .process__icon { background: var(--lime); }
+.process h3 { margin: 32px 0 8px; font-size: 22px; letter-spacing: -0.03em; }
+.process__step p { color: var(--text-muted); font-size: 14.5px; transition: color .4s var(--ease); }
+.process__tags { margin-top: 18px; display: flex; flex-wrap: wrap; gap: 6px; }
+.process__tags li {
+  font-size: 12.5px; padding: 5px 10px; border-radius: 999px; background: rgba(255, 255, 255, .75);
+  transition: background-color .4s var(--ease), color .4s var(--ease);
+}
+.process__bar { margin-top: auto; padding-top: 28px; display: grid; grid-template-columns: repeat(4, 1fr); gap: 4px; }
+.process__bar i { height: 4px; border-radius: 4px; background: rgba(14, 14, 14, .1); overflow: hidden; position: relative; }
+.process__bar i.is-on::after {
+  content: ""; position: absolute; inset: 0; background: var(--ink); transform-origin: left;
+  transition: transform .7s var(--ease) calc(var(--d) + 200ms), background-color .4s var(--ease);
+}
+.js .process__step.reveal:not(.is-visible) .process__bar i.is-on::after { transform: scaleX(0); }
+
+.process__step:hover { background: var(--ink); color: #fff; transform: translateY(-6px); box-shadow: var(--shadow-lg); }
+.process__step:hover p { color: rgba(255, 255, 255, .62); }
+.process__step:hover .process__icon { background: var(--lime); color: var(--ink); transform: rotate(-8deg); }
+.process__step:hover .process__num { background: rgba(255, 255, 255, .12); }
+.process__step:hover .process__tags li { background: rgba(255, 255, 255, .1); color: #fff; }
+.process__step:hover .process__ghost { color: rgba(212, 245, 92, .09); transform: translateY(-6px); }
+.process__step:hover .process__bar i { background: rgba(255, 255, 255, .14); }
+.process__step:hover .process__bar i.is-on::after { background: var(--lime); }
 
 /* ---------- Experience ---------- */
 .exp-head { display: flex; justify-content: space-between; align-items: flex-end; gap: 24px; flex-wrap: wrap; margin-bottom: clamp(32px, 4vw, 48px); }
@@ -605,6 +644,7 @@ details[open] .acc-icon::after { transform: rotate(0); }
 @media (max-width: 1100px) {
   .stats { grid-template-columns: repeat(2, 1fr); }
   .process { grid-template-columns: repeat(2, 1fr); }
+  .process__step:nth-child(2n)::after { display: none; }
 }
 
 @media (max-width: 900px) {
@@ -644,6 +684,8 @@ details[open] .acc-icon::after { transform: rotate(0); }
   .hero__ctas .btn--outline { justify-content: center; }
   .hero__role { font-size: 12px; }
   .process, .rw-grid { grid-template-columns: 1fr; }
+  .process__step:not(:last-child)::after { display: block; top: auto; right: auto; bottom: -24px; left: 50%; transform: translateX(-50%) rotate(90deg); }
+  .process__ghost { font-size: 96px; }
   .stats { gap: 12px; }
   .stat { min-height: 0; gap: 28px; padding: 20px; }
   .stat__value { font-size: 40px; }
