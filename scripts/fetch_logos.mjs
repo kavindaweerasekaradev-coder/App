@@ -9,16 +9,12 @@ import fs from 'node:fs';
 import path from 'node:path';
 
 const sites = [
-  { slug: 'healthsync', url: 'https://www.healthsync.lk/' },
-  { slug: 'cubis', url: 'https://www.cubis.io/' },
-  { slug: 'gigz', url: 'https://gigz.app/' },
-  { slug: 'dailydogfights', url: 'https://www.dailydogfights.com/' },
+  { slug: 'uom', url: 'https://uom.lk/' },
 ];
-const apps = [
-  { slug: 'readyme', id: '1637112313' },
-  { slug: 'peoplespay', id: '1557298582' },
-  { slug: 'gigz', term: 'gigz' },
-  { slug: 'dailydogfights', term: 'daily dogfights golf' },
+const apps = [];
+// Wikipedia infobox images (logos/seals) via the REST summary endpoint.
+const wiki = [
+  { slug: 'uom', title: 'University_of_Moratuwa' },
 ];
 
 const root = path.join('assets', 'data', 'logo-raw');
@@ -132,6 +128,20 @@ for (const a of apps) {
     console.log(a.slug, 'appstore', meta.map((m) => m.name).join(' | '));
   } catch (e) {
     console.log(a.slug, 'appstore error', e.message);
+  }
+}
+
+for (const w of wiki) {
+  const dir = path.join(root, w.slug);
+  fs.mkdirSync(dir, { recursive: true });
+  try {
+    const sum = await (await context.request.get(`https://en.wikipedia.org/api/rest_v1/page/summary/${w.title}`, { timeout: 30000 })).json();
+    const img = sum.originalimage && sum.originalimage.source;
+    const f = img && await save(dir, 'wiki-infobox', img);
+    fs.writeFileSync(path.join(dir, 'wiki.json'), JSON.stringify({ file: f, src: img }, null, 2));
+    console.log(w.slug, 'wiki', img);
+  } catch (e) {
+    console.log(w.slug, 'wiki error', e.message);
   }
 }
 
