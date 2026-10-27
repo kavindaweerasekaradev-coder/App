@@ -380,13 +380,15 @@
     "slug": "corehr",
     "behance_id": "208563083",
     "name": "CoreHR",
-    "subtitle": "HR management system",
-    "kind": "UI/UX design",
+    "subtitle": "The future of human resources",
+    "kind": "UI/UX case study",
     "lead": "A comprehensive HR management system that streamlines HR processes within organisations.",
     "card_text": "An HR management system for scheduling, tasks, performance tracking and employee engagement.",
     "tags": [
+      "UI/UX",
+      "Web Design",
+      "Branding",
       "HR system",
-      "Web app",
       "Dashboard"
     ],
     "facts": [
@@ -395,16 +397,16 @@
         "2024"
       ],
       [
-        "Type",
-        "UI/UX design"
+        "Category",
+        "HR Management System"
       ],
       [
-        "Product",
-        "HR management system"
+        "Company",
+        "Nimi Technologies"
       ],
       [
-        "Users",
-        "HR teams & employees"
+        "Tools",
+        "Figma, Photoshop"
       ]
     ],
     "statement": "HR processes, streamlined for the whole organisation.",
@@ -441,6 +443,12 @@
         "Web app",
         ""
       ]
-    ]
+    ],
+    "case_study": "assets/data/case-studies/corehr.json",
+    "cover_image": {
+      "src": "assets/img/case-studies/corehr/00-cover.webp",
+      "width": 1600,
+      "height": 1730
+    }
   }
 ]
