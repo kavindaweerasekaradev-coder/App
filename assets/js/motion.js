@@ -65,7 +65,7 @@
     }
 
     // Section headings: words mask up on scroll
-    document.querySelectorAll('main h2').forEach(function (h) {
+    document.querySelectorAll('main h2:not(.contact__title)').forEach(function (h) {
       h.classList.remove('reveal');
       var w = splitWords(h);
       gsap.from(w, {
@@ -108,6 +108,35 @@
         scrollTrigger: { trigger: img, start: 'top bottom', end: 'center center', scrub: true }
       });
     });
+
+    // Contact card: grows in on scroll, 3D word flip, staggered content, drifting blobs and a cursor spotlight
+    var contact = document.querySelector('.contact');
+    if (contact) {
+      gsap.fromTo(contact, { scale: 0.9, borderRadius: '72px' }, {
+        scale: 1, borderRadius: '36px', ease: 'none',
+        scrollTrigger: { trigger: contact, start: 'top bottom', end: 'top 35%', scrub: 0.6 }
+      });
+      var ctitle = contact.querySelector('.contact__title');
+      var cwords = splitWords(ctitle);
+      var rest = contact.querySelectorAll('.label, .contact__lead, .contact__actions .btn, .contact__links li, .contact__marquee');
+      gsap.timeline({ scrollTrigger: { trigger: contact, start: 'top 70%', once: true } })
+        .from(cwords, { yPercent: 110, rotationX: -85, transformOrigin: '50% 100%', duration: 1.1, ease: 'power4.out', stagger: 0.07 })
+        .from(rest, { y: 26, autoAlpha: 0, duration: 0.8, ease: 'power3.out', stagger: 0.08, clearProps: 'transform,opacity,visibility' }, 0.35);
+      gsap.utils.toArray('.contact__blob', contact).forEach(function (blob) {
+        gsap.to(blob, {
+          xPercent: gsap.utils.random(-30, 30), yPercent: gsap.utils.random(-25, 25), scale: gsap.utils.random(0.85, 1.3),
+          duration: gsap.utils.random(7, 11), ease: 'sine.inOut', repeat: -1, yoyo: true
+        });
+      });
+      var spot = contact.querySelector('.contact__spot');
+      if (spot && window.matchMedia('(pointer: fine)').matches) {
+        contact.addEventListener('mousemove', function (e) {
+          var r = contact.getBoundingClientRect();
+          gsap.to(spot, { '--sx': (e.clientX - r.left) + 'px', '--sy': (e.clientY - r.top) + 'px', opacity: 1, duration: 0.6, ease: 'power3.out', overwrite: 'auto' });
+        });
+        contact.addEventListener('mouseleave', function () { gsap.to(spot, { opacity: 0, duration: 0.6 }); });
+      }
+    }
 
     // Toolkit chips: springy entrance, independent drifting, cursor parallax and orbiting rings
     var visual = document.querySelector('.services__visual');
