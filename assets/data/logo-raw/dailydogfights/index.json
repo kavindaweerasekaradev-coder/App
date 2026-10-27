@@ -1,0 +1,26 @@
+{
+  "url": "https://www.dailydogfights.com/",
+  "files": [
+    {
+      "file": "cand-01.jpg",
+      "kind": "shortcut icon",
+      "url": "https://cdn.prod.website-files.com/64be075ab9983cf20cd286af/64db0e7b2e6bf957fa213093_Favicon.jpg"
+    },
+    {
+      "file": "cand-02.jpg",
+      "kind": "apple-touch-icon",
+      "url": "https://cdn.prod.website-files.com/64be075ab9983cf20cd286af/64db0e9619c92a97ddecc11f_Web%20clip.jpg"
+    },
+    {
+      "file": "cand-03.png",
+      "kind": "header img ",
+      "url": "https://cdn.prod.website-files.com/64be075ab9983cf20cd286af/64be07e4fbdbe6e05f02b575_Logo.png"
+    },
+    {
+      "file": "og-image.jpg",
+      "kind": "og:image",
+      "url": "https://cdn.prod.website-files.com/64be075ab9983cf20cd286af/64db0ec819c92a97ddecf176_Open%20graph.jpg"
+    }
+  ],
+  "title": "Why Daily DogFights?"
+}
