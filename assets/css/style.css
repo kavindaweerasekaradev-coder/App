@@ -58,18 +58,7 @@ button { font: inherit; color: inherit; background: none; border: 0; }
 :focus-visible { outline: 2px solid var(--blue); outline-offset: 3px; border-radius: 8px; }
 ::selection { background: var(--lime); color: var(--ink); }
 
-/* Bee cursor (assets/img/cursor). The hotspot is the tip of the antennae. */
-html {
-  cursor: url(../img/cursor/bee.png) 4 4, auto;
-  cursor: -webkit-image-set(url(../img/cursor/bee.png) 1x, url(../img/cursor/bee@2x.png) 2x) 4 4, auto;
-  cursor: image-set(url(../img/cursor/bee.png) 1x, url(../img/cursor/bee@2x.png) 2x) 4 4, auto;
-}
-a, button, summary, label, [role="button"] {
-  cursor: url(../img/cursor/bee-hover.png) 4 4, pointer;
-  cursor: -webkit-image-set(url(../img/cursor/bee-hover.png) 1x, url(../img/cursor/bee-hover@2x.png) 2x) 4 4, pointer;
-  cursor: image-set(url(../img/cursor/bee-hover.png) 1x, url(../img/cursor/bee-hover@2x.png) 2x) 4 4, pointer;
-}
-input, textarea, [contenteditable] { cursor: text; }
+a, button, summary, label, [role="button"] { cursor: pointer; }
 
 .container { width: 100%; max-width: var(--container); margin: 0 auto; padding: 0 var(--gutter); }
 .soft { color: var(--text-subtle); }
