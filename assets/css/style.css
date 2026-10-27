@@ -703,11 +703,12 @@ details[open] .acc-icon::after { transform: rotate(0); }
 .live__cat { margin-top: 26px; font-size: 11.5px; font-weight: 500; letter-spacing: .1em; text-transform: uppercase; color: rgba(255, 255, 255, .45); }
 .live__name { margin-top: 8px; font-size: clamp(24px, 2.2vw, 30px); letter-spacing: -0.035em; line-height: 1.1; }
 .live__text { margin-top: 12px; font-size: 14.5px; line-height: 1.6; color: rgba(255, 255, 255, .62); }
-.live__chips { margin: 16px 0 22px; display: flex; flex-wrap: wrap; gap: 6px; }
+.live__chips { margin-top: 16px; display: flex; flex-wrap: wrap; gap: 6px; }
+.live__links { margin: 20px 0 22px; display: flex; flex-wrap: wrap; gap: 8px; }
 .live__chips li { padding: 5px 10px; border-radius: 999px; background: rgba(212, 245, 92, .1); color: var(--lime); font-size: 12px; font-weight: 500; }
 
-.live__foot { margin-top: auto; padding-top: 16px; border-top: 1px solid rgba(255, 255, 255, .1); display: grid; grid-template-columns: 1fr auto; align-items: start; }
-.live__role { grid-column: 1 / -1; grid-row: 1; interpolate-size: allow-keywords; }
+.live__foot { margin-top: auto; padding-top: 14px; border-top: 1px solid rgba(255, 255, 255, .1); }
+.live__role { interpolate-size: allow-keywords; }
 .live__role summary {
   display: inline-flex; align-items: center; gap: 10px; min-height: 40px; cursor: pointer; list-style: none;
   font-size: 14.5px; font-weight: 500; color: rgba(255, 255, 255, .9);
@@ -728,7 +729,7 @@ details[open] .acc-icon::after { transform: rotate(0); }
 .live__role-body li { position: relative; padding-left: 16px; }
 .live__role-body li::before { content: ""; position: absolute; left: 2px; top: .62em; width: 5px; height: 5px; border-radius: 50%; background: var(--lime); }
 .live__go {
-  grid-column: 2; grid-row: 1; position: relative; z-index: 1; display: inline-flex; align-items: center; gap: 8px;
+  display: inline-flex; align-items: center; gap: 8px;
   height: 40px; padding: 0 5px 0 14px; border-radius: 999px; background: var(--lime); color: var(--ink); font-size: 13px; font-weight: 600;
   transition: background-color .3s var(--ease);
 }
@@ -818,8 +819,7 @@ details[open] .acc-icon::after { transform: rotate(0); }
   .hero__role { font-size: 12px; }
   .process, .rw-grid, .live { grid-template-columns: 1fr; }
   .live-panel { border-radius: var(--radius-lg); }
-  .live__foot { grid-template-columns: 1fr; }
-  .live__go { grid-column: 1; grid-row: 2; justify-self: start; margin-top: 12px; }
+
   .process__step:not(:last-child)::after { display: block; top: auto; right: auto; bottom: -24px; left: 50%; transform: translateX(-50%) rotate(90deg); }
   .process__ghost { font-size: 96px; }
   .stats { gap: 12px; }
