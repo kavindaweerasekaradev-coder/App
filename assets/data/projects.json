@@ -231,13 +231,15 @@
     "behance_id": "226135551",
     "name": "FlowSync",
     "subtitle": "Payment & invoicing platform",
-    "kind": "UI/UX design",
-    "lead": "A next-gen ACH payment and invoicing platform that streamlines financial operations for SMBs.",
+    "kind": "UI/UX case study",
+    "lead": "A next-gen ACH payment and invoicing platform that streamlines financial operations for small and medium-sized businesses.",
     "card_text": "An ACH payment and invoicing platform that streamlines financial operations for SMBs.",
     "tags": [
+      "UI/UX",
+      "Web Design",
+      "App Design",
       "Fintech",
-      "Web platform",
-      "UI/UX"
+      "SaaS"
     ],
     "facts": [
       [
@@ -245,16 +247,16 @@
         "2025"
       ],
       [
-        "Type",
-        "UI/UX design"
+        "Category",
+        "Fintech Platform — ACH Payment & Invoicing"
       ],
       [
-        "Product",
-        "ACH payments & invoicing"
+        "Users",
+        "Small & medium-sized businesses"
       ],
       [
-        "Audience",
-        "Small & medium businesses"
+        "Tools",
+        "Figma, Photoshop"
       ]
     ],
     "statement": "Payments and invoicing, streamlined for small and medium businesses.",
@@ -291,7 +293,13 @@
         "Web platform",
         ""
       ]
-    ]
+    ],
+    "case_study": "assets/data/case-studies/flowsync.json",
+    "cover_image": {
+      "src": "assets/img/case-studies/flowsync/00-cover.webp",
+      "width": 1600,
+      "height": 1147
+    }
   },
   {
     "slug": "travelsphere",
