@@ -656,9 +656,19 @@ details[open] .acc-icon::after { transform: rotate(0); }
 .footer__mono { font-size: 12px; letter-spacing: .08em; text-transform: uppercase; color: var(--text-subtle); }
 .footer__top:hover { color: var(--text); }
 
+/* ---------- GSAP motion ---------- */
+.gsap .is-tweening { transition: none !important; }
+.sw { display: inline-block; overflow: hidden; vertical-align: top; padding-bottom: .1em; margin-bottom: -.1em; }
+.sw__i { display: inline-block; will-change: transform; }
+.btn { translate: var(--mx, 0px) var(--my, 0px); }
+.scroll-progress {
+  position: fixed; z-index: 100; top: 0; left: 0; right: 0; height: 3px; background: var(--lime);
+  transform: scaleX(0); transform-origin: left; pointer-events: none;
+}
+
 /* ---------- Reveal animation ---------- */
-.js .reveal { opacity: 0; transform: translateY(24px); transition: opacity .8s var(--ease), transform .8s var(--ease); }
-.js .reveal.is-visible { opacity: 1; transform: none; }
+.js:not(.gsap) .reveal { opacity: 0; transform: translateY(24px); transition: opacity .8s var(--ease), transform .8s var(--ease); }
+.js:not(.gsap) .reveal.is-visible { opacity: 1; transform: none; }
 
 @media (prefers-reduced-motion: reduce) {
   *, *::before, *::after { animation: none !important; transition: none !important; scroll-behavior: auto !important; }

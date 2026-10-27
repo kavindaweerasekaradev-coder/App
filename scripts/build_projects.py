@@ -384,6 +384,9 @@ def render(p, prev_p, next_p, version):
     </div>
   </footer>
 
+  <script src="../assets/js/vendor/gsap.min.js?v=3.12.5"></script>
+  <script src="../assets/js/vendor/ScrollTrigger.min.js?v=3.12.5"></script>
+  <script src="../assets/js/motion.js?v={version}"></script>
   <script src="../assets/js/main.js?v={version}"></script>
 </body>
 </html>

@@ -37,7 +37,10 @@
         }
       });
     }, { threshold: 0.12, rootMargin: '0px 0px -40px 0px' });
-    document.querySelectorAll('.reveal').forEach(function (el) { revealer.observe(el); });
+    // With GSAP loaded, motion.js handles reveals
+    if (!document.documentElement.classList.contains('gsap')) {
+      document.querySelectorAll('.reveal').forEach(function (el) { revealer.observe(el); });
+    }
 
     var navLinks = links.querySelectorAll('a[href^="#"]');
     var spy = new IntersectionObserver(function (entries) {
