@@ -1,5 +1,84 @@
 [
   {
+    "slug": "dominos",
+    "behance_id": "257665725",
+    "name": "Domino’s Sri Lanka",
+    "subtitle": "Website redesign",
+    "kind": "UX/UI case study",
+    "lead": "A UX/UI redesign concept for Domino’s Sri Lanka: one clear path from craving to checkout, with honest prices, the best deal applied for you, order ahead and local payments.",
+    "card_text": "One clear path from craving to checkout, with honest prices, order ahead and local payments.",
+    "tags": [
+      "UI/UX",
+      "Web Design",
+      "Product Design",
+      "Food delivery",
+      "Responsive Design"
+    ],
+    "facts": [
+      [
+        "Year",
+        "2026"
+      ],
+      [
+        "Role",
+        "UX research, UX/UI design, prototype"
+      ],
+      [
+        "Platform",
+        "Responsive web, mobile-first"
+      ],
+      [
+        "Tools",
+        "Figma, React, TypeScript, GSAP"
+      ]
+    ],
+    "statement": "Ordering, redesigned.",
+    "overview": [
+      "A UX/UI case study on turning a cluttered pizza order into one clear path."
+    ],
+    "highlights_title": "Hot. Fresh. Yours.",
+    "highlights": [
+      {
+        "title": "Add in one tap",
+        "text": "Smart defaults on every pizza."
+      },
+      {
+        "title": "No price surprises",
+        "text": "Real prices with the best deal applied."
+      },
+      {
+        "title": "Built for Sri Lanka",
+        "text": "Local areas, stores, wallets and LankaQR."
+      },
+      {
+        "title": "Now or later",
+        "text": "Order now or up to seven days ahead."
+      }
+    ],
+    "accent": "#006491",
+    "card_tags": [
+      [
+        "Food ordering",
+        ""
+      ],
+      [
+        "Case study",
+        "dark"
+      ],
+      [
+        "New",
+        "lime"
+      ]
+    ],
+    "case_study": "assets/data/case-studies/dominos.json",
+    "hero_title": "Domino’s Sri Lanka",
+    "cover_image": {
+      "src": "assets/img/case-studies/dominos/00-cover.webp",
+      "width": 1600,
+      "height": 1714
+    }
+  },
+  {
     "slug": "personal-finance-dashboard",
     "behance_id": "257350815",
     "name": "Personal Finance Dashboard",
@@ -70,10 +149,6 @@
       [
         "Case study",
         "dark"
-      ],
-      [
-        "New",
-        "lime"
       ]
     ]
   },
