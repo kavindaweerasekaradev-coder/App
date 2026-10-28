@@ -254,7 +254,7 @@ def render(p, prev_p, next_p, version):
   <!-- ===================== NAV ===================== -->
   <header class="nav" id="top">
     <div class="container nav__inner">
-      <a href="../index.html" class="nav__logo" aria-label="Kavinda Weerasekara — home">
+      <a href="../" class="nav__logo" aria-label="Kavinda Weerasekara — home">
         <svg class="nav__logo-mark" viewBox="0 0 64 64" width="36" height="36" aria-hidden="true"><rect width="64" height="64" rx="16" fill="#0e0e0e"/><g fill="none" stroke="#fff" stroke-width="6.5" stroke-linecap="round" stroke-linejoin="round"><path d="M19 17v30"/><path d="M38 17 23.5 32 38 47"/></g><circle class="nav__logo-dot" cx="47" cy="44" r="4.5" fill="#d4f55c"/></svg>
         <span class="nav__logo-text">kavinda<span>.design</span></span>
       </a>
