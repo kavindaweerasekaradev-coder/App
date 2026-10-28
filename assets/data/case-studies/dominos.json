@@ -1,0 +1,644 @@
+[
+  {
+    "id": "overview",
+    "num": "01",
+    "label": "Overview",
+    "title": "I redesigned how Sri Lanka orders pizza.",
+    "lead": "Ordering pizza should be the easiest part of the night. Online, it often isn’t: too many steps before anything reaches the cart, prices that change at checkout, and no simple way to say “ready at 7, please”.",
+    "blocks": [
+      {
+        "type": "quote",
+        "label": "My role",
+        "text": "This is my concept for the Domino’s Sri Lanka website. I led the UX and UI end to end, from the first sketches to a working, responsive prototype."
+      },
+      {
+        "type": "image",
+        "src": "assets/img/case-studies/dominos/01-intro.webp",
+        "alt": "Hi, I’m Kavinda. I redesigned how Sri Lanka orders pizza: an illustration of Kavinda eating pizza next to a photo of two pizzas",
+        "width": 1331,
+        "height": 1134
+      }
+    ]
+  },
+  {
+    "id": "problem",
+    "num": "02",
+    "label": "The problem",
+    "title": "Hungry people don’t read instructions.",
+    "lead": "I walked through a typical online pizza order step by step, like a hungry customer would. These thoughts kept coming up.",
+    "blocks": [
+      {
+        "type": "cards",
+        "items": [
+          {
+            "title": "Too many steps",
+            "text": "“I have to pick a crust before I can even add it?”"
+          },
+          {
+            "title": "Price surprises",
+            "text": "“Wait… why is it Rs 600 more now?”"
+          },
+          {
+            "title": "Unclear timing",
+            "text": "“Which store even delivers here?”"
+          },
+          {
+            "title": "No order ahead",
+            "text": "“Can I just order it for 7 pm?”"
+          }
+        ]
+      },
+      {
+        "type": "cards",
+        "items": [
+          {
+            "title": "Add in one tap",
+            "text": "Smart defaults on every pizza. Customise only if you want to."
+          },
+          {
+            "title": "No price surprises",
+            "text": "Real prices with taxes, and the best deal applied for you."
+          },
+          {
+            "title": "Built for Sri Lanka",
+            "text": "Local areas, stores, wallets and LankaQR."
+          },
+          {
+            "title": "Now or later",
+            "text": "Order for right now, or book up to seven days ahead."
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "id": "persona",
+    "num": "03",
+    "label": "Who it’s for",
+    "title": "Meet Nethmi. Hungry, and busy.",
+    "lead": "A proto-persona kept every decision grounded in a real moment: ordering on a phone, between other things, often for a group.",
+    "blocks": [
+      {
+        "type": "persona",
+        "name": "Nethmi Perera",
+        "meta": "27 · Marketing executive · Colombo",
+        "bio": "“Just tell me what I’ll pay and when it’ll arrive.”",
+        "cols": [
+          {
+            "title": "Habits",
+            "items": [
+              "Orders for the team every Friday",
+              "Pays with Genie or a card",
+              "Always on her phone, one hand busy"
+            ]
+          }
+        ]
+      },
+      {
+        "type": "image",
+        "src": "assets/img/case-studies/dominos/02-journey.webp",
+        "alt": "Her ordering journey: before, the experience dips at customise, checkout and wait; after the redesign it stays happy from craving to wait",
+        "width": 793,
+        "height": 585
+      },
+      {
+        "type": "quote",
+        "label": "Note",
+        "text": "Proto-persona and journey based on assumptions and a heuristic review, to be validated with real customers."
+      }
+    ]
+  },
+  {
+    "id": "moments",
+    "num": "04",
+    "label": "Real moments",
+    "title": "Designed for real people, in real moments.",
+    "lead": "Three everyday moments shaped every decision: the team lunch, the late night with friends, and the rider bringing it to the door.",
+    "blocks": [
+      {
+        "type": "image",
+        "src": "assets/img/case-studies/dominos/03-moments.webp",
+        "alt": "Illustrations: ordering for the whole team on a Friday lunch, sharing with friends late at night, and the rider right on time",
+        "width": 1280,
+        "height": 786
+      }
+    ]
+  },
+  {
+    "id": "process",
+    "num": "05",
+    "label": "Process",
+    "title": "From napkin to pixels.",
+    "lead": "Every screen went through the same three steps: an idea on paper, structure in grey boxes, then the flavour.",
+    "blocks": [
+      {
+        "type": "image",
+        "src": "assets/img/case-studies/dominos/04-process.webp",
+        "alt": "The home screen as a paper sketch, a grey wireframe and the final interface",
+        "width": 1600,
+        "height": 1215
+      },
+      {
+        "type": "steps",
+        "items": [
+          "Sketch: quick ideas on paper. The big one: order straight from the hero.",
+          "Wireframe: grey boxes to lock the hierarchy: what, how much, one button.",
+          "Interface: brand colour, real photos, live prices and motion."
+        ]
+      }
+    ]
+  },
+  {
+    "id": "improved",
+    "num": "06",
+    "label": "What I improved",
+    "title": "My first version worked. It just wasn’t Domino’s.",
+    "lead": "The first build was clean but generic: illustrated pizzas, a soft beige palette and the same card everywhere. I rebuilt every screen around the brand and the four goals. These are real screens from both versions.",
+    "blocks": [
+      {
+        "type": "image",
+        "src": "assets/img/case-studies/dominos/05-versions.webp",
+        "alt": "Before: the first version with illustrated pizzas on beige. After: the final design with a blue hero and real pizza photos",
+        "width": 1600,
+        "height": 1095
+      },
+      {
+        "type": "cards",
+        "items": [
+          {
+            "title": "69",
+            "text": "Design iterations between the first version and the final one."
+          },
+          {
+            "title": "8",
+            "text": "Screens rebuilt: hero, offers, menu, customise, cart, checkout, payment and footer."
+          },
+          {
+            "title": "1 rule",
+            "text": "Every change had to make ordering faster, clearer or more trustworthy."
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "id": "before-after",
+    "num": "07",
+    "label": "Before and after",
+    "title": "From a search banner to a hero you can order from.",
+    "lead": "The first hero asked people to search. The new one puts a pizza, a size and an Add button on the very first screen.",
+    "blocks": [
+      {
+        "type": "image",
+        "src": "assets/img/case-studies/dominos/06-home.webp",
+        "alt": "Home before and after",
+        "width": 1600,
+        "height": 599
+      },
+      {
+        "type": "list",
+        "title": "Home",
+        "items": [
+          "Order from the hero: a swipeable deck of featured pizzas with a size picker and one-tap Add.",
+          "Brand first: Domino’s blue, real food photos instead of illustrations, and the tile motif.",
+          "A reason to act now: today’s deal with a live countdown sits right under the headline."
+        ]
+      },
+      {
+        "type": "image",
+        "src": "assets/img/case-studies/dominos/07-offers.webp",
+        "alt": "Most loved and deals, before and after",
+        "width": 1600,
+        "height": 1246
+      },
+      {
+        "type": "list",
+        "title": "From plain lists to offers that sell",
+        "items": [
+          "Photos lead: full-bleed food photography with the name and price laid over it.",
+          "Ranked, not listed: big #1, #2, #3 numbers help first-timers pick a favourite fast.",
+          "Deals you can grab: tear-off coupons with an “ends tonight” timer, applied automatically."
+        ]
+      },
+      {
+        "type": "image",
+        "src": "assets/img/case-studies/dominos/08-menu.webp",
+        "alt": "Menu before and after: identical illustrated cards become photo-first cards",
+        "width": 1600,
+        "height": 661
+      },
+      {
+        "type": "list",
+        "title": "From identical cards to photo-first cards",
+        "items": [
+          "Size on the card: a sliding size switcher, with the real price for that size.",
+          "Add without a dialog: one tap adds the pizza with sensible defaults. Customise is optional.",
+          "Filters that stay: category tabs, Veg only, Spicy and search stick while you scroll."
+        ]
+      },
+      {
+        "type": "image",
+        "src": "assets/img/case-studies/dominos/09-customise-cart.webp",
+        "alt": "Customise and cart, before and after",
+        "width": 1600,
+        "height": 1246
+      },
+      {
+        "type": "list",
+        "title": "Less to read, more to see",
+        "items": [
+          "See the size: real pizza photos that grow with the inches, instead of small icons.",
+          "Live total: the Add button always shows what you’ll pay as you choose.",
+          "Deal applied for you: the cart finds the best deal and spells out the saving. No codes."
+        ]
+      },
+      {
+        "type": "image",
+        "src": "assets/img/case-studies/dominos/10-checkout.webp",
+        "alt": "Checkout before and after",
+        "width": 1600,
+        "height": 678
+      },
+      {
+        "type": "list",
+        "title": "From “schedule for later” to real order ahead",
+        "items": [
+          "Progress, not paperwork: a clean progress tracker replaces the stack of numbered cards.",
+          "Day, then time: seven days ahead, grouped by lunch to late night, with busy times marked Full.",
+          "A clear commitment: “Book order” shows the exact time and store before you pay."
+        ]
+      },
+      {
+        "type": "image",
+        "src": "assets/img/case-studies/dominos/11-footer.webp",
+        "alt": "Footer before and after",
+        "width": 1600,
+        "height": 611
+      },
+      {
+        "type": "list",
+        "title": "From a sign-off to a brand moment",
+        "items": [
+          "The promise, big: “Hot. Fresh. Yours.” with a gentle light sweep over an ingredient wall.",
+          "Still useful: track an order, call the hotline and check opening hours, right there.",
+          "Every way to pay: cards, cash, Genie, eZ Cash, FriMi and LankaQR, shown with their logos."
+        ]
+      }
+    ]
+  },
+  {
+    "id": "mobile",
+    "num": "08",
+    "label": "Mobile",
+    "title": "On the phone, where most orders start.",
+    "lead": "The same improvements, sized for one hand: bigger photos, actions within thumb reach, and nothing hidden.",
+    "blocks": [
+      {
+        "type": "image",
+        "src": "assets/img/case-studies/dominos/12-mobile.webp",
+        "alt": "Mobile before and after for home, menu, customise and cart",
+        "width": 1600,
+        "height": 1917
+      }
+    ]
+  },
+  {
+    "id": "flow",
+    "num": "09",
+    "label": "User flow",
+    "title": "One clear path, from craving to collected.",
+    "lead": "Every route leads to the same single-page checkout. The only fork is when: right now, or booked for later.",
+    "blocks": [
+      {
+        "type": "image",
+        "src": "assets/img/case-studies/dominos/13-flow.webp",
+        "alt": "User flow: home, menu, customise, cart and location lead to checkout; then as soon as possible or order ahead; then pay and track",
+        "width": 1600,
+        "height": 600
+      }
+    ]
+  },
+  {
+    "id": "brand",
+    "num": "10",
+    "label": "Brand",
+    "title": "Hot. Fresh. Yours.",
+    "lead": "The promise I designed around. Every screen should feel hot (fast, energetic), fresh (clean, honest) and yours (personal, made your way).",
+    "blocks": [
+      {
+        "type": "cards",
+        "items": [
+          {
+            "title": "Bold",
+            "text": "Big type, big photos, one big button."
+          },
+          {
+            "title": "Warm",
+            "text": "Talks like a friend at the counter."
+          },
+          {
+            "title": "Honest",
+            "text": "Real prices and real times, always."
+          },
+          {
+            "title": "Quick",
+            "text": "Nothing between you and pizza."
+          }
+        ]
+      },
+      {
+        "type": "image",
+        "src": "assets/img/case-studies/dominos/14-brand.webp",
+        "alt": "Hot. Fresh. Yours. with voice examples: “Ready in about 20 min”, “You save Rs 2,284. Deal applied.” and “That time’s full. Try 7:30?”",
+        "width": 1600,
+        "height": 1565
+      },
+      {
+        "type": "image",
+        "src": "assets/img/case-studies/dominos/15-brand-system.webp",
+        "alt": "Brand system: primary lockup, stacked reversed logo, icon, tile pattern and usage on different backgrounds",
+        "width": 1600,
+        "height": 1169
+      }
+    ]
+  },
+  {
+    "id": "identity",
+    "num": "11",
+    "label": "Visual identity",
+    "title": "Unmistakably Domino’s, dialled up.",
+    "lead": "Only the brand’s own colours, the domino tile as a quiet motif, a characterful grotesque for appetite and a calm sans for reading.",
+    "blocks": [
+      {
+        "type": "image",
+        "src": "assets/img/case-studies/dominos/16-identity.webp",
+        "alt": "The domino tile, Bricolage Grotesque and Plus Jakarta Sans, and the colour palette",
+        "width": 1600,
+        "height": 1095
+      },
+      {
+        "type": "swatches",
+        "items": [
+          {
+            "name": "Domino’s Blue",
+            "token": "",
+            "hex": "#006491"
+          },
+          {
+            "name": "Domino’s Red",
+            "token": "",
+            "hex": "#E31837"
+          },
+          {
+            "name": "Night",
+            "token": "",
+            "hex": "#0B2E44"
+          },
+          {
+            "name": "Cheese",
+            "token": "",
+            "hex": "#FFD84D"
+          },
+          {
+            "name": "Dough",
+            "token": "",
+            "hex": "#F6F3EE"
+          }
+        ]
+      },
+      {
+        "type": "chips",
+        "label": "Typography",
+        "items": [
+          "Bricolage Grotesque · headlines and prices",
+          "Plus Jakarta Sans · body, labels and UI"
+        ]
+      }
+    ]
+  },
+  {
+    "id": "art",
+    "num": "12",
+    "label": "Art direction",
+    "title": "Warm photos, friendly people.",
+    "lead": "Food is shot close and real, never glossy. People are drawn by hand in simple line art, so the brand feels human without stock-photo smiles.",
+    "blocks": [
+      {
+        "type": "image",
+        "src": "assets/img/case-studies/dominos/17-art.webp",
+        "alt": "Close, warm pizza photos next to hand-drawn character illustrations on brand colours",
+        "width": 1202,
+        "height": 699
+      },
+      {
+        "type": "image",
+        "src": "assets/img/case-studies/dominos/18-campaign.webp",
+        "alt": "Campaign: “Order at 5. Eat at 7.”, a story, a feed post and app notifications",
+        "width": 1600,
+        "height": 1583
+      }
+    ]
+  },
+  {
+    "id": "components",
+    "num": "13",
+    "label": "Components",
+    "title": "A small kit that does a lot.",
+    "lead": "One strong button for the action that matters, segmented pickers for sizes, honest tags for diet and heat, and one icon set at a single stroke weight.",
+    "blocks": [
+      {
+        "type": "image",
+        "src": "assets/img/case-studies/dominos/19-components.webp",
+        "alt": "Buttons, size picker and tags, time slots, feedback toast and a Lucide icon set",
+        "width": 1600,
+        "height": 778
+      }
+    ]
+  },
+  {
+    "id": "screens",
+    "num": "14",
+    "label": "Key screens",
+    "title": "A hero you can order from.",
+    "lead": "The first screen is a swipeable deck of pizzas with a size picker and a one-tap Add, followed by offers that sell themselves.",
+    "blocks": [
+      {
+        "type": "image",
+        "src": "assets/img/case-studies/dominos/20-hero.webp",
+        "alt": "Mobile home with the pizza hero deck and campaign posters",
+        "width": 1600,
+        "height": 2200
+      },
+      {
+        "type": "list",
+        "title": "Home",
+        "items": [
+          "Swipe, tap or use the arrow keys",
+          "Live price per size, under the photo",
+          "Campaign posters inspired by the shopfronts"
+        ]
+      },
+      {
+        "type": "image",
+        "src": "assets/img/case-studies/dominos/21-menu-customise.webp",
+        "alt": "Mobile menu with sticky filters and the customise sheet",
+        "width": 1600,
+        "height": 2200
+      },
+      {
+        "type": "list",
+        "title": "Filter in a tap, customise in a sheet",
+        "items": [
+          "Veg, Spicy and search always in reach",
+          "The pizza photo grows with the size",
+          "Running total on the Add button"
+        ]
+      },
+      {
+        "type": "image",
+        "src": "assets/img/case-studies/dominos/22-cart.webp",
+        "alt": "Mobile cart with free delivery and the best deal applied",
+        "width": 1600,
+        "height": 2200
+      },
+      {
+        "type": "list",
+        "title": "A cart that does the maths",
+        "items": [
+          "Delivery or pickup, switched at the top",
+          "Free-delivery progress, no guessing",
+          "Taxes included in every price"
+        ]
+      },
+      {
+        "type": "image",
+        "src": "assets/img/case-studies/dominos/23-checkout.webp",
+        "alt": "Checkout on desktop and mobile with day and time slots",
+        "width": 1600,
+        "height": 1084
+      },
+      {
+        "type": "list",
+        "title": "Now, or order ahead",
+        "items": [
+          "Day, then time, grouped by lunch, afternoon, evening and late night",
+          "Busy times are marked Full instead of hidden",
+          "Change or cancel until 30 minutes before"
+        ]
+      },
+      {
+        "type": "image",
+        "src": "assets/img/case-studies/dominos/24-payment.webp",
+        "alt": "Secure payment with a live card preview, and order tracking",
+        "width": 1600,
+        "height": 2198
+      },
+      {
+        "type": "list",
+        "title": "Pay the local way, track to the door",
+        "items": [
+          "Cards with 3-D Secure, Genie, eZ Cash, FriMi and LankaQR",
+          "The card preview updates as you type",
+          "Clear stages from oven to door",
+          "Change time or cancel, right from tracking"
+        ]
+      }
+    ]
+  },
+  {
+    "id": "responsive",
+    "num": "15",
+    "label": "Responsive",
+    "title": "From a 320px phone to a 4K screen.",
+    "lead": "The same components reflow across twelve tested screen sizes, with no sideways scrolling anywhere.",
+    "blocks": [
+      {
+        "type": "image",
+        "src": "assets/img/case-studies/dominos/25-responsive.webp",
+        "alt": "Desktop menu, cart and checkout",
+        "width": 1600,
+        "height": 1579
+      },
+      {
+        "type": "image",
+        "src": "assets/img/case-studies/dominos/26-every-screen.webp",
+        "alt": "Every screen. One clear path.",
+        "width": 1600,
+        "height": 1715
+      }
+    ]
+  },
+  {
+    "id": "outcome",
+    "num": "16",
+    "label": "Outcome",
+    "title": "What the redesign delivers.",
+    "lead": "A working, responsive prototype that removes the biggest points of friction, ready to test with real customers.",
+    "blocks": [
+      {
+        "type": "cards",
+        "items": [
+          {
+            "title": "1 tap",
+            "text": "To add a pizza, from the hero or any menu card."
+          },
+          {
+            "title": "1 page",
+            "text": "Checkout: details, timing and payment together."
+          },
+          {
+            "title": "7 days",
+            "text": "Order ahead: pickup or delivery, changeable later."
+          },
+          {
+            "title": "5",
+            "text": "Local ways to pay: cards, Genie, eZ Cash, FriMi, LankaQR."
+          },
+          {
+            "title": "320px up to 4K",
+            "text": "Twelve screen sizes, no sideways scroll."
+          },
+          {
+            "title": "AA · WCAG 2.2",
+            "text": "Keyboard, screen reader and reduced motion."
+          }
+        ]
+      },
+      {
+        "type": "columns",
+        "items": [
+          {
+            "title": "What I learned",
+            "items": [
+              "Trust is designed in the details. Showing the real price early did more than any visual flourish."
+            ]
+          },
+          {
+            "title": "What I’d test next",
+            "items": [
+              "Usability sessions with customers in Colombo, and the hero deck against a menu-first home."
+            ]
+          },
+          {
+            "title": "What comes after",
+            "items": [
+              "Reorder in one tap, group orders, and loyalty points shown right in the cart."
+            ]
+          }
+        ]
+      },
+      {
+        "type": "image",
+        "src": "assets/img/case-studies/dominos/27-thanks.webp",
+        "alt": "Thanks for scrolling. Hungry yet?",
+        "width": 1414,
+        "height": 1112
+      },
+      {
+        "type": "quote",
+        "label": "Note",
+        "text": "Self-initiated concept. Not affiliated with or endorsed by Domino’s Pizza Enterprises or Domino’s Sri Lanka. Domino’s name and colours belong to their owners. Pizza photos are stand-ins from Wikimedia Commons contributors (CC BY / CC BY-SA / public domain)."
+      }
+    ]
+  }
+]
