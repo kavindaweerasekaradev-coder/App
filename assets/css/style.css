@@ -782,6 +782,46 @@ details[open] .acc-icon::after { transform: rotate(0); }
 .live__role-body li { position: relative; padding-left: 16px; }
 .live__role-body li::before { content: ""; position: absolute; left: 2px; top: .62em; width: 5px; height: 5px; border-radius: 50%; background: #c9c9c4; }
 
+/* Beyond the pixels: story + polaroid wall */
+.beyond { display: grid; grid-template-columns: minmax(0, 0.9fr) minmax(0, 1.1fr); gap: clamp(32px, 5vw, 80px); align-items: center; }
+.beyond__title { margin-top: 18px; font-size: clamp(40px, 5.4vw, 76px); letter-spacing: -0.05em; line-height: 1; }
+.beyond__mark { position: relative; z-index: 0; white-space: nowrap; }
+.beyond__mark::after {
+  content: ""; position: absolute; z-index: -1; left: -0.06em; right: -0.04em; bottom: 0.04em; height: 0.42em;
+  background: var(--lime); border-radius: 0.08em; transform: skewX(-6deg) scaleX(0); transform-origin: left;
+  transition: transform .9s .3s var(--ease);
+}
+.beyond__text .reveal.is-visible .beyond__mark::after, html:not(.js) .beyond__mark::after { transform: skewX(-6deg) scaleX(1); }
+.beyond__lead { margin-top: 28px; max-width: 600px; font-size: clamp(18px, 1.6vw, 21px); line-height: 1.5; letter-spacing: -0.01em; }
+.beyond__body { margin-top: 16px; color: var(--text-muted); font-size: 15.5px; line-height: 1.65; max-width: 560px; }
+.beyond__actions { margin-top: 32px; display: flex; flex-wrap: wrap; gap: 12px; }
+
+.beyond__wall { position: relative; height: clamp(600px, 52vw, 720px); }
+.snap {
+  position: absolute; width: clamp(190px, 17vw, 236px); padding: 12px 12px 0; margin: 0; background: #fff;
+  box-shadow: 0 1px 2px rgba(14, 14, 14, .06), 0 18px 40px rgba(14, 14, 14, .14);
+  rotate: var(--tilt, 0deg); transition: rotate .45s var(--ease), scale .45s var(--ease), box-shadow .45s var(--ease);
+  cursor: grab; user-select: none; touch-action: pan-y;
+}
+.snap:hover { rotate: 0deg; scale: 1.04; box-shadow: 0 2px 4px rgba(14, 14, 14, .06), 0 30px 60px rgba(14, 14, 14, .2); z-index: 5; }
+.snap.is-dragging { cursor: grabbing; rotate: 0deg; scale: 1.06; }
+.snap img { display: block; width: 100%; height: auto; aspect-ratio: 4 / 5; object-fit: cover; pointer-events: none; }
+.snap figcaption { padding: 12px 4px 16px; text-align: center; font-size: 14px; font-style: italic; font-weight: 500; letter-spacing: -0.01em; color: var(--text-muted); }
+.snap__tape {
+  position: absolute; top: -12px; left: 50%; width: 84px; height: 24px; translate: -50% 0; rotate: -3deg;
+  background: rgba(212, 245, 92, .7); box-shadow: 0 1px 2px rgba(14, 14, 14, .08);
+}
+.snap--2 .snap__tape { rotate: 4deg; background: rgba(255, 255, 255, .75); box-shadow: inset 0 0 0 1px var(--border), 0 1px 2px rgba(14, 14, 14, .08); }
+.snap--3 .snap__tape { rotate: -6deg; }
+.snap--4 .snap__tape { rotate: 2deg; background: rgba(255, 255, 255, .75); box-shadow: inset 0 0 0 1px var(--border), 0 1px 2px rgba(14, 14, 14, .08); }
+.snap--1 { top: 0; left: 2%; z-index: 2; }
+.snap--2 { bottom: 1%; left: 15%; z-index: 3; }
+.snap--3 { top: 5%; right: 9%; z-index: 1; }
+.snap--4 { bottom: 4%; right: 0; z-index: 2; }
+.beyond__hint { position: absolute; right: 0; top: -34px; font-size: 13px; font-style: italic; color: var(--text-subtle); }
+.beyond__hint::before { content: "\2199  "; font-style: normal; }
+html:not(.has-drag) .beyond__hint { display: none; }
+
 /* White chips and icons on gray cards get a hairline so they hold up on the light gray */
 .stat:not(.stat--ink):not(.stat--lime) .stat__icon, .stat__contrast, .rw-card__arrow, .acc-icon,
 .process__num, .process__icon, .process__tags li, .cs-blk-steps li:last-child span {
@@ -813,6 +853,8 @@ details[open] .acc-icon::after { transform: rotate(0); }
 /* ---------- Responsive ---------- */
 @media (max-width: 1100px) {
   .stats { grid-template-columns: repeat(2, 1fr); }
+  .beyond { grid-template-columns: 1fr; }
+  .beyond__wall { max-width: 640px; width: 100%; margin: 0 auto; }
   .xp2 { grid-template-columns: 1fr; }
   .xp2 { gap: 28px; }
   .xp2__aside { display: contents; }
@@ -860,6 +902,12 @@ details[open] .acc-icon::after { transform: rotate(0); }
   .hero__ctas .btn--outline { justify-content: center; }
   .hero__role { font-size: 12px; }
   .process, .rw-grid, .live { grid-template-columns: 1fr; }
+  .beyond__wall { height: auto; display: grid; grid-template-columns: 1fr 1fr; gap: 28px 16px; padding-top: 14px; }
+  .snap { position: relative; inset: auto; width: auto; padding: 8px 8px 0; rotate: calc(var(--tilt, 0deg) * .5); }
+  .beyond__wall { padding-inline: 10px; }
+  #beyond { overflow-x: clip; }
+  .snap figcaption { padding: 8px 2px 12px; font-size: 12.5px; }
+  .snap__tape { width: 60px; height: 18px; top: -9px; }
   .tl2 { padding-left: 26px; }
   .tl2::before { left: 5px; }
   .tl2__item::before { left: -26px; width: 12px; height: 12px; top: 26px; }

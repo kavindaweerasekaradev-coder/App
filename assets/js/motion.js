@@ -138,6 +138,28 @@
       }
     }
 
+    // Beyond the pixels: polaroids drop onto the wall, drift on scroll and can be dragged around
+    var wall = document.querySelector('.beyond__wall');
+    if (wall) {
+      var snaps = gsap.utils.toArray('.snap', wall);
+      gsap.from(snaps, {
+        y: -160, autoAlpha: 0, rotation: function () { return gsap.utils.random(-28, 28); }, scale: 1.15,
+        duration: 1.1, ease: 'back.out(1.6)', stagger: 0.14,
+        scrollTrigger: { trigger: wall, start: 'top 75%', once: true },
+        onComplete: function () { gsap.set(snaps, { clearProps: 'rotation,scale' }); }
+      });
+      if (window.Draggable && window.matchMedia('(pointer: fine)').matches && window.matchMedia('(min-width: 901px)').matches) {
+        gsap.registerPlugin(Draggable);
+        root.classList.add('has-drag');
+        var top = 10;
+        Draggable.create(snaps, {
+          bounds: wall, edgeResistance: 0.75, inertia: false,
+          onPress: function () { this.target.style.zIndex = ++top; this.target.classList.add('is-dragging'); },
+          onRelease: function () { this.target.classList.remove('is-dragging'); }
+        });
+      }
+    }
+
     // Toolkit chips: springy entrance, independent drifting, cursor parallax and orbiting rings
     var visual = document.querySelector('.services__visual');
     if (visual) {
