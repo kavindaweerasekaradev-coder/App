@@ -219,6 +219,89 @@
       }
     }
 
+    // Dribbble shots: 3D coverflow carousel (drag/swipe, arrows, keys, click, autoplay with progress)
+    var dc = document.querySelector('.dc');
+    if (dc) {
+      var track = dc.querySelector('.dc__track');
+      var cards = gsap.utils.toArray('.dc__card', dc);
+      var n = cards.length, pos = { p: 0 }, wrapD = gsap.utils.wrap(-n / 2, n / 2);
+      var count = dc.querySelector('.dc__count b'), titleLink = dc.querySelector('.dc__title'), titleText = titleLink.querySelector('span');
+      var bar = dc.querySelector('.dc__progress i');
+      dc.classList.add('is-3d');
+      track.setAttribute('tabindex', '0');
+      cards.forEach(function (card) { var sh = document.createElement('span'); sh.className = 'dc__shade'; card.querySelector('a').appendChild(sh); });
+      var spacing = function () { return Math.min(window.innerWidth * 0.3, 470); };
+      var current = -1;
+      function render() {
+        var sp = spacing();
+        cards.forEach(function (card, i) {
+          var d = wrapD(i - pos.p), ad = Math.abs(d);
+          gsap.set(card, {
+            xPercent: -50, yPercent: -50,
+            x: d * sp * (1 - Math.min(ad, 3) * 0.08), z: -ad * 180, rotationY: gsap.utils.clamp(-48, 48, -d * 34),
+            scale: 1 - Math.min(ad, 3) * 0.06, zIndex: 100 - Math.round(ad * 10), autoAlpha: ad > 2.6 ? 0 : 1
+          });
+          card.querySelector('.dc__shade').style.opacity = Math.min(ad * 0.32, 0.7);
+        });
+        var idx = ((Math.round(pos.p) % n) + n) % n;
+        if (idx !== current) {
+          current = idx;
+          cards.forEach(function (c, i) { c.classList.toggle('is-active', i === idx); c.querySelector('a').tabIndex = i === idx ? 0 : -1; });
+          var a = cards[idx].querySelector('a');
+          count.textContent = String(idx + 1).padStart(2, '0');
+          titleLink.href = a.href;
+          gsap.fromTo(titleText, { yPercent: 100, autoAlpha: 0 }, { yPercent: 0, autoAlpha: 1, duration: 0.5, ease: 'power3.out', overwrite: true,
+            onStart: function () { titleText.textContent = a.querySelector('.dc__card-title').textContent; } });
+        }
+      }
+      var auto;
+      function startAuto() {
+        if (auto) auto.kill();
+        auto = gsap.fromTo(bar, { scaleX: 0 }, { scaleX: 1, duration: 4, ease: 'none', onComplete: function () { go(1); } });
+      }
+      function go(step) {
+        gsap.to(pos, { p: Math.round(pos.p) + step, duration: 0.9, ease: 'power3.inOut', onUpdate: render, overwrite: true });
+        startAuto();
+      }
+      render();
+      // Entrance: cards fly in from the depth
+      gsap.from(cards, { autoAlpha: 0, z: -800, rotationY: 60, duration: 1.2, ease: 'power3.out', stagger: 0.06,
+        scrollTrigger: { trigger: dc, start: 'top 75%', once: true }, onComplete: render });
+      ScrollTrigger.create({ trigger: dc, start: 'top 75%', once: true, onEnter: startAuto });
+      dc.querySelector('.dc__next').addEventListener('click', function () { go(1); });
+      dc.querySelector('.dc__prev').addEventListener('click', function () { go(-1); });
+      track.addEventListener('keydown', function (e) { if (e.key === 'ArrowRight') { e.preventDefault(); go(1); } if (e.key === 'ArrowLeft') { e.preventDefault(); go(-1); } });
+      dc.addEventListener('mouseenter', function () { auto && auto.pause(); });
+      dc.addEventListener('mouseleave', function () { auto && auto.resume(); });
+      // Clicking a side card brings it to the centre instead of following the link
+      cards.forEach(function (card, i) {
+        card.querySelector('a').addEventListener('click', function (e) {
+          if (moved) { e.preventDefault(); return; }
+          var d = Math.round(wrapD(i - pos.p));
+          if (d !== 0) { e.preventDefault(); go(d); }
+        });
+      });
+      // Drag / swipe with a proxy so the cards themselves keep their 3D transforms
+      var moved = false;
+      if (window.Draggable) {
+        gsap.registerPlugin(Draggable);
+        var proxy = document.createElement('div'), startP = 0, lastX = 0, lastT = 0, vel = 0;
+        Draggable.create(proxy, {
+          type: 'x', trigger: track, allowContextMenu: true, minimumMovement: 6,
+          onPress: function () { startP = pos.p; moved = false; gsap.killTweensOf(pos); auto && auto.pause(); },
+          onDragStart: function () { moved = true; lastX = this.x; lastT = performance.now(); vel = 0; track.classList.add('is-grabbing'); },
+          onDrag: function () { var now = performance.now(); vel = (this.x - lastX) / Math.max(now - lastT, 1); lastX = this.x; lastT = now; pos.p = startP - (this.x - this.startX) / spacing(); render(); },
+          onRelease: function () {
+            track.classList.remove('is-grabbing');
+            if (moved) { gsap.to(pos, { p: Math.round(pos.p - gsap.utils.clamp(-2, 2, vel * 0.6)), duration: 0.8, ease: 'power3.out', onUpdate: render }); startAuto(); }
+            else { auto && auto.resume(); }
+            setTimeout(function () { moved = false; }, 0);
+          }
+        });
+      }
+      window.addEventListener('resize', render);
+    }
+
     // Toolkit chips: springy entrance, independent drifting, cursor parallax and orbiting rings
     var visual = document.querySelector('.services__visual');
     if (visual) {

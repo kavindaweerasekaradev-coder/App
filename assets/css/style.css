@@ -842,6 +842,54 @@ html:not(.has-drag) .beyond__hint { display: none; }
 .doodle--loop { left: 10%; bottom: -3%; width: calc(clamp(190px, 17vw, 236px) * 1.32); z-index: 0; stroke: var(--lime-dark); stroke-width: 3; }
 .doodle--star { right: 30%; top: -2%; width: 46px; z-index: 4; stroke: var(--ink); fill: var(--lime); stroke-width: 2; }
 
+/* Dribbble shots carousel. Base = swipeable scroll-snap row; .is-3d (GSAP) = coverflow stage */
+.dc { margin-top: clamp(8px, 2vw, 24px); overflow-x: clip; overflow-y: visible; padding-block: 30px; margin-block: -30px; }
+.dc__track {
+  display: flex; gap: 16px; overflow-x: auto; scroll-snap-type: x mandatory; padding: 12px var(--gutter) 24px;
+  scrollbar-width: none;
+}
+.dc__track::-webkit-scrollbar { display: none; }
+.dc__card { flex: 0 0 min(78vw, 560px); scroll-snap-align: center; }
+.dc__card a { position: relative; display: block; overflow: hidden; border-radius: var(--radius-lg); background: var(--gray); box-shadow: 0 24px 60px rgba(14, 14, 14, .14); }
+.dc__card img { display: block; width: 100%; height: auto; aspect-ratio: 4 / 3; object-fit: cover; user-select: none; }
+.dc__card-title {
+  position: absolute; left: 14px; bottom: 14px; padding: 8px 14px; border-radius: 999px; background: rgba(255, 255, 255, .92);
+  font-size: 13px; font-weight: 500; opacity: 0; translate: 0 8px; transition: opacity .3s var(--ease), translate .3s var(--ease);
+}
+.dc__card a:hover .dc__card-title, .dc__card a:focus-visible .dc__card-title { opacity: 1; translate: 0 0; }
+
+.dc.is-3d .dc__track {
+  position: relative; display: block; overflow: visible; height: clamp(300px, 36vw, 500px); padding: 0;
+  perspective: 1400px; transform-style: preserve-3d; cursor: grab; touch-action: pan-y;
+}
+.dc.is-3d .dc__track.is-grabbing { cursor: grabbing; }
+.dc.is-3d .dc__card { position: absolute; left: 50%; top: 50%; width: clamp(280px, 40vw, 600px); margin: 0; will-change: transform; }
+.dc.is-3d .dc__card a { transition: box-shadow .4s var(--ease); }
+.dc.is-3d .dc__card.is-active a { box-shadow: 0 40px 90px rgba(14, 14, 14, .22); }
+.dc.is-3d .dc__card:not(.is-active) .dc__card-title { display: none; }
+.dc__shade { position: absolute; inset: 0; background: #fff; opacity: 0; pointer-events: none; }
+.dc:not(.is-3d) .dc__shade { display: none; }
+
+.dc__bar { margin-top: clamp(20px, 3vw, 36px); display: flex; align-items: center; gap: 24px; }
+.dc__info { display: flex; align-items: center; gap: 18px; min-width: 0; flex: 1; }
+.dc__count { font-size: 13px; letter-spacing: .08em; color: var(--text-subtle); font-variant-numeric: tabular-nums; white-space: nowrap; }
+.dc__count b { color: var(--text); font-weight: 600; }
+.dc__title { display: inline-flex; align-items: center; gap: 8px; min-width: 0; font-size: clamp(16px, 1.6vw, 20px); font-weight: 500; letter-spacing: -0.02em; overflow: hidden; }
+.dc__title span { display: inline-block; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+.dc__title svg { flex: none; width: 16px; height: 16px; transition: transform .3s var(--ease); }
+.dc__title:hover svg { transform: rotate(45deg); }
+.dc__progress { flex: 0 1 220px; height: 3px; border-radius: 3px; background: var(--border); overflow: hidden; }
+.dc__progress i { display: block; height: 100%; background: var(--ink); transform: scaleX(0); transform-origin: left; }
+.dc__nav { display: flex; gap: 8px; }
+.dc__btn {
+  width: 48px; height: 48px; border-radius: 50%; display: grid; place-items: center; border: 0; background: #fff; color: var(--ink);
+  box-shadow: inset 0 0 0 1px var(--border); transition: background-color .25s var(--ease), color .25s var(--ease), transform .25s var(--ease);
+}
+.dc__btn:hover { background: var(--ink); color: #fff; }
+.dc__btn:active { transform: scale(.94); }
+.dc__btn svg { width: 18px; height: 18px; }
+.dc:not(.is-3d) .dc__progress, .dc:not(.is-3d) .dc__nav { display: none; }
+
 /* White chips and icons on gray cards get a hairline so they hold up on the light gray */
 .stat:not(.stat--ink):not(.stat--lime) .stat__icon, .stat__contrast, .rw-card__arrow, .acc-icon,
 .process__num, .process__icon, .process__tags li, .cs-blk-steps li:last-child span {
@@ -922,6 +970,13 @@ html:not(.has-drag) .beyond__hint { display: none; }
   .hero__ctas .btn--outline { justify-content: center; }
   .hero__role { font-size: 12px; }
   .process, .rw-grid, .live { grid-template-columns: 1fr; }
+  .dc__progress { display: none; }
+  .dc.is-3d .dc__card { width: 74vw; }
+  .dc.is-3d .dc__track { height: 64vw; }
+  .dc__btn { width: 42px; height: 42px; }
+  .dc__info { flex-direction: column; align-items: flex-start; gap: 4px; }
+  .dc__title { font-size: 16px; }
+  .dc__title span { white-space: normal; }
   .beyond__wall { height: auto; display: grid; grid-template-columns: 1fr 1fr; gap: 28px 16px; padding-top: 14px; }
   .snap { position: relative; inset: auto; width: auto; }
   .snap__card { padding: 8px 8px 0; rotate: calc(var(--tilt, 0deg) * .5); }
