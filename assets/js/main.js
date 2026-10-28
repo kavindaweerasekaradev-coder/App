@@ -1,6 +1,26 @@
 (function () {
   document.documentElement.classList.add('js');
 
+  // Logo: reload the home page from the very top (not the remembered scroll spot)
+  try {
+    if (sessionStorage.getItem('toTop')) {
+      sessionStorage.removeItem('toTop');
+      if ('scrollRestoration' in history) history.scrollRestoration = 'manual';
+      window.scrollTo(0, 0);
+      window.addEventListener('load', function () { window.scrollTo(0, 0); });
+    }
+  } catch (e) {}
+  var logo = document.getElementById('nav-logo');
+  if (logo) {
+    logo.addEventListener('click', function (e) {
+      if (e.metaKey || e.ctrlKey || e.shiftKey || e.button !== 0) return;
+      e.preventDefault();
+      try { sessionStorage.setItem('toTop', '1'); } catch (err) {}
+      window.scrollTo(0, 0);
+      window.location.href = window.location.pathname;
+    });
+  }
+
   // Mobile menu
   var burger = document.getElementById('nav-burger');
   var links = document.getElementById('nav-links');
