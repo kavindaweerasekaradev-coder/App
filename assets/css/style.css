@@ -791,24 +791,36 @@ details[open] .acc-icon::after { transform: rotate(0); }
   background: var(--lime); border-radius: 0.08em; transform: skewX(-6deg) scaleX(0); transform-origin: left;
   transition: transform .9s .3s var(--ease);
 }
-.beyond__text .reveal.is-visible .beyond__mark::after, html:not(.js) .beyond__mark::after { transform: skewX(-6deg) scaleX(1); }
+html:not(.gsap) .beyond__text .reveal.is-visible .beyond__mark::after, html:not(.js) .beyond__mark::after, .beyond__mark.is-built::after { transform: skewX(-6deg) scaleX(1); }
+.beyond__mark .ch { display: inline-block; }
 .beyond__lead { margin-top: 28px; max-width: 600px; font-size: clamp(18px, 1.6vw, 21px); line-height: 1.5; letter-spacing: -0.01em; }
 .beyond__body { margin-top: 16px; color: var(--text-muted); font-size: 15.5px; line-height: 1.65; max-width: 560px; }
 .beyond__actions { margin-top: 32px; display: flex; flex-wrap: wrap; gap: 12px; }
 
 .beyond__wall { position: relative; height: clamp(600px, 52vw, 720px); }
-.snap {
-  position: absolute; width: clamp(190px, 17vw, 236px); padding: 12px 12px 0; margin: 0; background: #fff;
+/* Each polaroid has three layers: .snap (placed + scroll fan-out), .snap__drag (Draggable), .snap__card (frame, tilt, 3D hover) */
+.snap { position: absolute; width: clamp(190px, 17vw, 236px); }
+.snap__drag { cursor: grab; touch-action: pan-y; }
+.snap__card {
+  position: relative; margin: 0; padding: 12px 12px 0; background: #fff; user-select: none;
   box-shadow: 0 1px 2px rgba(14, 14, 14, .06), 0 18px 40px rgba(14, 14, 14, .14);
   rotate: var(--tilt, 0deg); transition: rotate .45s var(--ease), scale .45s var(--ease), box-shadow .45s var(--ease);
-  cursor: grab; user-select: none; touch-action: pan-y;
+  transform-style: preserve-3d;
 }
-.snap:hover { rotate: 0deg; scale: 1.04; box-shadow: 0 2px 4px rgba(14, 14, 14, .06), 0 30px 60px rgba(14, 14, 14, .2); z-index: 5; }
-.snap.is-dragging { cursor: grabbing; rotate: 0deg; scale: 1.06; }
-.snap img { display: block; width: 100%; height: auto; aspect-ratio: 4 / 5; object-fit: cover; pointer-events: none; }
+.snap:hover { z-index: 9; }
+.snap:hover .snap__card { rotate: 0deg; scale: 1.04; box-shadow: 0 2px 4px rgba(14, 14, 14, .06), 0 30px 60px rgba(14, 14, 14, .2); }
+.snap.is-dragging .snap__drag { cursor: grabbing; }
+.snap.is-dragging .snap__card { rotate: 0deg; scale: 1.07; box-shadow: 0 40px 80px rgba(14, 14, 14, .25); }
+.snap__photo { position: relative; display: block; overflow: hidden; }
+.snap__photo img { display: block; width: 100%; height: auto; aspect-ratio: 4 / 5; object-fit: cover; pointer-events: none; }
+.snap__glare {
+  position: absolute; inset: 0; pointer-events: none; opacity: var(--go, 0); transition: opacity .3s;
+  background: radial-gradient(circle at var(--gx, 50%) var(--gy, 0%), rgba(255, 255, 255, .55), transparent 55%);
+  mix-blend-mode: soft-light;
+}
 .snap figcaption { padding: 12px 4px 16px; text-align: center; font-size: 14px; font-style: italic; font-weight: 500; letter-spacing: -0.01em; color: var(--text-muted); }
 .snap__tape {
-  position: absolute; top: -12px; left: 50%; width: 84px; height: 24px; translate: -50% 0; rotate: -3deg;
+  position: absolute; z-index: 1; top: -12px; left: 50%; width: 84px; height: 24px; translate: -50% 0; rotate: -3deg;
   background: rgba(212, 245, 92, .7); box-shadow: 0 1px 2px rgba(14, 14, 14, .08);
 }
 .snap--2 .snap__tape { rotate: 4deg; background: rgba(255, 255, 255, .75); box-shadow: inset 0 0 0 1px var(--border), 0 1px 2px rgba(14, 14, 14, .08); }
@@ -821,6 +833,14 @@ details[open] .acc-icon::after { transform: rotate(0); }
 .beyond__hint { position: absolute; right: 0; top: -34px; font-size: 13px; font-style: italic; color: var(--text-subtle); }
 .beyond__hint::before { content: "\2199  "; font-style: normal; }
 html:not(.has-drag) .beyond__hint { display: none; }
+
+/* Hand-drawn doodles that ink themselves in */
+.doodle { position: absolute; overflow: visible; pointer-events: none; fill: none; stroke: var(--ink); stroke-width: 2.4; stroke-linecap: round; stroke-linejoin: round; }
+.doodle text { fill: var(--text-muted); stroke: none; font: italic 500 15px var(--font-sans); letter-spacing: -0.01em; }
+.doodle--arrow { left: 38%; bottom: -17%; width: 240px; z-index: 4; }
+#beyond { padding-bottom: clamp(80px, 9vw, 140px); }
+.doodle--loop { left: 10%; bottom: -3%; width: calc(clamp(190px, 17vw, 236px) * 1.32); z-index: 0; stroke: var(--lime-dark); stroke-width: 3; }
+.doodle--star { right: 30%; top: -2%; width: 46px; z-index: 4; stroke: var(--ink); fill: var(--lime); stroke-width: 2; }
 
 /* White chips and icons on gray cards get a hairline so they hold up on the light gray */
 .stat:not(.stat--ink):not(.stat--lime) .stat__icon, .stat__contrast, .rw-card__arrow, .acc-icon,
@@ -903,7 +923,9 @@ html:not(.has-drag) .beyond__hint { display: none; }
   .hero__role { font-size: 12px; }
   .process, .rw-grid, .live { grid-template-columns: 1fr; }
   .beyond__wall { height: auto; display: grid; grid-template-columns: 1fr 1fr; gap: 28px 16px; padding-top: 14px; }
-  .snap { position: relative; inset: auto; width: auto; padding: 8px 8px 0; rotate: calc(var(--tilt, 0deg) * .5); }
+  .snap { position: relative; inset: auto; width: auto; }
+  .snap__card { padding: 8px 8px 0; rotate: calc(var(--tilt, 0deg) * .5); }
+  .doodle { display: none; }
   .beyond__wall { padding-inline: 10px; }
   #beyond { overflow-x: clip; }
   .snap figcaption { padding: 8px 2px 12px; font-size: 12.5px; }

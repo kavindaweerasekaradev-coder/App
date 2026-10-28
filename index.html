@@ -19,7 +19,7 @@
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet" />
-  <link rel="stylesheet" href="assets/css/style.css?v=20261028a" />
+  <link rel="stylesheet" href="assets/css/style.css?v=20261028b" />
 </head>
 <body>
   <a class="skip-link" href="#main">Skip to content</a>
@@ -627,7 +627,7 @@
         <div class="beyond__text">
           <div class="reveal">
             <p class="label">Beyond the pixels</p>
-            <h2 class="beyond__title">A designer who <span class="beyond__mark">builds.</span></h2>
+            <h2 class="beyond__title">A designer who <span class="beyond__mark" data-nosplit>builds.</span></h2>
           </div>
           <p class="beyond__lead reveal">I'm Kavinda, a product and UI/UX designer from Sri Lanka. Five years designing web and mobile products, from first wireframes to products that are live today.</p>
           <p class="beyond__body reveal">I turn complex ideas into interfaces people understand, backed by design systems teams can actually build with. I use AI alongside Figma as a creative partner to explore faster, while the judgement about what's right for people stays human.</p>
@@ -641,27 +641,54 @@
           </div>
         </div>
         <div class="beyond__wall" aria-label="Photos from life outside work">
-            <figure class="snap snap--1" style="--tilt:-6deg">
-              <span class="snap__tape" aria-hidden="true"></span>
-              <img src="assets/img/beyond/desk-setup.webp" alt="A desk with a monitor showing a website being built in Webflow, lit by a monitor light bar" width="637" height="800" loading="lazy" draggable="false" />
-              <figcaption>Where the work happens</figcaption>
-            </figure>
-            <figure class="snap snap--2" style="--tilt:5deg">
-              <span class="snap__tape" aria-hidden="true"></span>
-              <img src="assets/img/beyond/sunset-ride.webp" alt="View over motorbike handlebars of a sunset on the beach" width="640" height="798" loading="lazy" draggable="false" />
-              <figcaption>Chasing sunsets</figcaption>
-            </figure>
-            <figure class="snap snap--3" style="--tilt:-3deg">
-              <span class="snap__tape" aria-hidden="true"></span>
-              <img src="assets/img/beyond/colombo-view.webp" alt="Feet up by a high-rise window overlooking Colombo and the sea" width="640" height="800" loading="lazy" draggable="false" />
-              <figcaption>Colombo from above</figcaption>
-            </figure>
-            <figure class="snap snap--4" style="--tilt:7deg">
-              <span class="snap__tape" aria-hidden="true"></span>
-              <img src="assets/img/beyond/office-desk.webp" alt="A tidy office desk with a laptop and monitor against an orange wall" width="637" height="800" loading="lazy" draggable="false" />
-              <figcaption>Office days</figcaption>
-            </figure>
-            <p class="beyond__hint" aria-hidden="true">Drag the photos around</p>
+          <svg class="doodle doodle--arrow" viewBox="0 0 240 130" aria-hidden="true">
+            <path d="M206 92c6-36-18-64-72-74-30-6-60-2-84 8" />
+            <path d="M66 12l-18 15 22 9" />
+            <text x="40" y="122">the life behind the work</text>
+          </svg>
+          <svg class="doodle doodle--loop" viewBox="0 0 300 420" aria-hidden="true">
+            <path d="M152 14C78 10 22 64 16 166c-6 104 30 212 120 236 92 24 152-52 150-170C284 110 236 26 156 22c-40-2-70 10-92 26" />
+          </svg>
+          <svg class="doodle doodle--star" viewBox="0 0 80 80" aria-hidden="true">
+            <path d="M40 6c3 20 10 28 34 34-24 6-31 14-34 34-3-20-10-28-34-34 24-6 31-14 34-34z" />
+          </svg>
+          <div class="snap snap--1">
+            <div class="snap__drag">
+              <figure class="snap__card" style="--tilt:-6deg">
+                <span class="snap__tape" aria-hidden="true"></span>
+                <span class="snap__photo"><img src="assets/img/beyond/desk-setup.webp" alt="A desk with a monitor showing a website being built in Webflow, lit by a monitor light bar" width="637" height="800" loading="lazy" draggable="false" /><span class="snap__glare" aria-hidden="true"></span></span>
+                <figcaption>Where the work happens</figcaption>
+              </figure>
+            </div>
+          </div>
+          <div class="snap snap--2">
+            <div class="snap__drag">
+              <figure class="snap__card" style="--tilt:5deg">
+                <span class="snap__tape" aria-hidden="true"></span>
+                <span class="snap__photo"><img src="assets/img/beyond/sunset-ride.webp" alt="View over motorbike handlebars of a sunset on the beach" width="640" height="798" loading="lazy" draggable="false" /><span class="snap__glare" aria-hidden="true"></span></span>
+                <figcaption>Chasing sunsets</figcaption>
+              </figure>
+            </div>
+          </div>
+          <div class="snap snap--3">
+            <div class="snap__drag">
+              <figure class="snap__card" style="--tilt:-3deg">
+                <span class="snap__tape" aria-hidden="true"></span>
+                <span class="snap__photo"><img src="assets/img/beyond/colombo-view.webp" alt="Feet up by a high-rise window overlooking Colombo and the sea" width="640" height="800" loading="lazy" draggable="false" /><span class="snap__glare" aria-hidden="true"></span></span>
+                <figcaption>Colombo from above</figcaption>
+              </figure>
+            </div>
+          </div>
+          <div class="snap snap--4">
+            <div class="snap__drag">
+              <figure class="snap__card" style="--tilt:7deg">
+                <span class="snap__tape" aria-hidden="true"></span>
+                <span class="snap__photo"><img src="assets/img/beyond/office-desk.webp" alt="A tidy office desk with a laptop and monitor against an orange wall" width="637" height="800" loading="lazy" draggable="false" /><span class="snap__glare" aria-hidden="true"></span></span>
+                <figcaption>Office days</figcaption>
+              </figure>
+            </div>
+          </div>
+          <p class="beyond__hint" aria-hidden="true">Drag the photos around</p>
         </div>
       </div>
     </section>
@@ -712,7 +739,7 @@
   <script src="assets/js/vendor/gsap.min.js?v=3.12.5"></script>
   <script src="assets/js/vendor/ScrollTrigger.min.js?v=3.12.5"></script>
   <script src="assets/js/vendor/Draggable.min.js?v=3.12.5"></script>
-  <script src="assets/js/motion.js?v=20261028a"></script>
-  <script src="assets/js/main.js?v=20261028a"></script>
+  <script src="assets/js/motion.js?v=20261028b"></script>
+  <script src="assets/js/main.js?v=20261028b"></script>
 </body>
 </html>
