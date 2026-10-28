@@ -265,7 +265,7 @@ def render(p, prev_p, next_p, version):
         <a href="../index.html#about">About</a>
         <a href="../index.html#services">Services</a>
         <a href="../index.html#experience">Experience</a>
-        <a href="../assets/docs/Kavinda-Weerasekara-CV.pdf" download>Download CV</a>
+        <a href="../assets/docs/Kavinda-Weerasekara-CV.pdf?v=2" download>Download CV</a>
       </nav>
 
       <div class="nav__actions">
