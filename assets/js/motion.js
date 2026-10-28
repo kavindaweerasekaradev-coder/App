@@ -19,7 +19,7 @@
             outer.appendChild(inner); frag.appendChild(outer);
           });
           n.parentNode.replaceChild(frag, n);
-        } else if (n.nodeType === 1 && n.tagName !== 'BR') {
+        } else if (n.nodeType === 1 && n.tagName !== 'BR' && !n.hasAttribute('data-nosplit')) {
           walk(n);
         }
       });
@@ -31,6 +31,7 @@
 
   mm.add('(prefers-reduced-motion: reduce)', function () {
     document.querySelectorAll('.reveal').forEach(function (el) { el.classList.add('is-visible'); });
+    document.querySelectorAll('.beyond__mark').forEach(function (el) { el.classList.add('is-built'); });
   });
 
   mm.add('(prefers-reduced-motion: no-preference)', function () {
@@ -65,7 +66,7 @@
     }
 
     // Section headings: words mask up on scroll
-    document.querySelectorAll('main h2:not(.contact__title)').forEach(function (h) {
+    document.querySelectorAll('main h2:not(.contact__title):not(.beyond__title)').forEach(function (h) {
       h.classList.remove('reveal');
       var w = splitWords(h);
       gsap.from(w, {
@@ -138,25 +139,83 @@
       }
     }
 
-    // Beyond the pixels: polaroids drop onto the wall, drift on scroll and can be dragged around
+    // Beyond the pixels: "builds." stacks itself, photos fan out from a pile on scroll, develop like
+    // instant film, doodles ink themselves in, cards tilt in 3D with a glare and can be dragged around
     var wall = document.querySelector('.beyond__wall');
     if (wall) {
+      var btitle = document.querySelector('.beyond__title');
+      var mark = btitle.querySelector('.beyond__mark');
+      btitle.setAttribute('aria-label', btitle.textContent.replace(/\s+/g, ' ').trim());
+      var letters = mark.textContent.split('');
+      mark.textContent = '';
+      var chars = letters.map(function (ch) { var sp = document.createElement('span'); sp.className = 'ch'; sp.textContent = ch; mark.appendChild(sp); return sp; });
+      var bwords = splitWords(btitle);
+      gsap.timeline({ scrollTrigger: { trigger: btitle, start: 'top 85%', once: true } })
+        .from(bwords, { yPercent: 115, duration: 0.9, ease: 'power4.out', stagger: 0.06 })
+        .from(chars, { y: -140, rotation: function () { return gsap.utils.random(-40, 40); }, autoAlpha: 0, duration: 0.9, ease: 'bounce.out', stagger: 0.07 }, 0.25)
+        .add(function () { mark.classList.add('is-built'); }, '-=0.35');
+
       var snaps = gsap.utils.toArray('.snap', wall);
-      gsap.from(snaps, {
-        y: -160, autoAlpha: 0, rotation: function () { return gsap.utils.random(-28, 28); }, scale: 1.15,
-        duration: 1.1, ease: 'back.out(1.6)', stagger: 0.14,
-        scrollTrigger: { trigger: wall, start: 'top 75%', once: true },
-        onComplete: function () { gsap.set(snaps, { clearProps: 'rotation,scale' }); }
+      var imgs = wall.querySelectorAll('.snap__photo img');
+      var desktop = window.matchMedia('(min-width: 1101px)').matches;
+      var fine = window.matchMedia('(pointer: fine)').matches;
+
+      // Instant-film developing
+      gsap.set(imgs, { filter: 'grayscale(1) sepia(0.3) brightness(1.75) contrast(0.55) blur(3px)' });
+      gsap.to(imgs, {
+        filter: 'grayscale(0) sepia(0) brightness(1) contrast(1) blur(0px)', duration: 2.4, ease: 'power2.out', stagger: 0.3,
+        scrollTrigger: { trigger: wall, start: desktop ? 'top 30%' : 'top 75%', once: true }
       });
-      if (window.Draggable && window.matchMedia('(pointer: fine)').matches && window.matchMedia('(min-width: 901px)').matches) {
-        gsap.registerPlugin(Draggable);
-        root.classList.add('has-drag');
-        var top = 10;
-        Draggable.create(snaps, {
-          bounds: wall, edgeResistance: 0.75, inertia: false,
-          onPress: function () { this.target.style.zIndex = ++top; this.target.classList.add('is-dragging'); },
-          onRelease: function () { this.target.classList.remove('is-dragging'); }
+
+      if (desktop) {
+        // Fan out from a stacked pile in the middle of the wall, scrubbed to scroll
+        snaps.forEach(function (snap, i) {
+          gsap.fromTo(snap, {
+            x: function () { var w = wall.getBoundingClientRect(), r = snap.getBoundingClientRect(); return (w.left + w.width / 2) - (r.left + r.width / 2) + i * 6; },
+            y: function () { var w = wall.getBoundingClientRect(), r = snap.getBoundingClientRect(); return (w.top + w.height / 2) - (r.top + r.height / 2) + i * 4; },
+            rotation: [-8, 6, -3, 9][i % 4]
+          }, {
+            x: 0, y: 0, rotation: 0, ease: 'power1.inOut', immediateRender: true,
+            scrollTrigger: { trigger: wall, start: 'top 70%', end: 'top 15%', scrub: 0.8, invalidateOnRefresh: true }
+          });
         });
+        // Doodles ink themselves in once the photos have landed
+        var paths = wall.querySelectorAll('.doodle path');
+        paths.forEach(function (path) { var len = path.getTotalLength(); gsap.set(path, { strokeDasharray: len, strokeDashoffset: len }); });
+        gsap.timeline({ scrollTrigger: { trigger: wall, start: 'top 20%', once: true } })
+          .to(paths, { strokeDashoffset: 0, duration: 1.1, ease: 'power2.inOut', stagger: 0.25 })
+          .from(wall.querySelectorAll('.doodle text'), { autoAlpha: 0, x: -10, duration: 0.6 }, 0.2)
+          .from(wall.querySelector('.doodle--star'), { scale: 0, rotation: -90, transformOrigin: '50% 50%', duration: 0.7, ease: 'back.out(3)' }, 0.5);
+      } else {
+        gsap.set(wall.querySelectorAll('.doodle path'), { strokeDashoffset: 0 });
+        gsap.from(snaps, { y: 60, autoAlpha: 0, rotation: function () { return gsap.utils.random(-12, 12); }, duration: 0.9, ease: 'back.out(1.6)', stagger: 0.12,
+          scrollTrigger: { trigger: wall, start: 'top 80%', once: true } });
+      }
+
+      if (fine && desktop) {
+        // 3D tilt + glare following the cursor
+        wall.querySelectorAll('.snap__card').forEach(function (card) {
+          var glare = card.querySelector('.snap__glare');
+          card.addEventListener('mousemove', function (e) {
+            var r = card.getBoundingClientRect(), px = (e.clientX - r.left) / r.width, py = (e.clientY - r.top) / r.height;
+            gsap.to(card, { rotationY: (px - 0.5) * 18, rotationX: (0.5 - py) * 18, transformPerspective: 800, duration: 0.5, ease: 'power3.out', overwrite: 'auto' });
+            glare.style.setProperty('--gx', (px * 100) + '%'); glare.style.setProperty('--gy', (py * 100) + '%'); glare.style.setProperty('--go', 1);
+          });
+          card.addEventListener('mouseleave', function () {
+            gsap.to(card, { rotationX: 0, rotationY: 0, duration: 0.9, ease: 'elastic.out(1, 0.5)', overwrite: 'auto' });
+            glare.style.setProperty('--go', 0);
+          });
+        });
+        if (window.Draggable) {
+          gsap.registerPlugin(Draggable);
+          root.classList.add('has-drag');
+          var zTop = 10;
+          Draggable.create(wall.querySelectorAll('.snap__drag'), {
+            bounds: wall, edgeResistance: 0.75,
+            onPress: function () { var s = this.target.parentNode; s.style.zIndex = ++zTop; s.classList.add('is-dragging'); },
+            onRelease: function () { this.target.parentNode.classList.remove('is-dragging'); }
+          });
+        }
       }
     }
 
