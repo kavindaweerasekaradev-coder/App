@@ -26,6 +26,51 @@ input{font:inherit}
 .rail-group + .rail-group{display:none !important}
 .hide-sm{display:none !important}
 }
+
+/* Motion */
+@keyframes rise{from{opacity:0;transform:translateY(14px)}to{opacity:1;transform:none}}
+@keyframes grow-y{from{transform:scaleY(0)}to{transform:scaleY(1)}}
+@keyframes grow-x{from{transform:scaleX(0)}to{transform:scaleX(1)}}
+@keyframes pop{0%{opacity:0;transform:scale(.6)}70%{opacity:1;transform:scale(1.08)}100%{opacity:1;transform:scale(1)}}
+@keyframes tip-in{from{opacity:0;transform:translate(-50%,6px)}to{opacity:1;transform:translate(-50%,0)}}
+@keyframes ring{0%,100%{transform:rotate(0)}20%{transform:rotate(14deg)}40%{transform:rotate(-12deg)}60%{transform:rotate(8deg)}80%{transform:rotate(-4deg)}}
+@keyframes ping{0%{transform:scale(1);opacity:.7}100%{transform:scale(2.6);opacity:0}}
+@keyframes flash{from{background-color:#F1FBCF}to{background-color:#F6F7F9}}
+@keyframes spin{to{transform:rotate(360deg)}}
+.card{animation:rise .6s cubic-bezier(.2,.7,.2,1) backwards;transition:transform .25s ease,box-shadow .25s ease}
+.card:hover{transform:translateY(-3px);box-shadow:0 12px 32px rgba(15,17,21,.08)}
+.enter{animation:rise .6s cubic-bezier(.2,.7,.2,1) backwards}
+button,a{transition:transform .15s ease,background-color .2s ease,border-color .2s ease,box-shadow .2s ease,color .2s ease}
+button:active,a:active{transform:scale(.95)}
+button:focus-visible,a:focus-visible,input:focus-visible{outline:2px solid #0F1115;outline-offset:2px}
+.lift:hover{transform:translateY(-2px);box-shadow:0 8px 20px rgba(15,17,21,.18)}
+.arrow svg{transition:transform .3s cubic-bezier(.2,.7,.2,1)}
+.arrow:hover{background:var(--accent);border-color:var(--accent) !important;color:#0F1115 !important}
+.arrow:hover svg{transform:rotate(45deg)}
+.bell:hover svg{animation:ring .7s ease;transform-origin:50% 10%}
+.ping::after{content:'';position:absolute;inset:-2px;border-radius:999px;background:#E5484D;animation:ping 1.8s ease-out infinite}
+.rail-btn svg,.navlink{transition:transform .2s ease,background-color .2s ease}
+.rail-btn:hover svg{transform:scale(1.15)}
+.icon-btn:hover{border-color:#0F1115 !important}
+.icon-btn:hover svg{transform:scale(1.15)}
+.icon-btn svg{transition:transform .2s ease}
+.searchbox{transition:box-shadow .2s ease}
+.searchbox:focus-within{box-shadow:0 0 0 2px var(--accent)}
+.row{transition:background-color .2s ease}
+.row-in{animation:rise .45s cubic-bezier(.2,.7,.2,1) backwards}
+.bar-fill{transform-origin:bottom;animation:grow-y .7s cubic-bezier(.2,.8,.2,1) backwards;transition:filter .2s ease}
+.bar-wrap:hover .bar-fill{filter:brightness(.94)}
+.tip{animation:tip-in .35s ease .55s backwards}
+.seg-grow{transform-origin:left;animation:grow-x .9s cubic-bezier(.2,.8,.2,1) backwards}
+.leave-row{transition:background-color .2s ease,transform .2s ease}
+.leave-row:hover{background-color:#EEF0F3 !important;transform:translateX(2px)}
+.leave-row.flash{animation:flash 1.2s ease}
+.pop{display:inline-flex;animation:pop .45s cubic-bezier(.2,.8,.2,1)}
+.bump{display:inline-block;animation:pop .45s cubic-bezier(.2,.8,.2,1)}
+.spinner{width:14px;height:14px;border-radius:999px;border:2px solid rgba(15,17,21,.25);border-top-color:#0F1115;animation:spin .7s linear infinite}
+@media (prefers-reduced-motion: reduce){
+*,*::before,*::after{animation-duration:.01ms !important;animation-delay:0ms !important;animation-iteration-count:1 !important;transition-duration:.01ms !important}
+}
 </style>
 </head>
 <body>
@@ -33,7 +78,7 @@ input{font:inherit}
 <div style="max-width: 1392px; margin: 0 auto; display: flex; flex-direction: column; gap: 20px;">
 
 <!-- Top navigation -->
-<header style="display: flex; flex-wrap: wrap; align-items: center; justify-content: space-between; gap: 12px; background: #FFFFFF; border-radius: 999px; padding: 10px 12px 10px 14px;">
+<header class="enter" style="display: flex; flex-wrap: wrap; align-items: center; justify-content: space-between; gap: 12px; background: #FFFFFF; border-radius: 999px; padding: 10px 12px 10px 14px;">
 <a href="#" style="display: flex; align-items: center; gap: 10px; text-decoration: none; color: #0F1115;">
 <span style="width: 40px; height: 40px; border-radius: 12px; background: var(--accent); display: flex; align-items: center; justify-content: center;">
 <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="#0F1115" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="9" cy="8" r="3.2"/><path d="M3 19.5c.9-3.4 3.2-5 6-5s5.1 1.6 6 5"/><path d="M15.5 4.8a3.2 3.2 0 0 1 0 6.4M17.5 14.6c1.8.7 2.9 2.3 3.4 4.9"/></svg>
@@ -51,9 +96,9 @@ input{font:inherit}
 <button type="button" aria-label="Search" style="width: 44px; height: 44px; border-radius: 999px; border: 1px solid #E3E6EA; background: #FFFFFF; display: flex; align-items: center; justify-content: center;">
 <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" aria-hidden="true"><circle cx="11" cy="11" r="7"/><path d="M20 20l-3.5-3.5"/></svg>
 </button>
-<button type="button" aria-label="Notifications, 3 unread" style="position: relative; width: 44px; height: 44px; border-radius: 999px; border: 1px solid #E3E6EA; background: #FFFFFF; display: flex; align-items: center; justify-content: center;">
+<button type="button" aria-label="Notifications, 3 unread" class="bell" style="position: relative; width: 44px; height: 44px; border-radius: 999px; border: 1px solid #E3E6EA; background: #FFFFFF; display: flex; align-items: center; justify-content: center;">
 <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M6 16v-5a6 6 0 1 1 12 0v5l1.5 2h-15z"/><path d="M10 20.5a2 2 0 0 0 4 0"/></svg>
-<span style="position: absolute; top: 9px; right: 11px; width: 8px; height: 8px; border-radius: 999px; background: #E5484D; border: 2px solid #FFFFFF;"></span>
+<span class="ping" style="position: absolute; top: 9px; right: 11px; width: 8px; height: 8px; border-radius: 999px; background: #E5484D; border: 2px solid #FFFFFF;"></span>
 </button>
 <button type="button" aria-label="Account menu" style="display: flex; align-items: center; gap: 8px; border: none; background: transparent; padding: 0 4px 0 0;">
 <span style="width: 44px; height: 44px; border-radius: 999px; background: #0F1115; color: var(--accent); display: flex; align-items: center; justify-content: center; font-size: 14px; font-weight: 700;">KW</span>
@@ -63,7 +108,7 @@ input{font:inherit}
 </header>
 
 <!-- Greeting row -->
-<div style="display: flex; flex-wrap: wrap; align-items: flex-end; justify-content: space-between; gap: 16px; padding: 4px 4px 0;">
+<div class="enter" style="display: flex; flex-wrap: wrap; align-items: flex-end; justify-content: space-between; gap: 16px; padding: 4px 4px 0; animation-delay: 60ms;">
 <div style="display: flex; flex-direction: column; gap: 6px;">
 <h1 style="margin: 0; font-size: 34px; line-height: 1.15; font-weight: 700; letter-spacing: -0.02em;">Good morning, Kavinda</h1>
 <p style="margin: 0; font-size: 15px; color: #5B626D;">Here’s what’s happening with your people today.</p>
@@ -73,7 +118,7 @@ input{font:inherit}
 <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" aria-hidden="true"><rect x="3" y="5" width="18" height="16" rx="3"/><path d="M8 3v4M16 3v4M3 10h18"/></svg>
 1 Oct 2026 – 31 Oct 2026
 </button>
-<button type="button" style="display: flex; align-items: center; gap: 8px; height: 44px; padding: 0 20px; border-radius: 999px; border: none; background: #0F1115; color: #FFFFFF; font-size: 14px; font-weight: 600;">
+<button type="button" class="lift" style="display: flex; align-items: center; gap: 8px; height: 44px; padding: 0 20px; border-radius: 999px; border: none; background: #0F1115; color: #FFFFFF; font-size: 14px; font-weight: 600;">
 <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true"><circle cx="10" cy="8" r="3.5"/><path d="M3.5 20c.8-3.6 3.4-5.5 6.5-5.5 1.6 0 3 .5 4.1 1.4M19 14v6M16 17h6"/></svg>
 Add employee
 </button>
@@ -84,7 +129,7 @@ Add employee
 <div style="display: flex; flex-wrap: wrap; align-items: flex-start; gap: 20px;">
 
 <!-- Side rail -->
-<aside class="rail" aria-label="Sections" style="width: 72px; box-sizing: border-box; background: #FFFFFF; border-radius: 999px; padding: 18px 0; display: flex; flex-direction: column; align-items: center; justify-content: space-between; gap: 48px;">
+<aside class="rail enter" aria-label="Sections" style="width: 72px; box-sizing: border-box; background: #FFFFFF; border-radius: 999px; padding: 18px 0; display: flex; flex-direction: column; align-items: center; justify-content: space-between; gap: 48px;">
 <div class="rail-group" style="display: flex; flex-direction: column; align-items: center; gap: 10px;">
 <a href="#" aria-label="Overview" aria-current="page" style="width: 48px; height: 48px; border-radius: 999px; background: #0F1115; color: var(--accent); display: flex; align-items: center; justify-content: center;">
 <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" aria-hidden="true"><rect x="3.5" y="3.5" width="7" height="7" rx="2"/><rect x="13.5" y="3.5" width="7" height="7" rx="2"/><rect x="3.5" y="13.5" width="7" height="7" rx="2"/><rect x="13.5" y="13.5" width="7" height="7" rx="2"/></svg>
@@ -125,7 +170,7 @@ Add employee
 
 <!-- KPI grid -->
 <section aria-label="Headcount summary" style="flex: 1 1 300px; display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 12px;">
-<div style="background: #FFFFFF; border-radius: 24px; padding: 18px; display: flex; flex-direction: column; gap: 14px;">
+<div class="card" style="background: #FFFFFF; border-radius: 24px; padding: 18px; display: flex; flex-direction: column; gap: 14px;">
 <div style="display: flex; align-items: center; justify-content: space-between;">
 <span style="width: 36px; height: 36px; border-radius: 12px; background: var(--accent); display: flex; align-items: center; justify-content: center;">
 <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#0F1115" stroke-width="2" stroke-linecap="round" aria-hidden="true"><circle cx="9" cy="8" r="3.5"/><path d="M2.5 20c.8-3.6 3.4-5.5 6.5-5.5s5.7 1.9 6.5 5.5"/><path d="M16 4.6a3.5 3.5 0 0 1 0 6.8"/></svg>
@@ -134,10 +179,10 @@ Add employee
 </div>
 <div style="display: flex; flex-direction: column; gap: 2px;">
 <span style="font-size: 13px; color: #5B626D;">Total employees</span>
-<span style="font-size: 30px; font-weight: 700; letter-spacing: -0.02em;">248</span>
+<span class="countup" data-to="248" style="font-size: 30px; font-weight: 700; letter-spacing: -0.02em;">248</span>
 </div>
 </div>
-<div style="background: #FFFFFF; border-radius: 24px; padding: 18px; display: flex; flex-direction: column; gap: 14px;">
+<div class="card" style="background: #FFFFFF; border-radius: 24px; padding: 18px; display: flex; flex-direction: column; gap: 14px;">
 <div style="display: flex; align-items: center; justify-content: space-between;">
 <span style="width: 36px; height: 36px; border-radius: 12px; background: #E1ECFF; color: #1D4ED8; display: flex; align-items: center; justify-content: center;">
 <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true"><circle cx="10" cy="8" r="3.5"/><path d="M3.5 20c.8-3.6 3.4-5.5 6.5-5.5 1.6 0 3 .5 4.1 1.4M19 14v6M16 17h6"/></svg>
@@ -146,10 +191,10 @@ Add employee
 </div>
 <div style="display: flex; flex-direction: column; gap: 2px;">
 <span style="font-size: 13px; color: #5B626D;">New hires</span>
-<span style="font-size: 30px; font-weight: 700; letter-spacing: -0.02em;">12</span>
+<span class="countup" data-to="12" style="font-size: 30px; font-weight: 700; letter-spacing: -0.02em;">12</span>
 </div>
 </div>
-<div style="background: #FFFFFF; border-radius: 24px; padding: 18px; display: flex; flex-direction: column; gap: 14px;">
+<div class="card" style="background: #FFFFFF; border-radius: 24px; padding: 18px; display: flex; flex-direction: column; gap: 14px;">
 <div style="display: flex; align-items: center; justify-content: space-between;">
 <span style="width: 36px; height: 36px; border-radius: 12px; background: #FDEBD3; color: #9A4A00; display: flex; align-items: center; justify-content: center;">
 <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true"><rect x="3" y="5" width="18" height="16" rx="3"/><path d="M8 3v4M16 3v4M3 10h18"/></svg>
@@ -158,27 +203,27 @@ Add employee
 </div>
 <div style="display: flex; flex-direction: column; gap: 2px;">
 <span style="font-size: 13px; color: #5B626D;">On leave</span>
-<span style="font-size: 30px; font-weight: 700; letter-spacing: -0.02em;">9</span>
+<span class="countup" data-to="9" style="font-size: 30px; font-weight: 700; letter-spacing: -0.02em;">9</span>
 </div>
 </div>
-<div style="background: #0F1115; color: #FFFFFF; border-radius: 24px; padding: 18px; display: flex; flex-direction: column; gap: 14px;">
+<div class="card" style="background: #0F1115; color: #FFFFFF; border-radius: 24px; padding: 18px; display: flex; flex-direction: column; gap: 14px;">
 <div style="display: flex; align-items: center; justify-content: space-between;">
 <span style="width: 36px; height: 36px; border-radius: 12px; background: #262A31; color: var(--accent); display: flex; align-items: center; justify-content: center;">
 <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="3" y="7" width="18" height="13" rx="3"/><path d="M8 7V5a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2"/></svg>
 </span>
-<a href="#" aria-label="View open roles" style="width: 32px; height: 32px; border-radius: 999px; border: 1px solid #3A3F47; color: #FFFFFF; display: flex; align-items: center; justify-content: center;">
+<a href="#" aria-label="View open roles" class="arrow" style="width: 32px; height: 32px; border-radius: 999px; border: 1px solid #3A3F47; color: #FFFFFF; display: flex; align-items: center; justify-content: center;">
 <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M7 17L17 7M8 7h9v9"/></svg>
 </a>
 </div>
 <div style="display: flex; flex-direction: column; gap: 2px;">
 <span style="font-size: 13px; color: #B8BEC7;">Open positions</span>
-<span style="font-size: 30px; font-weight: 700; letter-spacing: -0.02em;">14</span>
+<span class="countup" data-to="14" style="font-size: 30px; font-weight: 700; letter-spacing: -0.02em;">14</span>
 </div>
 </div>
 </section>
 
 <!-- Attendance chart -->
-<section aria-label="Attendance overview" style="flex: 2 1 420px; min-width: 0; background: #FFFFFF; border-radius: 24px; padding: 20px 22px; display: flex; flex-direction: column; gap: 16px;">
+<section aria-label="Attendance overview" class="card" style="flex: 2 1 420px; min-width: 0; background: #FFFFFF; border-radius: 24px; padding: 20px 22px; display: flex; flex-direction: column; gap: 16px;">
 <div style="display: flex; flex-wrap: wrap; align-items: flex-start; justify-content: space-between; gap: 12px;">
 <div style="display: flex; flex-direction: column; gap: 4px;">
 <h2 style="margin: 0; font-size: 16px; font-weight: 600;">Attendance rate</h2>
@@ -212,14 +257,14 @@ Add employee
 </div>
 
 <!-- Employees table -->
-<section aria-label="Employees" style="background: #FFFFFF; border-radius: 24px; padding: 20px 22px; display: flex; flex-direction: column; gap: 16px;">
+<section aria-label="Employees" class="card" style="background: #FFFFFF; border-radius: 24px; padding: 20px 22px; display: flex; flex-direction: column; gap: 16px;">
 <div style="display: flex; flex-wrap: wrap; align-items: center; justify-content: space-between; gap: 12px;">
 <div style="display: flex; flex-direction: column; gap: 2px;">
 <h2 style="margin: 0; font-size: 18px; font-weight: 600;">Employees</h2>
 <p style="margin: 0; font-size: 13px; color: #5B626D;">Recently active team members</p>
 </div>
 <div style="display: flex; flex-wrap: wrap; gap: 8px;">
-<label style="display: flex; align-items: center; gap: 8px; height: 44px; padding: 0 14px; border-radius: 999px; background: #F1F3F5; color: #5B626D;">
+<label class="searchbox" style="display: flex; align-items: center; gap: 8px; height: 44px; padding: 0 14px; border-radius: 999px; background: #F1F3F5; color: #5B626D;">
 <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true"><circle cx="11" cy="11" r="7"/><path d="M20 20l-3.5-3.5"/></svg>
 <span style="position: absolute; width: 1px; height: 1px; overflow: hidden; clip: rect(0 0 0 0);">Search employees</span>
 <input type="search" placeholder="Search employees" style="border: none; outline: none; background: transparent; width: 160px; font-size: 14px; color: #0F1115;">
@@ -251,7 +296,7 @@ All departments
 <div style="flex: 1 1 320px; min-width: 0; display: flex; flex-direction: column; gap: 20px;">
 
 <!-- Payroll card -->
-<section aria-label="Next payroll" style="background: #0F1115; color: #FFFFFF; border-radius: 24px; padding: 22px; display: flex; flex-direction: column; gap: 18px; position: relative; overflow: hidden;">
+<section aria-label="Next payroll" class="card" style="background: #0F1115; color: #FFFFFF; border-radius: 24px; padding: 22px; display: flex; flex-direction: column; gap: 18px; position: relative; overflow: hidden;">
 <div aria-hidden="true" style="position: absolute; right: -40px; top: -40px; width: 160px; height: 160px; border-radius: 999px; border: 28px solid #1E2228;"></div>
 <div style="position: relative; display: flex; align-items: center; justify-content: space-between;">
 <h2 style="margin: 0; font-size: 16px; font-weight: 600;">Next payroll</h2>
@@ -259,7 +304,7 @@ All departments
 </div>
 <div style="position: relative; display: flex; flex-direction: column; gap: 4px;">
 <span style="font-size: 13px; color: #B8BEC7;">Total payout</span>
-<span style="font-size: 34px; font-weight: 700; letter-spacing: -0.02em;">$412,860<span style="color: #7D8590;">.00</span></span>
+<span style="font-size: 34px; font-weight: 700; letter-spacing: -0.02em;"><span class="countup" data-to="412860" data-prefix="$">$412,860</span><span style="color: #7D8590;">.00</span></span>
 </div>
 <div style="position: relative; display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 8px; font-size: 12px;">
 <div style="display: flex; flex-direction: column; gap: 2px;"><span style="color: #B8BEC7;">Pay date</span><span style="font-size: 14px; font-weight: 600;">31 Oct</span></div>
@@ -267,27 +312,27 @@ All departments
 <div style="display: flex; flex-direction: column; gap: 2px;"><span style="color: #B8BEC7;">Cycle</span><span style="font-size: 14px; font-weight: 600;">Monthly</span></div>
 </div>
 <div style="position: relative; display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 10px;">
-<button type="button" style="height: 46px; border-radius: 999px; border: none; background: var(--accent); color: #0F1115; font-size: 14px; font-weight: 700;">Run payroll</button>
+<button type="button" id="runPayroll" class="lift" style="display: flex; align-items: center; justify-content: center; gap: 8px; height: 46px; border-radius: 999px; border: none; background: var(--accent); color: #0F1115; font-size: 14px; font-weight: 700;">Run payroll</button>
 <button type="button" style="height: 46px; border-radius: 999px; border: 1px solid #3A3F47; background: transparent; color: #FFFFFF; font-size: 14px; font-weight: 600;">Review</button>
 </div>
 </section>
 
 <!-- Today's attendance -->
-<section aria-label="Today's attendance" style="background: #FFFFFF; border-radius: 24px; padding: 20px 22px; display: flex; flex-direction: column; gap: 16px;">
+<section aria-label="Today's attendance" class="card" style="background: #FFFFFF; border-radius: 24px; padding: 20px 22px; display: flex; flex-direction: column; gap: 16px;">
 <div style="display: flex; align-items: center; justify-content: space-between;">
 <h2 style="margin: 0; font-size: 16px; font-weight: 600;">Today’s attendance</h2>
-<a href="#" aria-label="Open attendance" style="width: 36px; height: 36px; border-radius: 999px; border: 1px solid #D9DDE2; color: #0F1115; display: flex; align-items: center; justify-content: center;">
+<a href="#" aria-label="Open attendance" class="arrow" style="width: 36px; height: 36px; border-radius: 999px; border: 1px solid #D9DDE2; color: #0F1115; display: flex; align-items: center; justify-content: center;">
 <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M7 17L17 7M8 7h9v9"/></svg>
 </a>
 </div>
 <div style="display: flex; align-items: baseline; gap: 8px;">
-<span style="font-size: 34px; font-weight: 700; letter-spacing: -0.02em;">228</span>
+<span class="countup" data-to="228" style="font-size: 34px; font-weight: 700; letter-spacing: -0.02em;">228</span>
 <span style="font-size: 14px; color: #5B626D;">of 248 checked in</span>
 </div>
 <div role="img" aria-label="212 on time, 16 late, 20 absent" style="display: flex; gap: 4px; height: 14px;">
-<div style="width: 85.5%; border-radius: 999px; background: var(--accent);"></div>
-<div style="width: 6.5%; border-radius: 999px; background: #0F1115;"></div>
-<div class="hatch" style="width: 8%; border-radius: 999px; background-color: #D9DDE2;"></div>
+<div class="seg-grow" style="width: 85.5%; border-radius: 999px; background: var(--accent); animation-delay: 500ms;"></div>
+<div class="seg-grow" style="width: 6.5%; border-radius: 999px; background: #0F1115; animation-delay: 750ms;"></div>
+<div class="hatch seg-grow" style="animation-delay: 850ms; width: 8%; border-radius: 999px; background-color: #D9DDE2;"></div>
 </div>
 <div style="display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 8px;">
 <div style="display: flex; flex-direction: column; gap: 4px; padding: 12px; border-radius: 16px; background: #F6F7F9;">
@@ -306,7 +351,7 @@ All departments
 </section>
 
 <!-- Leave requests -->
-<section aria-label="Leave requests" style="background: #FFFFFF; border-radius: 24px; padding: 20px 22px; display: flex; flex-direction: column; gap: 14px;">
+<section aria-label="Leave requests" class="card" style="background: #FFFFFF; border-radius: 24px; padding: 20px 22px; display: flex; flex-direction: column; gap: 14px;">
 <div style="display: flex; align-items: center; justify-content: space-between; gap: 8px;">
 <div style="display: flex; align-items: center; gap: 8px;">
 <h2 style="margin: 0; font-size: 16px; font-weight: 600;">Leave requests</h2>
@@ -337,12 +382,12 @@ All departments
     document.getElementById('delta').textContent = d.delta;
     var bars = document.getElementById('bars');
     bars.setAttribute('aria-label', 'Attendance rate by ' + d.label + ': ' + d.bars.map(function (b) { return b[0] + ' ' + b[1] + '%'; }).join(', '));
-    bars.innerHTML = d.bars.map(function (b) {
+    bars.innerHTML = d.bars.map(function (b, i) {
       var hi = b[1] === max;
       var tip = weekly ? b[1] + '% · ' + Math.round(248 * b[1] / 100) + ' in' : b[1] + '% avg';
-      return '<div style="flex:1 1 0;max-width:56px;height:' + b[1] + '%;position:relative;display:flex;">' +
-        (hi ? '<div style="position:absolute;bottom:calc(100% + 8px);left:50%;transform:translateX(-50%);white-space:nowrap;background:#0F1115;color:#FFFFFF;font-size:12px;font-weight:600;padding:6px 10px;border-radius:10px;">' + tip + '</div>' : '') +
-        '<div class="hatch" style="flex:1;border-radius:999px;background-color:' + (hi ? 'var(--accent)' : '#E6E9ED') + ';"></div></div>';
+      return '<div class="bar-wrap" style="flex:1 1 0;max-width:56px;height:' + b[1] + '%;position:relative;display:flex;">' +
+        (hi ? '<div class="tip" style="position:absolute;bottom:calc(100% + 8px);left:50%;transform:translateX(-50%);white-space:nowrap;background:#0F1115;color:#FFFFFF;font-size:12px;font-weight:600;padding:6px 10px;border-radius:10px;">' + tip + '</div>' : '') +
+        '<div class="hatch bar-fill" style="flex:1;border-radius:999px;animation-delay:' + (i * 70) + 'ms;background-color:' + (hi ? 'var(--accent)' : '#E6E9ED') + ';"></div></div>';
     }).join('');
     document.getElementById('barLabels').innerHTML = d.bars.map(function (b) {
       return '<span style="flex:1 1 0;max-width:56px;text-align:center;">' + b[0] + '</span>';
@@ -352,7 +397,9 @@ All departments
     });
   }
   document.querySelectorAll('.seg').forEach(function (btn) {
-    btn.addEventListener('click', function () { renderChart(btn.dataset.period); });
+    btn.addEventListener('click', function () {
+      if (btn.getAttribute('aria-pressed') !== 'true') renderChart(btn.dataset.period);
+    });
   });
   renderChart('weekly');
 
@@ -370,8 +417,8 @@ All departments
     q = (q || '').toLowerCase();
     tbody.innerHTML = employees.filter(function (e) {
       return !q || (e[2] + ' ' + e[3] + ' ' + e[4] + ' ' + e[5]).toLowerCase().indexOf(q) !== -1;
-    }).map(function (e) {
-      return '<tr class="row"><td style="' + td + '"><div style="display:flex;align-items:center;gap:12px;">' +
+    }).map(function (e, i) {
+      return '<tr class="row row-in" style="animation-delay:' + (i * 50) + 'ms"><td style="' + td + '"><div style="display:flex;align-items:center;gap:12px;">' +
         '<span style="width:36px;height:36px;flex:none;border-radius:999px;background:' + e[1] + ';display:flex;align-items:center;justify-content:center;font-size:13px;font-weight:700;color:#0F1115;">' + e[0] + '</span>' +
         '<div style="display:flex;flex-direction:column;"><span style="font-weight:600;">' + esc(e[2]) + '</span><span style="font-size:12px;color:#5B626D;">' + esc(e[3]) + '</span></div></div></td>' +
         '<td style="' + td + '">' + e[4] + '</td><td style="' + td + '">' + e[5] + '</td>' +
@@ -390,15 +437,16 @@ All departments
   var x = '<svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" aria-hidden="true"><path d="M6 6l12 12M18 6L6 18"/></svg>';
   var check = '<svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12.5l4.5 4.5L19 7.5"/></svg>';
   var list = document.getElementById('leaves');
+  var justDecided = -1;
   function renderLeaves() {
     document.getElementById('pending').textContent = leaves.filter(function (l) { return !l.result; }).length;
     list.innerHTML = leaves.map(function (l, i) {
       var action = l.result
-        ? '<span style="' + (l.result === 'Approved' ? chip('#E3F5E8', '#1C6B37') : chip('#FDE4E4', '#A3262A')) + '">' + l.result + '</span>'
+        ? '<span class="' + (i === justDecided ? 'pop' : '') + '" style="' + (l.result === 'Approved' ? chip('#E3F5E8', '#1C6B37') : chip('#FDE4E4', '#A3262A')) + '">' + l.result + '</span>'
         : '<div style="display:flex;gap:6px;">' +
-          '<button type="button" data-i="' + i + '" data-r="Declined" aria-label="Decline ' + l.name + '" style="width:44px;height:44px;border-radius:999px;border:1px solid #D9DDE2;background:#FFFFFF;display:flex;align-items:center;justify-content:center;">' + x + '</button>' +
-          '<button type="button" data-i="' + i + '" data-r="Approved" aria-label="Approve ' + l.name + '" style="width:44px;height:44px;border-radius:999px;border:none;background:#0F1115;color:var(--accent);display:flex;align-items:center;justify-content:center;">' + check + '</button></div>';
-      return '<div style="display:flex;align-items:center;gap:12px;padding:12px;border-radius:18px;background:#F6F7F9;">' +
+          '<button type="button" class="icon-btn" data-i="' + i + '" data-r="Declined" aria-label="Decline ' + l.name + '" style="width:44px;height:44px;border-radius:999px;border:1px solid #D9DDE2;background:#FFFFFF;display:flex;align-items:center;justify-content:center;">' + x + '</button>' +
+          '<button type="button" class="icon-btn" data-i="' + i + '" data-r="Approved" aria-label="Approve ' + l.name + '" style="width:44px;height:44px;border-radius:999px;border:none;background:#0F1115;color:var(--accent);display:flex;align-items:center;justify-content:center;">' + check + '</button></div>';
+      return '<div class="leave-row' + (i === justDecided ? ' flash' : '') + '" style="display:flex;align-items:center;gap:12px;padding:12px;border-radius:18px;background:#F6F7F9;">' +
         '<span style="width:40px;height:40px;flex:none;border-radius:999px;background:' + l.tint + ';display:flex;align-items:center;justify-content:center;font-size:13px;font-weight:700;color:#0F1115;">' + l.initials + '</span>' +
         '<div style="flex:1 1 auto;min-width:0;display:flex;flex-direction:column;gap:2px;"><span style="font-size:14px;font-weight:600;">' + l.name + '</span>' +
         '<span style="font-size:12px;color:#5B626D;">' + l.type + ' · ' + l.dates + '</span></div>' + action + '</div>';
@@ -407,10 +455,51 @@ All departments
   list.addEventListener('click', function (ev) {
     var btn = ev.target.closest('button[data-i]');
     if (!btn) return;
-    leaves[+btn.dataset.i].result = btn.dataset.r;
+    justDecided = +btn.dataset.i;
+    leaves[justDecided].result = btn.dataset.r;
     renderLeaves();
+    var badge = document.getElementById('pending').parentNode;
+    badge.classList.remove('bump');
+    void badge.offsetWidth;
+    badge.classList.add('bump');
   });
   renderLeaves();
+
+  var reduced = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+
+  // Stagger the cards in as the page loads
+  document.querySelectorAll('.card').forEach(function (el, i) {
+    el.style.animationDelay = (120 + i * 70) + 'ms';
+  });
+
+  // Count the big numbers up from zero
+  function countUp(el) {
+    var to = +el.dataset.to, prefix = el.dataset.prefix || '', start = null, duration = 1100;
+    if (reduced) return;
+    function frame(t) {
+      if (start === null) start = t;
+      var k = Math.min(1, (t - start) / duration);
+      var eased = 1 - Math.pow(1 - k, 3);
+      el.textContent = prefix + Math.round(to * eased).toLocaleString('en-US');
+      if (k < 1) requestAnimationFrame(frame);
+    }
+    requestAnimationFrame(frame);
+  }
+  document.querySelectorAll('.countup').forEach(function (el, i) {
+    setTimeout(function () { countUp(el); }, 250 + i * 60);
+  });
+
+  // Run payroll: a short processing state, then a confirmation
+  var run = document.getElementById('runPayroll');
+  run.addEventListener('click', function () {
+    if (run.disabled) return;
+    run.disabled = true;
+    run.innerHTML = '<span class="spinner" aria-hidden="true"></span>Processing…';
+    setTimeout(function () {
+      run.innerHTML = '<span class="pop" style="align-items:center;gap:8px;white-space:nowrap">' + check + 'Done</span>';
+      run.style.cursor = 'default';
+    }, 1400);
+  });
 })();
 </script>
 </body>
