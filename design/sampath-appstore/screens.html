@@ -1,0 +1,396 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<title>Sampath Vishwa App Store Screens</title>
+<!--
+  App Store screenshots for Sampath Vishwa, styled after playful "chat-first" store art.
+  Each .frame is 430x932 CSS px; render.mjs exports them at 3x (1290x2796, the 6.7" size).
+-->
+<style>
+@font-face{font-family:Rubik;src:url(fonts/Rubik-Variable.woff2) format('woff2');font-weight:300 900}
+:root{
+  --o:#F37021; --o2:#FF9A4D; --od:#D9520F; --navy:#0F3550; --ink:#18202D; --muted:#7D8696;
+  --line:#EEF0F4; --green:#1FAE7A; --cream:#FFF7F0; --blue:#2F7BF6; --red:#F0473C;
+}
+*{box-sizing:border-box;margin:0;padding:0}
+body{background:#1b1b1f;font-family:Inter,system-ui,sans-serif;color:var(--ink);display:flex;gap:36px;padding:40px;-webkit-font-smoothing:antialiased}
+body.preview .frame{border-radius:34px}
+.frame{width:430px;height:932px;position:relative;overflow:hidden;flex:none}
+.abs{position:absolute}
+.h{font-family:Rubik,sans-serif;font-weight:900;letter-spacing:-.025em;line-height:.93}
+.grid-light{background-color:var(--cream);background-image:linear-gradient(rgba(243,112,33,.07) 1px,transparent 1px),linear-gradient(90deg,rgba(243,112,33,.07) 1px,transparent 1px);background-size:30px 30px}
+.grid-orange{background-color:var(--o);background-image:linear-gradient(rgba(255,255,255,.09) 1px,transparent 1px),linear-gradient(90deg,rgba(255,255,255,.09) 1px,transparent 1px),radial-gradient(circle at 50% 30%,#FF8E45 0,transparent 70%);background-size:30px 30px,30px 30px,100% 100%}
+svg.ic{width:20px;height:20px;flex:none}
+
+/* phone */
+.phone{position:absolute;width:322px;background:#0d0f13;border-radius:54px;padding:9px;box-shadow:0 40px 70px -24px rgba(110,40,0,.5),inset 0 0 0 2px #2b2e35}
+.screen{background:#fff;border-radius:45px;overflow:hidden;position:relative;height:100%}
+.island{position:absolute;top:10px;left:50%;transform:translateX(-50%);width:92px;height:27px;background:#000;border-radius:20px;z-index:5}
+.sb{height:48px;display:flex;justify-content:space-between;align-items:center;padding:6px 24px 0 34px;font-weight:600;font-size:14px}
+.sb svg{width:64px;height:12px}
+.tb{display:flex;align-items:center;justify-content:space-between;padding:4px 18px 10px}
+.tb svg.ic{width:22px;height:22px}
+.brand{display:flex;align-items:center;gap:6px;font-weight:800;font-size:16px;letter-spacing:-.01em}
+.brand svg{width:22px;height:22px}
+
+/* chat */
+.bub{display:inline-block;background:var(--navy);color:#fff;font-weight:600;border-radius:22px 22px 6px 22px;padding:10px 16px;font-size:14px}
+.pill{border-radius:999px;font-weight:700;font-size:12px;padding:6px 12px;border:1.5px solid currentColor}
+.card{background:#fff;border-radius:24px;box-shadow:0 22px 50px -18px rgba(90,35,0,.35),0 2px 6px rgba(0,0,0,.05)}
+.chip{display:flex;align-items:center;gap:10px;background:#fff;border-radius:999px;padding:11px 14px 11px 20px;font-weight:700;font-size:16px;box-shadow:0 14px 30px -12px rgba(90,35,0,.4)}
+.chip i{width:26px;height:26px;border-radius:50%;display:grid;place-items:center;color:#fff}
+.chip i svg{width:15px;height:15px}
+
+.row{display:flex;justify-content:space-between;align-items:center;padding:12px 0;border-bottom:1px solid var(--line)}
+.row:last-child{border-bottom:0}
+.k{font-size:11.5px;color:var(--muted);font-weight:500;margin-top:2px}
+.v{font-size:14.5px;font-weight:700}
+.dot{width:24px;height:24px;border-radius:50%;display:grid;place-items:center}
+.dot svg{width:13px;height:13px}
+
+.glass{border-radius:50%;background:radial-gradient(circle at 34% 28%,rgba(255,255,255,.75),rgba(255,255,255,.18) 42%,rgba(255,255,255,.08) 70%,rgba(255,255,255,.35) 100%);border:2px solid rgba(255,255,255,.75);box-shadow:inset -12px -16px 34px rgba(255,255,255,.4),0 24px 40px -10px rgba(80,40,0,.35)}
+.cloud{position:absolute;border-radius:50%;background:#fff;filter:blur(14px);opacity:.85}
+.shadow{filter:drop-shadow(0 18px 18px rgba(90,30,0,.3))}
+</style>
+</head>
+<body>
+
+<!-- ============ shared symbols ============ -->
+<svg width="0" height="0" style="position:absolute" aria-hidden="true">
+  <defs>
+    <radialGradient id="gHead" cx=".38" cy=".34" r=".75"><stop offset="0" stop-color="#F6F8FC"/><stop offset=".55" stop-color="#C8D2E3"/><stop offset="1" stop-color="#8C9DB8"/></radialGradient>
+    <radialGradient id="gEar" cx=".5" cy=".4" r=".72"><stop offset="0" stop-color="#D7DFEC"/><stop offset="1" stop-color="#8494B0"/></radialGradient>
+    <radialGradient id="gEarIn" cx=".5" cy=".45" r=".6"><stop offset="0" stop-color="#FFD1C8"/><stop offset="1" stop-color="#EE9688"/></radialGradient>
+    <linearGradient id="gTrunk" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#C8D2E3"/><stop offset="1" stop-color="#90A1BB"/></linearGradient>
+    <radialGradient id="gCap" cx=".35" cy=".25" r=".95"><stop offset="0" stop-color="#FFB97C"/><stop offset=".55" stop-color="#F37021"/><stop offset="1" stop-color="#C2460B"/></radialGradient>
+    <radialGradient id="gGold" cx=".34" cy=".3" r=".8"><stop offset="0" stop-color="#FFF3B8"/><stop offset=".5" stop-color="#FFC93C"/><stop offset="1" stop-color="#E3920B"/></radialGradient>
+    <linearGradient id="gShield" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#FFB06B"/><stop offset="1" stop-color="#EE5A10"/></linearGradient>
+    <linearGradient id="gIcon" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#FF9A4D"/><stop offset="1" stop-color="#E5520D"/></linearGradient>
+    <linearGradient id="gArea" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#F37021" stop-opacity=".45"/><stop offset="1" stop-color="#F37021" stop-opacity="0"/></linearGradient>
+  </defs>
+
+  <!-- mascot: a friendly elephant in a Sampath-orange cap -->
+  <symbol id="ele" viewBox="0 0 200 200">
+    <ellipse cx="40" cy="100" rx="40" ry="50" fill="url(#gEar)"/>
+    <ellipse cx="45" cy="102" rx="25" ry="33" fill="url(#gEarIn)"/>
+    <ellipse cx="160" cy="100" rx="40" ry="50" fill="url(#gEar)"/>
+    <ellipse cx="155" cy="102" rx="25" ry="33" fill="url(#gEarIn)"/>
+    <circle cx="100" cy="94" r="58" fill="url(#gHead)"/>
+    <path d="M100 112 C 99 146, 103 166, 128 170" stroke="url(#gTrunk)" stroke-width="26" stroke-linecap="round" fill="none"/>
+    <path d="M89 136 q11 4 22 0 M90 151 q10 4 20 0" stroke="#8C9DB8" stroke-width="2.5" fill="none" stroke-linecap="round"/>
+    <ellipse cx="66" cy="110" rx="10" ry="6" fill="#FF8F7E" opacity=".65"/>
+    <ellipse cx="134" cy="110" rx="10" ry="6" fill="#FF8F7E" opacity=".65"/>
+    <ellipse cx="78" cy="92" rx="8" ry="10" fill="#1B2433"/>
+    <ellipse cx="122" cy="92" rx="8" ry="10" fill="#1B2433"/>
+    <circle cx="80.5" cy="88" r="3.2" fill="#fff"/><circle cx="124.5" cy="88" r="3.2" fill="#fff"/>
+    <path d="M136 66 C 158 60, 176 66, 182 76 C 166 79, 150 77, 134 74Z" fill="#D2560F"/>
+    <path d="M50 72 C 48 26, 152 26, 150 72 C 120 62, 80 62, 50 72Z" fill="url(#gCap)"/>
+    <circle cx="100" cy="35" r="5" fill="#C2460B"/>
+    <path d="M100 44 c5 6 6 10 0 15 c-6 -5 -5 -9 0 -15z M90 61 h20 c-1 6 -5 9 -10 9 c-5 0 -9 -3 -10 -9z" fill="#fff"/>
+    <ellipse cx="74" cy="48" rx="12" ry="6" fill="#fff" opacity=".35" transform="rotate(-25 74 48)"/>
+  </symbol>
+
+  <!-- app icon (orange) and its white variant -->
+  <symbol id="appicon" viewBox="0 0 100 100">
+    <rect width="100" height="100" rx="24" fill="url(#gIcon)"/>
+    <path d="M50 18 C 61 31, 64 41, 50 52 C 36 41, 39 31, 50 18Z M24 57 H76 C74 72, 63 80, 50 80 C37 80, 26 72, 24 57Z" fill="#fff"/>
+  </symbol>
+  <symbol id="appicon-w" viewBox="0 0 100 100">
+    <rect width="100" height="100" rx="24" fill="#fff"/>
+    <path d="M50 18 C 61 31, 64 41, 50 52 C 36 41, 39 31, 50 18Z M24 57 H76 C74 72, 63 80, 50 80 C37 80, 26 72, 24 57Z" fill="url(#gIcon)"/>
+  </symbol>
+
+  <symbol id="coin" viewBox="0 0 120 124">
+    <circle cx="60" cy="66" r="54" fill="#B8730A"/>
+    <circle cx="60" cy="58" r="54" fill="url(#gGold)"/>
+    <circle cx="60" cy="58" r="42" fill="none" stroke="#EBA41F" stroke-width="4"/>
+    <text x="60" y="75" text-anchor="middle" font-family="Rubik" font-weight="900" font-size="42" fill="#C9800A">Rs</text>
+    <text x="60" y="72" text-anchor="middle" font-family="Rubik" font-weight="900" font-size="42" fill="#FFEFB0">Rs</text>
+    <ellipse cx="38" cy="30" rx="17" ry="8" fill="#fff" opacity=".5" transform="rotate(-32 38 30)"/>
+  </symbol>
+
+  <!-- chunky 3D arrow pointing right; colours come from --a1 / --a3 -->
+  <symbol id="arrow3d" viewBox="0 0 190 170">
+    <g stroke-linejoin="round" stroke-width="20">
+      <path d="M16 66H98V32L168 86L98 140V106H16Z" transform="translate(6 14)" style="fill:var(--a3);stroke:var(--a3)"/>
+      <path d="M16 66H98V32L168 86L98 140V106H16Z" style="fill:var(--a1);stroke:var(--a1)"/>
+    </g>
+    <path d="M18 70H104V44L150 82" stroke="#fff" stroke-opacity=".5" stroke-width="8" fill="none" stroke-linecap="round" stroke-linejoin="round"/>
+  </symbol>
+
+  <symbol id="shield" viewBox="0 0 124 136">
+    <path d="M60 8 L106 25 V60 C106 94 86 114 60 126 C34 114 14 94 14 60 V25Z" transform="translate(5 7)" fill="#B9440B" stroke="#B9440B" stroke-width="8" stroke-linejoin="round"/>
+    <path d="M60 8 L106 25 V60 C106 94 86 114 60 126 C34 114 14 94 14 60 V25Z" fill="url(#gShield)" stroke="url(#gShield)" stroke-width="8" stroke-linejoin="round"/>
+    <path d="M39 66 L54 81 L83 50" stroke="#fff" stroke-width="12" stroke-linecap="round" stroke-linejoin="round" fill="none"/>
+    <path d="M60 17 L97 31 V46" stroke="#fff" stroke-opacity=".45" stroke-width="5" fill="none" stroke-linecap="round"/>
+  </symbol>
+
+  <symbol id="sbi" viewBox="0 0 66 12">
+    <g fill="currentColor"><rect x="0" y="8" width="3" height="4" rx="1"/><rect x="5" y="5.5" width="3" height="6.5" rx="1"/><rect x="10" y="3" width="3" height="9" rx="1"/><rect x="15" y="0" width="3" height="12" rx="1"/></g>
+    <path d="M24 4.2a9 9 0 0 1 12.5 0M26.3 6.6a5.6 5.6 0 0 1 7.9 0M28.6 9a2.4 2.4 0 0 1 3.3 0" stroke="currentColor" stroke-width="1.7" fill="none" stroke-linecap="round"/>
+    <rect x="41" y="0.8" width="21" height="10.4" rx="3" stroke="currentColor" stroke-opacity=".4" fill="none"/>
+    <rect x="43" y="2.8" width="15" height="6.4" rx="1.6" fill="currentColor"/>
+  </symbol>
+
+  <symbol id="i-menu" viewBox="0 0 24 24"><path d="M4 8h16M4 16h11" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" fill="none"/></symbol>
+  <symbol id="i-plus" viewBox="0 0 24 24"><path d="M12 5v14M5 12h14" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" fill="none"/></symbol>
+  <symbol id="i-bell" viewBox="0 0 24 24"><path d="M6 16v-5a6 6 0 0 1 12 0v5l1.5 2h-15zM10 20.5a2 2 0 0 0 4 0" stroke="currentColor" stroke-width="2" stroke-linejoin="round" stroke-linecap="round" fill="none"/></symbol>
+  <symbol id="i-check" viewBox="0 0 24 24"><path d="M5 12.5l4.5 4.5L19 7.5" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round" fill="none"/></symbol>
+  <symbol id="i-x" viewBox="0 0 24 24"><path d="M6 6l12 12M18 6L6 18" stroke="currentColor" stroke-width="2.6" stroke-linecap="round" fill="none"/></symbol>
+  <symbol id="i-up" viewBox="0 0 24 24"><path d="M7 17L17 7M9 7h8v8" stroke="currentColor" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round" fill="none"/></symbol>
+  <symbol id="i-down" viewBox="0 0 24 24"><path d="M12 5v14M6 13l6 6 6-6" stroke="currentColor" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round" fill="none"/></symbol>
+  <symbol id="i-qr" viewBox="0 0 24 24"><path d="M4 4h6v6H4zM14 4h6v6h-6zM4 14h6v6H4zM14 14h2.5v2.5H14zM17.5 17.5H20V20h-2.5z" stroke="currentColor" stroke-width="2.2" stroke-linejoin="round" fill="none"/></symbol>
+  <symbol id="i-bolt" viewBox="0 0 24 24"><path d="M13.5 2L5 14h6.2l-1.2 8L19 10h-6.2z" fill="currentColor"/></symbol>
+  <symbol id="i-face" viewBox="0 0 24 24"><path d="M4 8.5V6.5A2.5 2.5 0 0 1 6.5 4h2M15.5 4h2A2.5 2.5 0 0 1 20 6.5v2M20 15.5v2a2.5 2.5 0 0 1-2.5 2.5h-2M8.5 20h-2A2.5 2.5 0 0 1 4 17.5v-2M9 9v1.6M15 9v1.6M12.3 9v3.8h-1.1M9.2 15.6a4.2 4.2 0 0 0 5.6 0" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" fill="none"/></symbol>
+  <symbol id="i-chev" viewBox="0 0 24 24"><path d="M9 6l6 6-6 6" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" fill="none"/></symbol>
+  <symbol id="i-mic" viewBox="0 0 24 24"><path d="M12 3a3 3 0 0 1 3 3v5a3 3 0 0 1-6 0V6a3 3 0 0 1 3-3zM6 11a6 6 0 0 0 12 0M12 17v3" stroke="currentColor" stroke-width="2" stroke-linecap="round" fill="none"/></symbol>
+  <symbol id="i-spark" viewBox="0 0 24 24"><path d="M12 1.5l2.3 8.2 8.2 2.3-8.2 2.3-2.3 8.2-2.3-8.2L1.5 12l8.2-2.3z" fill="currentColor"/></symbol>
+  <symbol id="i-clock" viewBox="0 0 24 24"><circle cx="12" cy="12" r="8" stroke="currentColor" stroke-width="2.4" fill="none"/><path d="M12 8v4.5l3 2" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" fill="none"/></symbol>
+  <symbol id="i-lock" viewBox="0 0 24 24"><rect x="5" y="10.5" width="14" height="10" rx="2.5" stroke="currentColor" stroke-width="2.2" fill="none"/><path d="M8.5 10.5V8a3.5 3.5 0 0 1 7 0v2.5" stroke="currentColor" stroke-width="2.2" fill="none"/></symbol>
+  <symbol id="i-card" viewBox="0 0 24 24"><rect x="3" y="5.5" width="18" height="13" rx="2.5" stroke="currentColor" stroke-width="2.2" fill="none"/><path d="M3 10h18" stroke="currentColor" stroke-width="2.2"/></symbol>
+</svg>
+
+<!-- =====================================================
+     1 · Meet your smart banker
+     ===================================================== -->
+<section class="frame" id="s1" style="background:linear-gradient(180deg,#FF6E1F 0%,#FF8D3C 38%,#FFC189 72%,#FFE0BC 100%)">
+  <div class="abs" style="inset:0;background:radial-gradient(circle at 50% 46%,rgba(255,240,210,.75),transparent 42%)"></div>
+  <div class="cloud" style="width:170px;height:60px;left:-40px;top:330px"></div>
+  <div class="cloud" style="width:120px;height:46px;left:-10px;top:300px;opacity:.7"></div>
+  <div class="cloud" style="width:190px;height:64px;right:-60px;top:410px"></div>
+  <div class="cloud" style="width:140px;height:40px;right:40px;top:28px;opacity:.35"></div>
+
+  <!-- tea-estate hills -->
+  <svg class="abs" style="left:0;bottom:0" width="430" height="400" viewBox="0 0 430 400">
+    <path d="M0 70 L50 44 L95 62 L150 18 L205 58 L250 40 L300 66 L360 30 L430 60 V400 H0Z" fill="#F2A36A" opacity=".55"/>
+    <path d="M0 116 C 90 62, 200 72, 262 108 C 320 142, 382 116, 430 92 V400 H0Z" fill="#86BE5E"/>
+    <path d="M8 140 C 96 92, 196 100, 258 132 M2 168 C 96 120, 200 128, 270 160 M0 196 C 100 150, 214 158, 300 190" stroke="#A9D47F" stroke-width="7" fill="none" opacity=".8" stroke-linecap="round"/>
+    <path d="M0 206 C 120 146, 262 162, 430 212 V400 H0Z" fill="#62A548"/>
+    <path d="M10 236 C 130 184, 270 196, 430 240 M0 266 C 130 214, 280 226, 430 270" stroke="#7FBE5C" stroke-width="7" fill="none" opacity=".85" stroke-linecap="round"/>
+    <path d="M0 296 C 140 254, 300 262, 430 300 V400 H0Z" fill="#418C3B"/>
+    <path d="M0 326 C 140 288, 300 294, 430 330 M0 356 C 140 320, 300 326, 430 362" stroke="#579F48" stroke-width="7" fill="none" stroke-linecap="round"/>
+  </svg>
+
+  <div class="abs h" style="left:30px;top:58px;color:#fff;text-shadow:0 6px 22px rgba(160,50,0,.28)">
+    <div style="font-size:48px">Meet Your</div>
+    <div style="font-size:112px;margin-left:-4px">Smart</div>
+    <div style="display:flex;align-items:center;gap:14px;margin-top:4px">
+      <svg width="78" height="78" style="filter:drop-shadow(0 10px 16px rgba(150,45,0,.35));transform:rotate(-6deg)"><use href="#appicon-w"/></svg>
+      <span style="font-size:72px">Banker</span>
+    </div>
+  </div>
+
+  <!-- mascot in a glass bubble -->
+  <div class="abs glass" style="left:96px;top:342px;width:238px;height:238px;display:grid;place-items:center">
+    <svg width="196" height="196" style="margin-top:6px;filter:drop-shadow(0 10px 10px rgba(60,40,30,.25))"><use href="#ele"/></svg>
+  </div>
+  <svg class="abs" style="left:300px;top:326px" width="70" height="70" viewBox="0 0 70 70">
+    <g stroke="#F0473C" stroke-width="7" stroke-linecap="round"><path d="M18 40 L10 14"/><path d="M34 44 L40 18"/><path d="M44 54 L62 40"/></g>
+  </svg>
+
+  <div class="abs" style="right:30px;top:618px">
+    <div class="bub" style="font-size:20px;padding:14px 22px;border-radius:28px 28px 8px 28px;display:flex;align-items:center;gap:8px;box-shadow:0 14px 30px -10px rgba(10,30,50,.5)">
+      Can I pay my electricity bill?
+      <svg class="ic" style="color:#FFC93C;width:22px;height:22px"><use href="#i-bolt"/></svg>
+    </div>
+  </div>
+  <div class="abs card" style="left:26px;top:702px;width:378px;padding:20px 22px;border-radius:28px 28px 28px 8px;transform:rotate(-2deg)">
+    <div style="font-size:20px;font-weight:700;line-height:1.3;letter-spacing:-.01em">Done! LKR 4,250.00 paid.<br>You saved LKR 13,000 this month.</div>
+  </div>
+  <div class="abs" style="left:0;right:0;bottom:44px;display:flex;justify-content:center;align-items:center;gap:10px;color:#fff;font-weight:600;font-size:16px">
+    <svg class="ic" style="width:18px;height:18px"><use href="#i-spark"/></svg>
+    Smart Insight Score
+    <b style="margin-left:18px">9/10</b>
+    <span style="width:4px;height:16px;background:#C8F06A;border-radius:2px"></span>
+  </div>
+</section>
+
+<!-- =====================================================
+     2 · Insights made for you
+     ===================================================== -->
+<section class="frame grid-light" id="s2">
+  <div class="abs h" style="left:0;right:0;top:50px;text-align:center;color:var(--o);font-size:68px">Insights<br>Made For<br>You</div>
+
+  <div class="phone" style="left:54px;top:300px;height:720px">
+    <div class="screen">
+      <div class="island"></div>
+      <div class="sb"><span>1:43</span><svg><use href="#sbi"/></svg></div>
+      <div class="tb"><svg class="ic"><use href="#i-menu"/></svg><div class="brand"><svg><use href="#appicon"/></svg>Vishwa</div><svg class="ic"><use href="#i-bell"/></svg></div>
+      <div style="text-align:right;padding:8px 16px 0"><span class="bub" style="background:#E8F0FF;color:var(--blue);font-size:13px">How's my spending?</span></div>
+      <div style="height:168px"></div>
+      <div style="padding:0 20px">
+        <div style="display:flex;height:10px;border-radius:6px;overflow:hidden;gap:3px;margin:4px 0 6px">
+          <span style="flex:31;background:var(--green)"></span><span style="flex:48;background:#FFA22E"></span><span style="flex:7;background:var(--red)"></span><span style="flex:14;background:var(--blue)"></span>
+        </div>
+        <div class="row"><div><div class="v" style="color:var(--green)">LKR 380,447.67</div><div class="k">Available to spend</div></div><span class="dot" style="background:#E3F6EE;color:var(--green)"><svg><use href="#i-check"/></svg></span></div>
+        <div class="row"><div><div class="v">LKR <span style="color:#E58A0E">602,638.10</span></div><div class="k">Billed · due 15 Dec</div></div><span class="dot" style="background:#FFF1DE;color:#E58A0E"><svg><use href="#i-clock"/></svg></span></div>
+        <div class="row"><div><div class="v">LKR <span style="color:var(--red)">79,597.57</span></div><div class="k">Unbilled</div></div><span class="dot" style="background:#FDE7E5;color:var(--red)"><svg><use href="#i-up"/></svg></span></div>
+        <div class="row"><div><div class="v">LKR <span style="color:var(--blue)">178,547.34</span></div><div class="k">Installments</div></div><span class="dot" style="background:#E6EFFE;color:var(--blue)"><svg><use href="#i-card"/></svg></span></div>
+        <div class="row" style="padding-top:14px"><span class="k" style="margin:0">Smart insight score</span><span style="display:flex;align-items:center;gap:6px;font-weight:700;color:var(--green);font-size:14px">8/10<span style="width:3px;height:13px;background:var(--green);border-radius:2px"></span></span></div>
+      </div>
+    </div>
+
+    <!-- account card that breaks out of the phone -->
+    <div class="card" style="position:absolute;left:-32px;top:200px;width:386px;padding:16px 18px 0 82px">
+      <div style="position:absolute;left:-10px;top:-6px;width:84px;height:84px;border-radius:50%;background:radial-gradient(circle at 40% 35%,#FFE3CC,#FFC59A);border:4px solid #fff;box-shadow:0 10px 20px -8px rgba(90,35,0,.4);display:grid;place-items:center">
+        <svg width="70" height="70"><use href="#ele"/></svg>
+      </div>
+      <div style="display:flex;justify-content:space-between;align-items:flex-start">
+        <div>
+          <div style="font-weight:700;font-size:15px;display:flex;align-items:center;gap:2px">Double S Savings <svg class="ic" style="width:14px;height:14px;color:var(--muted)"><use href="#i-chev"/></svg></div>
+          <div style="font-size:13px;color:var(--muted);margin-top:3px">LKR 46,441.32 <b style="color:var(--green)">↗ 12.4%</b></div>
+        </div>
+        <span class="pill" style="color:var(--green);font-size:13px;padding:7px 14px">Healthy</span>
+      </div>
+      <div style="display:flex;gap:22px;margin-top:16px;font-size:13px;font-weight:600;color:var(--muted)">
+        <span style="color:var(--ink);border-bottom:2.5px solid var(--o);padding-bottom:9px">Overview</span><span>Spending</span><span>Cards</span>
+      </div>
+    </div>
+
+    <!-- tilted chart snapshot -->
+    <div style="position:absolute;right:-46px;top:-58px;width:168px;transform:rotate(9deg)">
+      <div style="font-size:9px;font-weight:600;color:#8a7a70;text-align:right;margin-bottom:3px">DEC_SPEND.PNG</div>
+      <div style="background:#13283A;border-radius:12px;padding:10px;box-shadow:0 18px 30px -10px rgba(0,0,0,.45);border:3px solid #fff">
+        <svg viewBox="0 0 140 80" width="100%">
+          <g stroke="#ffffff" stroke-opacity=".08"><path d="M0 20H140M0 40H140M0 60H140"/></g>
+          <path d="M0 62 L14 55 L26 58 L38 44 L50 49 L62 34 L74 40 L86 26 L98 31 L110 18 L124 22 L140 10 V80 H0Z" fill="url(#gArea)"/>
+          <path d="M0 62 L14 55 L26 58 L38 44 L50 49 L62 34 L74 40 L86 26 L98 31 L110 18 L124 22 L140 10" stroke="#FF8A3D" stroke-width="2.4" fill="none" stroke-linejoin="round"/>
+          <g fill="#3BD18F"><rect x="6" y="70" width="4" height="10"/><rect x="20" y="66" width="4" height="14"/><rect x="34" y="72" width="4" height="8"/><rect x="48" y="64" width="4" height="16"/><rect x="62" y="68" width="4" height="12"/></g>
+          <g fill="#F0473C"><rect x="76" y="70" width="4" height="10"/><rect x="90" y="62" width="4" height="18"/></g>
+          <g fill="#3BD18F"><rect x="104" y="66" width="4" height="14"/><rect x="118" y="60" width="4" height="20"/><rect x="132" y="68" width="4" height="12"/></g>
+        </svg>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- =====================================================
+     3 · Send & pay in one tap
+     ===================================================== -->
+<section class="frame grid-orange" id="s3">
+  <div class="phone" style="left:54px;top:-110px;height:690px">
+    <div class="screen" style="padding:0 20px">
+      <div style="height:236px"></div>
+      <div class="row"><span class="k" style="margin:0;font-size:13px">Payee</span><span class="v" style="display:flex;align-items:center;gap:8px"><span style="width:22px;height:22px;border-radius:50%;background:#FDE4EC;color:#D64B7A;font-size:11px;display:grid;place-items:center">M</span>Mother</span></div>
+      <div class="row"><span class="k" style="margin:0;font-size:13px">Amount</span><span class="v">LKR 5,000.00</span></div>
+      <div class="row"><span class="k" style="margin:0;font-size:13px">Speed</span><span class="v" style="color:var(--green)">Instant</span></div>
+      <div class="row"><span class="k" style="margin:0;font-size:13px">Fee</span><span class="v">Free</span></div>
+    </div>
+  </div>
+
+  <svg class="abs shadow" style="left:-26px;top:-24px;transform:rotate(-38deg);--a1:#33D48F;--a3:#0F8A57" width="190" height="170"><use href="#arrow3d"/></svg>
+
+  <div class="abs card" style="left:26px;top:338px;width:378px;padding:22px 24px 20px">
+    <div style="font-weight:800;font-size:19px;letter-spacing:-.01em">Ready to send LKR 5,000?</div>
+    <div style="font-size:14.5px;color:#4E5767;line-height:1.45;margin-top:6px">We've filled in everything. Just review and confirm.</div>
+    <div style="display:flex;align-items:center;justify-content:space-between;margin-top:16px">
+      <span style="background:var(--o);color:#fff;font-weight:700;font-size:15px;border-radius:999px;padding:12px 26px;box-shadow:0 8px 16px -6px rgba(243,112,33,.6)">Confirm</span>
+      <span style="display:flex;align-items:center;gap:6px;font-size:12px;color:#9AA1AD">Secured by <b style="color:#4E5767;display:flex;align-items:center;gap:4px"><svg class="ic" style="width:15px;height:15px"><use href="#i-face"/></svg>Face ID</b></span>
+    </div>
+  </div>
+  <div class="abs" style="left:24px;right:24px;top:528px;display:flex;justify-content:space-between">
+    <span class="chip">Send <i style="background:var(--green)"><svg><use href="#i-up"/></svg></i></span>
+    <span class="chip">Pay <i style="background:var(--blue)"><svg><use href="#i-bolt"/></svg></i></span>
+    <span class="chip">Scan <i style="background:var(--red)"><svg><use href="#i-qr"/></svg></i></span>
+  </div>
+
+  <svg class="abs shadow" style="right:-44px;top:806px;transform:rotate(-52deg);--a1:#FF6151;--a3:#B5231B" width="150" height="134"><use href="#arrow3d"/></svg>
+
+  <div class="abs h" style="left:0;right:0;top:668px;text-align:center;color:#fff;font-size:64px;text-shadow:0 6px 20px rgba(140,40,0,.3)">
+    Send &amp; Pay<br>In Just
+    <div style="margin:10px auto 0;position:relative;display:inline-block;background:#fff;color:var(--o);border-radius:34px;padding:12px 30px 16px;text-shadow:none;box-shadow:0 14px 30px -10px rgba(120,40,0,.45)">
+      One Tap
+      <svg style="position:absolute;left:30px;bottom:-16px" width="34" height="22" viewBox="0 0 34 22"><path d="M0 0 H30 C 22 6, 10 14, 2 22 C 6 14, 6 6, 0 0Z" fill="#fff"/></svg>
+    </div>
+  </div>
+</section>
+
+<!-- =====================================================
+     4 · Instant loans against your FD
+     ===================================================== -->
+<section class="frame grid-light" id="s4">
+  <svg class="abs" style="left:-10px;top:166px;transform:rotate(-12deg);filter:drop-shadow(0 16px 16px rgba(90,40,20,.25))" width="132" height="132"><use href="#ele"/></svg>
+  <svg class="abs" style="left:118px;top:176px;color:#FFC93C" width="24" height="24"><use href="#i-spark"/></svg>
+  <svg class="abs" style="left:30px;top:70px;color:var(--o);opacity:.6" width="16" height="16"><use href="#i-spark"/></svg>
+  <div class="abs h" style="right:28px;top:52px;text-align:right;color:var(--o);font-size:60px">Instant<br>Loans On<br>Your FD</div>
+
+  <div class="phone" style="left:54px;top:302px;height:720px">
+    <div class="screen">
+      <div class="island"></div>
+      <div class="sb"><span>9:41</span><svg><use href="#sbi"/></svg></div>
+      <div class="tb"><svg class="ic"><use href="#i-menu"/></svg><div class="brand"><svg><use href="#appicon"/></svg>Vishwa</div><svg class="ic"><use href="#i-plus"/></svg></div>
+      <div style="text-align:right;padding:10px 16px 0"><span class="bub" style="background:var(--o);font-size:14px;max-width:210px;text-align:left;line-height:1.35">Can I get a loan on my fixed deposit?</span></div>
+      <div style="padding:16px 18px 0;font-size:13px;line-height:1.45;color:#3B4352">
+        <div style="font-weight:800;color:var(--ink);font-size:14px;margin-bottom:4px;display:flex;align-items:center;gap:6px"><svg class="ic" style="width:16px;height:16px;color:var(--o)"><use href="#i-spark"/></svg>Loan against your FD</div>
+        You can get up to <b>LKR 45,000.00</b> today. Your deposit keeps earning while you borrow.
+      </div>
+    </div>
+
+    <div class="card" style="position:absolute;left:-26px;width:374px;top:296px;padding:6px 20px 18px">
+      <div class="row" style="padding:14px 0">
+        <div style="display:flex;align-items:center;gap:12px">
+          <span style="width:40px;height:40px;border-radius:50%;background:linear-gradient(135deg,#FFB06B,#EE5A10);color:#fff;font-weight:800;font-size:13px;display:grid;place-items:center">FD</span>
+          <div><div class="v">2200 •••• 546</div><div class="k">Deposit LKR 50,000.00</div></div>
+        </div>
+        <div style="text-align:right"><div class="v" style="color:var(--green)">LKR 45,000</div><div class="k">Available</div></div>
+      </div>
+      <div class="row" style="display:block;padding:14px 0">
+        <div style="display:flex;justify-content:space-between"><span class="k" style="margin:0">Loan amount</span><span class="v">LKR 30,000.00</span></div>
+        <div style="position:relative;height:6px;border-radius:3px;background:var(--line);margin:14px 0 4px">
+          <div style="position:absolute;left:0;top:0;bottom:0;width:66%;background:var(--o);border-radius:3px"></div>
+          <div style="position:absolute;left:66%;top:50%;width:22px;height:22px;margin:-11px 0 0 -11px;border-radius:50%;background:#fff;border:5px solid var(--o);box-shadow:0 4px 8px rgba(0,0,0,.15)"></div>
+        </div>
+      </div>
+      <div class="row" style="padding:14px 0">
+        <div><div class="v">9.4%</div><div class="k">Interest p.a.</div></div>
+        <div style="text-align:center"><div class="v">12 mo</div><div class="k">Term</div></div>
+        <div style="text-align:right"><div class="v">LKR 2,628.40</div><div class="k">Monthly</div></div>
+      </div>
+      <div style="margin-top:14px;background:var(--navy);color:#fff;border-radius:16px;padding:15px;text-align:center;font-weight:700;font-size:15px;display:flex;justify-content:center;align-items:center;gap:6px">Get Loan <svg class="ic" style="width:16px;height:16px"><use href="#i-chev"/></svg></div>
+    </div>
+  </div>
+
+  <svg class="abs" style="right:-46px;top:792px;transform:rotate(14deg);filter:drop-shadow(0 22px 22px rgba(120,70,0,.35))" width="190" height="196"><use href="#coin"/></svg>
+  <svg class="abs" style="left:-34px;top:866px;transform:rotate(-20deg);filter:drop-shadow(0 14px 14px rgba(120,70,0,.3))" width="100" height="104"><use href="#coin"/></svg>
+</section>
+
+<!-- =====================================================
+     5 · Safe with one look
+     ===================================================== -->
+<section class="frame" id="s5" style="background:radial-gradient(circle at 50% 20%,#FF9A4D 0,#F37021 45%,#D9520F 100%)">
+  <div class="abs" style="inset:0;background-image:radial-gradient(rgba(255,255,255,.22) 1.4px,transparent 1.6px);background-size:22px 22px;mask-image:linear-gradient(180deg,transparent 30%,#000 70%);-webkit-mask-image:linear-gradient(180deg,transparent 30%,#000 70%)"></div>
+  <div class="abs h" style="left:0;right:0;top:54px;text-align:center;color:#fff;font-size:68px;text-shadow:0 6px 20px rgba(140,40,0,.3)">Safe With<br>Just One<br>Look</div>
+
+  <div class="phone" style="left:54px;top:310px;height:720px">
+    <div class="screen" style="background:linear-gradient(180deg,#fff 55%,#FFF3EA)">
+      <div class="island"></div>
+      <div class="sb"><span>9:41</span><svg><use href="#sbi"/></svg></div>
+      <div style="text-align:center;padding-top:26px">
+        <div style="font-weight:800;font-size:20px;letter-spacing:-.01em">Good Morning!</div>
+        <div style="font-size:13px;color:var(--muted);margin-top:4px">Welcome back to Sampath Vishwa</div>
+        <div style="margin:46px auto 0;width:132px;height:132px;border-radius:36px;background:linear-gradient(135deg,#FFB06B,#EE5A10);display:grid;place-items:center;box-shadow:0 20px 34px -12px rgba(238,90,16,.6),inset 0 2px 0 rgba(255,255,255,.4)">
+          <svg style="width:78px;height:78px;color:#fff"><use href="#i-face"/></svg>
+        </div>
+        <div style="font-weight:700;font-size:15px;margin-top:26px">Look to sign in</div>
+        <div style="font-size:13px;color:var(--o);font-weight:600;margin-top:8px">Use PIN instead</div>
+      </div>
+    </div>
+  </div>
+
+  <svg class="abs" style="left:-22px;top:486px;transform:rotate(-14deg);filter:drop-shadow(0 20px 18px rgba(110,35,0,.35))" width="132" height="146"><use href="#shield"/></svg>
+  <svg class="abs" style="right:34px;top:330px;color:#FFE08A" width="26" height="26"><use href="#i-spark"/></svg>
+  <svg class="abs" style="right:70px;top:372px;color:#fff;opacity:.8" width="14" height="14"><use href="#i-spark"/></svg>
+
+  <div class="abs card" style="left:24px;right:24px;top:716px;padding:14px 16px;display:flex;gap:12px;align-items:center;border-radius:22px">
+    <span class="dot" style="width:40px;height:40px;background:#E3F6EE;color:var(--green)"><svg style="width:20px;height:20px"><use href="#i-check"/></svg></span>
+    <div style="flex:1"><div style="display:flex;justify-content:space-between"><b style="font-size:14.5px">Transfer successful</b><span class="k" style="margin:0">now</span></div><div class="k">LKR 5,000.00 sent to Mother</div></div>
+  </div>
+  <div class="abs card" style="left:44px;right:10px;top:796px;padding:14px 16px;display:flex;gap:12px;align-items:center;border-radius:22px;transform:rotate(2deg)">
+    <span class="dot" style="width:40px;height:40px;background:#FFF0E6;color:var(--o)"><svg style="width:20px;height:20px"><use href="#i-bell"/></svg></span>
+    <div style="flex:1"><div style="display:flex;justify-content:space-between"><b style="font-size:14.5px">Card used · ••3041</b><span class="k" style="margin:0">2m</span></div><div class="k">LKR 9,050.00 at Pizza Hub, Colombo 02</div></div>
+  </div>
+</section>
+
+</body>
+</html>
