@@ -1,0 +1,417 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Staffora — HR Management Dashboard</title>
+<meta name="description" content="HR management dashboard concept by Kavinda Weerasekara.">
+<link rel="icon" href="../favicon.ico">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&amp;display=swap">
+<style>
+:root{--accent:#D4F34A}
+.seg{height:36px;padding:0 16px;border-radius:999px;border:none;font-size:13px;font-weight:600;background:transparent;color:#3A3F47}
+.seg[aria-pressed="true"]{background:#0F1115;color:#FFFFFF}
+body{margin:0;background:#E9ECF0}
+a{color:#0F1115}a:hover{color:#3A3F47}
+button{font:inherit;color:inherit;cursor:pointer}
+input{font:inherit}
+.hatch{background-image:repeating-linear-gradient(135deg,rgba(15,17,21,.06) 0 2px,transparent 2px 9px)}
+.navlink:hover{background:#F1F3F5}
+.rail-btn:hover{background:#F1F3F5}
+.row:hover{background:#F6F7F9}
+@media (max-width: 760px){
+.rail{flex-direction:row !important;width:100% !important;justify-content:space-between;padding:10px 14px !important}
+.rail-group{flex-direction:row !important;gap:4px !important}
+.rail-group + .rail-group{display:none !important}
+.hide-sm{display:none !important}
+}
+</style>
+</head>
+<body>
+<div style="min-height: 100vh; box-sizing: border-box; padding: 24px 16px 40px; background: #E9ECF0; color: #0F1115; font-family: 'Plus Jakarta Sans', system-ui, sans-serif;">
+<div style="max-width: 1392px; margin: 0 auto; display: flex; flex-direction: column; gap: 20px;">
+
+<!-- Top navigation -->
+<header style="display: flex; flex-wrap: wrap; align-items: center; justify-content: space-between; gap: 12px; background: #FFFFFF; border-radius: 999px; padding: 10px 12px 10px 14px;">
+<a href="#" style="display: flex; align-items: center; gap: 10px; text-decoration: none; color: #0F1115;">
+<span style="width: 40px; height: 40px; border-radius: 12px; background: var(--accent); display: flex; align-items: center; justify-content: center;">
+<svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="#0F1115" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="9" cy="8" r="3.2"/><path d="M3 19.5c.9-3.4 3.2-5 6-5s5.1 1.6 6 5"/><path d="M15.5 4.8a3.2 3.2 0 0 1 0 6.4M17.5 14.6c1.8.7 2.9 2.3 3.4 4.9"/></svg>
+</span>
+<span style="font-size: 21px; font-weight: 800; letter-spacing: -0.02em;">Staffora</span>
+</a>
+<nav aria-label="Primary" style="display: flex; flex-wrap: wrap; gap: 4px;">
+<a href="#" aria-current="page" style="padding: 10px 18px; border-radius: 999px; background: #0F1115; color: #FFFFFF; font-size: 14px; font-weight: 600; text-decoration: none;">Dashboard</a>
+<a href="#" class="navlink" style="padding: 10px 18px; border-radius: 999px; color: #0F1115; font-size: 14px; font-weight: 500; text-decoration: none;">Employees</a>
+<a href="#" class="navlink" style="padding: 10px 18px; border-radius: 999px; color: #0F1115; font-size: 14px; font-weight: 500; text-decoration: none;">Recruitment</a>
+<a href="#" class="navlink" style="padding: 10px 18px; border-radius: 999px; color: #0F1115; font-size: 14px; font-weight: 500; text-decoration: none;">Payroll</a>
+<a href="#" class="navlink" style="padding: 10px 18px; border-radius: 999px; color: #0F1115; font-size: 14px; font-weight: 500; text-decoration: none;">Attendance</a>
+</nav>
+<div style="display: flex; align-items: center; gap: 8px;">
+<button type="button" aria-label="Search" style="width: 44px; height: 44px; border-radius: 999px; border: 1px solid #E3E6EA; background: #FFFFFF; display: flex; align-items: center; justify-content: center;">
+<svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" aria-hidden="true"><circle cx="11" cy="11" r="7"/><path d="M20 20l-3.5-3.5"/></svg>
+</button>
+<button type="button" aria-label="Notifications, 3 unread" style="position: relative; width: 44px; height: 44px; border-radius: 999px; border: 1px solid #E3E6EA; background: #FFFFFF; display: flex; align-items: center; justify-content: center;">
+<svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M6 16v-5a6 6 0 1 1 12 0v5l1.5 2h-15z"/><path d="M10 20.5a2 2 0 0 0 4 0"/></svg>
+<span style="position: absolute; top: 9px; right: 11px; width: 8px; height: 8px; border-radius: 999px; background: #E5484D; border: 2px solid #FFFFFF;"></span>
+</button>
+<button type="button" aria-label="Account menu" style="display: flex; align-items: center; gap: 8px; border: none; background: transparent; padding: 0 4px 0 0;">
+<span style="width: 44px; height: 44px; border-radius: 999px; background: #0F1115; color: var(--accent); display: flex; align-items: center; justify-content: center; font-size: 14px; font-weight: 700;">KW</span>
+<svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M6 9l6 6 6-6"/></svg>
+</button>
+</div>
+</header>
+
+<!-- Greeting row -->
+<div style="display: flex; flex-wrap: wrap; align-items: flex-end; justify-content: space-between; gap: 16px; padding: 4px 4px 0;">
+<div style="display: flex; flex-direction: column; gap: 6px;">
+<h1 style="margin: 0; font-size: 34px; line-height: 1.15; font-weight: 700; letter-spacing: -0.02em;">Good morning, Kavinda</h1>
+<p style="margin: 0; font-size: 15px; color: #5B626D;">Here’s what’s happening with your people today.</p>
+</div>
+<div style="display: flex; flex-wrap: wrap; align-items: center; gap: 10px;">
+<button type="button" style="display: flex; align-items: center; gap: 10px; height: 44px; padding: 0 18px; border-radius: 999px; border: 1px solid #D9DDE2; background: #FFFFFF; font-size: 14px; font-weight: 500;">
+<svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" aria-hidden="true"><rect x="3" y="5" width="18" height="16" rx="3"/><path d="M8 3v4M16 3v4M3 10h18"/></svg>
+1 Oct 2026 – 31 Oct 2026
+</button>
+<button type="button" style="display: flex; align-items: center; gap: 8px; height: 44px; padding: 0 20px; border-radius: 999px; border: none; background: #0F1115; color: #FFFFFF; font-size: 14px; font-weight: 600;">
+<svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true"><circle cx="10" cy="8" r="3.5"/><path d="M3.5 20c.8-3.6 3.4-5.5 6.5-5.5 1.6 0 3 .5 4.1 1.4M19 14v6M16 17h6"/></svg>
+Add employee
+</button>
+</div>
+</div>
+
+<!-- Body: rail + content -->
+<div style="display: flex; flex-wrap: wrap; align-items: flex-start; gap: 20px;">
+
+<!-- Side rail -->
+<aside class="rail" aria-label="Sections" style="width: 72px; box-sizing: border-box; background: #FFFFFF; border-radius: 999px; padding: 18px 0; display: flex; flex-direction: column; align-items: center; justify-content: space-between; gap: 48px;">
+<div class="rail-group" style="display: flex; flex-direction: column; align-items: center; gap: 10px;">
+<a href="#" aria-label="Overview" aria-current="page" style="width: 48px; height: 48px; border-radius: 999px; background: #0F1115; color: var(--accent); display: flex; align-items: center; justify-content: center;">
+<svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" aria-hidden="true"><rect x="3.5" y="3.5" width="7" height="7" rx="2"/><rect x="13.5" y="3.5" width="7" height="7" rx="2"/><rect x="3.5" y="13.5" width="7" height="7" rx="2"/><rect x="13.5" y="13.5" width="7" height="7" rx="2"/></svg>
+</a>
+<a href="#" aria-label="Employees" class="rail-btn" style="width: 48px; height: 48px; border-radius: 999px; color: #3A3F47; display: flex; align-items: center; justify-content: center;">
+<svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" aria-hidden="true"><circle cx="9" cy="8" r="3.5"/><path d="M2.5 20c.8-3.6 3.4-5.5 6.5-5.5s5.7 1.9 6.5 5.5"/><path d="M16 4.6a3.5 3.5 0 0 1 0 6.8M18 14.8c1.9.7 3.1 2.5 3.5 5.2"/></svg>
+</a>
+<a href="#" aria-label="Recruitment" class="rail-btn" style="width: 48px; height: 48px; border-radius: 999px; color: #3A3F47; display: flex; align-items: center; justify-content: center;">
+<svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="3" y="7" width="18" height="13" rx="3"/><path d="M8 7V5a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2M3 12.5h18"/></svg>
+</a>
+<a href="#" aria-label="Time off" class="rail-btn" style="width: 48px; height: 48px; border-radius: 999px; color: #3A3F47; display: flex; align-items: center; justify-content: center;">
+<svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" aria-hidden="true"><rect x="3" y="5" width="18" height="16" rx="3"/><path d="M8 3v4M16 3v4M3 10h18M9 15l2 2 4-4"/></svg>
+</a>
+<a href="#" aria-label="Payroll" class="rail-btn" style="width: 48px; height: 48px; border-radius: 999px; color: #3A3F47; display: flex; align-items: center; justify-content: center;">
+<svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" aria-hidden="true"><rect x="3" y="6" width="18" height="14" rx="3"/><path d="M3 10.5h18M15.5 15h2.5"/></svg>
+</a>
+<a href="#" aria-label="Reports" class="rail-btn" style="width: 48px; height: 48px; border-radius: 999px; color: #3A3F47; display: flex; align-items: center; justify-content: center;">
+<svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" aria-hidden="true"><path d="M5 20V11M11 20V5M17 20v-7M3 20h18"/></svg>
+</a>
+</div>
+<div class="rail-group" style="display: flex; flex-direction: column; align-items: center; gap: 10px;">
+<a href="#" aria-label="Settings" class="rail-btn" style="width: 48px; height: 48px; border-radius: 999px; color: #3A3F47; display: flex; align-items: center; justify-content: center;">
+<svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" aria-hidden="true"><path d="M4 6h9M19 6h1M4 12h3M13 12h7M4 18h11M21 18h-1"/><circle cx="16" cy="6" r="2.2"/><circle cx="10" cy="12" r="2.2"/><circle cx="18" cy="18" r="2.2"/></svg>
+</a>
+<a href="#" aria-label="Sign out" class="rail-btn" style="width: 48px; height: 48px; border-radius: 999px; color: #3A3F47; display: flex; align-items: center; justify-content: center;">
+<svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M15 4h3a2 2 0 0 1 2 2v12a2 2 0 0 1-2 2h-3M10 8l-4 4 4 4M6 12h10"/></svg>
+</a>
+</div>
+</aside>
+
+<!-- Main content -->
+<main style="flex: 999 1 560px; min-width: 0; display: flex; flex-wrap: wrap; align-items: flex-start; gap: 20px;">
+
+<!-- Left column -->
+<div style="flex: 999 1 600px; min-width: 0; display: flex; flex-direction: column; gap: 20px;">
+
+<div style="display: flex; flex-wrap: wrap; gap: 20px;">
+
+<!-- KPI grid -->
+<section aria-label="Headcount summary" style="flex: 1 1 300px; display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 12px;">
+<div style="background: #FFFFFF; border-radius: 24px; padding: 18px; display: flex; flex-direction: column; gap: 14px;">
+<div style="display: flex; align-items: center; justify-content: space-between;">
+<span style="width: 36px; height: 36px; border-radius: 12px; background: var(--accent); display: flex; align-items: center; justify-content: center;">
+<svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#0F1115" stroke-width="2" stroke-linecap="round" aria-hidden="true"><circle cx="9" cy="8" r="3.5"/><path d="M2.5 20c.8-3.6 3.4-5.5 6.5-5.5s5.7 1.9 6.5 5.5"/><path d="M16 4.6a3.5 3.5 0 0 1 0 6.8"/></svg>
+</span>
+<span style="font-size: 12px; font-weight: 600; color: #1C6B37; background: #E3F5E8; padding: 4px 8px; border-radius: 999px;">+4.2%</span>
+</div>
+<div style="display: flex; flex-direction: column; gap: 2px;">
+<span style="font-size: 13px; color: #5B626D;">Total employees</span>
+<span style="font-size: 30px; font-weight: 700; letter-spacing: -0.02em;">248</span>
+</div>
+</div>
+<div style="background: #FFFFFF; border-radius: 24px; padding: 18px; display: flex; flex-direction: column; gap: 14px;">
+<div style="display: flex; align-items: center; justify-content: space-between;">
+<span style="width: 36px; height: 36px; border-radius: 12px; background: #E1ECFF; color: #1D4ED8; display: flex; align-items: center; justify-content: center;">
+<svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true"><circle cx="10" cy="8" r="3.5"/><path d="M3.5 20c.8-3.6 3.4-5.5 6.5-5.5 1.6 0 3 .5 4.1 1.4M19 14v6M16 17h6"/></svg>
+</span>
+<span style="font-size: 12px; font-weight: 600; color: #1C6B37; background: #E3F5E8; padding: 4px 8px; border-radius: 999px;">+3</span>
+</div>
+<div style="display: flex; flex-direction: column; gap: 2px;">
+<span style="font-size: 13px; color: #5B626D;">New hires</span>
+<span style="font-size: 30px; font-weight: 700; letter-spacing: -0.02em;">12</span>
+</div>
+</div>
+<div style="background: #FFFFFF; border-radius: 24px; padding: 18px; display: flex; flex-direction: column; gap: 14px;">
+<div style="display: flex; align-items: center; justify-content: space-between;">
+<span style="width: 36px; height: 36px; border-radius: 12px; background: #FDEBD3; color: #9A4A00; display: flex; align-items: center; justify-content: center;">
+<svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true"><rect x="3" y="5" width="18" height="16" rx="3"/><path d="M8 3v4M16 3v4M3 10h18"/></svg>
+</span>
+<span style="font-size: 12px; font-weight: 600; color: #5B626D; background: #F1F3F5; padding: 4px 8px; border-radius: 999px;">Today</span>
+</div>
+<div style="display: flex; flex-direction: column; gap: 2px;">
+<span style="font-size: 13px; color: #5B626D;">On leave</span>
+<span style="font-size: 30px; font-weight: 700; letter-spacing: -0.02em;">9</span>
+</div>
+</div>
+<div style="background: #0F1115; color: #FFFFFF; border-radius: 24px; padding: 18px; display: flex; flex-direction: column; gap: 14px;">
+<div style="display: flex; align-items: center; justify-content: space-between;">
+<span style="width: 36px; height: 36px; border-radius: 12px; background: #262A31; color: var(--accent); display: flex; align-items: center; justify-content: center;">
+<svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="3" y="7" width="18" height="13" rx="3"/><path d="M8 7V5a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2"/></svg>
+</span>
+<a href="#" aria-label="View open roles" style="width: 32px; height: 32px; border-radius: 999px; border: 1px solid #3A3F47; color: #FFFFFF; display: flex; align-items: center; justify-content: center;">
+<svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M7 17L17 7M8 7h9v9"/></svg>
+</a>
+</div>
+<div style="display: flex; flex-direction: column; gap: 2px;">
+<span style="font-size: 13px; color: #B8BEC7;">Open positions</span>
+<span style="font-size: 30px; font-weight: 700; letter-spacing: -0.02em;">14</span>
+</div>
+</div>
+</section>
+
+<!-- Attendance chart -->
+<section aria-label="Attendance overview" style="flex: 2 1 420px; min-width: 0; background: #FFFFFF; border-radius: 24px; padding: 20px 22px; display: flex; flex-direction: column; gap: 16px;">
+<div style="display: flex; flex-wrap: wrap; align-items: flex-start; justify-content: space-between; gap: 12px;">
+<div style="display: flex; flex-direction: column; gap: 4px;">
+<h2 style="margin: 0; font-size: 16px; font-weight: 600;">Attendance rate</h2>
+<div style="display: flex; align-items: baseline; gap: 10px;">
+<span id="avg" style="font-size: 28px; font-weight: 700; letter-spacing: -0.02em;"></span>
+<span id="delta" style="font-size: 12px; font-weight: 600; color: #1C6B37;"></span>
+</div>
+</div>
+<div role="group" aria-label="Period" style="display: flex; gap: 4px; padding: 4px; background: #F1F3F5; border-radius: 999px;">
+<button type="button" class="seg" data-period="weekly">Weekly</button>
+<button type="button" class="seg" data-period="monthly">Monthly</button>
+</div>
+</div>
+<div style="display: flex; gap: 10px;">
+<div aria-hidden="true" style="height: 200px; display: flex; flex-direction: column; justify-content: space-between; font-size: 11px; color: #5B626D; transform: translateY(-6px);">
+<span>100%</span><span>75%</span><span>50%</span><span>25%</span><span>0%</span>
+</div>
+<div style="flex: 1 1 auto; min-width: 0; display: flex; flex-direction: column; gap: 8px;">
+<div style="position: relative; height: 200px;">
+<div aria-hidden="true" style="position: absolute; left: 0; right: 0; top: 0; border-top: 1px dashed #D9DDE2;"></div>
+<div aria-hidden="true" style="position: absolute; left: 0; right: 0; top: 25%; border-top: 1px dashed #D9DDE2;"></div>
+<div aria-hidden="true" style="position: absolute; left: 0; right: 0; top: 50%; border-top: 1px dashed #D9DDE2;"></div>
+<div aria-hidden="true" style="position: absolute; left: 0; right: 0; top: 75%; border-top: 1px dashed #D9DDE2;"></div>
+<div aria-hidden="true" style="position: absolute; left: 0; right: 0; bottom: 0; border-top: 1px solid #D9DDE2;"></div>
+<div id="bars" role="img" style="position: absolute; inset: 0; display: flex; align-items: flex-end; justify-content: space-around; gap: 10px; padding: 0 6px;"></div>
+</div>
+<div id="barLabels" aria-hidden="true" style="display: flex; justify-content: space-around; gap: 10px; padding: 0 6px; font-size: 12px; color: #5B626D;"></div>
+</div>
+</div>
+</section>
+</div>
+
+<!-- Employees table -->
+<section aria-label="Employees" style="background: #FFFFFF; border-radius: 24px; padding: 20px 22px; display: flex; flex-direction: column; gap: 16px;">
+<div style="display: flex; flex-wrap: wrap; align-items: center; justify-content: space-between; gap: 12px;">
+<div style="display: flex; flex-direction: column; gap: 2px;">
+<h2 style="margin: 0; font-size: 18px; font-weight: 600;">Employees</h2>
+<p style="margin: 0; font-size: 13px; color: #5B626D;">Recently active team members</p>
+</div>
+<div style="display: flex; flex-wrap: wrap; gap: 8px;">
+<label style="display: flex; align-items: center; gap: 8px; height: 44px; padding: 0 14px; border-radius: 999px; background: #F1F3F5; color: #5B626D;">
+<svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true"><circle cx="11" cy="11" r="7"/><path d="M20 20l-3.5-3.5"/></svg>
+<span style="position: absolute; width: 1px; height: 1px; overflow: hidden; clip: rect(0 0 0 0);">Search employees</span>
+<input type="search" placeholder="Search employees" style="border: none; outline: none; background: transparent; width: 160px; font-size: 14px; color: #0F1115;">
+</label>
+<button type="button" style="display: flex; align-items: center; gap: 8px; height: 44px; padding: 0 16px; border-radius: 999px; border: 1px solid #D9DDE2; background: #FFFFFF; font-size: 14px; font-weight: 500;">
+All departments
+<svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M6 9l6 6 6-6"/></svg>
+</button>
+</div>
+</div>
+<div style="overflow-x: auto;">
+<table style="width: 100%; min-width: 680px; border-collapse: collapse; font-size: 14px;">
+<thead>
+<tr style="text-align: left; color: #5B626D; font-size: 13px;">
+<th scope="col" style="font-weight: 500; padding: 10px 12px;">Name</th>
+<th scope="col" style="font-weight: 500; padding: 10px 12px;">Department</th>
+<th scope="col" style="font-weight: 500; padding: 10px 12px;">Role</th>
+<th scope="col" style="font-weight: 500; padding: 10px 12px;">Status</th>
+<th scope="col" style="font-weight: 500; padding: 10px 12px; text-align: right;">Joined</th>
+</tr>
+</thead>
+<tbody id="employees"></tbody>
+</table>
+</div>
+</section>
+</div>
+
+<!-- Right column -->
+<div style="flex: 1 1 320px; min-width: 0; display: flex; flex-direction: column; gap: 20px;">
+
+<!-- Payroll card -->
+<section aria-label="Next payroll" style="background: #0F1115; color: #FFFFFF; border-radius: 24px; padding: 22px; display: flex; flex-direction: column; gap: 18px; position: relative; overflow: hidden;">
+<div aria-hidden="true" style="position: absolute; right: -40px; top: -40px; width: 160px; height: 160px; border-radius: 999px; border: 28px solid #1E2228;"></div>
+<div style="position: relative; display: flex; align-items: center; justify-content: space-between;">
+<h2 style="margin: 0; font-size: 16px; font-weight: 600;">Next payroll</h2>
+<span style="font-size: 12px; font-weight: 700; color: #0F1115; background: var(--accent); padding: 5px 10px; border-radius: 999px;">Scheduled</span>
+</div>
+<div style="position: relative; display: flex; flex-direction: column; gap: 4px;">
+<span style="font-size: 13px; color: #B8BEC7;">Total payout</span>
+<span style="font-size: 34px; font-weight: 700; letter-spacing: -0.02em;">$412,860<span style="color: #7D8590;">.00</span></span>
+</div>
+<div style="position: relative; display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 8px; font-size: 12px;">
+<div style="display: flex; flex-direction: column; gap: 2px;"><span style="color: #B8BEC7;">Pay date</span><span style="font-size: 14px; font-weight: 600;">31 Oct</span></div>
+<div style="display: flex; flex-direction: column; gap: 2px;"><span style="color: #B8BEC7;">Employees</span><span style="font-size: 14px; font-weight: 600;">248</span></div>
+<div style="display: flex; flex-direction: column; gap: 2px;"><span style="color: #B8BEC7;">Cycle</span><span style="font-size: 14px; font-weight: 600;">Monthly</span></div>
+</div>
+<div style="position: relative; display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 10px;">
+<button type="button" style="height: 46px; border-radius: 999px; border: none; background: var(--accent); color: #0F1115; font-size: 14px; font-weight: 700;">Run payroll</button>
+<button type="button" style="height: 46px; border-radius: 999px; border: 1px solid #3A3F47; background: transparent; color: #FFFFFF; font-size: 14px; font-weight: 600;">Review</button>
+</div>
+</section>
+
+<!-- Today's attendance -->
+<section aria-label="Today's attendance" style="background: #FFFFFF; border-radius: 24px; padding: 20px 22px; display: flex; flex-direction: column; gap: 16px;">
+<div style="display: flex; align-items: center; justify-content: space-between;">
+<h2 style="margin: 0; font-size: 16px; font-weight: 600;">Today’s attendance</h2>
+<a href="#" aria-label="Open attendance" style="width: 36px; height: 36px; border-radius: 999px; border: 1px solid #D9DDE2; color: #0F1115; display: flex; align-items: center; justify-content: center;">
+<svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M7 17L17 7M8 7h9v9"/></svg>
+</a>
+</div>
+<div style="display: flex; align-items: baseline; gap: 8px;">
+<span style="font-size: 34px; font-weight: 700; letter-spacing: -0.02em;">228</span>
+<span style="font-size: 14px; color: #5B626D;">of 248 checked in</span>
+</div>
+<div role="img" aria-label="212 on time, 16 late, 20 absent" style="display: flex; gap: 4px; height: 14px;">
+<div style="width: 85.5%; border-radius: 999px; background: var(--accent);"></div>
+<div style="width: 6.5%; border-radius: 999px; background: #0F1115;"></div>
+<div class="hatch" style="width: 8%; border-radius: 999px; background-color: #D9DDE2;"></div>
+</div>
+<div style="display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 8px;">
+<div style="display: flex; flex-direction: column; gap: 4px; padding: 12px; border-radius: 16px; background: #F6F7F9;">
+<span style="display: flex; align-items: center; gap: 6px; font-size: 12px; color: #5B626D;"><span style="width: 8px; height: 8px; border-radius: 999px; background: var(--accent); outline: 1px solid #C9CED5;"></span>On time</span>
+<span style="font-size: 18px; font-weight: 700;">212</span>
+</div>
+<div style="display: flex; flex-direction: column; gap: 4px; padding: 12px; border-radius: 16px; background: #F6F7F9;">
+<span style="display: flex; align-items: center; gap: 6px; font-size: 12px; color: #5B626D;"><span style="width: 8px; height: 8px; border-radius: 999px; background: #0F1115;"></span>Late</span>
+<span style="font-size: 18px; font-weight: 700;">16</span>
+</div>
+<div style="display: flex; flex-direction: column; gap: 4px; padding: 12px; border-radius: 16px; background: #F6F7F9;">
+<span style="display: flex; align-items: center; gap: 6px; font-size: 12px; color: #5B626D;"><span style="width: 8px; height: 8px; border-radius: 999px; background: #C9CED5;"></span>Absent</span>
+<span style="font-size: 18px; font-weight: 700;">20</span>
+</div>
+</div>
+</section>
+
+<!-- Leave requests -->
+<section aria-label="Leave requests" style="background: #FFFFFF; border-radius: 24px; padding: 20px 22px; display: flex; flex-direction: column; gap: 14px;">
+<div style="display: flex; align-items: center; justify-content: space-between; gap: 8px;">
+<div style="display: flex; align-items: center; gap: 8px;">
+<h2 style="margin: 0; font-size: 16px; font-weight: 600;">Leave requests</h2>
+<span style="font-size: 12px; font-weight: 700; background: var(--accent); color: #0F1115; padding: 3px 9px; border-radius: 999px;"><span id="pending"></span> pending</span>
+</div>
+<a href="#" style="font-size: 13px; font-weight: 600;">View all</a>
+</div>
+<div id="leaves" style="display: flex; flex-direction: column; gap: 14px;"></div>
+</section>
+</div>
+
+</main>
+</div>
+</div>
+</div>
+<script>
+(function () {
+  var chip = function (bg, fg) { return 'display:inline-flex;align-items:center;padding:4px 10px;border-radius:999px;font-size:12px;font-weight:600;background:' + bg + ';color:' + fg + ';'; };
+  var esc = function (s) { return String(s).replace(/[&<>"]/g, function (c) { return { '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;' }[c]; }); };
+  var data = {
+    weekly: { bars: [['Mon', 94], ['Tue', 97], ['Wed', 91], ['Thu', 98], ['Fri', 89]], avg: '93.8%', delta: '+1.6% vs last week', label: 'day this week' },
+    monthly: { bars: [['May', 91], ['Jun', 93], ['Jul', 88], ['Aug', 90], ['Sep', 94], ['Oct', 96]], avg: '92.0%', delta: '+2.4% vs previous 6 months', label: 'month' }
+  };
+  function renderChart(period) {
+    var d = data[period], weekly = period === 'weekly';
+    var max = Math.max.apply(null, d.bars.map(function (b) { return b[1]; }));
+    document.getElementById('avg').textContent = d.avg;
+    document.getElementById('delta').textContent = d.delta;
+    var bars = document.getElementById('bars');
+    bars.setAttribute('aria-label', 'Attendance rate by ' + d.label + ': ' + d.bars.map(function (b) { return b[0] + ' ' + b[1] + '%'; }).join(', '));
+    bars.innerHTML = d.bars.map(function (b) {
+      var hi = b[1] === max;
+      var tip = weekly ? b[1] + '% · ' + Math.round(248 * b[1] / 100) + ' in' : b[1] + '% avg';
+      return '<div style="flex:1 1 0;max-width:56px;height:' + b[1] + '%;position:relative;display:flex;">' +
+        (hi ? '<div style="position:absolute;bottom:calc(100% + 8px);left:50%;transform:translateX(-50%);white-space:nowrap;background:#0F1115;color:#FFFFFF;font-size:12px;font-weight:600;padding:6px 10px;border-radius:10px;">' + tip + '</div>' : '') +
+        '<div class="hatch" style="flex:1;border-radius:999px;background-color:' + (hi ? 'var(--accent)' : '#E6E9ED') + ';"></div></div>';
+    }).join('');
+    document.getElementById('barLabels').innerHTML = d.bars.map(function (b) {
+      return '<span style="flex:1 1 0;max-width:56px;text-align:center;">' + b[0] + '</span>';
+    }).join('');
+    document.querySelectorAll('.seg').forEach(function (btn) {
+      btn.setAttribute('aria-pressed', String(btn.dataset.period === period));
+    });
+  }
+  document.querySelectorAll('.seg').forEach(function (btn) {
+    btn.addEventListener('click', function () { renderChart(btn.dataset.period); });
+  });
+  renderChart('weekly');
+
+  var statusChip = { 'Active': chip('#E3F5E8', '#1C6B37'), 'Remote': chip('#E1ECFF', '#1D4ED8'), 'On leave': chip('#FDEBD3', '#9A4A00') };
+  var employees = [
+    ['AS', '#E8F9B5', 'Amaya Silva', 'amaya.silva@staffora.co', 'Design', 'Product Designer', 'Active', '12 Mar 2024'],
+    ['DO', '#DCE8FF', 'Daniel Okafor', 'daniel.okafor@staffora.co', 'Engineering', 'Backend Engineer', 'Remote', '04 Jan 2023'],
+    ['PN', '#FFE6CC', 'Priya Nair', 'priya.nair@staffora.co', 'Marketing', 'Growth Lead', 'On leave', '21 Aug 2022'],
+    ['LM', '#EDE3FF', 'Lucas Martin', 'lucas.martin@staffora.co', 'Finance', 'Payroll Specialist', 'Active', '09 Sep 2025'],
+    ['HK', '#D9F3EA', 'Hana Kim', 'hana.kim@staffora.co', 'Engineering', 'QA Engineer', 'Active', '17 Jun 2024']
+  ];
+  var td = 'padding:10px 12px;border-top:1px solid #EEF0F2;';
+  var tbody = document.getElementById('employees');
+  function renderEmployees(q) {
+    q = (q || '').toLowerCase();
+    tbody.innerHTML = employees.filter(function (e) {
+      return !q || (e[2] + ' ' + e[3] + ' ' + e[4] + ' ' + e[5]).toLowerCase().indexOf(q) !== -1;
+    }).map(function (e) {
+      return '<tr class="row"><td style="' + td + '"><div style="display:flex;align-items:center;gap:12px;">' +
+        '<span style="width:36px;height:36px;flex:none;border-radius:999px;background:' + e[1] + ';display:flex;align-items:center;justify-content:center;font-size:13px;font-weight:700;color:#0F1115;">' + e[0] + '</span>' +
+        '<div style="display:flex;flex-direction:column;"><span style="font-weight:600;">' + esc(e[2]) + '</span><span style="font-size:12px;color:#5B626D;">' + esc(e[3]) + '</span></div></div></td>' +
+        '<td style="' + td + '">' + e[4] + '</td><td style="' + td + '">' + e[5] + '</td>' +
+        '<td style="' + td + '"><span style="' + statusChip[e[6]] + '">' + e[6] + '</span></td>' +
+        '<td style="' + td + 'text-align:right;color:#3A3F47;">' + e[7] + '</td></tr>';
+    }).join('') || '<tr><td colspan="5" style="' + td + 'color:#5B626D;">No employees match “' + esc(q) + '”.</td></tr>';
+  }
+  document.querySelector('input[type="search"]').addEventListener('input', function (ev) { renderEmployees(ev.target.value); });
+  renderEmployees('');
+
+  var leaves = [
+    { initials: 'NP', tint: '#E8F9B5', name: 'Nadia Perera', type: 'Annual leave', dates: '3–5 Nov · 3 days' },
+    { initials: 'ML', tint: '#DCE8FF', name: 'Marcus Lee', type: 'Sick leave', dates: '30 Oct · 1 day' },
+    { initials: 'IF', tint: '#FFE6CC', name: 'Ishan Fernando', type: 'Parental leave', dates: '11 Nov – 6 Dec' }
+  ];
+  var x = '<svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" aria-hidden="true"><path d="M6 6l12 12M18 6L6 18"/></svg>';
+  var check = '<svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12.5l4.5 4.5L19 7.5"/></svg>';
+  var list = document.getElementById('leaves');
+  function renderLeaves() {
+    document.getElementById('pending').textContent = leaves.filter(function (l) { return !l.result; }).length;
+    list.innerHTML = leaves.map(function (l, i) {
+      var action = l.result
+        ? '<span style="' + (l.result === 'Approved' ? chip('#E3F5E8', '#1C6B37') : chip('#FDE4E4', '#A3262A')) + '">' + l.result + '</span>'
+        : '<div style="display:flex;gap:6px;">' +
+          '<button type="button" data-i="' + i + '" data-r="Declined" aria-label="Decline ' + l.name + '" style="width:44px;height:44px;border-radius:999px;border:1px solid #D9DDE2;background:#FFFFFF;display:flex;align-items:center;justify-content:center;">' + x + '</button>' +
+          '<button type="button" data-i="' + i + '" data-r="Approved" aria-label="Approve ' + l.name + '" style="width:44px;height:44px;border-radius:999px;border:none;background:#0F1115;color:var(--accent);display:flex;align-items:center;justify-content:center;">' + check + '</button></div>';
+      return '<div style="display:flex;align-items:center;gap:12px;padding:12px;border-radius:18px;background:#F6F7F9;">' +
+        '<span style="width:40px;height:40px;flex:none;border-radius:999px;background:' + l.tint + ';display:flex;align-items:center;justify-content:center;font-size:13px;font-weight:700;color:#0F1115;">' + l.initials + '</span>' +
+        '<div style="flex:1 1 auto;min-width:0;display:flex;flex-direction:column;gap:2px;"><span style="font-size:14px;font-weight:600;">' + l.name + '</span>' +
+        '<span style="font-size:12px;color:#5B626D;">' + l.type + ' · ' + l.dates + '</span></div>' + action + '</div>';
+    }).join('');
+  }
+  list.addEventListener('click', function (ev) {
+    var btn = ev.target.closest('button[data-i]');
+    if (!btn) return;
+    leaves[+btn.dataset.i].result = btn.dataset.r;
+    renderLeaves();
+  });
+  renderLeaves();
+})();
+</script>
+</body>
+</html>
