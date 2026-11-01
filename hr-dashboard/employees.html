@@ -41,7 +41,8 @@ button:focus-visible, a:focus-visible, input:focus-visible, select:focus-visible
 .circle-btn { width: 44px; height: 44px; border-radius: 999px; border: 1px solid #E8E3E0; background: #FFFFFF; display: grid; place-items: center; transition: background-color .2s ease, transform .15s ease; }
 .circle-btn:hover { background: var(--soft); }
 .circle-btn:active { transform: scale(.94); }
-.me { width: 44px; height: 44px; border-radius: 999px; background: var(--ink); color: var(--accent); display: grid; place-items: center; font-size: 14px; font-weight: 700; border: none; }
+.me { width: 44px; height: 44px; padding: 0; border-radius: 999px; background: var(--peach); display: grid; place-items: center; border: none; overflow: hidden; box-shadow: 0 0 0 2px var(--ink); }
+.me img { width: 100%; height: 100%; display: block; }
 
 /* Body: rail + content */
 .body { display: flex; flex-wrap: wrap; align-items: flex-start; gap: 20px; }
@@ -105,7 +106,8 @@ button:focus-visible, a:focus-visible, input:focus-visible, select:focus-visible
 .person:hover { transform: translateY(-3px); box-shadow: 0 12px 28px rgba(43,39,37,.08); background: #FFFFFF; border-color: var(--line); }
 .person.new { animation: rise .5s cubic-bezier(.2,.7,.2,1) backwards, flash 2s ease; }
 .person-top { display: flex; align-items: center; gap: 12px; }
-.avatar { width: 46px; height: 46px; flex: none; border-radius: 999px; display: grid; place-items: center; font-size: 15px; font-weight: 700; }
+.avatar { width: 46px; height: 46px; flex: none; border-radius: 999px; display: grid; place-items: center; font-size: 15px; font-weight: 700; overflow: hidden; }
+.avatar img { width: 100%; height: 100%; display: block; }
 .person-name { min-width: 0; }
 .person-name a { font-size: 15px; font-weight: 700; text-decoration: none; display: block; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
 .person-name a::after { content: ''; position: absolute; inset: 0; border-radius: 20px; }
@@ -289,7 +291,7 @@ select.input { appearance: none; background: #FFFFFF url("data:image/svg+xml,%3C
     <div class="top-actions">
       <button type="button" class="circle-btn" aria-label="Search" id="focusSearch"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" aria-hidden="true"><circle cx="11" cy="11" r="7"/><path d="M20 20l-3.5-3.5"/></svg></button>
       <button type="button" class="circle-btn" aria-label="Notifications"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M6 16v-5a6 6 0 1 1 12 0v5l1.5 2h-15z"/><path d="M10 20.5a2 2 0 0 0 4 0"/></svg></button>
-      <button type="button" class="me" aria-label="Account menu">KW</button>
+      <button type="button" class="me" aria-label="Account menu"><img src="assets/avatars/kavinda-weerasekara.svg" alt="" width="44" height="44"></button>
     </div>
   </header>
 
@@ -498,6 +500,12 @@ select.input { appearance: none; background: #FFFFFF url("data:image/svg+xml,%3C
   function byId(id) { for (var i = 0; i < people.length; i++) if (people[i].id === id) return people[i]; return null; }
   function full(p) { return p.first + ' ' + p.last; }
   function initials(p) { return (p.first.charAt(0) + p.last.charAt(0)).toUpperCase(); }
+  // Sample people have a portrait in assets/avatars/; anyone added in the prototype shows initials
+  function slug(p) { return full(p).toLowerCase().normalize('NFD').replace(/[\u0300-\u036f]/g, '').replace(/[^a-z]+/g, '-'); }
+  function face(p) {
+    if (p.photo === false) return initials(p);
+    return '<img src="assets/avatars/' + slug(p) + '.svg" alt="" width="84" height="84" loading="lazy" data-i="' + initials(p) + '" onerror="this.replaceWith(document.createTextNode(this.dataset.i))">';
+  }
   function fmtDate(iso) {
     var d = new Date(iso + 'T00:00:00');
     return d.toLocaleDateString('en-GB', { day: '2-digit', month: 'short', year: 'numeric' });
@@ -561,7 +569,7 @@ select.input { appearance: none; background: #FFFFFF url("data:image/svg+xml,%3C
     listEl.className = 'people' + (state.view === 'list' ? ' list' : '');
     listEl.innerHTML = rows.map(function (p, i) {
       return '<li class="person' + (p.id === state.newId ? ' new' : '') + '" style="animation-delay:' + Math.min(i, 12) * 35 + 'ms">' +
-        '<div class="person-top"><span class="avatar" style="background:' + TINT[p.dept] + '" aria-hidden="true">' + initials(p) + '</span>' +
+        '<div class="person-top"><span class="avatar" style="background:' + TINT[p.dept] + '" aria-hidden="true">' + face(p) + '</span>' +
         '<div class="person-name"><a href="#emp-' + p.id + '" data-open="' + p.id + '">' + esc(full(p)) + '</a><span>' + esc(p.role) + '</span></div></div>' +
         '<div class="person-meta"><span class="tag">' + p.dept + '</span><span class="status" style="' + STATUS[p.status] + '">' + p.status + '</span><span class="tag">' + esc(p.location) + '</span></div>' +
         '<div class="person-foot"><span>Joined ' + fmtDate(p.joined) + '</span><span class="go" aria-hidden="true">' + ICON_ARROW + '</span></div></li>';
@@ -647,7 +655,7 @@ select.input { appearance: none; background: #FFFFFF url("data:image/svg+xml,%3C
     var mgr = byId(p.manager);
     var left = p.leaveTotal - p.leaveUsed;
     drawerBody.innerHTML =
-      '<div class="profile-hero"><span class="avatar" style="background:' + TINT[p.dept] + '" aria-hidden="true">' + initials(p) + '</span>' +
+      '<div class="profile-hero"><span class="avatar" style="background:' + TINT[p.dept] + '" aria-hidden="true">' + face(p) + '</span>' +
         '<h2 id="pName">' + esc(full(p)) + '</h2><p>' + esc(p.role) + ' · ' + p.dept + '</p>' +
         '<span class="status" style="' + STATUS[p.status] + '">' + p.status + '</span></div>' +
       '<div class="quick">' +
@@ -808,7 +816,7 @@ select.input { appearance: none; background: #FFFFFF url("data:image/svg+xml,%3C
     setTimeout(function () {
       var id = people.reduce(function (m, p) { return Math.max(m, p.id); }, 0) + 1;
       var p = { id: id, first: d.first, last: d.last, role: d.role, dept: d.dept, status: 'Active', location: d.location, joined: d.joined,
-        manager: d.manager, type: d.type, leaveUsed: 0, leaveTotal: 20, email: d.email, phone: d.phone };
+        manager: d.manager, type: d.type, leaveUsed: 0, leaveTotal: 20, email: d.email, phone: d.phone, photo: false };
       people.push(p); save();
       btn.disabled = false;
       closeTop();

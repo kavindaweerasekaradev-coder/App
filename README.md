@@ -49,6 +49,7 @@ hr-dashboard/signup.html     # Five-step sign-up: account, email code, company, 
 hr-dashboard/index.html      # Dashboard
 hr-dashboard/employees.html  # Directory, profile panel (#emp-<id>) and add-employee form (#add)
 hr-dashboard/auth.css        # Styles shared by the log-in and sign-up pages
+hr-dashboard/assets/avatars/ # Portraits of the sample people (DiceBear Notionists, CC0 1.0)
 ```
 
 Log in and sign-up both lead to the dashboard, and the dashboard's Sign out icon returns to log in.
