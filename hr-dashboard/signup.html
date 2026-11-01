@@ -1,0 +1,610 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Create your account — Staffora</title>
+<meta name="description" content="Sign-up flow for the Staffora HR dashboard concept by Kavinda Weerasekara.">
+<link rel="icon" href="../favicon.ico">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&amp;display=swap">
+<style>
+:root {
+  --accent: #F47B36;
+  --accent-dark: #B4501A;
+  --peach: #FDE1D0;
+  --ink: #2B2725;
+  --muted: #6E6762;
+  --line: #E5E0DC;
+  --soft: #F4F1EE;
+  --bg: #F1F0EE;
+  --error: #C2283A;
+  --ok: #1C6B37;
+}
+* { box-sizing: border-box; }
+body { margin: 0; background: var(--bg); color: var(--ink); font-family: 'Plus Jakarta Sans', system-ui, sans-serif; font-size: 14px; line-height: 1.5; }
+a { color: var(--ink); }
+button, input, select { font: inherit; color: inherit; }
+button { cursor: pointer; }
+h1, h2, p { margin: 0; }
+.sr-only { position: absolute; width: 1px; height: 1px; overflow: hidden; clip: rect(0 0 0 0); white-space: nowrap; }
+
+/* Layout */
+.shell { min-height: 100vh; display: flex; flex-wrap: wrap; gap: 16px; padding: 16px; max-width: 1280px; margin: 0 auto; }
+.panel { flex: 1 1 380px; max-width: 460px; background: var(--ink); color: #FFFFFF; border-radius: 28px; padding: 36px; display: flex; flex-direction: column; gap: 40px; position: relative; overflow: hidden; }
+.panel::after { content: ''; position: absolute; right: -90px; bottom: -90px; width: 260px; height: 260px; border-radius: 999px; border: 44px solid #36312E; }
+.form-side { flex: 999 1 480px; min-width: 0; background: #FFFFFF; border-radius: 28px; padding: 36px; display: flex; flex-direction: column; }
+
+/* Brand panel */
+.brand { display: flex; align-items: center; gap: 10px; color: #FFFFFF; text-decoration: none; font-size: 20px; font-weight: 800; letter-spacing: -0.02em; }
+.brand-mark { width: 40px; height: 40px; border-radius: 12px; background: var(--accent); display: grid; place-items: center; }
+.panel h1 { font-size: 34px; line-height: 1.15; font-weight: 700; letter-spacing: -0.02em; }
+.panel h1 span { color: var(--accent); }
+.panel .lead { color: #C9C1BB; margin-top: 12px; font-size: 15px; }
+.steps { list-style: none; margin: 0; padding: 0; display: flex; flex-direction: column; gap: 6px; position: relative; z-index: 1; }
+.step { display: flex; align-items: center; gap: 14px; padding: 10px 12px; border-radius: 16px; color: #C9C1BB; transition: background-color .3s ease, color .3s ease; }
+.step-dot { width: 34px; height: 34px; flex: none; border-radius: 999px; border: 1.5px solid #4B4541; display: grid; place-items: center; font-size: 13px; font-weight: 700; transition: background-color .3s ease, border-color .3s ease, color .3s ease, transform .3s ease; }
+.step strong { display: block; font-size: 14px; font-weight: 600; }
+.step small { font-size: 12px; color: #90877F; }
+.step.current { background: #3C3633; color: #FFFFFF; }
+.step.current .step-dot { border-color: var(--accent); color: var(--accent); transform: scale(1.05); }
+.step.done { color: #FFFFFF; }
+.step.done .step-dot { background: var(--accent); border-color: var(--accent); color: var(--ink); }
+.panel-foot { margin-top: auto; font-size: 13px; color: #90877F; position: relative; z-index: 1; }
+
+/* Mobile progress */
+.mobile-top { display: none; }
+.progress { height: 6px; border-radius: 999px; background: var(--soft); overflow: hidden; }
+.progress span { display: block; height: 100%; width: 20%; background: var(--accent); border-radius: 999px; transition: width .5s cubic-bezier(.2,.8,.2,1); }
+
+/* Form side */
+.topline { display: flex; justify-content: space-between; align-items: center; gap: 12px; min-height: 44px; margin-bottom: 24px; }
+.back { display: inline-flex; align-items: center; gap: 8px; height: 40px; padding: 0 14px 0 10px; border-radius: 999px; border: 1px solid var(--line); background: #FFFFFF; font-weight: 600; font-size: 13px; transition: background-color .2s ease, transform .15s ease; }
+.back:hover { background: var(--soft); }
+.back[hidden] { display: none; }
+.login { font-size: 13px; color: var(--muted); margin-left: auto; }
+.login a { font-weight: 600; }
+.stage { width: 100%; max-width: 460px; margin: auto; padding: 12px 0 24px; }
+.screen { display: none; }
+.screen.active { display: block; animation: enter .45s cubic-bezier(.2,.7,.2,1); }
+.screen.active.from-left { animation-name: enter-left; }
+.eyebrow { font-size: 12px; font-weight: 700; letter-spacing: .06em; text-transform: uppercase; color: var(--accent-dark); }
+.screen h2 { font-size: 28px; line-height: 1.2; font-weight: 700; letter-spacing: -0.02em; margin-top: 8px; }
+.screen .sub { color: var(--muted); margin-top: 8px; font-size: 15px; }
+.fields { display: flex; flex-direction: column; gap: 18px; margin-top: 28px; }
+.field { display: flex; flex-direction: column; gap: 6px; }
+.field label, .group-label { font-size: 13px; font-weight: 600; }
+.control { position: relative; }
+.input { width: 100%; height: 50px; padding: 0 16px; border-radius: 14px; border: 1.5px solid var(--line); background: #FFFFFF; font-size: 15px; outline: none; transition: border-color .2s ease, box-shadow .2s ease; }
+.input::placeholder { color: #A39A93; }
+.input:hover { border-color: #D8D0CA; }
+.input:focus { border-color: var(--accent); box-shadow: 0 0 0 4px rgba(244,123,54,.15); }
+.input[aria-invalid="true"] { border-color: var(--error); }
+.input.with-btn { padding-right: 64px; }
+select.input { appearance: none; background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='16' height='16' viewBox='0 0 24 24' fill='none' stroke='%232B2725' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='M6 9l6 6 6-6'/%3E%3C/svg%3E"); background-repeat: no-repeat; background-position: right 16px center; padding-right: 44px; }
+.reveal { position: absolute; right: 6px; top: 6px; height: 38px; padding: 0 12px; border: none; border-radius: 10px; background: var(--soft); font-size: 12px; font-weight: 700; transition: background-color .2s ease; }
+.reveal:hover { background: #EAE5E1; }
+.error { font-size: 12px; color: var(--error); min-height: 0; }
+.error:empty { display: none; }
+.hint { font-size: 12px; color: var(--muted); }
+
+.strength { display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: 6px; margin-top: 4px; }
+.strength i { height: 5px; border-radius: 999px; background: var(--soft); transition: background-color .3s ease; }
+.strength[data-level="1"] i:nth-child(-n+1) { background: var(--error); }
+.strength[data-level="2"] i:nth-child(-n+2) { background: #E08A2E; }
+.strength[data-level="3"] i:nth-child(-n+3) { background: var(--accent); }
+.strength[data-level="4"] i { background: #3FA46A; }
+
+.check { display: flex; align-items: flex-start; gap: 10px; font-size: 13px; color: var(--muted); cursor: pointer; }
+.check input { width: 20px; height: 20px; margin: 0; accent-color: var(--accent); flex: none; }
+
+.btn { width: 100%; height: 52px; border-radius: 999px; border: none; font-size: 15px; font-weight: 700; display: inline-flex; align-items: center; justify-content: center; gap: 10px; transition: transform .15s ease, box-shadow .2s ease, background-color .2s ease, opacity .2s ease; }
+.btn:active { transform: scale(.97); }
+.btn-primary { background: var(--ink); color: #FFFFFF; }
+.btn-primary:hover { box-shadow: 0 10px 24px rgba(43,39,37,.22); transform: translateY(-1px); }
+.btn-primary:disabled { opacity: .35; cursor: not-allowed; box-shadow: none; transform: none; }
+.btn-accent { background: var(--accent); color: var(--ink); }
+.btn-accent:hover { box-shadow: 0 10px 24px rgba(244,123,54,.35); transform: translateY(-1px); }
+.btn-ghost { background: transparent; color: var(--muted); height: 44px; font-weight: 600; }
+.btn-ghost:hover { color: var(--ink); }
+.btn-outline { background: #FFFFFF; border: 1.5px solid var(--line); color: var(--ink); }
+.btn-outline:hover { background: var(--soft); }
+.btn svg { transition: transform .2s ease; }
+.btn:hover svg.arrow { transform: translateX(3px); }
+.actions { display: flex; flex-direction: column; gap: 10px; margin-top: 28px; }
+.divider { display: flex; align-items: center; gap: 12px; color: #A39A93; font-size: 12px; margin: 4px 0; }
+.divider::before, .divider::after { content: ''; flex: 1; height: 1px; background: var(--line); }
+button:focus-visible, a:focus-visible, .chip input:focus-visible + span { outline: 2px solid var(--ink); outline-offset: 2px; }
+
+/* Code input */
+.code { display: grid; grid-template-columns: repeat(6, minmax(0, 1fr)); gap: 10px; margin-top: 28px; }
+.code input { width: 100%; height: 60px; text-align: center; font-size: 24px; font-weight: 700; border-radius: 14px; border: 1.5px solid var(--line); outline: none; background: #FFFFFF; transition: border-color .2s ease, box-shadow .2s ease, transform .15s ease, background-color .2s ease; }
+.code input:focus { border-color: var(--accent); box-shadow: 0 0 0 4px rgba(244,123,54,.15); }
+.code input.filled { background: var(--soft); transform: scale(1.03); }
+.resend { margin-top: 16px; font-size: 13px; color: var(--muted); }
+.link-btn { border: none; background: none; padding: 0; font-weight: 700; color: var(--ink); text-decoration: underline; text-underline-offset: 3px; }
+.link-btn:disabled { color: #A39A93; text-decoration: none; cursor: default; }
+.email-pill { display: inline-block; padding: 2px 10px; border-radius: 999px; background: var(--peach); color: var(--ink); font-weight: 600; }
+
+/* Chips */
+.chips { display: flex; flex-wrap: wrap; gap: 8px; border: none; margin: 0; padding: 0; }
+.chip { position: relative; }
+.chip input { position: absolute; inset: 0; z-index: 1; opacity: 0; width: 100%; height: 100%; margin: 0; cursor: pointer; }
+.chip span { display: inline-flex; align-items: center; height: 42px; padding: 0 16px; border-radius: 999px; border: 1.5px solid var(--line); font-weight: 600; font-size: 13px; transition: background-color .2s ease, border-color .2s ease, color .2s ease, transform .15s ease; }
+.chip:hover span { border-color: #D8D0CA; }
+.chip input:checked + span { background: var(--ink); border-color: var(--ink); color: #FFFFFF; }
+.chip input:active + span { transform: scale(.95); }
+
+/* Invites */
+.invite-row { display: flex; gap: 8px; }
+.invite-row .input { flex: 1 1 auto; min-width: 0; }
+.add-btn { flex: none; width: 50px; height: 50px; border-radius: 14px; border: none; background: var(--ink); color: var(--accent); display: grid; place-items: center; transition: transform .15s ease; }
+.add-btn:active { transform: scale(.92); }
+.invites { list-style: none; margin: 4px 0 0; padding: 0; display: flex; flex-direction: column; gap: 8px; }
+.invite { display: flex; align-items: center; gap: 12px; padding: 10px 10px 10px 12px; border-radius: 16px; background: var(--soft); animation: pop .35s cubic-bezier(.2,.8,.2,1); }
+.invite .avatar { width: 34px; height: 34px; border-radius: 999px; background: var(--peach); display: grid; place-items: center; font-size: 12px; font-weight: 700; flex: none; text-transform: uppercase; }
+.invite span.mail { flex: 1 1 auto; min-width: 0; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; font-weight: 500; }
+.remove { width: 36px; height: 36px; flex: none; border-radius: 999px; border: none; background: #FFFFFF; display: grid; place-items: center; transition: background-color .2s ease; }
+.remove:hover { background: #FDE4E4; color: var(--error); }
+.empty { font-size: 13px; color: var(--muted); padding: 14px; border: 1.5px dashed var(--line); border-radius: 16px; text-align: center; }
+
+/* Success */
+.success { text-align: center; }
+.badge { width: 96px; height: 96px; margin: 0 auto 24px; border-radius: 999px; background: var(--accent); display: grid; place-items: center; animation: pop .6s cubic-bezier(.2,.8,.2,1); box-shadow: 0 0 0 12px var(--peach); }
+.badge path { stroke-dasharray: 30; stroke-dashoffset: 30; animation: draw .5s .35s ease forwards; }
+.summary { margin: 28px 0 0; padding: 0; list-style: none; text-align: left; border-radius: 20px; background: var(--soft); }
+.summary li { display: flex; justify-content: space-between; gap: 16px; padding: 14px 18px; border-top: 1px solid #EAE5E1; }
+.summary li:first-child { border-top: none; }
+.summary span { color: var(--muted); }
+.summary strong { font-weight: 600; text-align: right; overflow-wrap: anywhere; }
+
+.spinner { width: 18px; height: 18px; border-radius: 999px; border: 2.5px solid rgba(255,255,255,.3); border-top-color: #FFFFFF; animation: spin .7s linear infinite; }
+
+@keyframes enter { from { opacity: 0; transform: translateX(24px); } to { opacity: 1; transform: none; } }
+@keyframes enter-left { from { opacity: 0; transform: translateX(-24px); } to { opacity: 1; transform: none; } }
+@keyframes pop { 0% { opacity: 0; transform: scale(.7); } 70% { opacity: 1; transform: scale(1.05); } 100% { transform: scale(1); } }
+@keyframes draw { to { stroke-dashoffset: 0; } }
+@keyframes spin { to { transform: rotate(360deg); } }
+@keyframes shake { 0%, 100% { transform: translateX(0); } 20%, 60% { transform: translateX(-6px); } 40%, 80% { transform: translateX(6px); } }
+@keyframes rise { from { opacity: 0; transform: translateY(14px); } to { opacity: 1; transform: none; } }
+.shake { animation: shake .4s ease; }
+.panel, .form-side { animation: rise .6s cubic-bezier(.2,.7,.2,1) backwards; }
+.form-side { animation-delay: 80ms; }
+
+@media (max-width: 900px) {
+  .shell { padding: 12px; gap: 12px; align-content: flex-start; }
+  .panel { max-width: none; flex-basis: 100%; padding: 24px; gap: 20px; flex-direction: row; align-items: center; justify-content: space-between; border-radius: 24px; }
+  .panel .intro, .panel .steps, .panel-foot { display: none; }
+  .panel::after { width: 160px; height: 160px; border-width: 28px; right: -60px; bottom: -80px; }
+  .mobile-top { display: flex; flex-direction: column; gap: 10px; margin-bottom: 20px; }
+  .mobile-top .label { display: flex; justify-content: space-between; font-size: 13px; color: var(--muted); }
+  .mobile-top .label strong { color: var(--ink); }
+  .form-side { padding: 24px 20px; border-radius: 24px; }
+  .topline { margin-bottom: 12px; }
+}
+@media (max-width: 420px) {
+  .screen h2 { font-size: 24px; }
+  .code { gap: 6px; }
+  .code input { height: 52px; font-size: 20px; }
+}
+@media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after { animation-duration: .01ms !important; animation-delay: 0ms !important; transition-duration: .01ms !important; }
+  .badge path { stroke-dashoffset: 0; }
+}
+</style>
+</head>
+<body>
+<div class="shell">
+
+  <aside class="panel">
+    <a href="./" class="brand">
+      <span class="brand-mark">
+        <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="#2B2725" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="9" cy="8" r="3.2"/><path d="M3 19.5c.9-3.4 3.2-5 6-5s5.1 1.6 6 5"/><path d="M15.5 4.8a3.2 3.2 0 0 1 0 6.4M17.5 14.6c1.8.7 2.9 2.3 3.4 4.9"/></svg>
+      </span>
+      Staffora
+    </a>
+    <div class="intro">
+      <h1>Set up your <span>HR workspace</span> in a few minutes.</h1>
+      <p class="lead">People, time off and payroll in one calm place.</p>
+    </div>
+    <ol class="steps" aria-label="Sign-up progress">
+      <li class="step current" data-for="1"><span class="step-dot">1</span><div><strong>Your account</strong><small>Name, email and password</small></div></li>
+      <li class="step" data-for="2"><span class="step-dot">2</span><div><strong>Verify email</strong><small>Enter the 6-digit code</small></div></li>
+      <li class="step" data-for="3"><span class="step-dot">3</span><div><strong>Your company</strong><small>Name, size and industry</small></div></li>
+      <li class="step" data-for="4"><span class="step-dot">4</span><div><strong>Invite your team</strong><small>Optional, you can skip</small></div></li>
+    </ol>
+    <p class="panel-foot">This is a design prototype. Nothing you enter is sent anywhere.</p>
+  </aside>
+
+  <main class="form-side">
+    <div class="mobile-top" aria-hidden="true">
+      <div class="label"><span id="mCount">Step <strong id="mStep">1</strong> of 4</span><span id="mName">Your account</span></div>
+      <div class="progress"><span id="mBar"></span></div>
+    </div>
+
+    <div class="topline">
+      <button type="button" class="back" id="back" hidden>
+        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M15 6l-6 6 6 6"/></svg>
+        Back
+      </button>
+      <p class="login" id="loginLine">Already have an account? <a href="./">Log in</a></p>
+    </div>
+
+    <div class="stage">
+
+      <!-- Step 1: account -->
+      <form class="screen active" data-step="1" novalidate>
+        <p class="eyebrow">Step 1 of 4</p>
+        <h2>Create your account</h2>
+        <p class="sub">Start with a free workspace for your team.</p>
+        <div class="fields">
+          <div class="field">
+            <label for="name">Full name</label>
+            <input class="input" id="name" name="name" autocomplete="name" placeholder="e.g. Kavinda Weerasekara" aria-describedby="name-err">
+            <p class="error" id="name-err"></p>
+          </div>
+          <div class="field">
+            <label for="email">Work email</label>
+            <input class="input" id="email" name="email" type="email" autocomplete="email" placeholder="you@company.com" aria-describedby="email-err">
+            <p class="error" id="email-err"></p>
+          </div>
+          <div class="field">
+            <label for="password">Password</label>
+            <div class="control">
+              <input class="input with-btn" id="password" name="password" type="password" autocomplete="new-password" placeholder="At least 8 characters" aria-describedby="pw-hint pw-err">
+              <button type="button" class="reveal" id="reveal" aria-controls="password" aria-pressed="false">Show</button>
+            </div>
+            <div class="strength" id="strength" data-level="0" aria-hidden="true"><i></i><i></i><i></i><i></i></div>
+            <p class="hint" id="pw-hint">Use 8+ characters with a number and a capital letter.</p>
+            <p class="error" id="pw-err"></p>
+          </div>
+          <div class="field">
+            <label class="check"><input type="checkbox" id="terms"> <span>I agree to the <a href="#">Terms</a> and <a href="#">Privacy Policy</a>.</span></label>
+            <p class="error" id="terms-err"></p>
+          </div>
+        </div>
+        <div class="actions">
+          <button type="submit" class="btn btn-primary">Continue
+            <svg class="arrow" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6"/></svg>
+          </button>
+          <div class="divider">or</div>
+          <button type="button" class="btn btn-outline" id="sso">Continue with work SSO</button>
+        </div>
+      </form>
+
+      <!-- Step 2: verify -->
+      <form class="screen" data-step="2" novalidate>
+        <p class="eyebrow">Step 2 of 4</p>
+        <h2>Check your inbox</h2>
+        <p class="sub">We sent a 6-digit code to <span class="email-pill" id="sentTo">you@company.com</span></p>
+        <fieldset style="border: none; margin: 0; padding: 0;">
+          <legend class="sr-only">Verification code</legend>
+          <div class="code" id="code">
+            <input inputmode="numeric" maxlength="1" autocomplete="one-time-code" aria-label="Digit 1">
+            <input inputmode="numeric" maxlength="1" aria-label="Digit 2">
+            <input inputmode="numeric" maxlength="1" aria-label="Digit 3">
+            <input inputmode="numeric" maxlength="1" aria-label="Digit 4">
+            <input inputmode="numeric" maxlength="1" aria-label="Digit 5">
+            <input inputmode="numeric" maxlength="1" aria-label="Digit 6">
+          </div>
+        </fieldset>
+        <p class="resend" aria-live="polite">Didn’t get it? <button type="button" class="link-btn" id="resend" disabled>Resend code</button> <span id="timer">in 30s</span></p>
+        <p class="hint" style="margin-top: 6px;">Prototype: any 6 digits will work.</p>
+        <div class="actions">
+          <button type="submit" class="btn btn-primary" id="verifyBtn" disabled>Verify email</button>
+        </div>
+      </form>
+
+      <!-- Step 3: company -->
+      <form class="screen" data-step="3" novalidate>
+        <p class="eyebrow">Step 3 of 4</p>
+        <h2>Tell us about your company</h2>
+        <p class="sub">We’ll tailor leave policies and payroll defaults to fit.</p>
+        <div class="fields">
+          <div class="field">
+            <label for="company">Company name</label>
+            <input class="input" id="company" autocomplete="organization" placeholder="e.g. Staffora Ltd" aria-describedby="company-err">
+            <p class="error" id="company-err"></p>
+          </div>
+          <div class="field">
+            <span class="group-label" id="size-label">Team size</span>
+            <div class="chips" role="radiogroup" aria-labelledby="size-label">
+              <label class="chip"><input type="radio" name="size" value="1–10"><span>1–10</span></label>
+              <label class="chip"><input type="radio" name="size" value="11–50" checked><span>11–50</span></label>
+              <label class="chip"><input type="radio" name="size" value="51–200"><span>51–200</span></label>
+              <label class="chip"><input type="radio" name="size" value="201–500"><span>201–500</span></label>
+              <label class="chip"><input type="radio" name="size" value="500+"><span>500+</span></label>
+            </div>
+          </div>
+          <div class="field">
+            <label for="industry">Industry</label>
+            <select class="input" id="industry">
+              <option>Technology</option>
+              <option>Retail</option>
+              <option>Healthcare</option>
+              <option>Finance</option>
+              <option>Hospitality</option>
+              <option>Education</option>
+              <option>Other</option>
+            </select>
+          </div>
+        </div>
+        <div class="actions">
+          <button type="submit" class="btn btn-primary">Continue
+            <svg class="arrow" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6"/></svg>
+          </button>
+        </div>
+      </form>
+
+      <!-- Step 4: invite -->
+      <form class="screen" data-step="4" novalidate>
+        <p class="eyebrow">Step 4 of 4</p>
+        <h2>Invite your team</h2>
+        <p class="sub">Add teammates who’ll help manage people and payroll.</p>
+        <div class="fields">
+          <div class="field">
+            <label for="invite">Email address</label>
+            <div class="invite-row">
+              <input class="input" id="invite" type="email" placeholder="teammate@company.com" aria-describedby="invite-err">
+              <button type="button" class="add-btn" id="addInvite" aria-label="Add teammate">
+                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" aria-hidden="true"><path d="M12 5v14M5 12h14"/></svg>
+              </button>
+            </div>
+            <p class="error" id="invite-err"></p>
+            <ul class="invites" id="invites" aria-live="polite"></ul>
+          </div>
+        </div>
+        <div class="actions">
+          <button type="submit" class="btn btn-primary" id="finishBtn">Create workspace</button>
+          <button type="button" class="btn btn-ghost" id="skip">Skip for now</button>
+        </div>
+      </form>
+
+      <!-- Done -->
+      <section class="screen success" data-step="5" aria-labelledby="done-title">
+        <div class="badge">
+          <svg width="44" height="44" viewBox="0 0 24 24" fill="none" stroke="#2B2725" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12.5l4.5 4.5L19 7.5"/></svg>
+        </div>
+        <h2 id="done-title" tabindex="-1">You’re all set, <span id="firstName">there</span></h2>
+        <p class="sub">Your workspace is ready. Here’s what we set up.</p>
+        <ul class="summary">
+          <li><span>Company</span><strong id="sumCompany">—</strong></li>
+          <li><span>Team size</span><strong id="sumSize">—</strong></li>
+          <li><span>Industry</span><strong id="sumIndustry">—</strong></li>
+          <li><span>Invites sent</span><strong id="sumInvites">0</strong></li>
+        </ul>
+        <div class="actions">
+          <a href="./" class="btn btn-accent" style="text-decoration: none;">Go to dashboard
+            <svg class="arrow" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6"/></svg>
+          </a>
+        </div>
+      </section>
+
+    </div>
+  </main>
+</div>
+
+<script>
+(function () {
+  var names = ['Your account', 'Verify email', 'Your company', 'Invite your team'];
+  var current = 1;
+  var screens = document.querySelectorAll('.screen');
+  var back = document.getElementById('back');
+  var loginLine = document.getElementById('loginLine');
+  var reduced = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+  var emailRe = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+
+  function show(step) {
+    var forward = step > current;
+    current = step;
+    screens.forEach(function (s) {
+      var on = +s.dataset.step === step;
+      s.classList.toggle('active', on);
+      s.classList.toggle('from-left', on && !forward);
+    });
+    document.querySelectorAll('.step').forEach(function (li) {
+      var n = +li.dataset.for;
+      li.classList.toggle('current', n === step);
+      li.classList.toggle('done', n < step);
+      li.querySelector('.step-dot').innerHTML = n < step
+        ? '<svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12.5l4.5 4.5L19 7.5"/></svg>'
+        : n;
+      if (n === step) li.setAttribute('aria-current', 'step'); else li.removeAttribute('aria-current');
+    });
+    document.getElementById('mCount').innerHTML = step >= 5 ? '<strong>All done</strong>' : 'Step <strong id="mStep">' + step + '</strong> of 4';
+    document.getElementById('mName').textContent = step >= 5 ? 'Workspace ready' : names[step - 1];
+    document.getElementById('mBar').style.width = (step >= 5 ? 100 : step * 20) + '%';
+    back.hidden = step === 1 || step === 5;
+    loginLine.hidden = step !== 1;
+    var screen = document.querySelector('.screen[data-step="' + step + '"]');
+    var focusTarget = step === 2 ? document.querySelector('#code input')
+      : step === 5 ? document.getElementById('done-title')
+      : screen.querySelector('input');
+    if (focusTarget) setTimeout(function () { focusTarget.focus({ preventScroll: true }); }, reduced ? 0 : 120);
+    window.scrollTo({ top: 0, behavior: reduced ? 'auto' : 'smooth' });
+    if (step === 2) startTimer();
+  }
+  back.addEventListener('click', function () { show(current - 1); });
+
+  function setError(input, errEl, msg) {
+    errEl.textContent = msg || '';
+    if (input) input.setAttribute('aria-invalid', msg ? 'true' : 'false');
+    if (msg && input) {
+      input.classList.remove('shake'); void input.offsetWidth; input.classList.add('shake');
+    }
+    return !msg;
+  }
+
+  function busy(btn, label, done) {
+    var html = btn.innerHTML;
+    btn.disabled = true;
+    btn.innerHTML = '<span class="spinner" aria-hidden="true"></span>' + label;
+    setTimeout(function () { btn.disabled = false; btn.innerHTML = html; done(); }, reduced ? 0 : 900);
+  }
+
+  // Step 1
+  var nameEl = document.getElementById('name'), emailEl = document.getElementById('email'),
+      pwEl = document.getElementById('password'), termsEl = document.getElementById('terms');
+  function strength(pw) {
+    var score = 0;
+    if (pw.length >= 8) score++;
+    if (/[A-Z]/.test(pw)) score++;
+    if (/[0-9]/.test(pw)) score++;
+    if (/[^A-Za-z0-9]/.test(pw) || pw.length >= 12) score++;
+    return pw ? Math.max(1, score) : 0;
+  }
+  pwEl.addEventListener('input', function () {
+    document.getElementById('strength').dataset.level = strength(pwEl.value);
+  });
+  document.getElementById('reveal').addEventListener('click', function () {
+    var showing = pwEl.type === 'text';
+    pwEl.type = showing ? 'password' : 'text';
+    this.textContent = showing ? 'Show' : 'Hide';
+    this.setAttribute('aria-pressed', String(!showing));
+  });
+  [nameEl, emailEl, pwEl].forEach(function (el) {
+    el.addEventListener('input', function () {
+      if (el.getAttribute('aria-invalid') === 'true') el.setAttribute('aria-invalid', 'false');
+    });
+  });
+  document.querySelector('[data-step="1"]').addEventListener('submit', function (ev) {
+    ev.preventDefault();
+    var ok = setError(nameEl, document.getElementById('name-err'), nameEl.value.trim().length < 2 ? 'Please enter your full name.' : '');
+    ok = setError(emailEl, document.getElementById('email-err'), !emailRe.test(emailEl.value.trim()) ? 'Enter a valid email, like you@company.com.' : '') && ok;
+    var pw = pwEl.value;
+    ok = setError(pwEl, document.getElementById('pw-err'), pw.length < 8 || !/[0-9]/.test(pw) || !/[A-Z]/.test(pw) ? 'Password needs 8+ characters, a number and a capital letter.' : '') && ok;
+    ok = setError(null, document.getElementById('terms-err'), !termsEl.checked ? 'Please accept the terms to continue.' : '') && ok;
+    if (!ok) { var first = this.querySelector('[aria-invalid="true"]'); if (first) first.focus(); return; }
+    document.getElementById('sentTo').textContent = emailEl.value.trim();
+    busy(this.querySelector('[type="submit"]'), 'Creating account…', function () { show(2); });
+  });
+  document.getElementById('sso').addEventListener('click', function () {
+    document.getElementById('email-err').textContent = '';
+    emailEl.focus();
+    emailEl.placeholder = 'Enter your work email to find your SSO';
+  });
+
+  // Step 2
+  var boxes = Array.prototype.slice.call(document.querySelectorAll('#code input'));
+  var verifyBtn = document.getElementById('verifyBtn');
+  function codeValue() { return boxes.map(function (b) { return b.value; }).join(''); }
+  function syncCode() {
+    boxes.forEach(function (b) { b.classList.toggle('filled', !!b.value); });
+    verifyBtn.disabled = codeValue().length !== 6;
+  }
+  boxes.forEach(function (box, i) {
+    box.addEventListener('input', function () {
+      box.value = box.value.replace(/\D/g, '').slice(-1);
+      if (box.value && boxes[i + 1]) boxes[i + 1].focus();
+      syncCode();
+    });
+    box.addEventListener('keydown', function (ev) {
+      if (ev.key === 'Backspace' && !box.value && boxes[i - 1]) { boxes[i - 1].focus(); boxes[i - 1].value = ''; syncCode(); }
+      if (ev.key === 'ArrowLeft' && boxes[i - 1]) boxes[i - 1].focus();
+      if (ev.key === 'ArrowRight' && boxes[i + 1]) boxes[i + 1].focus();
+    });
+    box.addEventListener('paste', function (ev) {
+      var digits = (ev.clipboardData.getData('text') || '').replace(/\D/g, '').slice(0, 6);
+      if (!digits) return;
+      ev.preventDefault();
+      digits.split('').forEach(function (d, j) { if (boxes[j]) boxes[j].value = d; });
+      boxes[Math.min(digits.length, 6) - 1].focus();
+      syncCode();
+    });
+  });
+  var timerId = null;
+  var resend = document.getElementById('resend'), timerEl = document.getElementById('timer');
+  function startTimer() {
+    var left = 30;
+    clearInterval(timerId);
+    resend.disabled = true;
+    timerEl.textContent = 'in ' + left + 's';
+    timerId = setInterval(function () {
+      left--;
+      if (left <= 0) { clearInterval(timerId); resend.disabled = false; timerEl.textContent = ''; return; }
+      timerEl.textContent = 'in ' + left + 's';
+    }, 1000);
+  }
+  resend.addEventListener('click', function () {
+    boxes.forEach(function (b) { b.value = ''; });
+    syncCode();
+    boxes[0].focus();
+    startTimer();
+    timerEl.textContent = 'Code sent. Try again ' + timerEl.textContent;
+  });
+  document.querySelector('[data-step="2"]').addEventListener('submit', function (ev) {
+    ev.preventDefault();
+    if (codeValue().length !== 6) return;
+    clearInterval(timerId);
+    busy(verifyBtn, 'Verifying…', function () { show(3); });
+  });
+
+  // Step 3
+  var companyEl = document.getElementById('company');
+  companyEl.addEventListener('input', function () { companyEl.setAttribute('aria-invalid', 'false'); });
+  document.querySelector('[data-step="3"]').addEventListener('submit', function (ev) {
+    ev.preventDefault();
+    if (!setError(companyEl, document.getElementById('company-err'), companyEl.value.trim() ? '' : 'Please enter your company name.')) { companyEl.focus(); return; }
+    show(4);
+  });
+
+  // Step 4
+  var invites = [];
+  var inviteEl = document.getElementById('invite'), inviteErr = document.getElementById('invite-err'), list = document.getElementById('invites');
+  var cross = '<svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" aria-hidden="true"><path d="M6 6l12 12M18 6L6 18"/></svg>';
+  function esc(s) { return s.replace(/[&<>"]/g, function (c) { return { '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;' }[c]; }); }
+  function renderInvites() {
+    list.innerHTML = invites.length
+      ? invites.map(function (m, i) {
+          return '<li class="invite"><span class="avatar" aria-hidden="true">' + esc(m.slice(0, 2)) + '</span><span class="mail">' + esc(m) + '</span>' +
+            '<button type="button" class="remove" data-i="' + i + '" aria-label="Remove ' + esc(m) + '">' + cross + '</button></li>';
+        }).join('')
+      : '<li class="empty">No one added yet. You can invite people later from the dashboard.</li>';
+    document.getElementById('finishBtn').textContent = invites.length
+      ? 'Send ' + invites.length + (invites.length === 1 ? ' invite' : ' invites') + ' and finish'
+      : 'Create workspace';
+  }
+  function addInvite() {
+    var v = inviteEl.value.trim().toLowerCase();
+    if (!v) return;
+    if (!emailRe.test(v)) return setError(inviteEl, inviteErr, 'That doesn’t look like an email address.');
+    if (invites.indexOf(v) !== -1) return setError(inviteEl, inviteErr, 'You’ve already added this person.');
+    setError(inviteEl, inviteErr, '');
+    invites.push(v);
+    inviteEl.value = '';
+    renderInvites();
+    inviteEl.focus();
+  }
+  document.getElementById('addInvite').addEventListener('click', addInvite);
+  inviteEl.addEventListener('keydown', function (ev) {
+    if (ev.key === 'Enter' || ev.key === ',') { ev.preventDefault(); addInvite(); }
+  });
+  list.addEventListener('click', function (ev) {
+    var btn = ev.target.closest('.remove');
+    if (!btn) return;
+    invites.splice(+btn.dataset.i, 1);
+    renderInvites();
+    inviteEl.focus();
+  });
+  renderInvites();
+
+  function finish(sent) {
+    document.getElementById('firstName').textContent = nameEl.value.trim().split(/\s+/)[0] || 'there';
+    document.getElementById('sumCompany').textContent = companyEl.value.trim();
+    document.getElementById('sumSize').textContent = document.querySelector('input[name="size"]:checked').value + ' people';
+    document.getElementById('sumIndustry').textContent = document.getElementById('industry').value;
+    document.getElementById('sumInvites').textContent = sent;
+    show(5);
+  }
+  document.querySelector('[data-step="4"]').addEventListener('submit', function (ev) {
+    ev.preventDefault();
+    var btn = document.getElementById('finishBtn');
+    busy(btn, 'Setting up your workspace…', function () { finish(invites.length); });
+  });
+  document.getElementById('skip').addEventListener('click', function () { finish(0); });
+
+  show(1);
+})();
+</script>
+</body>
+</html>
