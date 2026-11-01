@@ -1,0 +1,271 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Log in — Staffora</title>
+<meta name="description" content="Login page for the Staffora HR dashboard concept by Kavinda Weerasekara.">
+<link rel="icon" href="../favicon.ico">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&amp;display=swap">
+<link rel="stylesheet" href="auth.css">
+<style>
+/* Login-only: a small preview of the dashboard in the brand panel */
+.preview { position: relative; z-index: 1; display: flex; flex-direction: column; gap: 10px; }
+.preview-card { background: #3C3633; border-radius: 20px; padding: 18px; display: flex; align-items: center; gap: 14px; animation: rise .6s cubic-bezier(.2,.7,.2,1) backwards; }
+.preview-card:nth-child(2) { animation-delay: 160ms; margin-left: 28px; }
+.preview-card:nth-child(3) { animation-delay: 320ms; }
+.preview-icon { width: 42px; height: 42px; flex: none; border-radius: 14px; background: var(--accent); color: var(--ink); display: grid; place-items: center; }
+.preview-icon.soft { background: #4B4541; color: var(--accent); }
+.preview-card strong { display: block; font-size: 22px; font-weight: 700; letter-spacing: -0.02em; line-height: 1.1; }
+.preview-card small { font-size: 12px; color: #C9C1BB; }
+.preview-bars { margin-left: auto; display: flex; align-items: flex-end; gap: 4px; height: 36px; }
+.preview-bars i { width: 8px; border-radius: 999px; background: #5A534F; transform-origin: bottom; animation: grow-y .7s cubic-bezier(.2,.8,.2,1) backwards; }
+.preview-bars i:last-child { background: var(--accent); }
+@keyframes grow-y { from { transform: scaleY(0); } to { transform: scaleY(1); } }
+.row-between { display: flex; justify-content: space-between; align-items: center; gap: 12px; flex-wrap: wrap; }
+.row-between .link-btn { font-size: 13px; }
+.notice { display: flex; gap: 12px; align-items: flex-start; padding: 14px 16px; border-radius: 16px; background: #FDE4E4; color: var(--error); font-size: 13px; font-weight: 500; margin-top: 20px; animation: pop .35s cubic-bezier(.2,.8,.2,1); }
+.notice[hidden] { display: none; }
+.mail-badge { width: 72px; height: 72px; border-radius: 22px; background: var(--peach); color: var(--accent-dark); display: grid; place-items: center; margin-bottom: 20px; animation: pop .5s cubic-bezier(.2,.8,.2,1); }
+@media (max-width: 900px) { .panel .preview { display: none; } }
+@media (prefers-reduced-motion: reduce) { .preview-bars i, .preview-card { animation: none; } }
+</style>
+</head>
+<body>
+<div class="shell">
+
+  <aside class="panel">
+    <a href="overview.html" class="brand">
+      <span class="brand-mark">
+        <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="#2B2725" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="9" cy="8" r="3.2"/><path d="M3 19.5c.9-3.4 3.2-5 6-5s5.1 1.6 6 5"/><path d="M15.5 4.8a3.2 3.2 0 0 1 0 6.4M17.5 14.6c1.8.7 2.9 2.3 3.4 4.9"/></svg>
+      </span>
+      Staffora
+    </a>
+    <div class="intro">
+      <h1>Welcome back. Your <span>team</span> is waiting.</h1>
+      <p class="lead">Pick up where you left off with people, time off and payroll.</p>
+    </div>
+    <div class="preview" aria-hidden="true">
+      <div class="preview-card">
+        <span class="preview-icon"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><circle cx="9" cy="8" r="3.5"/><path d="M2.5 20c.8-3.6 3.4-5.5 6.5-5.5s5.7 1.9 6.5 5.5"/><path d="M16 4.6a3.5 3.5 0 0 1 0 6.8"/></svg></span>
+        <div><strong>228</strong><small>Checked in today</small></div>
+        <div class="preview-bars"><i style="height: 60%; animation-delay: 300ms"></i><i style="height: 80%; animation-delay: 360ms"></i><i style="height: 55%; animation-delay: 420ms"></i><i style="height: 100%; animation-delay: 480ms"></i></div>
+      </div>
+      <div class="preview-card">
+        <span class="preview-icon soft"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><rect x="3" y="5" width="18" height="16" rx="3"/><path d="M8 3v4M16 3v4M3 10h18M9 15l2 2 4-4"/></svg></span>
+        <div><strong>3</strong><small>Leave requests to review</small></div>
+      </div>
+      <div class="preview-card">
+        <span class="preview-icon soft"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><rect x="3" y="6" width="18" height="14" rx="3"/><path d="M3 10.5h18M15.5 15h2.5"/></svg></span>
+        <div><strong>31 Oct</strong><small>Next payroll run</small></div>
+      </div>
+    </div>
+    <p class="panel-foot">This is a design prototype. Nothing you enter is sent anywhere.</p>
+  </aside>
+
+  <main class="form-side">
+    <div class="topline">
+      <button type="button" class="back" id="back" hidden>
+        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M15 6l-6 6 6 6"/></svg>
+        Back to log in
+      </button>
+      <p class="login" id="signupLine">New to Staffora? <a href="signup.html">Create an account</a></p>
+    </div>
+
+    <div class="stage">
+
+      <!-- Log in -->
+      <form class="screen active" data-screen="login" novalidate>
+        <p class="eyebrow">Log in</p>
+        <h2>Welcome back</h2>
+        <p class="sub">Log in to your Staffora workspace.</p>
+        <p class="notice" id="notice" role="alert" hidden>
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true" style="flex: none; margin-top: 1px;"><circle cx="12" cy="12" r="9"/><path d="M12 8v5M12 16h.01"/></svg>
+          <span id="noticeText"></span>
+        </p>
+        <div class="fields">
+          <div class="field">
+            <label for="email">Work email</label>
+            <input class="input" id="email" type="email" autocomplete="email" placeholder="you@company.com" aria-describedby="email-err">
+            <p class="error" id="email-err"></p>
+          </div>
+          <div class="field">
+            <div class="row-between">
+              <label for="password">Password</label>
+              <button type="button" class="link-btn" id="forgotLink">Forgot password?</button>
+            </div>
+            <div class="control">
+              <input class="input with-btn" id="password" type="password" autocomplete="current-password" placeholder="Your password" aria-describedby="pw-err">
+              <button type="button" class="reveal" id="reveal" aria-controls="password" aria-pressed="false">Show</button>
+            </div>
+            <p class="error" id="pw-err"></p>
+          </div>
+          <label class="check"><input type="checkbox" id="remember" checked> <span>Keep me logged in on this device</span></label>
+        </div>
+        <div class="actions">
+          <button type="submit" class="btn btn-primary" id="loginBtn">Log in
+            <svg class="arrow" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6"/></svg>
+          </button>
+          <div class="divider">or</div>
+          <button type="button" class="btn btn-outline" id="sso">Continue with work SSO</button>
+        </div>
+        <p class="hint" style="margin-top: 16px; text-align: center;">Prototype: any email and a password of 8+ characters will log you in.</p>
+      </form>
+
+      <!-- Forgot password -->
+      <form class="screen" data-screen="forgot" novalidate>
+        <p class="eyebrow">Reset password</p>
+        <h2>Forgot your password?</h2>
+        <p class="sub">Enter your work email and we’ll send you a link to set a new one.</p>
+        <div class="fields">
+          <div class="field">
+            <label for="resetEmail">Work email</label>
+            <input class="input" id="resetEmail" type="email" autocomplete="email" placeholder="you@company.com" aria-describedby="reset-err">
+            <p class="error" id="reset-err"></p>
+          </div>
+        </div>
+        <div class="actions">
+          <button type="submit" class="btn btn-primary" id="resetBtn">Send reset link</button>
+        </div>
+      </form>
+
+      <!-- Link sent -->
+      <section class="screen" data-screen="sent" aria-labelledby="sent-title">
+        <div class="mail-badge" aria-hidden="true">
+          <svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="5" width="18" height="14" rx="3"/><path d="M4 7l8 6 8-6"/></svg>
+        </div>
+        <p class="eyebrow">Check your inbox</p>
+        <h2 id="sent-title" tabindex="-1">Reset link sent</h2>
+        <p class="sub">If an account exists for <span class="email-pill" id="sentTo">you@company.com</span>, you’ll get an email with a link to reset your password. It expires in 30 minutes.</p>
+        <div class="actions">
+          <button type="button" class="btn btn-primary" id="backToLogin">Back to log in</button>
+          <button type="button" class="btn btn-ghost" id="resendReset">Didn’t get it? Send again</button>
+        </div>
+      </section>
+
+    </div>
+  </main>
+</div>
+
+<script>
+(function () {
+  var emailRe = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+  var reduced = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+  var current = 'login';
+  var order = { login: 0, forgot: 1, sent: 2 };
+  var back = document.getElementById('back');
+  var signupLine = document.getElementById('signupLine');
+
+  function show(name) {
+    var forward = order[name] > order[current];
+    current = name;
+    document.querySelectorAll('.screen').forEach(function (s) {
+      var on = s.dataset.screen === name;
+      s.classList.toggle('active', on);
+      s.classList.toggle('from-left', on && !forward);
+    });
+    back.hidden = name === 'login';
+    signupLine.hidden = name !== 'login';
+    var target = name === 'sent' ? document.getElementById('sent-title') : document.querySelector('.screen[data-screen="' + name + '"] input');
+    setTimeout(function () { target.focus({ preventScroll: true }); }, reduced ? 0 : 120);
+  }
+  back.addEventListener('click', function () { show('login'); });
+  document.getElementById('backToLogin').addEventListener('click', function () { show('login'); });
+
+  function setError(input, errEl, msg) {
+    errEl.textContent = msg || '';
+    input.setAttribute('aria-invalid', msg ? 'true' : 'false');
+    if (msg) { input.classList.remove('shake'); void input.offsetWidth; input.classList.add('shake'); }
+    return !msg;
+  }
+  function busy(btn, label, done) {
+    var html = btn.innerHTML;
+    btn.disabled = true;
+    btn.innerHTML = '<span class="spinner" aria-hidden="true"></span>' + label;
+    setTimeout(function () { btn.disabled = false; btn.innerHTML = html; done(); }, reduced ? 0 : 900);
+  }
+
+  var emailEl = document.getElementById('email'), pwEl = document.getElementById('password');
+  var notice = document.getElementById('notice');
+  [emailEl, pwEl].forEach(function (el) {
+    el.addEventListener('input', function () { el.setAttribute('aria-invalid', 'false'); notice.hidden = true; });
+  });
+  document.getElementById('reveal').addEventListener('click', function () {
+    var showing = pwEl.type === 'text';
+    pwEl.type = showing ? 'password' : 'text';
+    this.textContent = showing ? 'Show' : 'Hide';
+    this.setAttribute('aria-pressed', String(!showing));
+  });
+
+  // Prefill the email from a sign-up in this session
+  try {
+    var saved = sessionStorage.getItem('staffora:email');
+    if (saved) emailEl.value = saved;
+  } catch (e) {}
+
+  var attempts = 0;
+  document.querySelector('[data-screen="login"]').addEventListener('submit', function (ev) {
+    ev.preventDefault();
+    var email = emailEl.value.trim();
+    var ok = setError(emailEl, document.getElementById('email-err'), !emailRe.test(email) ? 'Enter a valid email, like you@company.com.' : '');
+    ok = setError(pwEl, document.getElementById('pw-err'), !pwEl.value ? 'Enter your password.' : '') && ok;
+    if (!ok) { this.querySelector('[aria-invalid="true"]').focus(); return; }
+    var btn = document.getElementById('loginBtn');
+    busy(btn, 'Logging in…', function () {
+      if (pwEl.value.length < 8) {
+        attempts++;
+        document.getElementById('noticeText').textContent = attempts > 1
+          ? 'That email and password still don’t match. Try again or reset your password.'
+          : 'That email and password don’t match. Check them and try again.';
+        notice.hidden = false;
+        pwEl.value = '';
+        pwEl.setAttribute('aria-invalid', 'true');
+        pwEl.focus();
+        return;
+      }
+      try {
+        var name = sessionStorage.getItem('staffora:email') === email ? sessionStorage.getItem('staffora:name') : '';
+        if (!name) {
+          var local = email.split('@')[0].split(/[._-]/)[0];
+          name = local.charAt(0).toUpperCase() + local.slice(1);
+        }
+        sessionStorage.setItem('staffora:name', name);
+        sessionStorage.setItem('staffora:email', email);
+      } catch (e) {}
+      window.location.href = 'index.html';
+    });
+  });
+
+  document.getElementById('sso').addEventListener('click', function () {
+    emailEl.focus();
+    emailEl.placeholder = 'Enter your work email to find your SSO';
+  });
+
+  // Forgot password
+  var resetEl = document.getElementById('resetEmail');
+  document.getElementById('forgotLink').addEventListener('click', function () {
+    resetEl.value = emailEl.value.trim();
+    show('forgot');
+  });
+  resetEl.addEventListener('input', function () { resetEl.setAttribute('aria-invalid', 'false'); });
+  document.querySelector('[data-screen="forgot"]').addEventListener('submit', function (ev) {
+    ev.preventDefault();
+    var email = resetEl.value.trim();
+    if (!setError(resetEl, document.getElementById('reset-err'), !emailRe.test(email) ? 'Enter a valid email, like you@company.com.' : '')) { resetEl.focus(); return; }
+    document.getElementById('sentTo').textContent = email;
+    busy(document.getElementById('resetBtn'), 'Sending…', function () { show('sent'); });
+  });
+  if (location.hash === '#forgot') { current = 'login'; show('forgot'); }
+
+  var resendBtn = document.getElementById('resendReset');
+  resendBtn.addEventListener('click', function () {
+    busy(resendBtn, 'Sending…', function () {
+      resendBtn.disabled = true;
+      resendBtn.textContent = 'Sent again. Check your spam folder too.';
+    });
+  });
+})();
+</script>
+</body>
+</html>
