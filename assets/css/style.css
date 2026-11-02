@@ -931,6 +931,7 @@ html:not(.has-drag) .beyond__hint { display: none; }
 @media (prefers-reduced-motion: reduce) {
   *, *::before, *::after { animation: none !important; transition: none !important; scroll-behavior: auto !important; }
   .js .reveal { opacity: 1; transform: none; }
+  .hero__mark::after { transform: scaleX(1); }
   .logos__track { animation: slide 70s linear infinite !important; }
 }
 

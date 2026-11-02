@@ -216,6 +216,25 @@ def chapters(cs):
 """
 
 
+SITE = "https://kavindaweerasekaradev-coder.github.io/App/"
+
+
+def ld_json(p, cover):
+    """Structured data for a case study: the project as a CreativeWork by Kavinda, plus breadcrumbs."""
+    url = f"{SITE}case-studies/{p['slug']}.html"
+    year = dict(p["facts"]).get("Year")
+    data = {"@context": "https://schema.org", "@graph": [
+        {"@type": "CreativeWork", "@id": url + "#work", "name": p["name"], "headline": f"{p['name']} — {p['kind']}",
+         "description": p["lead"], "url": url, "image": SITE + cover["src"], "keywords": ", ".join(p["tags"]),
+         "author": {"@type": "Person", "@id": SITE + "#person", "name": "Kavinda Weerasekara", "url": SITE},
+         **({"dateCreated": year} if year and year.isdigit() else {})},
+        {"@type": "BreadcrumbList", "itemListElement": [
+            {"@type": "ListItem", "position": 1, "name": "Kavinda Weerasekara", "item": SITE},
+            {"@type": "ListItem", "position": 2, "name": "Recent work", "item": SITE + "#work"},
+            {"@type": "ListItem", "position": 3, "name": p["name"], "item": url}]}]}
+    return json.dumps(data, ensure_ascii=False).replace("</", "<\\/")
+
+
 def render(p, prev_p, next_p, version):
     cover = p.get("cover_image") or {"src": p["cover"], "width": 808, "height": 632}
     middle = chapters(p["case_study_data"]) if p.get("case_study_data") else render_summary(p)
@@ -229,14 +248,25 @@ def render(p, prev_p, next_p, version):
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <title>{e(p['name'])} — {e(p['kind'])} · Kavinda Weerasekara</title>
+  <title>{e(p['name'])} — {e(p['kind'])} by Kavinda Weerasekara</title>
   <meta name="description" content="{e(p['lead'])}" />
+  <meta name="author" content="Kavinda Weerasekara" />
+  <meta name="robots" content="index, follow, max-image-preview:large" />
+  <link rel="canonical" href="{SITE}case-studies/{p['slug']}.html" />
   <meta name="theme-color" content="#ffffff" />
 
-  <meta property="og:title" content="{e(p['name'])} — {e(p['kind'])}" />
-  <meta property="og:description" content="{e(p['lead'])}" />
   <meta property="og:type" content="article" />
-  <meta property="og:image" content="../{p['cover']}" />
+  <meta property="og:site_name" content="kavinda.design" />
+  <meta property="og:title" content="{e(p['name'])} — {e(p['kind'])} by Kavinda Weerasekara" />
+  <meta property="og:description" content="{e(p['lead'])}" />
+  <meta property="og:url" content="{SITE}case-studies/{p['slug']}.html" />
+  <meta property="og:image" content="{SITE}{cover['src']}" />
+  <meta property="article:author" content="Kavinda Weerasekara" />
+  <meta name="twitter:card" content="summary_large_image" />
+  <meta name="twitter:title" content="{e(p['name'])} — {e(p['kind'])}" />
+  <meta name="twitter:description" content="{e(p['lead'])}" />
+  <meta name="twitter:image" content="{SITE}{cover['src']}" />
+  <script type="application/ld+json">{ld_json(p, cover)}</script>
 
   <link rel="icon" href="../assets/img/favicon-32.png?v=2" sizes="32x32" type="image/png" />
   <link rel="icon" href="../assets/img/favicon-48.png?v=2" sizes="48x48" type="image/png" />
@@ -422,6 +452,18 @@ def main():
         with open(path, "w", encoding="utf-8") as f:
             f.write(render(p, prev_p, next_p, version))
         print("wrote", os.path.relpath(path, ROOT))
+    write_sitemap(projects)
+
+
+def write_sitemap(projects):
+    """sitemap.xml for search engines: the home page and every case study."""
+    import datetime
+    today = datetime.date.today().isoformat()
+    urls = [(SITE, "1.0")] + [(f"{SITE}case-studies/{p['slug']}.html", "0.8") for p in projects]
+    body = "".join(f"  <url><loc>{u}</loc><lastmod>{today}</lastmod><priority>{pr}</priority></url>\n" for u, pr in urls)
+    with open(os.path.join(ROOT, "sitemap.xml"), "w", encoding="utf-8") as f:
+        f.write('<?xml version="1.0" encoding="UTF-8"?>\n<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">\n' + body + "</urlset>\n")
+    print("wrote sitemap.xml")
 
 
 if __name__ == "__main__":
