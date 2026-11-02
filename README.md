@@ -38,6 +38,24 @@ scripts/sync_behance.py        # Behance import, run by .github/workflows/behanc
 - **Caching:** the pages load `style.css?v=…` and `main.js?v=…`. After changing either file, bump the
   `v=` value in `index.html` and `case-studies/*.html` so browsers fetch the new version straight away.
 
+## Staffora HR prototype
+
+`hr-dashboard/` is a standalone, clickable HR management web app concept (no build step):
+
+```
+hr-dashboard/overview.html   # Project page: user flow, screens, palette
+hr-dashboard/login.html      # Log in and reset password (login.html#forgot opens the reset screen)
+hr-dashboard/signup.html     # Five-step sign-up: account, email code, company, invites, done
+hr-dashboard/index.html      # Dashboard
+hr-dashboard/employees.html  # Directory, profile panel (#emp-<id>) and add-employee form (#add)
+hr-dashboard/auth.css        # Styles shared by the log-in and sign-up pages
+```
+
+Log in and sign-up both lead to the dashboard, and the dashboard's Sign out icon returns to log in.
+The dashboard's Employees links, Add employee button and team-table names open `employees.html`.
+The name from sign-up (or the email used to log in) is kept in `sessionStorage` so the dashboard
+can greet the visitor; nothing is sent anywhere.
+
 ## Project detail pages
 
 Every Recent work card opens a page in `case-studies/`. The pages share one template in
