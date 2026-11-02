@@ -1050,3 +1050,6 @@ html:not(.has-drag) .beyond__hint { display: none; }
   .contact__actions .btn--lime { justify-content: space-between; }
   .footer__inner { flex-direction: column; align-items: flex-start; }
 }
+
+.footer__links { display: inline-flex; gap: 20px; align-items: center; }
+.footer__cookies { border: 0; background: none; padding: 0; font: inherit; color: inherit; cursor: pointer; }

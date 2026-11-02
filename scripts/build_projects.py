@@ -382,7 +382,8 @@ def render(p, prev_p, next_p, version):
     <div class="container footer__inner">
       <p>© <span id="year">2026</span> Kavinda Weerasekara</p>
       <p class="footer__mono">Product &amp; UI/UX Designer · Sri Lanka</p>
-      <a href="#top" class="footer__top">Back to top ↑</a>
+      <span class="footer__links"><button type="button" class="footer__top footer__cookies" data-cookie-settings>Cookie settings</button>
+      <a href="#top" class="footer__top">Back to top ↑</a></span>
     </div>
   </footer>
 
