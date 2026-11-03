@@ -21,8 +21,147 @@
     ]
   },
   {
-    "id": "problem",
+    "id": "screens-carousel",
     "num": "02",
+    "label": "UI screens",
+    "title": "Every screen, web and mobile.",
+    "lead": "The final interface, screen by screen. Switch between web and mobile, and drag, swipe or use the arrows to explore.",
+    "blocks": [
+      {
+        "type": "carousel",
+        "label": "Domino’s Sri Lanka UI screens",
+        "sets": [
+          {
+            "label": "Web",
+            "kind": "web",
+            "items": [
+              {
+                "src": "assets/img/case-studies/dominos/screens/w1-home.webp",
+                "caption": "Home · a hero you can order from",
+                "alt": "Domino’s web home with the Hot pizza, made your way hero and a pizza deck with size picker",
+                "width": 1459,
+                "height": 1013
+              },
+              {
+                "src": "assets/img/case-studies/dominos/screens/w2-most-loved.webp",
+                "caption": "Most loved · ranked, photo-first",
+                "alt": "Most loved right now: ranked #1 to #4 pizza cards with prices and Add buttons",
+                "width": 1459,
+                "height": 1003
+              },
+              {
+                "src": "assets/img/case-studies/dominos/screens/w3-deals.webp",
+                "caption": "Deals · applied for you",
+                "alt": "Deals worth ordering for: 2 Medium pizzas for Rs 3,990 and coupon cards with a countdown",
+                "width": 1459,
+                "height": 1006
+              },
+              {
+                "src": "assets/img/case-studies/dominos/screens/w4-menu.webp",
+                "caption": "Menu · sizes and Add on the card",
+                "alt": "Menu with sticky filters and photo-first pizza cards with size switchers",
+                "width": 1600,
+                "height": 1046
+              },
+              {
+                "src": "assets/img/case-studies/dominos/screens/w5-customise.webp",
+                "caption": "Customise · a visual sheet",
+                "alt": "Customise sheet for Margherita with pizza size photos and a live total",
+                "width": 1459,
+                "height": 1003
+              },
+              {
+                "src": "assets/img/case-studies/dominos/screens/w6-cart.webp",
+                "caption": "Cart · the best deal, applied",
+                "alt": "Cart drawer with the 20% off Large pizzas deal applied automatically",
+                "width": 1459,
+                "height": 1006
+              },
+              {
+                "src": "assets/img/case-studies/dominos/screens/w7-checkout.webp",
+                "caption": "Checkout · now or order ahead",
+                "alt": "Single-page checkout with day and time slots for ordering ahead",
+                "width": 1600,
+                "height": 1058
+              },
+              {
+                "src": "assets/img/case-studies/dominos/screens/w8-footer.webp",
+                "caption": "Footer · Hot. Fresh. Yours.",
+                "alt": "Footer with order tracking, hotline, payment methods and the Hot. Fresh. Yours. promise",
+                "width": 1459,
+                "height": 1003
+              }
+            ]
+          },
+          {
+            "label": "Mobile",
+            "kind": "mobile",
+            "items": [
+              {
+                "src": "assets/img/case-studies/dominos/screens/m1-home.webp",
+                "caption": "Home · swipeable pizza deck",
+                "alt": "Mobile home with the Kochchi Paneer hero card, size picker and Add button",
+                "width": 560,
+                "height": 1233
+              },
+              {
+                "src": "assets/img/case-studies/dominos/screens/m2-offers.webp",
+                "caption": "Offers · campaign posters",
+                "alt": "Mobile home offers: Let the cheese games begin and Go big or go home",
+                "width": 560,
+                "height": 1234
+              },
+              {
+                "src": "assets/img/case-studies/dominos/screens/m3-menu.webp",
+                "caption": "Menu · filters in a tap",
+                "alt": "Mobile menu with filters, photo-first cards and an added-to-cart toast",
+                "width": 560,
+                "height": 1233
+              },
+              {
+                "src": "assets/img/case-studies/dominos/screens/m4-customise.webp",
+                "caption": "Customise · see the size",
+                "alt": "Mobile customise sheet for Kochchi Paneer with size photos and a live total",
+                "width": 560,
+                "height": 1235
+              },
+              {
+                "src": "assets/img/case-studies/dominos/screens/m5-cart.webp",
+                "caption": "Cart · the maths, done",
+                "alt": "Mobile cart with free delivery and the best deal applied",
+                "width": 560,
+                "height": 1233
+              },
+              {
+                "src": "assets/img/case-studies/dominos/screens/m6-checkout.webp",
+                "caption": "Checkout · book a time",
+                "alt": "Mobile checkout with schedule delivery and time slots",
+                "width": 560,
+                "height": 1211
+              },
+              {
+                "src": "assets/img/case-studies/dominos/screens/m7-payment.webp",
+                "caption": "Payment · pay the local way",
+                "alt": "Mobile secure payment with a live card preview",
+                "width": 560,
+                "height": 1235
+              },
+              {
+                "src": "assets/img/case-studies/dominos/screens/m8-tracking.webp",
+                "caption": "Tracking · oven to door",
+                "alt": "Mobile order tracking: You’re booked in, ready to collect at 7:00 PM",
+                "width": 560,
+                "height": 1233
+              }
+            ]
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "id": "problem",
+    "num": "03",
     "label": "The problem",
     "title": "Hungry people don’t read instructions.",
     "lead": "I walked through a typical online pizza order step by step, like a hungry customer would. These thoughts kept coming up.",
@@ -73,7 +212,7 @@
   },
   {
     "id": "persona",
-    "num": "03",
+    "num": "04",
     "label": "Who it’s for",
     "title": "Meet Nethmi. Hungry, and busy.",
     "lead": "A proto-persona kept every decision grounded in a real moment: ordering on a phone, between other things, often for a group.",
@@ -110,7 +249,7 @@
   },
   {
     "id": "moments",
-    "num": "04",
+    "num": "05",
     "label": "Real moments",
     "title": "Designed for real people, in real moments.",
     "lead": "Three everyday moments shaped every decision: the team lunch, the late night with friends, and the rider bringing it to the door.",
@@ -126,7 +265,7 @@
   },
   {
     "id": "process",
-    "num": "05",
+    "num": "06",
     "label": "Process",
     "title": "From napkin to pixels.",
     "lead": "Every screen went through the same three steps: an idea on paper, structure in grey boxes, then the flavour.",
@@ -150,7 +289,7 @@
   },
   {
     "id": "improved",
-    "num": "06",
+    "num": "07",
     "label": "What I improved",
     "title": "My first version worked. It just wasn’t Domino’s.",
     "lead": "The first build was clean but generic: illustrated pizzas, a soft beige palette and the same card everywhere. I rebuilt every screen around the brand and the four goals. These are real screens from both versions.",
@@ -183,7 +322,7 @@
   },
   {
     "id": "before-after",
-    "num": "07",
+    "num": "08",
     "label": "Before and after",
     "title": "From a search banner to a hero you can order from.",
     "lead": "The first hero asked people to search. The new one puts a pizza, a size and an Add button on the very first screen.",
@@ -288,7 +427,7 @@
   },
   {
     "id": "mobile",
-    "num": "08",
+    "num": "09",
     "label": "Mobile",
     "title": "On the phone, where most orders start.",
     "lead": "The same improvements, sized for one hand: bigger photos, actions within thumb reach, and nothing hidden.",
@@ -304,7 +443,7 @@
   },
   {
     "id": "flow",
-    "num": "09",
+    "num": "10",
     "label": "User flow",
     "title": "One clear path, from craving to collected.",
     "lead": "Every route leads to the same single-page checkout. The only fork is when: right now, or booked for later.",
@@ -320,7 +459,7 @@
   },
   {
     "id": "brand",
-    "num": "10",
+    "num": "11",
     "label": "Brand",
     "title": "Hot. Fresh. Yours.",
     "lead": "The promise I designed around. Every screen should feel hot (fast, energetic), fresh (clean, honest) and yours (personal, made your way).",
@@ -364,7 +503,7 @@
   },
   {
     "id": "identity",
-    "num": "11",
+    "num": "12",
     "label": "Visual identity",
     "title": "Unmistakably Domino’s, dialled up.",
     "lead": "Only the brand’s own colours, the domino tile as a quiet motif, a characterful grotesque for appetite and a calm sans for reading.",
@@ -418,7 +557,7 @@
   },
   {
     "id": "art",
-    "num": "12",
+    "num": "13",
     "label": "Art direction",
     "title": "Warm photos, friendly people.",
     "lead": "Food is shot close and real, never glossy. People are drawn by hand in simple line art, so the brand feels human without stock-photo smiles.",
@@ -441,7 +580,7 @@
   },
   {
     "id": "components",
-    "num": "13",
+    "num": "14",
     "label": "Components",
     "title": "A small kit that does a lot.",
     "lead": "One strong button for the action that matters, segmented pickers for sizes, honest tags for diet and heat, and one icon set at a single stroke weight.",
@@ -457,7 +596,7 @@
   },
   {
     "id": "screens",
-    "num": "14",
+    "num": "15",
     "label": "Key screens",
     "title": "A hero you can order from.",
     "lead": "The first screen is a swipeable deck of pizzas with a size picker and a one-tap Add, followed by offers that sell themselves.",
@@ -547,7 +686,7 @@
   },
   {
     "id": "responsive",
-    "num": "15",
+    "num": "16",
     "label": "Responsive",
     "title": "From a 320px phone to a 4K screen.",
     "lead": "The same components reflow across twelve tested screen sizes, with no sideways scrolling anywhere.",
@@ -570,7 +709,7 @@
   },
   {
     "id": "outcome",
-    "num": "16",
+    "num": "17",
     "label": "Outcome",
     "title": "What the redesign delivers.",
     "lead": "A working, responsive prototype that removes the biggest points of friction, ready to test with real customers.",
