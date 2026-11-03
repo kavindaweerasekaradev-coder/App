@@ -122,6 +122,25 @@ def block(b):
             f'<span class="cs-blk-type__sample" style="font-size:clamp({min(i["size"], 28)}px, {i["size"] / 14:.2f}vw, {i["size"]}px);'
             f'font-weight:{i["weight"]};letter-spacing:{i["track"]}em">{e(i["sample"])}</span>'
             f'<span class="cs-blk-type__use">{e(i["use"])}</span></li>' for i in b["items"]) + "</ul>"
+    if t == "carousel":
+        arrow = lambda d: f'<svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="{d}"/></svg>'
+        tabs = "".join(
+            f'<button type="button" class="sc__tab" role="tab" aria-selected="{"true" if i == 0 else "false"}" data-set="{i}">'
+            f'{e(st["label"])}<span>{len(st["items"])}</span></button>' for i, st in enumerate(b["sets"]))
+        sets = "".join(
+            f'<div class="sc__set sc__set--{st["kind"]}" data-set="{i}"{"" if i == 0 else " hidden"}><ul class="sc__track">' + "".join(
+                f'<li class="sc__slide" data-caption="{e(it["caption"])}"><img src="../{it["src"]}" alt="{e(it["alt"])}" '
+                f'width="{it["width"]}" height="{it["height"]}" loading="lazy" draggable="false" /></li>' for it in st["items"])
+            + '</ul></div>' for i, st in enumerate(b["sets"]))
+        first = b["sets"][0]
+        return (f'<div class="sc" aria-roledescription="carousel" aria-label="{e(b.get("label", "UI screens"))}">'
+                f'<div class="sc__tabs" role="tablist">{tabs}</div>'
+                f'<div class="sc__stage" tabindex="0">{sets}</div>'
+                f'<div class="sc__bar"><p class="sc__info" aria-live="polite"><span class="sc__count"><b>01</b> / {len(first["items"]):02d}</span>'
+                f'<span class="sc__caption">{e(first["items"][0]["caption"])}</span></p>'
+                f'<span class="sc__progress" aria-hidden="true"><i></i></span>'
+                f'<span class="sc__nav"><button type="button" class="sc__btn sc__prev" aria-label="Previous screen">{arrow("M15 6l-6 6 6 6")}</button>'
+                f'<button type="button" class="sc__btn sc__next" aria-label="Next screen">{arrow("M9 6l6 6-6 6")}</button></span></div></div>')
     if t == "image":
         return (f'<figure class="cs-blk-image"><img src="../{b["src"]}" alt="{e(b["alt"])}" '
                 f'width="{b["width"]}" height="{b["height"]}" loading="lazy" /></figure>')
@@ -419,6 +438,8 @@ def render(p, prev_p, next_p, version):
 
   <script src="../assets/js/vendor/gsap.min.js?v=3.12.5"></script>
   <script src="../assets/js/vendor/ScrollTrigger.min.js?v=3.12.5"></script>
+  <script src="../assets/js/vendor/Draggable.min.js?v=3.12.5"></script>
+  <script src="../assets/js/carousel.js?v={version}" defer></script>
   <script src="../assets/js/motion.js?v={version}"></script>
   <script src="../assets/js/main.js?v={version}"></script>
 </body>
