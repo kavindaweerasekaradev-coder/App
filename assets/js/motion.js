@@ -44,26 +44,9 @@
     document.body.appendChild(bar);
     gsap.to(bar, { scaleX: 1, ease: 'none', scrollTrigger: { start: 0, end: 'max', scrub: 0.3 } });
 
-    // Hero intro (home page)
-    var hero = document.querySelector('.hero');
-    if (hero) {
-      var heroParts = hero.querySelectorAll('.hero__intro, .hero__lead, .hero__actions');
-      heroParts.forEach(function (el) { el.classList.remove('reveal'); });
-      var title = hero.querySelector('.hero__title');
-      title.classList.remove('reveal');
-      var words = splitWords(title);
-      gsap.timeline({ defaults: { ease: 'power4.out' } })
-        .from('.nav', { y: -24, autoAlpha: 0, duration: 0.8 })
-        .from(heroParts[0], { y: 24, autoAlpha: 0, duration: 0.8 }, 0.1)
-        .from(words, { yPercent: 115, duration: 1.1, stagger: 0.06 }, 0.2)
-        .from([heroParts[1], heroParts[2]], { y: 30, autoAlpha: 0, duration: 0.9, stagger: 0.12, ease: ease }, 0.6);
-    }
-
-    // Case study hero
-    var csTitle = document.querySelector('.cs-page-hero__title');
-    if (csTitle) {
-      gsap.from(splitWords(csTitle), { yPercent: 115, duration: 1.1, stagger: 0.05, ease: 'power4.out', delay: 0.1 });
-    }
+    // The home and case study heroes animate with CSS (.hero-in) so they show on first paint
+    // without waiting for this script; only the nav slides in here.
+    gsap.from('.nav', { y: -24, autoAlpha: 0, duration: 0.8, ease: 'power4.out' });
 
     // Section headings: words mask up on scroll
     document.querySelectorAll('main h2:not(.contact__title):not(.beyond__title)').forEach(function (h) {
@@ -300,6 +283,60 @@
         });
       }
       window.addEventListener('resize', render);
+    }
+
+    // About stats: each card's visual animates in on scroll; a spotlight follows the cursor
+    var stats = document.querySelector('.stats');
+    if (stats) {
+      var st = { trigger: stats, start: 'top 80%', once: true };
+      // 1. growth line draws, area fades, dot pops
+      var line = stats.querySelector('.st-chart__line');
+      if (line) {
+        var len = line.getTotalLength();
+        gsap.set(line, { strokeDasharray: len, strokeDashoffset: len });
+        gsap.timeline({ scrollTrigger: st })
+          .to(line, { strokeDashoffset: 0, duration: 1.6, ease: 'power2.inOut' })
+          .from(stats.querySelector('.st-chart__area'), { autoAlpha: 0, duration: 0.8 }, 0.6)
+          .from(stats.querySelector('.st-chart__dot'), { scale: 0, duration: 0.5, ease: 'back.out(3)' }, 1.4);
+      }
+      // 2. AI card: the prompt types itself, the tools pop in, then it loops through a few prompts
+      var ai = stats.querySelector('.st-ai');
+      if (ai) {
+        var txt = ai.querySelector('.st-ai__text'), tools = ai.querySelectorAll('.tool-logo');
+        var prompts = ['3 layout ideas', 'Sum up interviews', 'Friendlier UX copy', 'Prototype checkout'];
+        var tl = gsap.timeline({ paused: true, repeat: -1 });
+        prompts.forEach(function (str) {
+          var o = { n: 0 };
+          tl.to(o, { n: str.length, duration: str.length * 0.045, ease: 'none', onUpdate: function () { txt.textContent = str.slice(0, Math.round(o.n)); } })
+            .fromTo(tools, { y: 10, autoAlpha: 0, scale: 0.6 }, { y: 0, autoAlpha: 1, scale: 1, duration: 0.45, ease: 'back.out(2.4)', stagger: 0.08 })
+            .to(ai.querySelector('.st-ai__spark'), { rotation: '+=180', scale: 1.25, duration: 0.5, yoyo: true, repeat: 1, ease: 'power2.inOut' }, '<')
+            .to({}, { duration: 1.4 })
+            .to(o, { n: 0, duration: str.length * 0.02, ease: 'none', onUpdate: function () { txt.textContent = str.slice(0, Math.round(o.n)); } });
+        });
+        ScrollTrigger.create({ trigger: stats, start: 'top 80%', once: true, onEnter: function () { txt.textContent = ''; tl.play(0); } });
+      }
+      // 3. logos drop into a stack
+      gsap.from(stats.querySelectorAll('.st-logo'), { y: -40, autoAlpha: 0, rotation: function () { return gsap.utils.random(-20, 20); },
+        duration: 0.8, ease: 'back.out(1.8)', stagger: 0.1, scrollTrigger: st, clearProps: 'transform' });
+      // 4. contrast ratio counts up while the meter fills, then the check pops
+      var num = stats.querySelector('.st-aa__num');
+      if (num) {
+        var o = { v: 1 };
+        gsap.timeline({ scrollTrigger: st })
+          .from(stats.querySelector('.st-aa__meter i'), { scaleX: 0, duration: 1.4, ease: 'power2.out' })
+          .to(o, { v: 4.5, duration: 1.4, ease: 'power2.out', onUpdate: function () { num.textContent = o.v.toFixed(1); } }, 0)
+          .from(stats.querySelector('.st-aa__ok'), { scale: 0, rotation: -90, duration: 0.5, ease: 'back.out(3)' }, 1.2);
+      }
+      // spotlight
+      if (window.matchMedia('(pointer: fine)').matches) {
+        stats.querySelectorAll('.stat').forEach(function (card) {
+          card.addEventListener('mousemove', function (e) {
+            var r = card.getBoundingClientRect();
+            card.style.setProperty('--mx', (e.clientX - r.left) + 'px');
+            card.style.setProperty('--my', (e.clientY - r.top) + 'px');
+          });
+        });
+      }
     }
 
     // Toolkit chips: springy entrance, independent drifting, cursor parallax and orbiting rings

@@ -32,6 +32,41 @@ def asset_version():
     return m.group(1) if m else "1"
 
 
+def srcset(src, width, prefix="../"):
+    """srcset with the -600/-1000 WebP copies made by optimize_images.py, when they exist."""
+    base, ext = os.path.splitext(src)
+    parts = [f"{prefix}{base}-{w}.webp {w}w" for w in (600, 1000)
+             if os.path.exists(os.path.join(ROOT, f"{base}-{w}.webp"))]
+    return ", ".join(parts + [f"{prefix}{src} {width}w"]) if parts else ""
+
+
+def img_attrs(src, width, sizes, prefix="../"):
+    ss = srcset(src, width, prefix)
+    return f' srcset="{ss}" sizes="{sizes}"' if ss else ""
+
+
+def webp_cover(src):
+    """Prefer the WebP copy of a Behance cover."""
+    base, ext = os.path.splitext(src)
+    return base + ".webp" if ext.lower() != ".webp" and os.path.exists(os.path.join(ROOT, base + ".webp")) else src
+
+
+
+def split_words(text, start=0):
+    """Wrap each word in .sw/.sw__i so CSS can rise it in on first paint (no JS wait)."""
+    words = text.split()
+    return " ".join(f'<span class="sw"><span class="sw__i" style="--i:{start + i}">{w}</span></span>' for i, w in enumerate(words))
+
+
+
+def live_btn(p):
+    """Primary 'Live prototype' button when the project has a live_url."""
+    if not p.get("live_url"):
+        return ""
+    return (f'<a class="btn btn--lime btn--arrow" href="{e(p["live_url"])}" target="_blank" rel="noopener">'
+            f'{e(p.get("live_label", "Live prototype"))}<span class="btn__circle">{ARROW}</span></a>\n              ')
+
+
 def card(p, num, prefix="", label=None):
     """A Recent work card. Used on the home page and for previous/next links on project pages."""
     href = prefix + "case-studies/" + p["slug"] + ".html" if prefix == "" else p["slug"] + ".html"
@@ -40,7 +75,7 @@ def card(p, num, prefix="", label=None):
     return f"""          <article class="rw-card reveal">
             <a class="rw-card__link" href="{href}">
               <div class="rw-card__media">
-                <img src="{prefix}{p['cover']}" alt="{e(p['name'])} cover" width="808" height="632" loading="lazy" />
+                <img src="{prefix}{p['cover']}" alt="{e(p['name'])} cover" width="808" height="632" loading="lazy" decoding="async" />
               </div>
               <div class="rw-card__body">
                 <div>
@@ -122,9 +157,29 @@ def block(b):
             f'<span class="cs-blk-type__sample" style="font-size:clamp({min(i["size"], 28)}px, {i["size"] / 14:.2f}vw, {i["size"]}px);'
             f'font-weight:{i["weight"]};letter-spacing:{i["track"]}em">{e(i["sample"])}</span>'
             f'<span class="cs-blk-type__use">{e(i["use"])}</span></li>' for i in b["items"]) + "</ul>"
+    if t == "carousel":
+        arrow = lambda d: f'<svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="{d}"/></svg>'
+        tabs = "".join(
+            f'<button type="button" class="sc__tab" role="tab" aria-selected="{"true" if i == 0 else "false"}" data-set="{i}">'
+            f'{e(st["label"])}<span>{len(st["items"])}</span></button>' for i, st in enumerate(b["sets"]))
+        sets = "".join(
+            f'<div class="sc__set sc__set--{st["kind"]}" data-set="{i}"{"" if i == 0 else " hidden"}><ul class="sc__track">' + "".join(
+                f'<li class="sc__slide" data-caption="{e(it["caption"])}"><img src="../{it["src"]}" alt="{e(it["alt"])}" '
+                f'width="{it["width"]}" height="{it["height"]}" loading="lazy" decoding="async" draggable="false" /></li>' for it in st["items"])
+            + '</ul></div>' for i, st in enumerate(b["sets"]))
+        first = b["sets"][0]
+        light = " sc--clean" if b.get("clean") else (" sc--light" if b.get("light") else "")
+        return (f'<div class="sc{light}" aria-roledescription="carousel" aria-label="{e(b.get("label", "UI screens"))}">'
+                f'<div class="sc__tabs" role="tablist">{tabs}</div>'
+                f'<div class="sc__stage" tabindex="0">{sets}</div>'
+                f'<div class="sc__bar"><p class="sc__info" aria-live="polite"><span class="sc__count"><b>01</b> / {len(first["items"]):02d}</span>'
+                f'<span class="sc__caption">{e(first["items"][0]["caption"])}</span></p>'
+                f'<span class="sc__progress" aria-hidden="true"><i></i></span>'
+                f'<span class="sc__nav"><button type="button" class="sc__btn sc__prev" aria-label="Previous screen">{arrow("M15 6l-6 6 6 6")}</button>'
+                f'<button type="button" class="sc__btn sc__next" aria-label="Next screen">{arrow("M9 6l6 6-6 6")}</button></span></div></div>')
     if t == "image":
-        return (f'<figure class="cs-blk-image"><img src="../{b["src"]}" alt="{e(b["alt"])}" '
-                f'width="{b["width"]}" height="{b["height"]}" loading="lazy" /></figure>')
+        return (f'<figure class="cs-blk-image"><img src="../{b["src"]}"{img_attrs(b["src"], b["width"], "(max-width: 900px) 100vw, 860px")} alt="{e(b["alt"])}" '
+                f'width="{b["width"]}" height="{b["height"]}" loading="lazy" decoding="async" /></figure>')
     if t == "themes":
         card = ('<div class="ledgr-card"><p class="ledgr-card__eyebrow">Primary account · Northbank •••• 4821</p>'
                 '<p class="ledgr-card__label">Total balance · 4 accounts</p>'
@@ -181,8 +236,8 @@ def chapter(c):
     screen readers; narrow screens show the text, plus a cropped screen image if there is one."""
     board = c.get("board")
     ui = c.get("board_ui")
-    board_html = (f'<figure class="cs-board" aria-hidden="true"><img src="../{board["src"]}" alt="" '
-                  f'width="{board["width"]}" height="{board["height"]}" loading="lazy" /></figure>') if board else ""
+    board_html = (f'<figure class="cs-board" aria-hidden="true"><img src="../{board["src"]}"{img_attrs(board["src"], board["width"], "(max-width: 900px) 100vw, 1280px")} alt="" '
+                  f'width="{board["width"]}" height="{board["height"]}" loading="lazy" decoding="async" /></figure>') if board else ""
     ui_html = (f'<figure class="cs-blk-image cs-board-ui"><img src="../{ui["src"]}" '
                f'alt="{e(c["label"])} screens from the Ledgr prototype" width="{ui["width"]}" height="{ui["height"]}" '
                f'loading="lazy" /></figure>') if ui else ""
@@ -216,6 +271,43 @@ def chapters(cs):
 """
 
 
+SITE = "https://kavindaweerasekaradev-coder.github.io/App/"
+
+
+def ld_json(p, cover):
+    """Structured data for a case study: the project as a CreativeWork by Kavinda, plus breadcrumbs."""
+    url = f"{SITE}case-studies/{p['slug']}.html"
+    year = dict(p["facts"]).get("Year")
+    data = {"@context": "https://schema.org", "@graph": [
+        {"@type": "CreativeWork", "@id": url + "#work", "name": p["name"], "headline": f"{p['name']} — {p['kind']}",
+         "description": p["lead"], "url": url, "image": SITE + cover["src"], "keywords": ", ".join(p["tags"]),
+         "author": {"@type": "Person", "@id": SITE + "#person", "name": "Kavinda Weerasekara", "url": SITE},
+         **({"dateCreated": year} if year and year.isdigit() else {})},
+        {"@type": "BreadcrumbList", "itemListElement": [
+            {"@type": "ListItem", "position": 1, "name": "Kavinda Weerasekara", "item": SITE},
+            {"@type": "ListItem", "position": 2, "name": "Recent work", "item": SITE + "#work"},
+            {"@type": "ListItem", "position": 3, "name": p["name"], "item": url}]}]}
+    return json.dumps(data, ensure_ascii=False).replace("</", "<\\/")
+
+
+def gallery(p):
+    """Optional UI screens carousel shown after the case study (clean style, GSAP)."""
+    g = p.get("gallery")
+    if not g:
+        return ""
+    return f"""    <!-- ===================== UI SCREENS ===================== -->
+    <section class="section cs-gallery" id="ui-screens">
+      <div class="container">
+        <div class="cs-gallery__head reveal">
+          <p class="label">{e(g.get("label", "UI screens"))}</p>
+          <h2 class="cs-gallery__title">{e(g["title"])} <span class="soft">{e(g.get("title_soft", ""))}</span></h2>
+          <p class="cs-gallery__lead">{e(g.get("lead", ""))}</p>
+        </div>
+        {block({"type": "carousel", "label": g["title"], "sets": g["sets"], "clean": True})}
+      </div>
+    </section>
+"""
+
 def render(p, prev_p, next_p, version):
     cover = p.get("cover_image") or {"src": p["cover"], "width": 808, "height": 632}
     middle = chapters(p["case_study_data"]) if p.get("case_study_data") else render_summary(p)
@@ -229,14 +321,25 @@ def render(p, prev_p, next_p, version):
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <title>{e(p['name'])} — {e(p['kind'])} · Kavinda Weerasekara</title>
+  <title>{e(p['name'])} — {e(p['kind'])} by Kavinda Weerasekara</title>
   <meta name="description" content="{e(p['lead'])}" />
+  <meta name="author" content="Kavinda Weerasekara" />
+  <meta name="robots" content="index, follow, max-image-preview:large" />
+  <link rel="canonical" href="{SITE}case-studies/{p['slug']}.html" />
   <meta name="theme-color" content="#ffffff" />
 
-  <meta property="og:title" content="{e(p['name'])} — {e(p['kind'])}" />
-  <meta property="og:description" content="{e(p['lead'])}" />
   <meta property="og:type" content="article" />
-  <meta property="og:image" content="../{p['cover']}" />
+  <meta property="og:site_name" content="kavinda.design" />
+  <meta property="og:title" content="{e(p['name'])} — {e(p['kind'])} by Kavinda Weerasekara" />
+  <meta property="og:description" content="{e(p['lead'])}" />
+  <meta property="og:url" content="{SITE}case-studies/{p['slug']}.html" />
+  <meta property="og:image" content="{SITE}{cover['src']}" />
+  <meta property="article:author" content="Kavinda Weerasekara" />
+  <meta name="twitter:card" content="summary_large_image" />
+  <meta name="twitter:title" content="{e(p['name'])} — {e(p['kind'])}" />
+  <meta name="twitter:description" content="{e(p['lead'])}" />
+  <meta name="twitter:image" content="{SITE}{cover['src']}" />
+  <script type="application/ld+json">{ld_json(p, cover)}</script>
 
   <link rel="icon" href="../assets/img/favicon-32.png?v=2" sizes="32x32" type="image/png" />
   <link rel="icon" href="../assets/img/favicon-48.png?v=2" sizes="48x48" type="image/png" />
@@ -246,6 +349,11 @@ def render(p, prev_p, next_p, version):
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600{extra_fonts}&display=swap" rel="stylesheet" />
   <link rel="stylesheet" href="../assets/css/style.css?v={version}" />
+  <script>document.documentElement.classList.add('js')</script>
+  <link rel="preload" href="../assets/js/vendor/gsap.min.js?v=3.12.5" as="script" />
+  <link rel="preload" href="../assets/js/vendor/ScrollTrigger.min.js?v=3.12.5" as="script" />
+  <link rel="preload" href="../assets/js/motion.js?v={version}" as="script" />
+  <script src="../assets/js/analytics.js" defer></script>
 </head>
 <body>
   <!-- Generated by scripts/build_projects.py from assets/data/projects.json — edit those, not this file. -->
@@ -261,11 +369,11 @@ def render(p, prev_p, next_p, version):
 
       <nav class="nav__links" id="nav-links" aria-label="Primary">
         <a href="../index.html#work" class="is-active">Work</a>
-        <a href="../index.html#live">Products</a>
         <a href="../index.html#about">About</a>
         <a href="../index.html#services">Services</a>
         <a href="../index.html#experience">Experience</a>
-        <a href="../assets/docs/Kavinda-Weerasekara-CV.pdf?v=2" download>Download CV</a>
+        <a href="../explorations/">Explorations</a>
+        <a href="../assets/docs/Kavinda-Weerasekara-CV.pdf?v=3" download>Download CV</a>
       </nav>
 
       <div class="nav__actions">
@@ -281,26 +389,26 @@ def render(p, prev_p, next_p, version):
     <!-- ===================== INTRO ===================== -->
     <section class="cs-page-hero">
       <div class="container">
-        <a class="pill cs-back reveal" href="../index.html#work">{BACK} Recent work</a>
+        <a class="pill cs-back hero-in hero-in--1" href="../index.html#work">{BACK} Recent work</a>
 
         <div class="cs-page-hero__grid">
-          <div class="reveal">
-            <p class="label">{e(p['kind'])} · {p['year']}</p>
-            <h1 class="cs-page-hero__title">{e(p.get('hero_title', p['name']))}<br /><span class="soft">{e(p['subtitle'])}</span></h1>
+          <div>
+            <p class="label hero-in hero-in--1">{e(p['kind'])} · {p['year']}</p>
+            <h1 class="cs-page-hero__title hero-in" aria-label="{e(p.get('hero_title', p['name']))} {e(p['subtitle'])}">{split_words(e(p.get('hero_title', p['name'])))}<br /><span class="soft">{split_words(e(p['subtitle']), len(p.get('hero_title', p['name']).split()))}</span></h1>
           </div>
-          <div class="cs-page-hero__side reveal">
+          <div class="cs-page-hero__side hero-in hero-in--2">
             <p class="cs-page-hero__lead">{e(p['lead'])}</p>
             <ul class="pj-tags">{tags}</ul>
             <div class="cs-page-hero__ctas">
-              <a class="btn btn--lime btn--arrow" href="{e(p['url'])}" target="_blank" rel="noopener">
+              {live_btn(p)}<a class="btn {'btn--outline' if p.get('live_url') else 'btn--lime btn--arrow'}" href="{e(p['url'])}" target="_blank" rel="noopener">
                 View on Behance
-                <span class="btn__circle">{ARROW}</span>
+                {'' if p.get('live_url') else f'<span class="btn__circle">{ARROW}</span>'}
               </a>
             </div>
           </div>
         </div>
 
-        <dl class="cs-facts reveal">
+        <dl class="cs-facts hero-in hero-in--3">
 {facts}
         </dl>
       </div>
@@ -308,24 +416,24 @@ def render(p, prev_p, next_p, version):
 
     <!-- ===================== COVER ===================== -->
     <section class="container">
-      <figure class="cs-page-cover reveal">
-        <img src="../{cover['src']}" alt="{e(p['name'])} cover" width="{cover['width']}" height="{cover['height']}" />
+      <figure class="cs-page-cover hero-in hero-in--3">
+        <img src="../{cover['src']}"{img_attrs(cover['src'], cover['width'], "(max-width: 1340px) 100vw, 1280px")} alt="{e(p['name'])} cover" width="{cover['width']}" height="{cover['height']}" fetchpriority="high" decoding="async" />
       </figure>
     </section>
 
-{middle}    <!-- ===================== BEHANCE ===================== -->
+{middle}{gallery(p)}    <!-- ===================== BEHANCE ===================== -->
     <section class="section section--flush-top">
       <div class="container">
         <div class="pj-cta reveal">
           <div>
             <p class="label label--light">Full project</p>
             <h2 class="pj-cta__title">See every screen <span class="soft">on Behance</span></h2>
-            <p class="pj-cta__text">The complete project, with all screens and details, is published on my Behance profile.</p>
+            <p class="pj-cta__text">The complete project, with all screens and details, is published on my Behance profile.{' You can also try the live, working prototype.' if p.get('live_url') else ''}</p>
           </div>
-          <a class="btn btn--lime btn--arrow" href="{e(p['url'])}" target="_blank" rel="noopener">
-            Open {e(p['name'])}
-            <span class="btn__circle">{ARROW}</span>
-          </a>
+          <div class="pj-cta__btns">{live_btn(p)}<a class="btn {'btn--glass' if p.get('live_url') else 'btn--lime btn--arrow'}" href="{e(p['url'])}" target="_blank" rel="noopener">
+            {'View on Behance' if p.get('live_url') else 'Open ' + e(p['name'])}
+            {'' if p.get('live_url') else f'<span class="btn__circle">{ARROW}</span>'}
+          </a></div>
         </div>
       </div>
     </section>
@@ -381,20 +489,29 @@ def render(p, prev_p, next_p, version):
     <div class="container footer__inner">
       <p>© <span id="year">2026</span> Kavinda Weerasekara</p>
       <p class="footer__mono">Product &amp; UI/UX Designer · Sri Lanka</p>
-      <a href="#top" class="footer__top">Back to top ↑</a>
+      <span class="footer__links"><button type="button" class="footer__top footer__cookies" data-cookie-settings>Cookie settings</button>
+      <a href="#top" class="footer__top">Back to top ↑</a></span>
     </div>
   </footer>
 
-  <script src="../assets/js/vendor/gsap.min.js?v=3.12.5"></script>
-  <script src="../assets/js/vendor/ScrollTrigger.min.js?v=3.12.5"></script>
-  <script src="../assets/js/motion.js?v={version}"></script>
-  <script src="../assets/js/main.js?v={version}"></script>
+  <script src="../assets/js/vendor/gsap.min.js?v=3.12.5" defer></script>
+  <script src="../assets/js/vendor/ScrollTrigger.min.js?v=3.12.5" defer></script>
+  <script src="../assets/js/vendor/lenis.min.js?v=1.1.13" defer></script>
+  <script src="../assets/js/smooth.js?v={version}" defer></script>
+  <script src="../assets/js/vendor/Draggable.min.js?v=3.12.5" defer></script>
+  <script src="../assets/js/carousel.js?v={version}" defer></script>
+  <script src="../assets/js/showcase.js?v={version}" defer></script>
+  <script src="../assets/js/motion.js?v={version}" defer></script>
+  <script src="../assets/js/main.js?v={version}" defer></script>
 </body>
 </html>
 """
 
 
 def main():
+    import importlib.util
+    spec = importlib.util.spec_from_file_location("optimize_images", os.path.join(ROOT, "scripts", "optimize_images.py"))
+    mod = importlib.util.module_from_spec(spec); spec.loader.exec_module(mod); mod.main()
     with open(os.path.join(ROOT, "assets", "data", "projects.json"), encoding="utf-8") as f:
         projects = json.load(f)
     with open(os.path.join(ROOT, "assets", "data", "behance-projects.json"), encoding="utf-8") as f:
@@ -402,7 +519,7 @@ def main():
 
     for p in projects:
         b = behance[p["behance_id"]]
-        p["cover"] = b["cover"]
+        p["cover"] = webp_cover(b["cover"])
         p["url"] = b["url"]
         p["year"] = (b.get("published") or "")[:4]
         if p.get("case_study"):
@@ -420,6 +537,88 @@ def main():
         with open(path, "w", encoding="utf-8") as f:
             f.write(render(p, prev_p, next_p, version))
         print("wrote", os.path.relpath(path, ROOT))
+    write_explorations(version)
+    write_sitemap(projects)
+
+
+
+def write_explorations(version):
+    """explorations/index.html: a full-screen wall of design shots with a click-to-enlarge viewer."""
+    with open(os.path.join(ROOT, "assets", "data", "explorations.json"), encoding="utf-8") as f:
+        items = json.load(f)
+    tiles = "\n".join(
+        f'      <a class="ex-tile" href="{e(it["href"] if it["href"].startswith("http") else it["href"])}" data-full="../{it["src"]}" '
+        f'data-fw="{it["fw"]}" data-fh="{it["fh"]}" data-title="{e(it["title"])}"{" target=\"_blank\" rel=\"noopener\"" if it["href"].startswith("http") else ""}>'
+        f'<img src="../{it["thumb"]}" alt="{e(it["title"])}" width="{it["w"]}" height="{it["h"]}" loading="{"eager" if i < 12 else "lazy"}" decoding="async" /></a>'
+        for i, it in enumerate(items))
+    html = f"""<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Design explorations — Kavinda Weerasekara</title>
+  <meta name="description" content="A wall of UI explorations by Kavinda Weerasekara: web and mobile shots across fintech, travel, health, e-commerce and more." />
+  <meta name="author" content="Kavinda Weerasekara" />
+  <link rel="canonical" href="{SITE}explorations/" />
+  <meta name="theme-color" content="#ffffff" />
+  <meta property="og:type" content="website" />
+  <meta property="og:title" content="Design explorations — Kavinda Weerasekara" />
+  <meta property="og:description" content="A wall of web and mobile UI explorations." />
+  <meta property="og:url" content="{SITE}explorations/" />
+  <meta property="og:image" content="{SITE}{items[0]["src"]}" />
+  <link rel="icon" href="../assets/img/favicon-32.png?v=2" sizes="32x32" type="image/png" />
+  <link rel="icon" href="../assets/img/favicon-192.png?v=2" sizes="192x192" type="image/png" />
+  <link rel="apple-touch-icon" href="../assets/img/apple-touch-icon.png?v=2" />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="../assets/css/style.css?v={version}" />
+  <script>document.documentElement.classList.add('js')</script>
+  <script src="../assets/js/analytics.js" defer></script>
+</head>
+<body class="ex-page">
+  <a class="skip-link" href="#wall">Skip to the explorations</a>
+  <a class="ex-back" href="../">
+    <svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M19 12H5M11 6l-6 6 6 6"/></svg>
+    Back to home
+  </a>
+  <header class="ex-head">
+    <h1>Design explorations</h1>
+    <p>Click a screen to see it full size</p>
+  </header>
+  <main class="ex-wall" id="wall" aria-label="Design explorations">
+{tiles}
+  </main>
+  <div class="ex-viewer" hidden aria-hidden="true">
+    <div class="ex-viewer__bg"></div>
+    <figure class="ex-viewer__fig"><img alt="" /><figcaption><span class="ex-viewer__title"></span><a class="ex-viewer__link" target="_blank" rel="noopener">View on Dribbble ↗</a></figcaption></figure>
+    <button type="button" class="ex-viewer__close" aria-label="Close">
+      <svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true"><path d="M6 6l12 12M18 6L6 18"/></svg>
+    </button>
+  </div>
+  <script src="../assets/js/vendor/gsap.min.js?v=3.12.5" defer></script>
+  <script src="../assets/js/vendor/ScrollTrigger.min.js?v=3.12.5" defer></script>
+  <script src="../assets/js/vendor/lenis.min.js?v=1.1.13" defer></script>
+  <script src="../assets/js/smooth.js?v={version}" defer></script>
+  <script src="../assets/js/explorations.js?v={version}" defer></script>
+</body>
+</html>
+"""
+    os.makedirs(os.path.join(ROOT, "explorations"), exist_ok=True)
+    with open(os.path.join(ROOT, "explorations", "index.html"), "w", encoding="utf-8") as f:
+        f.write(html)
+    print("wrote explorations/index.html")
+
+
+def write_sitemap(projects):
+    """sitemap.xml for search engines: the home page and every case study."""
+    import datetime
+    today = datetime.date.today().isoformat()
+    urls = [(SITE, "1.0"), (SITE + "explorations/", "0.7")] + [(f"{SITE}case-studies/{p['slug']}.html", "0.8") for p in projects]
+    body = "".join(f"  <url><loc>{u}</loc><lastmod>{today}</lastmod><priority>{pr}</priority></url>\n" for u, pr in urls)
+    with open(os.path.join(ROOT, "sitemap.xml"), "w", encoding="utf-8") as f:
+        f.write('<?xml version="1.0" encoding="UTF-8"?>\n<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">\n' + body + "</urlset>\n")
+    print("wrote sitemap.xml")
 
 
 if __name__ == "__main__":
