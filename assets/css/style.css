@@ -597,23 +597,68 @@ details[open] .acc-icon::after { transform: rotate(0); }
 .accordion details p { padding: 0 48px 22px 0; color: var(--text-muted); font-size: 15px; }
 
 /* Process: open progress rail. Static default shows every step active; motion.js scrubs it in. */
-.pr { --node: 56px; position: relative; margin-top: 28px; }
+.pr-wrap { padding-top: clamp(40px, 5vw, 64px); }
+.pr-intro { display: flex; align-items: baseline; justify-content: space-between; gap: 12px 32px; flex-wrap: wrap; margin-bottom: 40px; }
+.pr-intro .label { margin: 0; }
+.pr-intro__title { margin: 0; font-size: clamp(26px, 3vw, 40px); letter-spacing: -0.035em; line-height: 1.1; }
+.pr { --node: 56px; position: relative; }
 .pr__list { display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: 32px; }
-.pr__rail { position: absolute; z-index: 0; left: calc(var(--node) / 2); top: calc(var(--node) / 2 - 1px); width: calc(75% + 24px); height: 2px;
-  border-radius: 2px; background: var(--border); overflow: hidden; }
+.pr__rail, .pr__track { position: absolute; z-index: 0; left: calc(var(--node) / 2); top: calc(var(--node) / 2 - 1px); width: calc(75% + 24px); height: 2px; }
+.pr__rail { border-radius: 2px; background: var(--border); overflow: hidden; }
+.pr__track { z-index: 2; pointer-events: none; }
 .pr__fill { position: absolute; inset: 0; background: var(--ink); transform-origin: left center; }
 .pr__step { position: relative; }
 .pr__node { position: relative; z-index: 1; display: grid; place-items: center; width: var(--node); height: var(--node); border-radius: 50%;
   background: var(--lime); border: 1px solid var(--lime); color: var(--ink); box-shadow: 0 0 0 8px var(--bg); transition: transform .5s var(--ease); }
 .pr__node svg { width: 22px; height: 22px; stroke-width: 1.8; transition: transform .5s var(--ease); }
 .pr__ring { position: absolute; inset: -1px; border-radius: 50%; border: 2px solid var(--lime); opacity: 0; pointer-events: none; }
-.pr__label { display: block; margin-top: 28px; font-size: 12px; font-weight: 500; letter-spacing: .12em; text-transform: uppercase; color: var(--text-muted); }
+.pr__label { display: block; margin-top: 18px; font-size: 12px; font-weight: 500; letter-spacing: .12em; text-transform: uppercase; color: var(--text-muted); }
 .pr h3 { position: relative; display: inline-block; margin: 8px 0 10px; font-size: 24px; letter-spacing: -0.03em; }
 .pr h3::after { content: ""; position: absolute; z-index: -1; left: -2px; right: -2px; bottom: .08em; height: .32em; border-radius: 3px;
   background: var(--lime); transform: scaleX(0); transform-origin: left; transition: transform .55s var(--ease); }
 .pr__step p { max-width: 32ch; color: var(--text-muted); font-size: 14.5px; }
 .pr__tags { margin-top: 16px; display: flex; flex-wrap: wrap; gap: 6px; }
 .pr__tags li { font-size: 12.5px; padding: 5px 11px; border-radius: 999px; background: #fff; border: 1px solid var(--border); }
+.pr__comet { position: absolute; left: 0; top: 1px; margin: -7px 0 0 -7px; width: 14px; height: 14px; border-radius: 50%;
+  background: var(--lime); box-shadow: 0 0 0 4px rgba(212,245,92,.35), 0 0 22px 6px rgba(212,245,92,.7); opacity: 0; pointer-events: none; }
+
+/* Step illustrations (final state by default; motion.js plays them in) */
+.pr__art { position: relative; overflow: hidden; margin-top: 24px; height: 150px; border-radius: 20px; background: var(--gray); border: 1px solid var(--border);
+  transition: transform .5s var(--ease), box-shadow .5s var(--ease); }
+.pr__step:hover .pr__art { transform: translateY(-4px); box-shadow: 0 18px 40px -22px rgba(14,14,14,.35); }
+.pa-note { position: absolute; display: grid; gap: 5px; align-content: start; width: 62px; height: 58px; padding: 10px 9px; border-radius: 8px; background: #fff;
+  box-shadow: 0 6px 14px -8px rgba(14,14,14,.3); }
+.pa-note b { height: 4px; border-radius: 2px; background: rgba(14,14,14,.14); }
+.pa-note b:nth-child(2) { width: 75%; } .pa-note b:nth-child(3) { width: 50%; }
+.pa-n1 { left: 10%; top: 20%; transform: rotate(-7deg); background: #fff7c9; }
+.pa-n2 { left: 40%; top: 44%; transform: rotate(4deg); background: var(--lime); }
+.pa-n3 { left: 68%; top: 16%; transform: rotate(-3deg); background: #dbe9ff; }
+.pa-lens { position: absolute; left: 48%; top: 22%; display: grid; place-items: center; width: 46px; height: 46px; border-radius: 50%; background: rgba(255,255,255,.75);
+  border: 1px solid var(--border); color: var(--ink); backdrop-filter: blur(2px); box-shadow: 0 10px 22px -10px rgba(14,14,14,.4); }
+.pa-lens svg { width: 22px; height: 22px; }
+.pa-def svg { position: absolute; inset: 0; width: 100%; height: 100%; padding: 4px 6px; }
+.pa-def text { font: 600 11px Inter, system-ui, sans-serif; fill: #0e0e0e; }
+.pa-node { transform-box: fill-box; transform-origin: center; }
+.pa-win { position: absolute; left: 14%; right: 14%; top: 16px; bottom: -10px; border-radius: 12px 12px 0 0; background: #fff; border: 1px solid var(--border); overflow: hidden; }
+.pa-bar { display: flex; gap: 4px; padding: 8px 10px; border-bottom: 1px solid var(--border); }
+.pa-bar i { width: 6px; height: 6px; border-radius: 50%; background: #e4e4e0; }
+.pa-ui { position: relative; display: grid; grid-template-columns: 1fr 1fr; gap: 6px; padding: 10px; }
+.pa-b { display: block; height: 8px; border-radius: 4px; background: var(--ink); outline: 1px dashed transparent; }
+.pa-nav { grid-column: 1 / -1; height: 6px; width: 40%; background: rgba(14,14,14,.18); }
+.pa-hero { grid-column: 1 / -1; height: 44px; border-radius: 8px; background: linear-gradient(120deg, #9ec5ff, #4a7dff); }
+.pa-t1 { width: 90%; } .pa-t2 { width: 60%; background: rgba(14,14,14,.18); grid-column: 1; }
+.pa-btn { grid-column: 2; grid-row: 3 / span 2; justify-self: end; align-self: center; width: 56px; height: 18px; border-radius: 999px; background: var(--lime); }
+.pa-cursor { position: absolute; left: 70%; top: 68%; width: 22px; height: 22px; filter: drop-shadow(0 3px 4px rgba(14,14,14,.25)); }
+.pa-list { position: absolute; left: 16px; right: 16px; top: 18px; display: grid; gap: 10px; }
+.pa-list li { display: flex; align-items: center; gap: 10px; }
+.pa-list i { position: relative; flex: none; width: 20px; height: 20px; border-radius: 50%; background: var(--ink); }
+.pa-list i::after { content: ""; position: absolute; left: 7px; top: 4px; width: 5px; height: 9px; border: solid var(--lime); border-width: 0 2px 2px 0; transform: rotate(45deg); }
+.pa-list b { height: 6px; border-radius: 3px; background: rgba(14,14,14,.16); width: 70%; }
+.pa-list li:nth-child(2) b { width: 52%; } .pa-list li:nth-child(3) b { width: 62%; }
+.pa-ship { position: absolute; right: 14px; bottom: 14px; padding: 6px 12px; border-radius: 999px; background: var(--ink); color: var(--lime); font-size: 12px; font-weight: 600; letter-spacing: .02em; }
+.pa-conf { position: absolute; right: 50px; bottom: 30px; width: 1px; height: 1px; }
+.pa-conf i { position: absolute; width: 6px; height: 6px; border-radius: 2px; opacity: 0; background: var(--lime); }
+.pa-conf i:nth-child(2n) { background: #4a7dff; } .pa-conf i:nth-child(3n) { background: #ff8fb1; border-radius: 50%; }
 .pr__step:hover .pr__node { transform: translateY(-4px); }
 .pr__step:hover .pr__node svg { transform: rotate(-10deg) scale(1.08); }
 .pr__step:hover h3::after { transform: scaleX(1); }
@@ -954,8 +999,10 @@ html:not(.has-drag) .beyond__hint { display: none; }
   .pr__list { grid-template-columns: 1fr; gap: 40px; }
   .pr__step { padding-left: calc(var(--node) + 24px); min-height: var(--node); }
   .pr__node { position: absolute; left: 0; top: 0; }
-  .pr__label { margin-top: 4px; }
-  .pr__rail { top: calc(var(--node) / 2); bottom: 0; left: calc(var(--node) / 2 - 1px); width: 2px; height: auto; }
+  .pr__label { margin-top: 16px; }
+  .pr__art { margin-top: 0; height: 140px; }
+  .pr__rail, .pr__track { top: calc(var(--node) / 2); bottom: 0; left: calc(var(--node) / 2 - 1px); width: 2px; height: auto; }
+  .pr__comet { left: 1px; top: 0; }
   .pr__fill { transform-origin: center top; }
 }
 

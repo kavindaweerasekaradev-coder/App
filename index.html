@@ -34,13 +34,13 @@
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet" />
-  <link rel="stylesheet" href="assets/css/style.css?v=20261106k" />
+  <link rel="stylesheet" href="assets/css/style.css?v=20261106l" />
   <script>document.documentElement.classList.add('js')</script>
   <link rel="preload" href="assets/js/vendor/gsap.min.js?v=3.12.5" as="script" />
   <link rel="preload" href="assets/js/vendor/ScrollTrigger.min.js?v=3.12.5" as="script" />
-  <link rel="preload" href="assets/js/motion.js?v=20261106k" as="script" />
+  <link rel="preload" href="assets/js/motion.js?v=20261106l" as="script" />
   <script src="assets/js/analytics.js" defer></script>
-  <script src="assets/js/chat.js?v=20261106k" defer></script>
+  <script src="assets/js/chat.js?v=20261106l" defer></script>
 </head>
 <body>
   <a class="skip-link" href="#main">Skip to content</a>
@@ -504,11 +504,15 @@
       </div>
 
       <div class="container">
+        <div class="pr-wrap">
+        <div class="pr-intro"><p class="label">My process</p><h2 class="pr-intro__title">From first question <span class="soft">to shipped product</span></h2></div>
         <div class="pr">
           <span class="pr__rail" aria-hidden="true"><i class="pr__fill"></i></span>
+          <span class="pr__track" aria-hidden="true"><span class="pr__comet"></span></span>
           <ol class="pr__list">
             <li class="pr__step">
               <span class="pr__node" aria-hidden="true"><span class="pr__ring"></span><svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="11" cy="11" r="6.5"/><path d="M20 20l-4.2-4.2"/></svg></span>
+              <div class="pr__art pa-disc" aria-hidden="true"><i class="pa-note pa-n1"><b></b><b></b><b></b></i><i class="pa-note pa-n2"><b></b><b></b><b></b></i><i class="pa-note pa-n3"><b></b><b></b><b></b></i><span class="pa-lens"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><circle cx="10" cy="10" r="6.5"/><path d="M20 20l-5.2-5.2"/></svg></span></div>
               <span class="pr__label">Step 01</span>
               <h3>Discover</h3>
               <p>Gather requirements with stakeholders, run research and map user journeys.</p>
@@ -516,6 +520,7 @@
             </li>
             <li class="pr__step">
               <span class="pr__node" aria-hidden="true"><span class="pr__ring"></span><svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="6" cy="6" r="2.5"/><circle cx="18" cy="18" r="2.5"/><path d="M8.5 6H14a4 4 0 0 1 0 8h-4a4 4 0 0 0 0 8h5.5" transform="translate(0 -2)"/></svg></span>
+              <div class="pr__art pa-def" aria-hidden="true"><svg viewBox="0 0 240 150"><g class="pa-links" fill="none" stroke="#0e0e0e" stroke-width="1.6" stroke-linecap="round"><path d="M92 38 C120 38 122 38 148 38"/><path d="M56 52 C56 112 62 116 84 116"/><path d="M184 52 C184 112 178 116 156 116"/></g><g class="pa-node"><rect x="20" y="24" width="72" height="28" rx="14" fill="#fff" stroke="#e4e4e0"/><text x="56" y="42.5" text-anchor="middle">Users</text></g><g class="pa-node"><rect x="148" y="24" width="72" height="28" rx="14" fill="#fff" stroke="#e4e4e0"/><text x="184" y="42.5" text-anchor="middle">Goals</text></g><g class="pa-node pa-node--key"><rect x="84" y="102" width="72" height="28" rx="14" fill="#d4f55c" stroke="#d4f55c"/><text x="120" y="120.5" text-anchor="middle">Flow</text></g></svg></div>
               <span class="pr__label">Step 02</span>
               <h3>Define</h3>
               <p>Shape personas, information architecture and user flows that align users with business goals.</p>
@@ -523,6 +528,7 @@
             </li>
             <li class="pr__step">
               <span class="pr__node" aria-hidden="true"><span class="pr__ring"></span><svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 20h9"/><path d="M16.5 3.5a2.1 2.1 0 0 1 3 3L7 19l-4 1 1-4Z"/></svg></span>
+              <div class="pr__art pa-des" aria-hidden="true"><div class="pa-win"><span class="pa-bar"><i></i><i></i><i></i></span><div class="pa-ui"><span class="pa-b pa-nav"></span><span class="pa-b pa-hero"></span><span class="pa-b pa-t1"></span><span class="pa-b pa-t2"></span><span class="pa-b pa-btn"></span></div></div><svg class="pa-cursor" viewBox="0 0 24 24"><path d="M5 3l14 8-6 1.5L10 19z" fill="#0e0e0e" stroke="#fff" stroke-width="1.5" stroke-linejoin="round"/></svg></div>
               <span class="pr__label">Step 03</span>
               <h3>Design</h3>
               <p>Wireframes to hi-fi UI and prototypes, with AI to explore more directions.</p>
@@ -530,12 +536,14 @@
             </li>
             <li class="pr__step">
               <span class="pr__node" aria-hidden="true"><span class="pr__ring"></span><svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 13l4 4L19 7"/></svg></span>
+              <div class="pr__art pa-del" aria-hidden="true"><ul class="pa-list"><li><i></i><b></b></li><li><i></i><b></b></li><li><i></i><b></b></li></ul><span class="pa-ship">Shipped ✦</span><span class="pa-conf"><i></i><i></i><i></i><i></i><i></i><i></i></span></div>
               <span class="pr__label">Step 04</span>
               <h3>Deliver</h3>
               <p>Test, hand off with tokens and specs, then keep iterating on real feedback.</p>
               <ul class="pr__tags"><li>Testing</li><li>Handoff</li><li>Iteration</li></ul>
             </li>
           </ol>
+        </div>
         </div>
       </div>
     </section>
@@ -773,9 +781,9 @@
   <script src="assets/js/vendor/gsap.min.js?v=3.12.5" defer></script>
   <script src="assets/js/vendor/ScrollTrigger.min.js?v=3.12.5" defer></script>
   <script src="assets/js/vendor/lenis.min.js?v=1.1.13" defer></script>
-  <script src="assets/js/smooth.js?v=20261106k" defer></script>
+  <script src="assets/js/smooth.js?v=20261106l" defer></script>
   <script src="assets/js/vendor/Draggable.min.js?v=3.12.5" defer></script>
-  <script src="assets/js/motion.js?v=20261106k" defer></script>
-  <script src="assets/js/main.js?v=20261106k" defer></script>
+  <script src="assets/js/motion.js?v=20261106l" defer></script>
+  <script src="assets/js/main.js?v=20261106l" defer></script>
 </body>
 </html>

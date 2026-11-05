@@ -29,12 +29,54 @@
 
   var mm = gsap.matchMedia();
 
-  // Process rail: a line draws through the four steps as you scroll; each node fills lime and pops,
-  // its icon draws itself, and the step's title, text and tags rise in. Scrubbed, so it reverses.
+  // Process rail: on desktop the section pins while a glowing comet travels along the line. Each node it
+  // reaches fills lime and pops, its icon draws itself, the step's illustration plays (notes + lens,
+  // flow links, wireframe painting into UI, checklist + shipped badge) and the copy rises in.
+  // Everything is scrubbed, so scrolling back rewinds it.
   var pr = document.querySelector('.pr');
   if (pr) {
     var prSteps = gsap.utils.toArray('.pr__step', pr);
-    var prFill = pr.querySelector('.pr__fill'), prRail = pr.querySelector('.pr__rail');
+    var prFill = pr.querySelector('.pr__fill'), prRail = pr.querySelector('.pr__rail'), prTrack = pr.querySelector('.pr__track'), prComet = pr.querySelector('.pr__comet');
+    var LIME = '#d4f55c';
+
+    // Illustration sequences, each about 0.8 timeline units long, added at the step's position
+    var arts = {
+      'pa-disc': function (el, tl, at) {
+        var notes = el.querySelectorAll('.pa-note'), lens = el.querySelector('.pa-lens'), key = el.querySelector('.pa-n2');
+        tl.from(notes, { scale: 0, rotation: function (i) { return [-30, 25, -20][i]; }, autoAlpha: 0, duration: 0.25, stagger: 0.08, ease: 'back.out(2)' }, at)
+          .from(lens, { x: -150, y: 40, rotation: -40, autoAlpha: 0, duration: 0.45, ease: 'power2.out' }, at + 0.15)
+          .from(key, { backgroundColor: '#ffffff', duration: 0.2 }, at + 0.5)
+          .to(lens, { scale: 1.15, duration: 0.1, yoyo: true, repeat: 1 }, at + 0.55);
+      },
+      'pa-def': function (el, tl, at) {
+        var nodes = el.querySelectorAll('.pa-node'), links = el.querySelectorAll('.pa-links path');
+        links.forEach(function (p) { var l = p.getTotalLength() + 1; gsap.set(p, { strokeDasharray: l }); });
+        tl.from(nodes[0], { scale: 0, autoAlpha: 0, duration: 0.2, ease: 'back.out(2.5)' }, at)
+          .from(nodes[1], { scale: 0, autoAlpha: 0, duration: 0.2, ease: 'back.out(2.5)' }, at + 0.08)
+          .from(links, { strokeDashoffset: function (i, p) { return p.getTotalLength() + 1; }, duration: 0.35, stagger: 0.08, ease: 'power1.inOut' }, at + 0.2)
+          .from(nodes[2], { scale: 0, autoAlpha: 0, duration: 0.25, ease: 'back.out(2.5)' }, at + 0.5);
+      },
+      'pa-des': function (el, tl, at) {
+        var blocks = el.querySelectorAll('.pa-b'), cursor = el.querySelector('.pa-cursor'), win = el.querySelector('.pa-win');
+        gsap.set(blocks, { outlineColor: 'rgba(14,14,14,.25)' });
+        tl.from(win, { yPercent: 40, autoAlpha: 0, duration: 0.25, ease: 'power3.out' }, at)
+          .from(blocks, { clipPath: 'inset(0 100% 0 0)', duration: 0.18, stagger: 0.07, ease: 'power2.inOut' }, at + 0.2)
+          .to(blocks, { outlineColor: 'rgba(14,14,14,0)', duration: 0.1 }, at + 0.62)
+          .from(cursor, { x: -110, y: -60, autoAlpha: 0, duration: 0.5, ease: 'power2.inOut' }, at + 0.15)
+          .to(el.querySelector('.pa-btn'), { scale: 0.9, duration: 0.06, yoyo: true, repeat: 1 }, at + 0.66);
+      },
+      'pa-del': function (el, tl, at) {
+        var checks = el.querySelectorAll('.pa-list i'), bars = el.querySelectorAll('.pa-list b'), ship = el.querySelector('.pa-ship');
+        var conf = el.querySelectorAll('.pa-conf i');
+        tl.from(bars, { scaleX: 0, transformOrigin: 'left center', duration: 0.2, stagger: 0.06 }, at)
+          .from(checks, { scale: 0, backgroundColor: '#e4e4e0', duration: 0.18, stagger: 0.1, ease: 'back.out(3)' }, at + 0.1)
+          .from(ship, { y: 40, scale: 0.6, autoAlpha: 0, duration: 0.25, ease: 'back.out(2)' }, at + 0.45)
+          .fromTo(conf, { x: 0, y: 0, autoAlpha: 1, rotation: 0 }, {
+            x: function (i) { return [-40, -18, 6, 26, -30, 14][i]; }, y: function (i) { return [-46, -60, -52, -38, -20, -24][i]; },
+            rotation: function (i) { return i * 70; }, autoAlpha: 0, duration: 0.35, ease: 'power2.out', immediateRender: false }, at + 0.5);
+      }
+    };
+
     gsap.matchMedia().add({
       wide: '(min-width: 981px) and (prefers-reduced-motion: no-preference)',
       narrow: '(max-width: 980px) and (prefers-reduced-motion: no-preference)'
@@ -42,34 +84,46 @@
       var vertical = ctx.conditions.narrow;
       if (!vertical && !ctx.conditions.wide) return;
       prSteps.forEach(function (s) { var h = s.querySelector('h3'); if (!h.querySelector('.sw')) splitWords(h); });
-      // vertical rail runs from the first node's centre to the last one's
-      function sizeRail() {
-        if (vertical) prRail.style.height = (prSteps[prSteps.length - 1].offsetTop - prSteps[0].offsetTop) + 'px';
+      function railLen() {
+        return vertical ? prSteps[prSteps.length - 1].offsetTop - prSteps[0].offsetTop : prRail.offsetWidth;
       }
+      function sizeRail() { if (vertical) prRail.style.height = prTrack.style.height = railLen() + 'px'; }
       sizeRail();
       ScrollTrigger.addEventListener('refreshInit', sizeRail);
-      var axis = vertical ? 'scaleY' : 'scaleX';
+
+      var axis = vertical ? 'scaleY' : 'scaleX', fillTo = {}, cometTo = {};
       gsap.set(prFill, vertical ? { scaleY: 0, scaleX: 1 } : { scaleX: 0, scaleY: 1 });
-      var tl = gsap.timeline({ defaults: { ease: 'none' }, scrollTrigger: {
-        trigger: pr, start: vertical ? 'top 70%' : 'top 78%', end: vertical ? 'bottom 65%' : 'bottom 60%', scrub: 0.8 } });
-      var span = prSteps.length - 1, fillTo = {}; fillTo[axis] = 1;
-      tl.to(prFill, Object.assign({ duration: span }, fillTo), 0);
+      fillTo[axis] = 1;
+      cometTo[vertical ? 'top' : 'left'] = '100%';
+      var span = prSteps.length - 1;
+      var tl = gsap.timeline({ defaults: { ease: 'none' }, scrollTrigger: vertical
+        ? { trigger: pr, start: 'top 70%', end: 'bottom 60%', scrub: 0.8 }
+        : { trigger: pr.parentNode, start: 'center 54%', end: '+=' + Math.round(window.innerHeight * 1.8), pin: true, scrub: 0.8 } });
+      tl.fromTo(prComet, { autoAlpha: 0, scale: 0 }, { autoAlpha: 1, scale: 1, duration: 0.15 }, 0)
+        .to(prFill, Object.assign({ duration: span }, fillTo), 0)
+        .to(prComet, Object.assign({ duration: span }, cometTo), 0)
+        .to(prComet, { scale: 2.2, autoAlpha: 0, duration: 0.3 }, span + 0.1);
+
       prSteps.forEach(function (s, i) {
-        var node = s.querySelector('.pr__node'), ring = s.querySelector('.pr__ring');
+        var node = s.querySelector('.pr__node'), ring = s.querySelector('.pr__ring'), art = s.querySelector('.pr__art');
         var shapes = node.querySelectorAll('svg path, svg circle');
-        var words = s.querySelectorAll('.sw__i'), rest = s.querySelectorAll('.pr__label, p, .pr__tags li');
+        var words = s.querySelectorAll('h3 .sw__i'), rest = s.querySelectorAll('.pr__label, p, .pr__tags li');
         shapes.forEach(function (el) { var len = el.getTotalLength ? el.getTotalLength() + 1 : 60; gsap.set(el, { strokeDasharray: len, strokeDashoffset: len }); });
         gsap.set(node, { backgroundColor: '#ffffff', borderColor: '#e4e4e0', scale: 0.86 });
         gsap.set(words, { yPercent: 110 });
         gsap.set(rest, { autoAlpha: 0.15, y: 16 });
+        gsap.set(art, { autoAlpha: 0.35, scale: 0.94 });
         var at = i;
-        tl.to(node, { backgroundColor: '#d4f55c', borderColor: '#d4f55c', scale: 1, duration: 0.3, ease: 'back.out(3)' }, at)
-          .fromTo(ring, { scale: 1, autoAlpha: 0.9 }, { scale: 1.7, autoAlpha: 0, duration: 0.45, ease: 'power2.out', immediateRender: false }, at + 0.05)
-          .to(shapes, { strokeDashoffset: 0, duration: 0.35, ease: 'power2.out' }, at + 0.05)
-          .to(words, { yPercent: 0, duration: 0.3, stagger: 0.05, ease: 'power3.out' }, at + 0.04)
-          .to(rest, { autoAlpha: 1, y: 0, duration: 0.3, stagger: 0.05, ease: 'power3.out' }, at + 0.1);
+        tl.to(node, { backgroundColor: LIME, borderColor: LIME, scale: 1, duration: 0.25, ease: 'back.out(3)' }, at)
+          .fromTo(ring, { scale: 1, autoAlpha: 0.9 }, { scale: 1.8, autoAlpha: 0, duration: 0.4, ease: 'power2.out', immediateRender: false }, at + 0.05)
+          .to(shapes, { strokeDashoffset: 0, duration: 0.3, ease: 'power2.out' }, at + 0.05)
+          .to(art, { autoAlpha: 1, scale: 1, duration: 0.2, ease: 'power2.out' }, at)
+          .to(words, { yPercent: 0, duration: 0.25, stagger: 0.05, ease: 'power3.out' }, at + 0.1)
+          .to(rest, { autoAlpha: 1, y: 0, duration: 0.25, stagger: 0.04, ease: 'power3.out' }, at + 0.18);
+        Object.keys(arts).forEach(function (k) { if (art.classList.contains(k)) arts[k](art, tl, at + 0.05); });
       });
-      return function () { ScrollTrigger.removeEventListener('refreshInit', sizeRail); prRail.style.height = ''; };
+      tl.to({}, { duration: 0.4 }); // brief hold on the finished state before unpinning
+      return function () { ScrollTrigger.removeEventListener('refreshInit', sizeRail); prRail.style.height = prTrack.style.height = ''; };
     });
   }
 
