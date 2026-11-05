@@ -30,7 +30,11 @@
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet" />
-  <link rel="stylesheet" href="../assets/css/style.css?v=20261105b" />
+  <link rel="stylesheet" href="../assets/css/style.css?v=20261105d" />
+  <script>document.documentElement.classList.add('js')</script>
+  <link rel="preload" href="../assets/js/vendor/gsap.min.js?v=3.12.5" as="script" />
+  <link rel="preload" href="../assets/js/vendor/ScrollTrigger.min.js?v=3.12.5" as="script" />
+  <link rel="preload" href="../assets/js/motion.js?v=20261105d" as="script" />
   <script src="../assets/js/analytics.js" defer></script>
 </head>
 <body>
@@ -67,14 +71,14 @@
     <!-- ===================== INTRO ===================== -->
     <section class="cs-page-hero">
       <div class="container">
-        <a class="pill cs-back reveal" href="../index.html#work"><svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M19 12H5M11 18l-6-6 6-6"/></svg> Recent work</a>
+        <a class="pill cs-back hero-in hero-in--1" href="../index.html#work"><svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M19 12H5M11 18l-6-6 6-6"/></svg> Recent work</a>
 
         <div class="cs-page-hero__grid">
-          <div class="reveal">
-            <p class="label">UI/UX case study · 2024</p>
-            <h1 class="cs-page-hero__title">TravelSphere<br /><span class="soft">Branding &amp; mobile app</span></h1>
+          <div>
+            <p class="label hero-in hero-in--1">UI/UX case study · 2024</p>
+            <h1 class="cs-page-hero__title hero-in" aria-label="TravelSphere Branding &amp; mobile app"><span class="sw"><span class="sw__i" style="--i:0">TravelSphere</span></span><br /><span class="soft"><span class="sw"><span class="sw__i" style="--i:1">Branding</span></span> <span class="sw"><span class="sw__i" style="--i:2">&amp;</span></span> <span class="sw"><span class="sw__i" style="--i:3">mobile</span></span> <span class="sw"><span class="sw__i" style="--i:4">app</span></span></span></h1>
           </div>
-          <div class="cs-page-hero__side reveal">
+          <div class="cs-page-hero__side hero-in hero-in--2">
             <p class="cs-page-hero__lead">A travel app that makes discovering, planning and booking trips simple and enjoyable.</p>
             <ul class="pj-tags"><li>UI/UX</li><li>App Design</li><li>Branding</li><li>Mobile app</li><li>Travel</li></ul>
             <div class="cs-page-hero__ctas">
@@ -86,7 +90,7 @@
           </div>
         </div>
 
-        <dl class="cs-facts reveal">
+        <dl class="cs-facts hero-in hero-in--3">
           <div><dt>Year</dt><dd>2024</dd></div>
           <div><dt>Category</dt><dd>Travel &amp; Tourism Mobile Application</dd></div>
           <div><dt>Company</dt><dd>Nimi Technologies</dd></div>
@@ -97,8 +101,8 @@
 
     <!-- ===================== COVER ===================== -->
     <section class="container">
-      <figure class="cs-page-cover reveal">
-        <img src="../assets/img/case-studies/travelsphere/00-cover.webp" alt="TravelSphere cover" width="1600" height="1552" />
+      <figure class="cs-page-cover hero-in hero-in--3">
+        <img src="../assets/img/case-studies/travelsphere/00-cover.webp" srcset="../assets/img/case-studies/travelsphere/00-cover-600.webp 600w, ../assets/img/case-studies/travelsphere/00-cover-1000.webp 1000w, ../assets/img/case-studies/travelsphere/00-cover.webp 1600w" sizes="(max-width: 1340px) 100vw, 1280px" alt="TravelSphere cover" width="1600" height="1552" fetchpriority="high" decoding="async" />
       </figure>
     </section>
 
@@ -115,7 +119,7 @@
             <div class="cs-chapter__main">
               <h2 class="cs-chapter__title reveal">TravelSphere is your travel buddy—making trip planning easy and exploration exciting.</h2>
               <p class="cs-chapter__lead reveal">With personalized itineraries and quick bookings, it&#x27;s all about connecting you to the world effortlessly.</p>
-              <div class="cs-chapter__block reveal"><figure class="cs-blk-image"><img src="../assets/img/case-studies/travelsphere/01-brand.webp" alt="TravelSphere suitcase logo on a mint card next to a photo of a smiling traveller holding a map and a phone" width="1600" height="1111" loading="lazy" /></figure></div>
+              <div class="cs-chapter__block reveal"><figure class="cs-blk-image"><img src="../assets/img/case-studies/travelsphere/01-brand.webp" srcset="../assets/img/case-studies/travelsphere/01-brand-600.webp 600w, ../assets/img/case-studies/travelsphere/01-brand-1000.webp 1000w, ../assets/img/case-studies/travelsphere/01-brand.webp 1600w" sizes="(max-width: 900px) 100vw, 860px" alt="TravelSphere suitcase logo on a mint card next to a photo of a smiling traveller holding a map and a phone" width="1600" height="1111" loading="lazy" decoding="async" /></figure></div>
             </div>
           </div>
         </div>
@@ -128,7 +132,7 @@
             <div class="cs-chapter__main">
               <h2 class="cs-chapter__title reveal">Effortless Entry, Exciting Journeys</h2>
               <p class="cs-chapter__lead reveal">TravelSphere&#x27;s login screens are designed for a fast, welcoming, and secure entry. With a clean layout, easy login options (including social sign-ins), and travel-inspired visuals, these screens make accessing the app effortless and engaging, setting the tone for an exciting user journey from the start.</p>
-              <div class="cs-chapter__block reveal"><figure class="cs-blk-image"><img src="../assets/img/case-studies/travelsphere/02-login.webp" alt="TravelSphere login screen: Welcome Back, Explorer! with Google and Apple sign-in" width="1600" height="1460" loading="lazy" /></figure></div>
+              <div class="cs-chapter__block reveal"><figure class="cs-blk-image"><img src="../assets/img/case-studies/travelsphere/02-login.webp" srcset="../assets/img/case-studies/travelsphere/02-login-600.webp 600w, ../assets/img/case-studies/travelsphere/02-login-1000.webp 1000w, ../assets/img/case-studies/travelsphere/02-login.webp 1600w" sizes="(max-width: 900px) 100vw, 860px" alt="TravelSphere login screen: Welcome Back, Explorer! with Google and Apple sign-in" width="1600" height="1460" loading="lazy" decoding="async" /></figure></div>
             </div>
           </div>
         </div>
@@ -141,7 +145,7 @@
             <div class="cs-chapter__main">
               <h2 class="cs-chapter__title reveal">Discover the World, One Trip at a Time.</h2>
               
-              <div class="cs-chapter__block reveal"><figure class="cs-blk-image"><img src="../assets/img/case-studies/travelsphere/03-home.webp" alt="TravelSphere home screen: Where will your next adventure take you? with destination search and top destinations" width="1600" height="1401" loading="lazy" /></figure></div>
+              <div class="cs-chapter__block reveal"><figure class="cs-blk-image"><img src="../assets/img/case-studies/travelsphere/03-home.webp" srcset="../assets/img/case-studies/travelsphere/03-home-600.webp 600w, ../assets/img/case-studies/travelsphere/03-home-1000.webp 1000w, ../assets/img/case-studies/travelsphere/03-home.webp 1600w" sizes="(max-width: 900px) 100vw, 860px" alt="TravelSphere home screen: Where will your next adventure take you? with destination search and top destinations" width="1600" height="1401" loading="lazy" decoding="async" /></figure></div>
             </div>
           </div>
         </div>
@@ -154,7 +158,7 @@
             <div class="cs-chapter__main">
               <h2 class="cs-chapter__title reveal">Tailored to Your Style</h2>
               <p class="cs-chapter__lead reveal">Whether you&#x27;re seeking adventure, romance, or cultural discovery, TravelSphere personalizes recommendations just for you. Explore travel categories and find trips that match your vibe.</p>
-              <div class="cs-chapter__block reveal"><figure class="cs-blk-image"><img src="../assets/img/case-studies/travelsphere/04-onboarding.webp" alt="TravelSphere onboarding screen, Your next adventure is just a tap away, next to the splash screen" width="1600" height="1701" loading="lazy" /></figure></div>
+              <div class="cs-chapter__block reveal"><figure class="cs-blk-image"><img src="../assets/img/case-studies/travelsphere/04-onboarding.webp" srcset="../assets/img/case-studies/travelsphere/04-onboarding-600.webp 600w, ../assets/img/case-studies/travelsphere/04-onboarding-1000.webp 1000w, ../assets/img/case-studies/travelsphere/04-onboarding.webp 1600w" sizes="(max-width: 900px) 100vw, 860px" alt="TravelSphere onboarding screen, Your next adventure is just a tap away, next to the splash screen" width="1600" height="1701" loading="lazy" decoding="async" /></figure></div>
             </div>
           </div>
         </div>
@@ -167,7 +171,7 @@
             <div class="cs-chapter__main">
               <h2 class="cs-chapter__title reveal">Urbanist</h2>
               <p class="cs-chapter__lead reveal">A modern, clean, and highly versatile sans-serif font, Urbanist is ideal for a travel platform like TravelSphere. Its geometric yet friendly design lends itself to easy readability, enhancing the user experience across various devices. Urbanist&#x27;s sleek lines and balanced proportions make it perfect for a visually engaging and functional app that aims to inspire and inform travelers.</p>
-              <div class="cs-chapter__block reveal"><figure class="cs-blk-image"><img src="../assets/img/case-studies/travelsphere/05-urbanist.webp" alt="Urbanist Regular type specimen" width="1600" height="676" loading="lazy" /></figure></div><div class="cs-chapter__block reveal"><ul class="cs-blk-swatches"><li><span class="cs-blk-swatches__chip" style="background:#2D2D58"></span><strong>#2D2D58</strong></li><li><span class="cs-blk-swatches__chip" style="background:#E2F4D9"></span><strong>#E2F4D9</strong></li><li><span class="cs-blk-swatches__chip" style="background:#181818"></span><strong>#181818</strong></li><li><span class="cs-blk-swatches__chip" style="background:#FFFFFF"></span><strong>#FFFFFF</strong></li></ul></div>
+              <div class="cs-chapter__block reveal"><figure class="cs-blk-image"><img src="../assets/img/case-studies/travelsphere/05-urbanist.webp" srcset="../assets/img/case-studies/travelsphere/05-urbanist-600.webp 600w, ../assets/img/case-studies/travelsphere/05-urbanist-1000.webp 1000w, ../assets/img/case-studies/travelsphere/05-urbanist.webp 1600w" sizes="(max-width: 900px) 100vw, 860px" alt="Urbanist Regular type specimen" width="1600" height="676" loading="lazy" decoding="async" /></figure></div><div class="cs-chapter__block reveal"><ul class="cs-blk-swatches"><li><span class="cs-blk-swatches__chip" style="background:#2D2D58"></span><strong>#2D2D58</strong></li><li><span class="cs-blk-swatches__chip" style="background:#E2F4D9"></span><strong>#E2F4D9</strong></li><li><span class="cs-blk-swatches__chip" style="background:#181818"></span><strong>#181818</strong></li><li><span class="cs-blk-swatches__chip" style="background:#FFFFFF"></span><strong>#FFFFFF</strong></li></ul></div>
             </div>
           </div>
         </div>
@@ -193,7 +197,7 @@
             <div class="cs-chapter__main">
               <h2 class="cs-chapter__title reveal">Smart Itineraries Made Easy</h2>
               <p class="cs-chapter__lead reveal">Our itinerary planner lets you effortlessly organize your travel days with a customizable, day-by-day schedule. Save your favorite activities and create a trip that&#x27;s perfectly yours.</p>
-              <div class="cs-chapter__block reveal"><figure class="cs-blk-image"><img src="../assets/img/case-studies/travelsphere/06-itinerary.webp" alt="Trip to Kyoto, Japan itinerary screen with day-by-day plan and a Book This Trip button" width="1600" height="1351" loading="lazy" /></figure></div>
+              <div class="cs-chapter__block reveal"><figure class="cs-blk-image"><img src="../assets/img/case-studies/travelsphere/06-itinerary.webp" srcset="../assets/img/case-studies/travelsphere/06-itinerary-600.webp 600w, ../assets/img/case-studies/travelsphere/06-itinerary-1000.webp 1000w, ../assets/img/case-studies/travelsphere/06-itinerary.webp 1600w" sizes="(max-width: 900px) 100vw, 860px" alt="Trip to Kyoto, Japan itinerary screen with day-by-day plan and a Book This Trip button" width="1600" height="1351" loading="lazy" decoding="async" /></figure></div>
             </div>
           </div>
         </div>
@@ -206,7 +210,7 @@
             <div class="cs-chapter__main">
               <h2 class="cs-chapter__title reveal">Making Travel Planning Effortless</h2>
               
-              <div class="cs-chapter__block reveal"><figure class="cs-blk-image"><img src="../assets/img/case-studies/travelsphere/07-family.webp" alt="A mother and two children looking out to sea through binoculars" width="1600" height="854" loading="lazy" /></figure></div><div class="cs-chapter__block reveal"><figure class="cs-blk-image"><img src="../assets/img/case-studies/travelsphere/08-suitcase.webp" alt="Mint TravelSphere-branded suitcase on a navy background" width="1600" height="1591" loading="lazy" /></figure></div>
+              <div class="cs-chapter__block reveal"><figure class="cs-blk-image"><img src="../assets/img/case-studies/travelsphere/07-family.webp" srcset="../assets/img/case-studies/travelsphere/07-family-600.webp 600w, ../assets/img/case-studies/travelsphere/07-family-1000.webp 1000w, ../assets/img/case-studies/travelsphere/07-family.webp 1600w" sizes="(max-width: 900px) 100vw, 860px" alt="A mother and two children looking out to sea through binoculars" width="1600" height="854" loading="lazy" decoding="async" /></figure></div><div class="cs-chapter__block reveal"><figure class="cs-blk-image"><img src="../assets/img/case-studies/travelsphere/08-suitcase.webp" srcset="../assets/img/case-studies/travelsphere/08-suitcase-600.webp 600w, ../assets/img/case-studies/travelsphere/08-suitcase-1000.webp 1000w, ../assets/img/case-studies/travelsphere/08-suitcase.webp 1600w" sizes="(max-width: 900px) 100vw, 860px" alt="Mint TravelSphere-branded suitcase on a navy background" width="1600" height="1591" loading="lazy" decoding="async" /></figure></div>
             </div>
           </div>
         </div>
@@ -219,7 +223,7 @@
             <div class="cs-chapter__main">
               <h2 class="cs-chapter__title reveal">TravelSphere brings ease and joy to travel planning, making every step feel effortless—from exploring new destinations to booking your dream trip.</h2>
               
-              <div class="cs-chapter__block reveal"><figure class="cs-blk-image"><img src="../assets/img/case-studies/travelsphere/09-result.webp" alt="TravelSphere home screen with exclusive offers and handpicked trips" width="1600" height="1849" loading="lazy" /></figure></div>
+              <div class="cs-chapter__block reveal"><figure class="cs-blk-image"><img src="../assets/img/case-studies/travelsphere/09-result.webp" srcset="../assets/img/case-studies/travelsphere/09-result-600.webp 600w, ../assets/img/case-studies/travelsphere/09-result-1000.webp 1000w, ../assets/img/case-studies/travelsphere/09-result.webp 1600w" sizes="(max-width: 900px) 100vw, 860px" alt="TravelSphere home screen with exclusive offers and handpicked trips" width="1600" height="1849" loading="lazy" decoding="async" /></figure></div>
             </div>
           </div>
         </div>
@@ -260,7 +264,7 @@
           <article class="rw-card reveal">
             <a class="rw-card__link" href="flowsync.html">
               <div class="rw-card__media">
-                <img src="../assets/img/behance/226135551.png" alt="FlowSync cover" width="808" height="632" loading="lazy" />
+                <img src="../assets/img/behance/226135551.webp" alt="FlowSync cover" width="808" height="632" loading="lazy" decoding="async" />
               </div>
               <div class="rw-card__body">
                 <div>
@@ -275,7 +279,7 @@
           <article class="rw-card reveal">
             <a class="rw-card__link" href="corehr.html">
               <div class="rw-card__media">
-                <img src="../assets/img/behance/208563083.png" alt="CoreHR cover" width="808" height="632" loading="lazy" />
+                <img src="../assets/img/behance/208563083.webp" alt="CoreHR cover" width="808" height="632" loading="lazy" decoding="async" />
               </div>
               <div class="rw-card__body">
                 <div>
@@ -327,12 +331,12 @@
     </div>
   </footer>
 
-  <script src="../assets/js/vendor/gsap.min.js?v=3.12.5"></script>
-  <script src="../assets/js/vendor/ScrollTrigger.min.js?v=3.12.5"></script>
-  <script src="../assets/js/vendor/Draggable.min.js?v=3.12.5"></script>
-  <script src="../assets/js/carousel.js?v=20261105b" defer></script>
-  <script src="../assets/js/showcase.js?v=20261105b" defer></script>
-  <script src="../assets/js/motion.js?v=20261105b"></script>
-  <script src="../assets/js/main.js?v=20261105b"></script>
+  <script src="../assets/js/vendor/gsap.min.js?v=3.12.5" defer></script>
+  <script src="../assets/js/vendor/ScrollTrigger.min.js?v=3.12.5" defer></script>
+  <script src="../assets/js/vendor/Draggable.min.js?v=3.12.5" defer></script>
+  <script src="../assets/js/carousel.js?v=20261105d" defer></script>
+  <script src="../assets/js/showcase.js?v=20261105d" defer></script>
+  <script src="../assets/js/motion.js?v=20261105d" defer></script>
+  <script src="../assets/js/main.js?v=20261105d" defer></script>
 </body>
 </html>

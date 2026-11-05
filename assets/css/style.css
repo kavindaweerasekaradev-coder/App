@@ -1129,3 +1129,12 @@ html:not(.gsap) .shw__track { animation: shw-left 60s linear infinite; }
 html:not(.gsap) .shw__row[data-dir="1"] .shw__track { animation-direction: reverse; }
 @keyframes shw-left { to { transform: translateX(-50%); } }
 @media (prefers-reduced-motion: reduce) { .shw__row { overflow-x: auto; } }
+
+/* Hero entrance in pure CSS: starts on first paint, no wait for the animation scripts */
+.hero-in .sw__i { animation: word-up 1.1s cubic-bezier(.16, 1, .3, 1) both; animation-delay: calc(var(--i, 0) * 60ms + 150ms); }
+.hero-in--1, .hero-in--2, .hero-in--3 { animation: fade-up .9s cubic-bezier(.2, .7, .2, 1) both; }
+.hero-in--1 { animation-delay: .05s; }
+.hero-in--2 { animation-delay: .55s; }
+.hero-in--3 { animation-delay: .7s; }
+@keyframes word-up { from { transform: translateY(110%); } }
+@keyframes fade-up { from { opacity: 0; transform: translateY(24px); } }

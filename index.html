@@ -34,7 +34,11 @@
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet" />
-  <link rel="stylesheet" href="assets/css/style.css?v=20261105b" />
+  <link rel="stylesheet" href="assets/css/style.css?v=20261105d" />
+  <script>document.documentElement.classList.add('js')</script>
+  <link rel="preload" href="assets/js/vendor/gsap.min.js?v=3.12.5" as="script" />
+  <link rel="preload" href="assets/js/vendor/ScrollTrigger.min.js?v=3.12.5" as="script" />
+  <link rel="preload" href="assets/js/motion.js?v=20261105d" as="script" />
   <script src="assets/js/analytics.js" defer></script>
 </head>
 <body>
@@ -70,9 +74,9 @@
     <!-- ===================== HERO ===================== -->
     <section class="hero">
       <div class="container">
-        <div class="hero__intro reveal">
+        <div class="hero__intro hero-in hero-in--1">
           <span class="hero__avatar">
-            <img src="assets/img/kavinda.jpg" alt="Portrait of Kavinda Weerasekara" width="160" height="160" />
+            <img src="assets/img/kavinda-160.webp" alt="Portrait of Kavinda Weerasekara" width="160" height="160" fetchpriority="high" />
             <span class="hero__avatar-dot" aria-hidden="true"></span>
           </span>
           <span>
@@ -81,11 +85,11 @@
           </span>
         </div>
 
-        <h1 class="hero__title reveal">Designing products<br /><span class="soft">that feel <span class="hero__mark">simple</span>.</span></h1>
+        <h1 class="hero__title hero-in" aria-label="Designing products that feel simple."><span class="sw"><span class="sw__i" style="--i:0">Designing</span></span> <span class="sw"><span class="sw__i" style="--i:1">products</span></span><br /><span class="soft"><span class="sw"><span class="sw__i" style="--i:2">that</span></span> <span class="sw"><span class="sw__i" style="--i:3">feel</span></span> <span class="hero__mark"><span class="sw"><span class="sw__i" style="--i:4">simple</span></span></span><span class="sw"><span class="sw__i" style="--i:5">.</span></span></span></h1>
 
         <div class="hero__bottom">
-          <p class="hero__lead reveal">5 years of crafting web and mobile products, scalable design systems and AI-assisted workflows. Currently open to new opportunities.</p>
-          <div class="hero__actions reveal">
+          <p class="hero__lead hero-in hero-in--2">5 years of crafting web and mobile products, scalable design systems and AI-assisted workflows. Currently open to new opportunities.</p>
+          <div class="hero__actions hero-in hero-in--3">
             <div class="hero__ctas">
               <a href="#work" class="btn btn--lime btn--arrow">
                 View my work
@@ -158,7 +162,7 @@
           <li class="stat reveal">
             <div class="stat__top">
               <span class="stat__icon"><svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="3" y="7" width="18" height="13" rx="2"/><path d="M8 7V5a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2M3 13h18"/></svg></span>
-              <span class="stat__logos" aria-hidden="true"><span style="--i:0"><img src="assets/img/logos/axis-tech.png" alt="" width="121" height="120" loading="lazy" /></span><span style="--i:1"><img src="assets/img/logos/nimi-tech.svg" alt="" width="1359" height="719" loading="lazy" /></span><span style="--i:2"><img src="assets/img/logos/empite.png" alt="" width="260" height="120" loading="lazy" /></span><span style="--i:3"><img src="assets/img/logos/arimac.png" alt="" width="124" height="120" loading="lazy" /></span></span>
+              <span class="stat__logos" aria-hidden="true"><span style="--i:0"><img src="assets/img/logos/axis-tech.png" alt="" width="121" height="120" loading="lazy" decoding="async" /></span><span style="--i:1"><img src="assets/img/logos/nimi-tech.svg" alt="" width="1359" height="719" loading="lazy" decoding="async" /></span><span style="--i:2"><img src="assets/img/logos/empite.png" alt="" width="260" height="120" loading="lazy" decoding="async" /></span><span style="--i:3"><img src="assets/img/logos/arimac.png" alt="" width="124" height="120" loading="lazy" decoding="async" /></span></span>
             </div>
             <div>
               <p class="stat__value"><span data-count="4">4</span></p>
@@ -225,7 +229,7 @@
           <article class="rw-card reveal">
             <a class="rw-card__link" href="case-studies/dominos.html">
               <div class="rw-card__media">
-                <img src="assets/img/behance/257665725.jpg" alt="Domino’s Sri Lanka cover" width="808" height="632" loading="lazy" />
+                <img src="assets/img/behance/257665725.webp" alt="Domino’s Sri Lanka cover" width="808" height="632" loading="lazy" decoding="async" />
               </div>
               <div class="rw-card__body">
                 <div>
@@ -241,7 +245,7 @@
           <article class="rw-card reveal">
             <a class="rw-card__link" href="case-studies/personal-finance-dashboard.html">
               <div class="rw-card__media">
-                <img src="assets/img/behance/257350815.png" alt="Personal Finance Dashboard cover" width="808" height="632" loading="lazy" />
+                <img src="assets/img/behance/257350815.webp" alt="Personal Finance Dashboard cover" width="808" height="632" loading="lazy" decoding="async" />
               </div>
               <div class="rw-card__body">
                 <div>
@@ -257,7 +261,7 @@
           <article class="rw-card reveal">
             <a class="rw-card__link" href="case-studies/lumora.html">
               <div class="rw-card__media">
-                <img src="assets/img/behance/251811817.png" alt="Lumora cover" width="808" height="632" loading="lazy" />
+                <img src="assets/img/behance/251811817.webp" alt="Lumora cover" width="808" height="632" loading="lazy" decoding="async" />
               </div>
               <div class="rw-card__body">
                 <div>
@@ -273,7 +277,7 @@
           <article class="rw-card reveal">
             <a class="rw-card__link" href="case-studies/wanderly.html">
               <div class="rw-card__media">
-                <img src="assets/img/behance/255103139.png" alt="Wanderly cover" width="808" height="632" loading="lazy" />
+                <img src="assets/img/behance/255103139.webp" alt="Wanderly cover" width="808" height="632" loading="lazy" decoding="async" />
               </div>
               <div class="rw-card__body">
                 <div>
@@ -289,7 +293,7 @@
           <article class="rw-card reveal">
             <a class="rw-card__link" href="case-studies/flowsync.html">
               <div class="rw-card__media">
-                <img src="assets/img/behance/226135551.png" alt="FlowSync cover" width="808" height="632" loading="lazy" />
+                <img src="assets/img/behance/226135551.webp" alt="FlowSync cover" width="808" height="632" loading="lazy" decoding="async" />
               </div>
               <div class="rw-card__body">
                 <div>
@@ -305,7 +309,7 @@
           <article class="rw-card reveal">
             <a class="rw-card__link" href="case-studies/travelsphere.html">
               <div class="rw-card__media">
-                <img src="assets/img/behance/212043297.png" alt="TravelSphere cover" width="808" height="632" loading="lazy" />
+                <img src="assets/img/behance/212043297.webp" alt="TravelSphere cover" width="808" height="632" loading="lazy" decoding="async" />
               </div>
               <div class="rw-card__body">
                 <div>
@@ -321,7 +325,7 @@
           <article class="rw-card reveal">
             <a class="rw-card__link" href="case-studies/corehr.html">
               <div class="rw-card__media">
-                <img src="assets/img/behance/208563083.png" alt="CoreHR cover" width="808" height="632" loading="lazy" />
+                <img src="assets/img/behance/208563083.webp" alt="CoreHR cover" width="808" height="632" loading="lazy" decoding="async" />
               </div>
               <div class="rw-card__body">
                 <div>
@@ -355,7 +359,7 @@
           <div class="live">
           <article class="live__card reveal">
             <div class="live__top">
-              <span class="live__logo live__logo--fill"><img src="assets/img/logos/products/readyme.webp" alt="ReadyMe logo" width="56" height="56" loading="lazy" /></span>
+              <span class="live__logo live__logo--fill"><img src="assets/img/logos/products/readyme.webp" alt="ReadyMe logo" width="56" height="56" loading="lazy" decoding="async" /></span>
               <span class="live__status"><i aria-hidden="true"></i>Live</span>
             </div>
             <p class="live__cat">EdTech · Learning platform</p>
@@ -372,7 +376,7 @@
           </article>
           <article class="live__card reveal">
             <div class="live__top">
-              <span class="live__logo"><img src="assets/img/logos/products/healthsync.webp" alt="HealthSync logo" width="56" height="56" loading="lazy" /></span>
+              <span class="live__logo"><img src="assets/img/logos/products/healthsync.webp" alt="HealthSync logo" width="56" height="56" loading="lazy" decoding="async" /></span>
               <span class="live__status"><i aria-hidden="true"></i>Live</span>
             </div>
             <p class="live__cat">Healthcare · EHR platform</p>
@@ -388,7 +392,7 @@
           </article>
           <article class="live__card reveal">
             <div class="live__top">
-              <span class="live__logo"><img src="assets/img/logos/products/cubis.svg" alt="Cubis logo" width="56" height="56" loading="lazy" /></span>
+              <span class="live__logo"><img src="assets/img/logos/products/cubis.svg" alt="Cubis logo" width="56" height="56" loading="lazy" decoding="async" /></span>
               <span class="live__status"><i aria-hidden="true"></i>Live</span>
             </div>
             <p class="live__cat">Fintech · Investment dashboard</p>
@@ -404,7 +408,7 @@
           </article>
           <article class="live__card reveal">
             <div class="live__top">
-              <span class="live__logo live__logo--fill"><img src="assets/img/logos/products/gigz.webp" alt="Gigz logo" width="56" height="56" loading="lazy" /></span>
+              <span class="live__logo live__logo--fill"><img src="assets/img/logos/products/gigz.webp" alt="Gigz logo" width="56" height="56" loading="lazy" decoding="async" /></span>
               <span class="live__status"><i aria-hidden="true"></i>Live</span>
             </div>
             <p class="live__cat">Music · Event discovery</p>
@@ -420,7 +424,7 @@
           </article>
           <article class="live__card reveal">
             <div class="live__top">
-              <span class="live__logo live__logo--fill"><img src="assets/img/logos/products/peoplespay.webp" alt="Peoples Pay logo" width="56" height="56" loading="lazy" /></span>
+              <span class="live__logo live__logo--fill"><img src="assets/img/logos/products/peoplespay.webp" alt="Peoples Pay logo" width="56" height="56" loading="lazy" decoding="async" /></span>
               <span class="live__status"><i aria-hidden="true"></i>Live</span>
             </div>
             <p class="live__cat">Fintech · Mobile banking</p>
@@ -436,7 +440,7 @@
           </article>
           <article class="live__card reveal">
             <div class="live__top">
-              <span class="live__logo"><img src="assets/img/logos/products/dailydogfights.webp" alt="Daily DogFights logo" width="56" height="56" loading="lazy" /></span>
+              <span class="live__logo"><img src="assets/img/logos/products/dailydogfights.webp" alt="Daily DogFights logo" width="56" height="56" loading="lazy" decoding="async" /></span>
               <span class="live__status"><i aria-hidden="true"></i>Live</span>
             </div>
             <p class="live__cat">Sports · Golf</p>
@@ -474,79 +478,79 @@
         <ul class="dc__track">
             <li class="dc__card">
               <a href="https://dribbble.com/shots/27792300-Meadowly-Farm-Products-Website" target="_blank" rel="noopener" draggable="false">
-                <img src="assets/img/dribbble/02.webp" alt="Meadowly — Farm Products Website on Dribbble" width="1200" height="900" loading="lazy" draggable="false" />
+                <img src="assets/img/dribbble/02.webp" srcset="assets/img/dribbble/02-600.webp 600w, assets/img/dribbble/02-1000.webp 1000w, assets/img/dribbble/02.webp 1200w" sizes="(max-width: 640px) 74vw, 600px" alt="Meadowly — Farm Products Website on Dribbble" width="1200" height="900" loading="lazy" decoding="async" draggable="false" />
                 <span class="dc__card-title">Meadowly — Farm Products Website</span>
               </a>
             </li>
             <li class="dc__card">
               <a href="https://dribbble.com/shots/27792260-Naturo-Skincare-Product-Website" target="_blank" rel="noopener" draggable="false">
-                <img src="assets/img/dribbble/03.webp" alt="Naturo — Skincare Product Website on Dribbble" width="1200" height="900" loading="lazy" draggable="false" />
+                <img src="assets/img/dribbble/03.webp" srcset="assets/img/dribbble/03-600.webp 600w, assets/img/dribbble/03-1000.webp 1000w, assets/img/dribbble/03.webp 1200w" sizes="(max-width: 640px) 74vw, 600px" alt="Naturo — Skincare Product Website on Dribbble" width="1200" height="900" loading="lazy" decoding="async" draggable="false" />
                 <span class="dc__card-title">Naturo — Skincare Product Website</span>
               </a>
             </li>
             <li class="dc__card">
               <a href="https://dribbble.com/shots/25050898-EcoRoots-Landing-Page-Design" target="_blank" rel="noopener" draggable="false">
-                <img src="assets/img/dribbble/07.webp" alt="EcoRoots — Landing Page Design on Dribbble" width="1200" height="900" loading="lazy" draggable="false" />
+                <img src="assets/img/dribbble/07.webp" srcset="assets/img/dribbble/07-600.webp 600w, assets/img/dribbble/07-1000.webp 1000w, assets/img/dribbble/07.webp 1200w" sizes="(max-width: 640px) 74vw, 600px" alt="EcoRoots — Landing Page Design on Dribbble" width="1200" height="900" loading="lazy" decoding="async" draggable="false" />
                 <span class="dc__card-title">EcoRoots — Landing Page Design</span>
               </a>
             </li>
             <li class="dc__card">
               <a href="https://dribbble.com/shots/24958645-Unity-Bank-App" target="_blank" rel="noopener" draggable="false">
-                <img src="assets/img/dribbble/08.webp" alt="Unity Bank App on Dribbble" width="1200" height="900" loading="lazy" draggable="false" />
+                <img src="assets/img/dribbble/08.webp" srcset="assets/img/dribbble/08-600.webp 600w, assets/img/dribbble/08-1000.webp 1000w, assets/img/dribbble/08.webp 1200w" sizes="(max-width: 640px) 74vw, 600px" alt="Unity Bank App on Dribbble" width="1200" height="900" loading="lazy" decoding="async" draggable="false" />
                 <span class="dc__card-title">Unity Bank App</span>
               </a>
             </li>
             <li class="dc__card">
               <a href="https://dribbble.com/shots/24947276-Crimson-Arch-Landing-Page" target="_blank" rel="noopener" draggable="false">
-                <img src="assets/img/dribbble/10.webp" alt="Crimson Arch — Landing Page on Dribbble" width="1200" height="900" loading="lazy" draggable="false" />
+                <img src="assets/img/dribbble/10.webp" srcset="assets/img/dribbble/10-600.webp 600w, assets/img/dribbble/10-1000.webp 1000w, assets/img/dribbble/10.webp 1200w" sizes="(max-width: 640px) 74vw, 600px" alt="Crimson Arch — Landing Page on Dribbble" width="1200" height="900" loading="lazy" decoding="async" draggable="false" />
                 <span class="dc__card-title">Crimson Arch — Landing Page</span>
               </a>
             </li>
             <li class="dc__card">
               <a href="https://dribbble.com/shots/24947229-MedConnect-Branding" target="_blank" rel="noopener" draggable="false">
-                <img src="assets/img/dribbble/13.webp" alt="MedConnect Branding on Dribbble" width="1200" height="900" loading="lazy" draggable="false" />
+                <img src="assets/img/dribbble/13.webp" srcset="assets/img/dribbble/13-600.webp 600w, assets/img/dribbble/13-1000.webp 1000w, assets/img/dribbble/13.webp 1200w" sizes="(max-width: 640px) 74vw, 600px" alt="MedConnect Branding on Dribbble" width="1200" height="900" loading="lazy" decoding="async" draggable="false" />
                 <span class="dc__card-title">MedConnect Branding</span>
               </a>
             </li>
             <li class="dc__card">
               <a href="https://dribbble.com/shots/24945476-Onboarding" target="_blank" rel="noopener" draggable="false">
-                <img src="assets/img/dribbble/17.webp" alt="Unity Bank — Onboarding on Dribbble" width="1200" height="900" loading="lazy" draggable="false" />
+                <img src="assets/img/dribbble/17.webp" srcset="assets/img/dribbble/17-600.webp 600w, assets/img/dribbble/17-1000.webp 1000w, assets/img/dribbble/17.webp 1200w" sizes="(max-width: 640px) 74vw, 600px" alt="Unity Bank — Onboarding on Dribbble" width="1200" height="900" loading="lazy" decoding="async" draggable="false" />
                 <span class="dc__card-title">Unity Bank — Onboarding</span>
               </a>
             </li>
             <li class="dc__card">
               <a href="https://dribbble.com/shots/24945457-Unity-Bank-App-Branding" target="_blank" rel="noopener" draggable="false">
-                <img src="assets/img/dribbble/19.webp" alt="Unity Bank App — Branding on Dribbble" width="1200" height="900" loading="lazy" draggable="false" />
+                <img src="assets/img/dribbble/19.webp" srcset="assets/img/dribbble/19-600.webp 600w, assets/img/dribbble/19-1000.webp 1000w, assets/img/dribbble/19.webp 1200w" sizes="(max-width: 640px) 74vw, 600px" alt="Unity Bank App — Branding on Dribbble" width="1200" height="900" loading="lazy" decoding="async" draggable="false" />
                 <span class="dc__card-title">Unity Bank App — Branding</span>
               </a>
             </li>
             <li class="dc__card">
               <a href="https://dribbble.com/shots/24945410-Crimson-Arch-Web-Design-and-Branding" target="_blank" rel="noopener" draggable="false">
-                <img src="assets/img/dribbble/22.webp" alt="Crimson Arch — Web Design and Branding on Dribbble" width="1200" height="900" loading="lazy" draggable="false" />
+                <img src="assets/img/dribbble/22.webp" srcset="assets/img/dribbble/22-600.webp 600w, assets/img/dribbble/22-1000.webp 1000w, assets/img/dribbble/22.webp 1200w" sizes="(max-width: 640px) 74vw, 600px" alt="Crimson Arch — Web Design and Branding on Dribbble" width="1200" height="900" loading="lazy" decoding="async" draggable="false" />
                 <span class="dc__card-title">Crimson Arch — Web Design and Branding</span>
               </a>
             </li>
             <li class="dc__card">
               <a href="https://dribbble.com/shots/24947248-CoreHR-Dark-Mode" target="_blank" rel="noopener" draggable="false">
-                <img src="assets/img/dribbble/12.webp" alt="CoreHR — Dark Mode on Dribbble" width="1200" height="900" loading="lazy" draggable="false" />
+                <img src="assets/img/dribbble/12.webp" srcset="assets/img/dribbble/12-600.webp 600w, assets/img/dribbble/12-1000.webp 1000w, assets/img/dribbble/12.webp 1200w" sizes="(max-width: 640px) 74vw, 600px" alt="CoreHR — Dark Mode on Dribbble" width="1200" height="900" loading="lazy" decoding="async" draggable="false" />
                 <span class="dc__card-title">CoreHR — Dark Mode</span>
               </a>
             </li>
             <li class="dc__card">
               <a href="https://dribbble.com/shots/25406077-TravelSphere-Mobile-App" target="_blank" rel="noopener" draggable="false">
-                <img src="assets/img/dribbble/06.webp" alt="TravelSphere — Mobile App on Dribbble" width="1200" height="900" loading="lazy" draggable="false" />
+                <img src="assets/img/dribbble/06.webp" srcset="assets/img/dribbble/06-600.webp 600w, assets/img/dribbble/06-1000.webp 1000w, assets/img/dribbble/06.webp 1200w" sizes="(max-width: 640px) 74vw, 600px" alt="TravelSphere — Mobile App on Dribbble" width="1200" height="900" loading="lazy" decoding="async" draggable="false" />
                 <span class="dc__card-title">TravelSphere — Mobile App</span>
               </a>
             </li>
             <li class="dc__card">
               <a href="https://dribbble.com/shots/24683726-E-Wallet-App" target="_blank" rel="noopener" draggable="false">
-                <img src="assets/img/dribbble/27.webp" alt="E-Wallet App on Dribbble" width="1200" height="900" loading="lazy" draggable="false" />
+                <img src="assets/img/dribbble/27.webp" srcset="assets/img/dribbble/27-600.webp 600w, assets/img/dribbble/27-1000.webp 1000w, assets/img/dribbble/27.webp 1200w" sizes="(max-width: 640px) 74vw, 600px" alt="E-Wallet App on Dribbble" width="1200" height="900" loading="lazy" decoding="async" draggable="false" />
                 <span class="dc__card-title">E-Wallet App</span>
               </a>
             </li>
             <li class="dc__card">
               <a href="https://dribbble.com/shots/20088959-ZGAMES-Games-Download-Website" target="_blank" rel="noopener" draggable="false">
-                <img src="assets/img/dribbble/33.webp" alt="ZGAMES — Games Download Website on Dribbble" width="1200" height="900" loading="lazy" draggable="false" />
+                <img src="assets/img/dribbble/33.webp" srcset="assets/img/dribbble/33-600.webp 600w, assets/img/dribbble/33-1000.webp 1000w, assets/img/dribbble/33.webp 1200w" sizes="(max-width: 640px) 74vw, 600px" alt="ZGAMES — Games Download Website on Dribbble" width="1200" height="900" loading="lazy" decoding="async" draggable="false" />
                 <span class="dc__card-title">ZGAMES — Games Download Website</span>
               </a>
             </li>
@@ -699,7 +703,7 @@
             <li class="tl2__item reveal is-latest">
               <article class="tl2__card">
                 <div class="tl2__head">
-                  <span class="tl2__logo"><img src="assets/img/logos/axis-tech.png" alt="" width="121" height="120" loading="lazy" /></span>
+                  <span class="tl2__logo"><img src="assets/img/logos/axis-tech.png" alt="" width="121" height="120" loading="lazy" decoding="async" /></span>
                   <div class="tl2__title">
                     <h3>Senior UI/UX Designer</h3>
                     <p>Axis Tech Lanka (Pvt) Ltd</p>
@@ -715,7 +719,7 @@
             <li class="tl2__item reveal">
               <article class="tl2__card">
                 <div class="tl2__head">
-                  <span class="tl2__logo"><img src="assets/img/logos/nimi-tech.svg" alt="" width="1359" height="719" loading="lazy" /></span>
+                  <span class="tl2__logo"><img src="assets/img/logos/nimi-tech.svg" alt="" width="1359" height="719" loading="lazy" decoding="async" /></span>
                   <div class="tl2__title">
                     <h3>UI/UX Designer</h3>
                     <p>Nimi Tech Limited</p>
@@ -731,7 +735,7 @@
             <li class="tl2__item reveal">
               <article class="tl2__card">
                 <div class="tl2__head">
-                  <span class="tl2__logo"><img src="assets/img/logos/empite.png" alt="" width="260" height="120" loading="lazy" /></span>
+                  <span class="tl2__logo"><img src="assets/img/logos/empite.png" alt="" width="260" height="120" loading="lazy" decoding="async" /></span>
                   <div class="tl2__title">
                     <h3>UI/UX Designer</h3>
                     <p>Empite Solutions Pvt Ltd</p>
@@ -747,7 +751,7 @@
             <li class="tl2__item reveal">
               <article class="tl2__card">
                 <div class="tl2__head">
-                  <span class="tl2__logo"><img src="assets/img/logos/arimac.png" alt="" width="124" height="120" loading="lazy" /></span>
+                  <span class="tl2__logo"><img src="assets/img/logos/arimac.png" alt="" width="124" height="120" loading="lazy" decoding="async" /></span>
                   <div class="tl2__title">
                     <h3>Intern UI/UX Designer</h3>
                     <p>Arimac Lanka Pvt Ltd</p>
@@ -800,7 +804,7 @@
             <div class="snap__drag">
               <figure class="snap__card" style="--tilt:-6deg">
                 <span class="snap__tape" aria-hidden="true"></span>
-                <span class="snap__photo"><img src="assets/img/beyond/desk-setup.webp" alt="A desk with a monitor showing a website being built in Webflow, lit by a monitor light bar" width="637" height="800" loading="lazy" draggable="false" /><span class="snap__glare" aria-hidden="true"></span></span>
+                <span class="snap__photo"><img src="assets/img/beyond/desk-setup.webp" alt="A desk with a monitor showing a website being built in Webflow, lit by a monitor light bar" width="637" height="800" loading="lazy" decoding="async" draggable="false" /><span class="snap__glare" aria-hidden="true"></span></span>
                 <figcaption>Where the work happens</figcaption>
               </figure>
             </div>
@@ -809,7 +813,7 @@
             <div class="snap__drag">
               <figure class="snap__card" style="--tilt:5deg">
                 <span class="snap__tape" aria-hidden="true"></span>
-                <span class="snap__photo"><img src="assets/img/beyond/sunset-ride.webp" alt="View over motorbike handlebars of a sunset on the beach" width="640" height="798" loading="lazy" draggable="false" /><span class="snap__glare" aria-hidden="true"></span></span>
+                <span class="snap__photo"><img src="assets/img/beyond/sunset-ride.webp" alt="View over motorbike handlebars of a sunset on the beach" width="640" height="798" loading="lazy" decoding="async" draggable="false" /><span class="snap__glare" aria-hidden="true"></span></span>
                 <figcaption>Chasing sunsets</figcaption>
               </figure>
             </div>
@@ -818,7 +822,7 @@
             <div class="snap__drag">
               <figure class="snap__card" style="--tilt:-3deg">
                 <span class="snap__tape" aria-hidden="true"></span>
-                <span class="snap__photo"><img src="assets/img/beyond/colombo-view.webp" alt="Feet up by a high-rise window overlooking Colombo and the sea" width="640" height="800" loading="lazy" draggable="false" /><span class="snap__glare" aria-hidden="true"></span></span>
+                <span class="snap__photo"><img src="assets/img/beyond/colombo-view.webp" alt="Feet up by a high-rise window overlooking Colombo and the sea" width="640" height="800" loading="lazy" decoding="async" draggable="false" /><span class="snap__glare" aria-hidden="true"></span></span>
                 <figcaption>Colombo from above</figcaption>
               </figure>
             </div>
@@ -827,7 +831,7 @@
             <div class="snap__drag">
               <figure class="snap__card" style="--tilt:7deg">
                 <span class="snap__tape" aria-hidden="true"></span>
-                <span class="snap__photo"><img src="assets/img/beyond/office-desk.webp" alt="A tidy office desk with a laptop and monitor against an orange wall" width="637" height="800" loading="lazy" draggable="false" /><span class="snap__glare" aria-hidden="true"></span></span>
+                <span class="snap__photo"><img src="assets/img/beyond/office-desk.webp" alt="A tidy office desk with a laptop and monitor against an orange wall" width="637" height="800" loading="lazy" decoding="async" draggable="false" /><span class="snap__glare" aria-hidden="true"></span></span>
                 <figcaption>Office days</figcaption>
               </figure>
             </div>
@@ -881,10 +885,10 @@
     </div>
   </footer>
 
-  <script src="assets/js/vendor/gsap.min.js?v=3.12.5"></script>
-  <script src="assets/js/vendor/ScrollTrigger.min.js?v=3.12.5"></script>
-  <script src="assets/js/vendor/Draggable.min.js?v=3.12.5"></script>
-  <script src="assets/js/motion.js?v=20261105b"></script>
-  <script src="assets/js/main.js?v=20261105b"></script>
+  <script src="assets/js/vendor/gsap.min.js?v=3.12.5" defer></script>
+  <script src="assets/js/vendor/ScrollTrigger.min.js?v=3.12.5" defer></script>
+  <script src="assets/js/vendor/Draggable.min.js?v=3.12.5" defer></script>
+  <script src="assets/js/motion.js?v=20261105d" defer></script>
+  <script src="assets/js/main.js?v=20261105d" defer></script>
 </body>
 </html>
