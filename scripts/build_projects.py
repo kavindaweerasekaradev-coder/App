@@ -256,20 +256,25 @@ def ld_json(p, cover):
 
 
 def gallery(p):
-    """Optional full-width UI screens carousel shown after the case study."""
+    """Optional full-bleed UI screens showcase after the case study: two endless rows (web, mobile)."""
     g = p.get("gallery")
     if not g:
         return ""
+    def row(st, direction):
+        items = "".join(
+            f'<figure class="shw__item"><img src="../{it["src"]}" alt="{e(it["alt"])}" width="{it["width"]}" height="{it["height"]}" loading="lazy" draggable="false" />'
+            f'<figcaption>{e(it["caption"])}</figcaption></figure>' for it in st["items"])
+        return (f'<div class="shw__row shw__row--{st["kind"]}" data-dir="{direction}" aria-label="{e(st["label"])} screens">'
+                f'<div class="shw__track">{items}<div class="shw__dup" aria-hidden="true">{items}</div></div></div>')
+    rows = "".join(row(st, -1 if i % 2 == 0 else 1) for i, st in enumerate(g["sets"]))
     return f"""    <!-- ===================== UI SCREENS ===================== -->
-    <section class="section cs-gallery" id="ui-screens">
-      <div class="container">
-        <div class="cs-gallery__head reveal">
-          <p class="label">{e(g.get("label", "UI screens"))}</p>
-          <h2 class="cs-gallery__title">{e(g["title"])} <span class="soft">{e(g.get("title_soft", ""))}</span></h2>
-          <p class="cs-gallery__lead">{e(g.get("lead", ""))}</p>
-        </div>
-        {block({"type": "carousel", "label": g["title"], "sets": g["sets"], "light": True})}
+    <section class="shw" id="ui-screens" aria-label="{e(g["title"])} {e(g.get("title_soft", ""))}">
+      <div class="container shw__head">
+        <p class="label reveal">{e(g.get("label", "UI screens"))}</p>
+        <h2 class="shw__title">{e(g["title"])} <span class="soft">{e(g.get("title_soft", ""))}</span></h2>
+        <p class="shw__lead reveal">{e(g.get("lead", ""))}</p>
       </div>
+      <div class="shw__rows">{rows}</div>
     </section>
 
 """
@@ -461,6 +466,7 @@ def render(p, prev_p, next_p, version):
   <script src="../assets/js/vendor/ScrollTrigger.min.js?v=3.12.5"></script>
   <script src="../assets/js/vendor/Draggable.min.js?v=3.12.5"></script>
   <script src="../assets/js/carousel.js?v={version}" defer></script>
+  <script src="../assets/js/showcase.js?v={version}" defer></script>
   <script src="../assets/js/motion.js?v={version}"></script>
   <script src="../assets/js/main.js?v={version}"></script>
 </body>
