@@ -58,6 +58,15 @@ def split_words(text, start=0):
     return " ".join(f'<span class="sw"><span class="sw__i" style="--i:{start + i}">{w}</span></span>' for i, w in enumerate(words))
 
 
+
+def live_btn(p):
+    """Primary 'Live prototype' button when the project has a live_url."""
+    if not p.get("live_url"):
+        return ""
+    return (f'<a class="btn btn--lime btn--arrow" href="{e(p["live_url"])}" target="_blank" rel="noopener">'
+            f'{e(p.get("live_label", "Live prototype"))}<span class="btn__circle">{ARROW}</span></a>\n              ')
+
+
 def card(p, num, prefix="", label=None):
     """A Recent work card. Used on the home page and for previous/next links on project pages."""
     href = prefix + "case-studies/" + p["slug"] + ".html" if prefix == "" else p["slug"] + ".html"
@@ -398,9 +407,9 @@ def render(p, prev_p, next_p, version):
             <p class="cs-page-hero__lead">{e(p['lead'])}</p>
             <ul class="pj-tags">{tags}</ul>
             <div class="cs-page-hero__ctas">
-              <a class="btn btn--lime btn--arrow" href="{e(p['url'])}" target="_blank" rel="noopener">
+              {live_btn(p)}<a class="btn {'btn--outline' if p.get('live_url') else 'btn--lime btn--arrow'}" href="{e(p['url'])}" target="_blank" rel="noopener">
                 View on Behance
-                <span class="btn__circle">{ARROW}</span>
+                {'' if p.get('live_url') else f'<span class="btn__circle">{ARROW}</span>'}
               </a>
             </div>
           </div>
@@ -426,12 +435,12 @@ def render(p, prev_p, next_p, version):
           <div>
             <p class="label label--light">Full project</p>
             <h2 class="pj-cta__title">See every screen <span class="soft">on Behance</span></h2>
-            <p class="pj-cta__text">The complete project, with all screens and details, is published on my Behance profile.</p>
+            <p class="pj-cta__text">The complete project, with all screens and details, is published on my Behance profile.{' You can also try the live, working prototype.' if p.get('live_url') else ''}</p>
           </div>
-          <a class="btn btn--lime btn--arrow" href="{e(p['url'])}" target="_blank" rel="noopener">
-            Open {e(p['name'])}
-            <span class="btn__circle">{ARROW}</span>
-          </a>
+          <div class="pj-cta__btns">{live_btn(p)}<a class="btn {'btn--glass' if p.get('live_url') else 'btn--lime btn--arrow'}" href="{e(p['url'])}" target="_blank" rel="noopener">
+            {'View on Behance' if p.get('live_url') else 'Open ' + e(p['name'])}
+            {'' if p.get('live_url') else f'<span class="btn__circle">{ARROW}</span>'}
+          </a></div>
         </div>
       </div>
     </section>
