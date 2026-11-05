@@ -168,7 +168,7 @@ def block(b):
                 f'width="{it["width"]}" height="{it["height"]}" loading="lazy" decoding="async" draggable="false" /></li>' for it in st["items"])
             + '</ul></div>' for i, st in enumerate(b["sets"]))
         first = b["sets"][0]
-        light = " sc--light" if b.get("light") else ""
+        light = " sc--clean" if b.get("clean") else (" sc--light" if b.get("light") else "")
         return (f'<div class="sc{light}" aria-roledescription="carousel" aria-label="{e(b.get("label", "UI screens"))}">'
                 f'<div class="sc__tabs" role="tablist">{tabs}</div>'
                 f'<div class="sc__stage" tabindex="0">{sets}</div>'
@@ -291,29 +291,22 @@ def ld_json(p, cover):
 
 
 def gallery(p):
-    """Optional full-bleed UI screens showcase after the case study: two endless rows (web, mobile)."""
+    """Optional UI screens carousel shown after the case study (clean style, GSAP)."""
     g = p.get("gallery")
     if not g:
         return ""
-    def row(st, direction):
-        items = "".join(
-            f'<figure class="shw__item"><img src="../{it["src"]}"{img_attrs(it["src"], it["width"], "(max-width: 900px) 70vw, 560px" if st["kind"] == "web" else "210px")} alt="{e(it["alt"])}" width="{it["width"]}" height="{it["height"]}" loading="lazy" decoding="async" draggable="false" />'
-            f'<figcaption>{e(it["caption"])}</figcaption></figure>' for it in st["items"])
-        return (f'<div class="shw__row shw__row--{st["kind"]}" data-dir="{direction}" aria-label="{e(st["label"])} screens">'
-                f'<div class="shw__track">{items}<div class="shw__dup" aria-hidden="true">{items}</div></div></div>')
-    rows = "".join(row(st, -1 if i % 2 == 0 else 1) for i, st in enumerate(g["sets"]))
     return f"""    <!-- ===================== UI SCREENS ===================== -->
-    <section class="shw" id="ui-screens" aria-label="{e(g["title"])} {e(g.get("title_soft", ""))}">
-      <div class="container shw__head">
-        <p class="label reveal">{e(g.get("label", "UI screens"))}</p>
-        <h2 class="shw__title">{e(g["title"])} <span class="soft">{e(g.get("title_soft", ""))}</span></h2>
-        <p class="shw__lead reveal">{e(g.get("lead", ""))}</p>
+    <section class="section cs-gallery" id="ui-screens">
+      <div class="container">
+        <div class="cs-gallery__head reveal">
+          <p class="label">{e(g.get("label", "UI screens"))}</p>
+          <h2 class="cs-gallery__title">{e(g["title"])} <span class="soft">{e(g.get("title_soft", ""))}</span></h2>
+          <p class="cs-gallery__lead">{e(g.get("lead", ""))}</p>
+        </div>
+        {block({"type": "carousel", "label": g["title"], "sets": g["sets"], "clean": True})}
       </div>
-      <div class="shw__rows">{rows}</div>
     </section>
-
 """
-
 
 def render(p, prev_p, next_p, version):
     cover = p.get("cover_image") or {"src": p["cover"], "width": 808, "height": 632}
