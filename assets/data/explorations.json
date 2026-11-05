@@ -1,0 +1,592 @@
+[
+  {
+    "src": "assets/img/explorations/01.webp",
+    "thumb": "assets/img/explorations/01-640.webp",
+    "w": 640,
+    "h": 533,
+    "fw": 1440,
+    "fh": 1200,
+    "title": "Personal financial management dashboard",
+    "href": "https://dribbble.com/shots/27819847-Personal-financial-management-dashboard"
+  },
+  {
+    "src": "assets/img/explorations/02.webp",
+    "thumb": "assets/img/explorations/02-640.webp",
+    "w": 640,
+    "h": 480,
+    "fw": 1600,
+    "fh": 1200,
+    "title": "Meadowly — Farm Products Website",
+    "href": "https://dribbble.com/shots/27792300-Meadowly-Farm-Products-Website"
+  },
+  {
+    "src": "assets/img/explorations/03.webp",
+    "thumb": "assets/img/explorations/03-640.webp",
+    "w": 640,
+    "h": 480,
+    "fw": 1600,
+    "fh": 1200,
+    "title": "Naturo — Skincare Product Website",
+    "href": "https://dribbble.com/shots/27792260-Naturo-Skincare-Product-Website"
+  },
+  {
+    "src": "assets/img/case-studies/dominos/screens/m1-home.webp",
+    "thumb": "assets/img/case-studies/dominos/screens/m1-home.webp",
+    "w": 560,
+    "h": 1233,
+    "fw": 560,
+    "fh": 1233,
+    "title": "Domino’s — Mobile home",
+    "href": "../case-studies/dominos.html"
+  },
+  {
+    "src": "assets/img/explorations/04.webp",
+    "thumb": "assets/img/explorations/04-640.webp",
+    "w": 640,
+    "h": 480,
+    "fw": 1600,
+    "fh": 1200,
+    "title": "A Modern Shopping Experience",
+    "href": "https://dribbble.com/shots/27714500-A-Modern-Shopping-Experience"
+  },
+  {
+    "src": "assets/img/explorations/05.webp",
+    "thumb": "assets/img/explorations/05-640.webp",
+    "w": 640,
+    "h": 480,
+    "fw": 1600,
+    "fh": 1200,
+    "title": "Wanderly — Making Travel Planning Simple",
+    "href": "https://dribbble.com/shots/27714381-Wanderly-Making-Travel-Planning-Simple"
+  },
+  {
+    "src": "assets/img/explorations/06.webp",
+    "thumb": "assets/img/explorations/06-640.webp",
+    "w": 640,
+    "h": 480,
+    "fw": 1600,
+    "fh": 1200,
+    "title": "TravelSphere — Mobile App",
+    "href": "https://dribbble.com/shots/25406077-TravelSphere-Mobile-App"
+  },
+  {
+    "src": "assets/img/explorations/07.webp",
+    "thumb": "assets/img/explorations/07-640.webp",
+    "w": 640,
+    "h": 480,
+    "fw": 1600,
+    "fh": 1200,
+    "title": "EcoRoots — Landing Page Design",
+    "href": "https://dribbble.com/shots/25050898-EcoRoots-Landing-Page-Design"
+  },
+  {
+    "src": "assets/img/explorations/08.webp",
+    "thumb": "assets/img/explorations/08-640.webp",
+    "w": 640,
+    "h": 480,
+    "fw": 1600,
+    "fh": 1200,
+    "title": "Unity Bank App",
+    "href": "https://dribbble.com/shots/24958645-Unity-Bank-App"
+  },
+  {
+    "src": "assets/img/explorations/09.webp",
+    "thumb": "assets/img/explorations/09-640.webp",
+    "w": 640,
+    "h": 480,
+    "fw": 1600,
+    "fh": 1200,
+    "title": "Unity Bank App",
+    "href": "https://dribbble.com/shots/24958642-Unity-Bank-App"
+  },
+  {
+    "src": "assets/img/case-studies/dominos/screens/m2-offers.webp",
+    "thumb": "assets/img/case-studies/dominos/screens/m2-offers.webp",
+    "w": 560,
+    "h": 1234,
+    "fw": 560,
+    "fh": 1234,
+    "title": "Domino’s — Offers",
+    "href": "../case-studies/dominos.html"
+  },
+  {
+    "src": "assets/img/explorations/10.webp",
+    "thumb": "assets/img/explorations/10-640.webp",
+    "w": 640,
+    "h": 480,
+    "fw": 1600,
+    "fh": 1200,
+    "title": "Crimson Arch -Landing Page",
+    "href": "https://dribbble.com/shots/24947276-Crimson-Arch-Landing-Page"
+  },
+  {
+    "src": "assets/img/explorations/11.webp",
+    "thumb": "assets/img/explorations/11-640.webp",
+    "w": 640,
+    "h": 480,
+    "fw": 1600,
+    "fh": 1200,
+    "title": "CoreHR — Departments",
+    "href": "https://dribbble.com/shots/24947270-CoreHR-Departments"
+  },
+  {
+    "src": "assets/img/explorations/12.webp",
+    "thumb": "assets/img/explorations/12-640.webp",
+    "w": 640,
+    "h": 480,
+    "fw": 1600,
+    "fh": 1200,
+    "title": "CoreHR — Dark Mode",
+    "href": "https://dribbble.com/shots/24947248-CoreHR-Dark-Mode"
+  },
+  {
+    "src": "assets/img/explorations/13.webp",
+    "thumb": "assets/img/explorations/13-640.webp",
+    "w": 640,
+    "h": 480,
+    "fw": 1600,
+    "fh": 1200,
+    "title": "MedConnect Branding",
+    "href": "https://dribbble.com/shots/24947229-MedConnect-Branding"
+  },
+  {
+    "src": "assets/img/explorations/14.webp",
+    "thumb": "assets/img/explorations/14-640.webp",
+    "w": 640,
+    "h": 480,
+    "fw": 1600,
+    "fh": 1200,
+    "title": "MedConnect — Branding",
+    "href": "https://dribbble.com/shots/24945504-MedConnect-Branding"
+  },
+  {
+    "src": "assets/img/explorations/15.webp",
+    "thumb": "assets/img/explorations/15-640.webp",
+    "w": 640,
+    "h": 480,
+    "fw": 1600,
+    "fh": 1200,
+    "title": "Crimson Arch — Landing Page",
+    "href": "https://dribbble.com/shots/24945492-Crimson-Arch-Landing-Page"
+  },
+  {
+    "src": "assets/img/case-studies/dominos/screens/m3-menu.webp",
+    "thumb": "assets/img/case-studies/dominos/screens/m3-menu.webp",
+    "w": 560,
+    "h": 1233,
+    "fw": 560,
+    "fh": 1233,
+    "title": "Domino’s — Menu",
+    "href": "../case-studies/dominos.html"
+  },
+  {
+    "src": "assets/img/explorations/16.webp",
+    "thumb": "assets/img/explorations/16-640.webp",
+    "w": 640,
+    "h": 480,
+    "fw": 1600,
+    "fh": 1200,
+    "title": "Crimson Arch — About Us",
+    "href": "https://dribbble.com/shots/24945481-Crimson-Arch-About-Us"
+  },
+  {
+    "src": "assets/img/explorations/17.webp",
+    "thumb": "assets/img/explorations/17-640.webp",
+    "w": 640,
+    "h": 480,
+    "fw": 1600,
+    "fh": 1200,
+    "title": "Onboarding",
+    "href": "https://dribbble.com/shots/24945476-Onboarding"
+  },
+  {
+    "src": "assets/img/explorations/18.webp",
+    "thumb": "assets/img/explorations/18-640.webp",
+    "w": 640,
+    "h": 480,
+    "fw": 1600,
+    "fh": 1200,
+    "title": "Unity Bank App — Account Creation",
+    "href": "https://dribbble.com/shots/24945468-Unity-Bank-App-Account-Creation"
+  },
+  {
+    "src": "assets/img/explorations/19.webp",
+    "thumb": "assets/img/explorations/19-640.webp",
+    "w": 640,
+    "h": 480,
+    "fw": 1600,
+    "fh": 1200,
+    "title": "Unity Bank App — Branding",
+    "href": "https://dribbble.com/shots/24945457-Unity-Bank-App-Branding"
+  },
+  {
+    "src": "assets/img/explorations/20.webp",
+    "thumb": "assets/img/explorations/20-640.webp",
+    "w": 640,
+    "h": 480,
+    "fw": 1600,
+    "fh": 1200,
+    "title": "Unity Bank App — Branding",
+    "href": "https://dribbble.com/shots/24945439-Unity-Bank-App-Branding"
+  },
+  {
+    "src": "assets/img/explorations/21.webp",
+    "thumb": "assets/img/explorations/21-640.webp",
+    "w": 640,
+    "h": 480,
+    "fw": 1600,
+    "fh": 1200,
+    "title": "Crimson Arch — Branding",
+    "href": "https://dribbble.com/shots/24945427-Crimson-Arch-Branding"
+  },
+  {
+    "src": "assets/img/case-studies/dominos/screens/m4-customise.webp",
+    "thumb": "assets/img/case-studies/dominos/screens/m4-customise.webp",
+    "w": 560,
+    "h": 1235,
+    "fw": 560,
+    "fh": 1235,
+    "title": "Domino’s — Customise",
+    "href": "../case-studies/dominos.html"
+  },
+  {
+    "src": "assets/img/explorations/22.webp",
+    "thumb": "assets/img/explorations/22-640.webp",
+    "w": 640,
+    "h": 501,
+    "fw": 1212,
+    "fh": 948,
+    "title": "Crimson Arch — Web Design and Branding",
+    "href": "https://dribbble.com/shots/24945410-Crimson-Arch-Web-Design-and-Branding"
+  },
+  {
+    "src": "assets/img/explorations/23.webp",
+    "thumb": "assets/img/explorations/23-640.webp",
+    "w": 640,
+    "h": 480,
+    "fw": 1600,
+    "fh": 1200,
+    "title": "MedConnect — Healthcare Management Portal",
+    "href": "https://dribbble.com/shots/24945355-MedConnect-Healthcare-Management-Portal"
+  },
+  {
+    "src": "assets/img/explorations/24.webp",
+    "thumb": "assets/img/explorations/24-640.webp",
+    "w": 640,
+    "h": 480,
+    "fw": 1600,
+    "fh": 1200,
+    "title": "CoreHR — HR Management System",
+    "href": "https://dribbble.com/shots/24945330-CoreHR-HR-Management-System"
+  },
+  {
+    "src": "assets/img/explorations/25.webp",
+    "thumb": "assets/img/explorations/25-640.webp",
+    "w": 640,
+    "h": 480,
+    "fw": 1600,
+    "fh": 1200,
+    "title": "Medicare",
+    "href": "https://dribbble.com/shots/24760875-Medicare"
+  },
+  {
+    "src": "assets/img/explorations/26.webp",
+    "thumb": "assets/img/explorations/26-640.webp",
+    "w": 640,
+    "h": 480,
+    "fw": 1600,
+    "fh": 1200,
+    "title": "Create Account Screen",
+    "href": "https://dribbble.com/shots/24702637-Create-Account-Screen"
+  },
+  {
+    "src": "assets/img/explorations/27.webp",
+    "thumb": "assets/img/explorations/27-640.webp",
+    "w": 640,
+    "h": 480,
+    "fw": 1600,
+    "fh": 1200,
+    "title": "E-Wallet App",
+    "href": "https://dribbble.com/shots/24683726-E-Wallet-App"
+  },
+  {
+    "src": "assets/img/case-studies/dominos/screens/m5-cart.webp",
+    "thumb": "assets/img/case-studies/dominos/screens/m5-cart.webp",
+    "w": 560,
+    "h": 1233,
+    "fw": 560,
+    "fh": 1233,
+    "title": "Domino’s — Cart",
+    "href": "../case-studies/dominos.html"
+  },
+  {
+    "src": "assets/img/explorations/28.webp",
+    "thumb": "assets/img/explorations/28-640.webp",
+    "w": 640,
+    "h": 480,
+    "fw": 1600,
+    "fh": 1200,
+    "title": "Modals / Pop-ups",
+    "href": "https://dribbble.com/shots/24589699-Modals-Pop-ups"
+  },
+  {
+    "src": "assets/img/explorations/29.webp",
+    "thumb": "assets/img/explorations/29-640.webp",
+    "w": 640,
+    "h": 480,
+    "fw": 1600,
+    "fh": 1200,
+    "title": "Onboarding Screens",
+    "href": "https://dribbble.com/shots/24589445-Onboarding-Screens"
+  },
+  {
+    "src": "assets/img/explorations/30.webp",
+    "thumb": "assets/img/explorations/30-640.webp",
+    "w": 640,
+    "h": 480,
+    "fw": 1600,
+    "fh": 1200,
+    "title": "Trip Planner",
+    "href": "https://dribbble.com/shots/24210803-Trip-Planner"
+  },
+  {
+    "src": "assets/img/explorations/31.webp",
+    "thumb": "assets/img/explorations/31-640.webp",
+    "w": 640,
+    "h": 480,
+    "fw": 1600,
+    "fh": 1200,
+    "title": "Task Management Software",
+    "href": "https://dribbble.com/shots/24210587-Task-Management-Software"
+  },
+  {
+    "src": "assets/img/explorations/32.webp",
+    "thumb": "assets/img/explorations/32-640.webp",
+    "w": 640,
+    "h": 480,
+    "fw": 1600,
+    "fh": 1200,
+    "title": "Yoga App (KUN)",
+    "href": "https://dribbble.com/shots/24118143-Yoga-App-KUN"
+  },
+  {
+    "src": "assets/img/explorations/33.webp",
+    "thumb": "assets/img/explorations/33-640.webp",
+    "w": 640,
+    "h": 480,
+    "fw": 1600,
+    "fh": 1200,
+    "title": "ZGAMES — Games Download Website",
+    "href": "https://dribbble.com/shots/20088959-ZGAMES-Games-Download-Website"
+  },
+  {
+    "src": "assets/img/case-studies/dominos/screens/m6-checkout.webp",
+    "thumb": "assets/img/case-studies/dominos/screens/m6-checkout.webp",
+    "w": 560,
+    "h": 1211,
+    "fw": 560,
+    "fh": 1211,
+    "title": "Domino’s — Checkout",
+    "href": "../case-studies/dominos.html"
+  },
+  {
+    "src": "assets/img/explorations/34.webp",
+    "thumb": "assets/img/explorations/34-640.webp",
+    "w": 640,
+    "h": 480,
+    "fw": 1600,
+    "fh": 1200,
+    "title": "Yoga Training App Design",
+    "href": "https://dribbble.com/shots/19956623-Yoga-Training-App-Design"
+  },
+  {
+    "src": "assets/img/explorations/35.webp",
+    "thumb": "assets/img/explorations/35-640.webp",
+    "w": 640,
+    "h": 480,
+    "fw": 1600,
+    "fh": 1200,
+    "title": "Health Care App",
+    "href": "https://dribbble.com/shots/19953622-Health-Care-App"
+  },
+  {
+    "src": "assets/img/explorations/36.webp",
+    "thumb": "assets/img/explorations/36-640.webp",
+    "w": 640,
+    "h": 480,
+    "fw": 1600,
+    "fh": 1200,
+    "title": "Online Learning Platform",
+    "href": "https://dribbble.com/shots/19927540-Online-Learning-Platform"
+  },
+  {
+    "src": "assets/img/explorations/37.webp",
+    "thumb": "assets/img/explorations/37-640.webp",
+    "w": 640,
+    "h": 480,
+    "fw": 1600,
+    "fh": 1200,
+    "title": "Live Q&A Platform for Professionals",
+    "href": "https://dribbble.com/shots/19925474-Live-Q-A-Platform-for-Professionals"
+  },
+  {
+    "src": "assets/img/explorations/38.webp",
+    "thumb": "assets/img/explorations/38-640.webp",
+    "w": 640,
+    "h": 480,
+    "fw": 1600,
+    "fh": 1200,
+    "title": "Car Rental — Landing Page Concept",
+    "href": "https://dribbble.com/shots/19823461-Car-Rental-Landing-Page-Concept"
+  },
+  {
+    "src": "assets/img/explorations/39.webp",
+    "thumb": "assets/img/explorations/39-640.webp",
+    "w": 640,
+    "h": 480,
+    "fw": 1600,
+    "fh": 1200,
+    "title": "Car Rental — Landing Page Concept",
+    "href": "https://dribbble.com/shots/19823452-Car-Rental-Landing-Page-Concept"
+  },
+  {
+    "src": "assets/img/case-studies/dominos/screens/m7-payment.webp",
+    "thumb": "assets/img/case-studies/dominos/screens/m7-payment.webp",
+    "w": 560,
+    "h": 1235,
+    "fw": 560,
+    "fh": 1235,
+    "title": "Domino’s — Payment",
+    "href": "../case-studies/dominos.html"
+  },
+  {
+    "src": "assets/img/explorations/40.webp",
+    "thumb": "assets/img/explorations/40-640.webp",
+    "w": 640,
+    "h": 480,
+    "fw": 1600,
+    "fh": 1200,
+    "title": "Health Plus eChannelling — UX Case Study",
+    "href": "https://dribbble.com/shots/18248337-Health-Plus-eChannelling-UX-Case-Study"
+  },
+  {
+    "src": "assets/img/explorations/41.webp",
+    "thumb": "assets/img/explorations/41-640.webp",
+    "w": 640,
+    "h": 480,
+    "fw": 1600,
+    "fh": 1200,
+    "title": "Healer | Health Care App",
+    "href": "https://dribbble.com/shots/17384606-Healer-Health-Care-App"
+  },
+  {
+    "src": "assets/img/explorations/42.webp",
+    "thumb": "assets/img/explorations/42-640.webp",
+    "w": 640,
+    "h": 480,
+    "fw": 1600,
+    "fh": 1200,
+    "title": "Fashion Store Landing Page | E-Commerce Concept",
+    "href": "https://dribbble.com/shots/17314634-Fashion-Store-Landing-Page-E-Commerce-Concept"
+  },
+  {
+    "src": "assets/img/explorations/43.webp",
+    "thumb": "assets/img/explorations/43-640.webp",
+    "w": 640,
+    "h": 432,
+    "fw": 1600,
+    "fh": 1080,
+    "title": "Figma logo 3D",
+    "href": "https://dribbble.com/shots/16854488-Figma-logo-3D"
+  },
+  {
+    "src": "assets/img/explorations/44.webp",
+    "thumb": "assets/img/explorations/44-640.webp",
+    "w": 640,
+    "h": 640,
+    "fw": 1080,
+    "fh": 1080,
+    "title": "3D Character",
+    "href": "https://dribbble.com/shots/16854476-3D-Character"
+  },
+  {
+    "src": "assets/img/explorations/45.webp",
+    "thumb": "assets/img/explorations/45-640.webp",
+    "w": 640,
+    "h": 480,
+    "fw": 1024,
+    "fh": 768,
+    "title": "3D Candy",
+    "href": "https://dribbble.com/shots/16815631-3D-Candy"
+  },
+  {
+    "src": "assets/img/case-studies/dominos/screens/m8-tracking.webp",
+    "thumb": "assets/img/case-studies/dominos/screens/m8-tracking.webp",
+    "w": 560,
+    "h": 1233,
+    "fw": 560,
+    "fh": 1233,
+    "title": "Domino’s — Order tracking",
+    "href": "../case-studies/dominos.html"
+  },
+  {
+    "src": "assets/img/explorations/46.webp",
+    "thumb": "assets/img/explorations/46-640.webp",
+    "w": 640,
+    "h": 464,
+    "fw": 828,
+    "fh": 600,
+    "title": "UI Components — Buttons",
+    "href": "https://dribbble.com/shots/16593531-UI-Components-Buttons"
+  },
+  {
+    "src": "assets/img/explorations/47.webp",
+    "thumb": "assets/img/explorations/47-640.webp",
+    "w": 640,
+    "h": 480,
+    "fw": 1600,
+    "fh": 1200,
+    "title": "Fitness Website Landing Page",
+    "href": "https://dribbble.com/shots/16526437-Fitness-Website-Landing-Page"
+  },
+  {
+    "src": "assets/img/explorations/48.webp",
+    "thumb": "assets/img/explorations/48-640.webp",
+    "w": 640,
+    "h": 506,
+    "fw": 1400,
+    "fh": 1107,
+    "title": "Shoe App Concept",
+    "href": "https://dribbble.com/shots/15672477-Shoe-App-Concept"
+  },
+  {
+    "src": "assets/img/explorations/50.webp",
+    "thumb": "assets/img/explorations/50-640.webp",
+    "w": 640,
+    "h": 455,
+    "fw": 1454,
+    "fh": 1034,
+    "title": "Watch Store concept",
+    "href": "https://dribbble.com/shots/15159722-Watch-Store-concept"
+  },
+  {
+    "src": "assets/img/explorations/51.webp",
+    "thumb": "assets/img/explorations/51-640.webp",
+    "w": 640,
+    "h": 480,
+    "fw": 1600,
+    "fh": 1200,
+    "title": "Furniture Shop App",
+    "href": "https://dribbble.com/shots/15075968-Furniture-Shop-App"
+  },
+  {
+    "src": "assets/img/explorations/52.webp",
+    "thumb": "assets/img/explorations/52-640.webp",
+    "w": 640,
+    "h": 480,
+    "fw": 1600,
+    "fh": 1200,
+    "title": "Clothing Store App Design Concept",
+    "href": "https://dribbble.com/shots/14991528-Clothing-Store-App-Design-Concept"
+  }
+]
