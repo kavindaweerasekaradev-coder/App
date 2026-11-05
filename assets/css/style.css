@@ -1188,3 +1188,19 @@ html.lenis, html.lenis body { height: auto; }
 .cs-gallery__head { max-width: 680px; margin-bottom: clamp(20px, 3vw, 32px); }
 .cs-gallery__title { margin-top: 18px; font-size: clamp(32px, 4.4vw, 56px); letter-spacing: -0.045em; line-height: 1.05; }
 .cs-gallery__lead { margin-top: 14px; color: var(--text-muted); font-size: 16px; }
+
+/* AI workflow card */
+.st-ai { display: grid; align-content: start; gap: 14px; }
+.st-ai__prompt {
+  display: flex; align-items: center; gap: 8px; height: 44px; padding: 0 14px; border-radius: 14px; background: var(--gray);
+  box-shadow: inset 0 0 0 1px var(--border); font-size: 13.5px; color: var(--text); white-space: nowrap; overflow: hidden;
+}
+.st-ai__spark { flex: none; width: 16px; height: 16px; fill: var(--lime); stroke: var(--ink); stroke-width: 1.5; }
+.st-ai__text { min-width: 0; overflow: hidden; text-overflow: clip; }
+.st-ai__caret { flex: none; width: 2px; height: 16px; margin-left: -6px; background: var(--ink); animation: st-blink 1s steps(1) infinite; }
+@keyframes st-blink { 50% { opacity: 0; } }
+.st-ai__tools { display: flex; gap: 8px; }
+.st-ai__tools .tool-logo { width: 40px; height: 40px; border-radius: 12px; box-shadow: inset 0 0 0 1px var(--border); }
+.st-ai__tools .tool-logo svg { width: 22px; height: 22px; }
+.st-ai__tools .tool-logo--figma svg { width: 15px; height: 22px; }
+@media (max-width: 640px) { .st-ai__prompt { height: 38px; padding: 0 10px; gap: 6px; font-size: 12px; } .st-ai__tools .tool-logo { width: 36px; height: 36px; } }
