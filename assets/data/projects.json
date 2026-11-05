@@ -76,6 +76,138 @@
       "src": "assets/img/case-studies/dominos/00-cover.webp",
       "width": 1600,
       "height": 1714
+    },
+    "gallery": {
+      "label": "UI screens",
+      "title": "Every screen,",
+      "title_soft": "web and mobile.",
+      "lead": "The final interface, screen by screen. Switch between web and mobile, then drag, swipe or use the arrows.",
+      "sets": [
+        {
+          "label": "Web",
+          "kind": "web",
+          "items": [
+            {
+              "src": "assets/img/case-studies/dominos/screens/w1-home.webp",
+              "caption": "Home · a hero you can order from",
+              "alt": "Domino’s web home with the Hot pizza, made your way hero and a pizza deck with size picker",
+              "width": 1459,
+              "height": 1013
+            },
+            {
+              "src": "assets/img/case-studies/dominos/screens/w2-most-loved.webp",
+              "caption": "Most loved · ranked, photo-first",
+              "alt": "Most loved right now: ranked #1 to #4 pizza cards with prices and Add buttons",
+              "width": 1459,
+              "height": 1003
+            },
+            {
+              "src": "assets/img/case-studies/dominos/screens/w3-deals.webp",
+              "caption": "Deals · applied for you",
+              "alt": "Deals worth ordering for: 2 Medium pizzas for Rs 3,990 and coupon cards with a countdown",
+              "width": 1459,
+              "height": 1006
+            },
+            {
+              "src": "assets/img/case-studies/dominos/screens/w4-menu.webp",
+              "caption": "Menu · sizes and Add on the card",
+              "alt": "Menu with sticky filters and photo-first pizza cards with size switchers",
+              "width": 1600,
+              "height": 1046
+            },
+            {
+              "src": "assets/img/case-studies/dominos/screens/w5-customise.webp",
+              "caption": "Customise · a visual sheet",
+              "alt": "Customise sheet for Margherita with pizza size photos and a live total",
+              "width": 1459,
+              "height": 1003
+            },
+            {
+              "src": "assets/img/case-studies/dominos/screens/w6-cart.webp",
+              "caption": "Cart · the best deal, applied",
+              "alt": "Cart drawer with the 20% off Large pizzas deal applied automatically",
+              "width": 1459,
+              "height": 1006
+            },
+            {
+              "src": "assets/img/case-studies/dominos/screens/w7-checkout.webp",
+              "caption": "Checkout · now or order ahead",
+              "alt": "Single-page checkout with day and time slots for ordering ahead",
+              "width": 1600,
+              "height": 1058
+            },
+            {
+              "src": "assets/img/case-studies/dominos/screens/w8-footer.webp",
+              "caption": "Footer · Hot. Fresh. Yours.",
+              "alt": "Footer with order tracking, hotline, payment methods and the Hot. Fresh. Yours. promise",
+              "width": 1459,
+              "height": 1003
+            }
+          ]
+        },
+        {
+          "label": "Mobile",
+          "kind": "mobile",
+          "items": [
+            {
+              "src": "assets/img/case-studies/dominos/screens/m1-home.webp",
+              "caption": "Home · swipeable pizza deck",
+              "alt": "Mobile home with the Kochchi Paneer hero card, size picker and Add button",
+              "width": 560,
+              "height": 1233
+            },
+            {
+              "src": "assets/img/case-studies/dominos/screens/m2-offers.webp",
+              "caption": "Offers · campaign posters",
+              "alt": "Mobile home offers: Let the cheese games begin and Go big or go home",
+              "width": 560,
+              "height": 1234
+            },
+            {
+              "src": "assets/img/case-studies/dominos/screens/m3-menu.webp",
+              "caption": "Menu · filters in a tap",
+              "alt": "Mobile menu with filters, photo-first cards and an added-to-cart toast",
+              "width": 560,
+              "height": 1233
+            },
+            {
+              "src": "assets/img/case-studies/dominos/screens/m4-customise.webp",
+              "caption": "Customise · see the size",
+              "alt": "Mobile customise sheet for Kochchi Paneer with size photos and a live total",
+              "width": 560,
+              "height": 1235
+            },
+            {
+              "src": "assets/img/case-studies/dominos/screens/m5-cart.webp",
+              "caption": "Cart · the maths, done",
+              "alt": "Mobile cart with free delivery and the best deal applied",
+              "width": 560,
+              "height": 1233
+            },
+            {
+              "src": "assets/img/case-studies/dominos/screens/m6-checkout.webp",
+              "caption": "Checkout · book a time",
+              "alt": "Mobile checkout with schedule delivery and time slots",
+              "width": 560,
+              "height": 1211
+            },
+            {
+              "src": "assets/img/case-studies/dominos/screens/m7-payment.webp",
+              "caption": "Payment · pay the local way",
+              "alt": "Mobile secure payment with a live card preview",
+              "width": 560,
+              "height": 1235
+            },
+            {
+              "src": "assets/img/case-studies/dominos/screens/m8-tracking.webp",
+              "caption": "Tracking · oven to door",
+              "alt": "Mobile order tracking: You’re booked in, ready to collect at 7:00 PM",
+              "width": 560,
+              "height": 1233
+            }
+          ]
+        }
+      ]
     }
   },
   {
