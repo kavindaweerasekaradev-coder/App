@@ -4,4 +4,6 @@ import { defineConfig } from 'vite'
 // https://vite.dev/config/
 export default defineConfig({
   plugins: [react()],
+  // GitHub Pages serves the site from /dominos/; everywhere else it lives at the root.
+  base: process.env.PAGES_BASE ?? '/',
 })
