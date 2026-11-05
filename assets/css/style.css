@@ -189,7 +189,10 @@ a, button, summary, label, [role="button"] { cursor: pointer; }
 .hero__social { display: flex; flex-wrap: wrap; gap: 8px 24px; font-size: 14px; color: var(--text-muted); }
 .hero__social a:hover { color: var(--text); }
 .btn--outline { border-color: var(--border); background: #fff; color: var(--ink); }
-.btn--outline:hover { border-color: var(--ink); }
+.btn--outline:hover { border-color: var(--ink); box-shadow: 0 10px 24px rgba(14,14,14,.08); }
+.btn__icon { flex: none; overflow: visible; margin-left: -4px; }
+.btn:hover .btn__icon { animation: btn-bob 1s var(--ease) infinite; }
+@keyframes btn-bob { 0%,100% { transform: none; } 50% { transform: translateY(3px); } }
 
 @keyframes slide { to { transform: translateX(-50%); } }
 
