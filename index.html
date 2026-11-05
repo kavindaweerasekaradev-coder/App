@@ -34,11 +34,11 @@
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet" />
-  <link rel="stylesheet" href="assets/css/style.css?v=20261106a" />
+  <link rel="stylesheet" href="assets/css/style.css?v=20261106b" />
   <script>document.documentElement.classList.add('js')</script>
   <link rel="preload" href="assets/js/vendor/gsap.min.js?v=3.12.5" as="script" />
   <link rel="preload" href="assets/js/vendor/ScrollTrigger.min.js?v=3.12.5" as="script" />
-  <link rel="preload" href="assets/js/motion.js?v=20261106a" as="script" />
+  <link rel="preload" href="assets/js/motion.js?v=20261106b" as="script" />
   <script src="assets/js/analytics.js" defer></script>
 </head>
 <body>
@@ -137,9 +137,14 @@
 
         <ul class="stats">
           <li class="stat stat--ink reveal">
-            <div class="stat__top">
-              <span class="stat__icon"><svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="9"/><path d="M12 7v5l3 2"/></svg></span>
-              <span class="stat__bars" aria-hidden="true"><i style="--h:28%;--d:0ms"></i><i style="--h:40%;--d:70ms"></i><i style="--h:52%;--d:140ms"></i><i style="--h:64%;--d:210ms"></i><i style="--h:80%;--d:280ms"></i><i style="--h:100%;--d:350ms"></i></span>
+            <div class="stat__viz st-chart" aria-hidden="true">
+              <svg viewBox="0 0 240 110" preserveAspectRatio="none">
+                <defs><linearGradient id="stg" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#d4f55c" stop-opacity=".28"/><stop offset="1" stop-color="#d4f55c" stop-opacity="0"/></linearGradient></defs>
+                <path class="st-chart__area" d="M4 100 L4 92 C40 88 52 70 84 68 S132 50 160 40 S210 20 236 8 L236 100 Z" fill="url(#stg)"/>
+                <path class="st-chart__line" d="M4 92 C40 88 52 70 84 68 S132 50 160 40 S210 20 236 8" fill="none" stroke="#d4f55c" stroke-width="2.5" stroke-linecap="round"/>
+              </svg>
+              <span class="st-chart__dot"></span>
+              <span class="st-chart__years"><span>2021</span><span>Today</span></span>
             </div>
             <div>
               <p class="stat__value"><span data-count="5">5</span><span class="stat__suffix">+</span></p>
@@ -147,10 +152,14 @@
               <p class="stat__text">Designing web and mobile products across industries since 2021.</p>
             </div>
           </li>
-          <li class="stat stat--lime reveal">
-            <div class="stat__top">
-              <span class="stat__icon"><svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="3" y="3" width="7" height="7" rx="1.5"/><rect x="14" y="3" width="7" height="7" rx="1.5"/><rect x="3" y="14" width="7" height="7" rx="1.5"/><circle cx="17.5" cy="17.5" r="3.5"/></svg></span>
-              <span class="stat__tiles" aria-hidden="true"><i style="--d:0ms"></i><i style="--d:60ms" class="is-round"></i><i style="--d:120ms" class="is-pill"></i><i style="--d:180ms" class="is-fill"></i><i style="--d:240ms"></i><i style="--d:300ms" class="is-round is-fill"></i></span>
+          <li class="stat reveal">
+            <div class="stat__viz st-kit" aria-hidden="true">
+              <span class="st-kit__btn">Button</span>
+              <span class="st-kit__toggle"><i></i></span>
+              <span class="st-kit__check"><svg viewBox="0 0 24 24"><path d="M5 12.5l4.5 4.5L19 7.5"/></svg></span>
+              <span class="st-kit__slider"><i></i></span>
+              <span class="st-kit__chip">Tag</span>
+              <span class="st-kit__avatar"></span>
             </div>
             <div>
               <p class="stat__value"><span data-count="100">100</span><span class="stat__suffix">+</span></p>
@@ -159,10 +168,7 @@
             </div>
           </li>
           <li class="stat reveal">
-            <div class="stat__top">
-              <span class="stat__icon"><svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="3" y="7" width="18" height="13" rx="2"/><path d="M8 7V5a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2M3 13h18"/></svg></span>
-              <span class="stat__logos" aria-hidden="true"><span style="--i:0"><img src="assets/img/logos/axis-tech.png" alt="" width="121" height="120" loading="lazy" decoding="async" /></span><span style="--i:1"><img src="assets/img/logos/nimi-tech.svg" alt="" width="1359" height="719" loading="lazy" decoding="async" /></span><span style="--i:2"><img src="assets/img/logos/empite.png" alt="" width="260" height="120" loading="lazy" decoding="async" /></span><span style="--i:3"><img src="assets/img/logos/arimac.png" alt="" width="124" height="120" loading="lazy" decoding="async" /></span></span>
-            </div>
+            <div class="stat__viz st-logos" aria-hidden="true"><span class="st-logo" style="--i:0"><img src="assets/img/logos/axis-tech.png" alt="" width="121" height="120" loading="lazy" decoding="async" /></span><span class="st-logo" style="--i:1"><img src="assets/img/logos/nimi-tech.svg" alt="" width="1359" height="719" loading="lazy" decoding="async" /></span><span class="st-logo" style="--i:2"><img src="assets/img/logos/empite.png" alt="" width="260" height="120" loading="lazy" decoding="async" /></span><span class="st-logo" style="--i:3"><img src="assets/img/logos/arimac.png" alt="" width="124" height="120" loading="lazy" decoding="async" /></span></div>
             <div>
               <p class="stat__value"><span data-count="4">4</span></p>
               <p class="stat__title">Product &amp; agency teams</p>
@@ -170,9 +176,9 @@
             </div>
           </li>
           <li class="stat reveal">
-            <div class="stat__top">
-              <span class="stat__icon"><svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="4.5" r="1.5"/><path d="M5 8l7 1.5L19 8M12 9.5V14m0 0-3 6m3-6 3 6"/></svg></span>
-              <span class="stat__contrast" aria-hidden="true"><b>Aa</b>4.5:1<svg viewBox="0 0 24 24" width="14" height="14" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12.5l4.5 4.5L19 7.5"/></svg></span>
+            <div class="stat__viz st-aa" aria-hidden="true">
+              <div class="st-aa__row"><b>Aa</b><span class="st-aa__ratio"><span class="st-aa__num">4.5</span>:1</span><span class="st-aa__ok"><svg viewBox="0 0 24 24"><path d="M5 12.5l4.5 4.5L19 7.5"/></svg></span></div>
+              <div class="st-aa__meter"><i></i><span class="st-aa__mark">AA</span></div>
             </div>
             <div>
               <p class="stat__value">WCAG</p>
@@ -769,9 +775,9 @@
   <script src="assets/js/vendor/gsap.min.js?v=3.12.5" defer></script>
   <script src="assets/js/vendor/ScrollTrigger.min.js?v=3.12.5" defer></script>
   <script src="assets/js/vendor/lenis.min.js?v=1.1.13" defer></script>
-  <script src="assets/js/smooth.js?v=20261106a" defer></script>
+  <script src="assets/js/smooth.js?v=20261106b" defer></script>
   <script src="assets/js/vendor/Draggable.min.js?v=3.12.5" defer></script>
-  <script src="assets/js/motion.js?v=20261106a" defer></script>
-  <script src="assets/js/main.js?v=20261106a" defer></script>
+  <script src="assets/js/motion.js?v=20261106b" defer></script>
+  <script src="assets/js/main.js?v=20261106b" defer></script>
 </body>
 </html>

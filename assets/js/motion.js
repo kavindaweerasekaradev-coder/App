@@ -285,6 +285,64 @@
       window.addEventListener('resize', render);
     }
 
+    // About stats: each card's visual animates in on scroll; a spotlight follows the cursor
+    var stats = document.querySelector('.stats');
+    if (stats) {
+      var st = { trigger: stats, start: 'top 80%', once: true };
+      // 1. growth line draws, area fades, dot pops
+      var line = stats.querySelector('.st-chart__line');
+      if (line) {
+        var len = line.getTotalLength();
+        gsap.set(line, { strokeDasharray: len, strokeDashoffset: len });
+        gsap.timeline({ scrollTrigger: st })
+          .to(line, { strokeDashoffset: 0, duration: 1.6, ease: 'power2.inOut' })
+          .from(stats.querySelector('.st-chart__area'), { autoAlpha: 0, duration: 0.8 }, 0.6)
+          .from(stats.querySelector('.st-chart__dot'), { scale: 0, duration: 0.5, ease: 'back.out(3)' }, 1.4);
+      }
+      // 2. UI kit: parts pop in, then loop little interactions
+      var kit = stats.querySelector('.st-kit');
+      if (kit) {
+        var parts = kit.querySelectorAll(':scope > span');
+        var check = kit.querySelector('.st-kit__check path');
+        gsap.set(check, { strokeDashoffset: 22 });
+        gsap.from(parts, { scale: 0.4, autoAlpha: 0, duration: 0.6, ease: 'back.out(2)', stagger: 0.08, scrollTrigger: st,
+          onComplete: function () {
+            var knob = kit.querySelector('.st-kit__toggle i'), tog = kit.querySelector('.st-kit__toggle');
+            gsap.timeline({ repeat: -1, repeatDelay: 0.6, defaults: { ease: 'power3.inOut' } })
+              .to(kit.querySelector('.st-kit__btn'), { scale: 0.92, duration: 0.15, yoyo: true, repeat: 1 })
+              .to(knob, { x: 22, duration: 0.45 }, 0.3).to(tog, { backgroundColor: '#d4f55c', duration: 0.45 }, 0.3)
+              .to(check, { strokeDashoffset: 0, duration: 0.45 }, 0.6)
+              .to(kit.querySelector('.st-kit__slider i'), { left: '78%', duration: 1, ease: 'power2.inOut' }, 0.5)
+              .to({}, { duration: 1.2 })
+              .to(knob, { x: 0, duration: 0.45 }).to(tog, { backgroundColor: '#f1f1ee', duration: 0.45 }, '<')
+              .to(check, { strokeDashoffset: 22, duration: 0.35 }, '<')
+              .to(kit.querySelector('.st-kit__slider i'), { left: '0%', duration: 0.9, ease: 'power2.inOut' }, '<');
+          } });
+      }
+      // 3. logos drop into a stack
+      gsap.from(stats.querySelectorAll('.st-logo'), { y: -40, autoAlpha: 0, rotation: function () { return gsap.utils.random(-20, 20); },
+        duration: 0.8, ease: 'back.out(1.8)', stagger: 0.1, scrollTrigger: st, clearProps: 'transform' });
+      // 4. contrast ratio counts up while the meter fills, then the check pops
+      var num = stats.querySelector('.st-aa__num');
+      if (num) {
+        var o = { v: 1 };
+        gsap.timeline({ scrollTrigger: st })
+          .from(stats.querySelector('.st-aa__meter i'), { scaleX: 0, duration: 1.4, ease: 'power2.out' })
+          .to(o, { v: 4.5, duration: 1.4, ease: 'power2.out', onUpdate: function () { num.textContent = o.v.toFixed(1); } }, 0)
+          .from(stats.querySelector('.st-aa__ok'), { scale: 0, rotation: -90, duration: 0.5, ease: 'back.out(3)' }, 1.2);
+      }
+      // spotlight
+      if (window.matchMedia('(pointer: fine)').matches) {
+        stats.querySelectorAll('.stat').forEach(function (card) {
+          card.addEventListener('mousemove', function (e) {
+            var r = card.getBoundingClientRect();
+            card.style.setProperty('--mx', (e.clientX - r.left) + 'px');
+            card.style.setProperty('--my', (e.clientY - r.top) + 'px');
+          });
+        });
+      }
+    }
+
     // Toolkit chips: springy entrance, independent drifting, cursor parallax and orbiting rings
     var visual = document.querySelector('.services__visual');
     if (visual) {
