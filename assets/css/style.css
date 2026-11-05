@@ -999,7 +999,7 @@ html:not(.has-drag) .beyond__hint { display: none; }
   .nav__actions .btn { display: none; }
   .hero__ctas, .hero__actions { width: 100%; }
   .hero__ctas .btn { flex: 1 1 100%; justify-content: space-between; }
-  .hero__ctas .btn--outline { justify-content: center; }
+  .hero__ctas .btn--outline { padding: 0 18px 0 22px; }
   .hero__role { font-size: 12px; }
   .process, .rw-grid, .live { grid-template-columns: 1fr; }
   .dc__progress { display: none; }
