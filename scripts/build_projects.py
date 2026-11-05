@@ -133,7 +133,8 @@ def block(b):
                 f'width="{it["width"]}" height="{it["height"]}" loading="lazy" draggable="false" /></li>' for it in st["items"])
             + '</ul></div>' for i, st in enumerate(b["sets"]))
         first = b["sets"][0]
-        return (f'<div class="sc" aria-roledescription="carousel" aria-label="{e(b.get("label", "UI screens"))}">'
+        light = " sc--light" if b.get("light") else ""
+        return (f'<div class="sc{light}" aria-roledescription="carousel" aria-label="{e(b.get("label", "UI screens"))}">'
                 f'<div class="sc__tabs" role="tablist">{tabs}</div>'
                 f'<div class="sc__stage" tabindex="0">{sets}</div>'
                 f'<div class="sc__bar"><p class="sc__info" aria-live="polite"><span class="sc__count"><b>01</b> / {len(first["items"]):02d}</span>'
@@ -254,6 +255,26 @@ def ld_json(p, cover):
     return json.dumps(data, ensure_ascii=False).replace("</", "<\\/")
 
 
+def gallery(p):
+    """Optional full-width UI screens carousel shown after the case study."""
+    g = p.get("gallery")
+    if not g:
+        return ""
+    return f"""    <!-- ===================== UI SCREENS ===================== -->
+    <section class="section cs-gallery" id="ui-screens">
+      <div class="container">
+        <div class="cs-gallery__head reveal">
+          <p class="label">{e(g.get("label", "UI screens"))}</p>
+          <h2 class="cs-gallery__title">{e(g["title"])} <span class="soft">{e(g.get("title_soft", ""))}</span></h2>
+          <p class="cs-gallery__lead">{e(g.get("lead", ""))}</p>
+        </div>
+        {block({"type": "carousel", "label": g["title"], "sets": g["sets"], "light": True})}
+      </div>
+    </section>
+
+"""
+
+
 def render(p, prev_p, next_p, version):
     cover = p.get("cover_image") or {"src": p["cover"], "width": 808, "height": 632}
     middle = chapters(p["case_study_data"]) if p.get("case_study_data") else render_summary(p)
@@ -363,7 +384,7 @@ def render(p, prev_p, next_p, version):
       </figure>
     </section>
 
-{middle}    <!-- ===================== BEHANCE ===================== -->
+{middle}{gallery(p)}    <!-- ===================== BEHANCE ===================== -->
     <section class="section section--flush-top">
       <div class="container">
         <div class="pj-cta reveal">
