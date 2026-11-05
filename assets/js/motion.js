@@ -29,6 +29,50 @@
 
   var mm = gsap.matchMedia();
 
+  // Process rail: a line draws through the four steps as you scroll; each node fills lime and pops,
+  // its icon draws itself, and the step's title, text and tags rise in. Scrubbed, so it reverses.
+  var pr = document.querySelector('.pr');
+  if (pr) {
+    var prSteps = gsap.utils.toArray('.pr__step', pr);
+    var prFill = pr.querySelector('.pr__fill'), prRail = pr.querySelector('.pr__rail');
+    gsap.matchMedia().add({
+      wide: '(min-width: 981px) and (prefers-reduced-motion: no-preference)',
+      narrow: '(max-width: 980px) and (prefers-reduced-motion: no-preference)'
+    }, function (ctx) {
+      var vertical = ctx.conditions.narrow;
+      if (!vertical && !ctx.conditions.wide) return;
+      prSteps.forEach(function (s) { var h = s.querySelector('h3'); if (!h.querySelector('.sw')) splitWords(h); });
+      // vertical rail runs from the first node's centre to the last one's
+      function sizeRail() {
+        if (vertical) prRail.style.height = (prSteps[prSteps.length - 1].offsetTop - prSteps[0].offsetTop) + 'px';
+      }
+      sizeRail();
+      ScrollTrigger.addEventListener('refreshInit', sizeRail);
+      var axis = vertical ? 'scaleY' : 'scaleX';
+      gsap.set(prFill, vertical ? { scaleY: 0, scaleX: 1 } : { scaleX: 0, scaleY: 1 });
+      var tl = gsap.timeline({ defaults: { ease: 'none' }, scrollTrigger: {
+        trigger: pr, start: vertical ? 'top 70%' : 'top 78%', end: vertical ? 'bottom 65%' : 'bottom 60%', scrub: 0.8 } });
+      var span = prSteps.length - 1, fillTo = {}; fillTo[axis] = 1;
+      tl.to(prFill, Object.assign({ duration: span }, fillTo), 0);
+      prSteps.forEach(function (s, i) {
+        var node = s.querySelector('.pr__node'), ring = s.querySelector('.pr__ring');
+        var shapes = node.querySelectorAll('svg path, svg circle');
+        var words = s.querySelectorAll('.sw__i'), rest = s.querySelectorAll('.pr__label, p, .pr__tags li');
+        shapes.forEach(function (el) { var len = el.getTotalLength ? el.getTotalLength() + 1 : 60; gsap.set(el, { strokeDasharray: len, strokeDashoffset: len }); });
+        gsap.set(node, { backgroundColor: '#ffffff', borderColor: '#e4e4e0', scale: 0.86 });
+        gsap.set(words, { yPercent: 110 });
+        gsap.set(rest, { autoAlpha: 0.15, y: 16 });
+        var at = i;
+        tl.to(node, { backgroundColor: '#d4f55c', borderColor: '#d4f55c', scale: 1, duration: 0.3, ease: 'back.out(3)' }, at)
+          .fromTo(ring, { scale: 1, autoAlpha: 0.9 }, { scale: 1.7, autoAlpha: 0, duration: 0.45, ease: 'power2.out', immediateRender: false }, at + 0.05)
+          .to(shapes, { strokeDashoffset: 0, duration: 0.35, ease: 'power2.out' }, at + 0.05)
+          .to(words, { yPercent: 0, duration: 0.3, stagger: 0.05, ease: 'power3.out' }, at + 0.04)
+          .to(rest, { autoAlpha: 1, y: 0, duration: 0.3, stagger: 0.05, ease: 'power3.out' }, at + 0.1);
+      });
+      return function () { ScrollTrigger.removeEventListener('refreshInit', sizeRail); prRail.style.height = ''; };
+    });
+  }
+
   mm.add('(prefers-reduced-motion: reduce)', function () {
     document.querySelectorAll('.reveal').forEach(function (el) { el.classList.add('is-visible'); });
     document.querySelectorAll('.beyond__mark').forEach(function (el) { el.classList.add('is-built'); });

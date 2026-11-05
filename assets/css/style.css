@@ -596,51 +596,27 @@ details[open] .acc-icon { background: var(--lime); }
 details[open] .acc-icon::after { transform: rotate(0); }
 .accordion details p { padding: 0 48px 22px 0; color: var(--text-muted); font-size: 15px; }
 
-.process { margin-top: 20px; display: grid; grid-template-columns: repeat(4, 1fr); gap: 20px; counter-reset: step; }
-.process__num { font-size: 12px; letter-spacing: .1em; padding: 4px 10px; border-radius: 999px; background: #fff; }
-.process__step {
-  position: relative; display: flex; flex-direction: column; padding: 24px; border-radius: var(--radius-lg);
-  background: var(--gray); transition: background-color .4s var(--ease), color .4s var(--ease), transform .5s var(--ease), box-shadow .5s var(--ease);
-}
-.process__step:not(:last-child)::after {
-  content: ""; position: absolute; z-index: 2; top: 34px; right: -24px; width: 28px; height: 28px; border-radius: 50%;
-  background: #fff url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%230e0e0e' stroke-width='2.2' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='M5 12h14M13 6l6 6-6 6'/%3E%3C/svg%3E") center / 14px no-repeat;
-  box-shadow: 0 0 0 4px var(--bg);
-}
-.process__ghost {
-  position: absolute; right: 18px; bottom: 6px; font-size: 120px; font-weight: 600; letter-spacing: -0.06em; line-height: 1;
-  color: rgba(14, 14, 14, .045); pointer-events: none; transition: color .4s var(--ease), transform .6s var(--ease);
-}
-.process__head { display: flex; align-items: center; justify-content: space-between; }
-.process__icon {
-  width: 48px; height: 48px; border-radius: 16px; display: grid; place-items: center; background: #fff;
-  transition: background-color .4s var(--ease), color .4s var(--ease), transform .5s var(--ease);
-}
-.process__icon svg { width: 22px; height: 22px; stroke-width: 1.8; }
-.process__step:last-child .process__icon { background: var(--lime); }
-.process h3 { margin: 32px 0 8px; font-size: 22px; letter-spacing: -0.03em; }
-.process__step p { color: var(--text-muted); font-size: 14.5px; transition: color .4s var(--ease); }
-.process__tags { margin-top: 18px; display: flex; flex-wrap: wrap; gap: 6px; }
-.process__tags li {
-  font-size: 12.5px; padding: 5px 10px; border-radius: 999px; background: rgba(255, 255, 255, .75);
-  transition: background-color .4s var(--ease), color .4s var(--ease);
-}
-.process__bar { margin-top: auto; padding-top: 28px; display: grid; grid-template-columns: repeat(4, 1fr); gap: 4px; }
-.process__bar i { height: 4px; border-radius: 4px; background: rgba(14, 14, 14, .1); overflow: hidden; position: relative; }
-.process__bar i.is-on::after {
-  content: ""; position: absolute; inset: 0; background: var(--ink); transform-origin: left;
-  transition: transform .7s var(--ease) calc(var(--d) + 200ms), background-color .4s var(--ease);
-}
-.js .process__step.reveal:not(.is-visible) .process__bar i.is-on::after { transform: scaleX(0); }
-
-.process__step:hover { background: var(--ink); color: #fff; transform: translateY(-6px); box-shadow: var(--shadow-lg); }
-.process__step:hover p { color: rgba(255, 255, 255, .62); }
-.process__step:hover .process__icon { background: var(--lime); color: var(--ink); transform: rotate(-8deg); }
-.process__step:hover .process__num { background: rgba(255, 255, 255, .12); }
-.process__step:hover .process__tags li { background: rgba(255, 255, 255, .1); color: #fff; }
-.process__step:hover .process__ghost { color: rgba(212, 245, 92, .09); transform: translateY(-6px); }
-.process__step:hover .process__bar i { background: rgba(255, 255, 255, .14); }
-.process__step:hover .process__bar i.is-on::after { background: var(--lime); }
+/* Process: open progress rail. Static default shows every step active; motion.js scrubs it in. */
+.pr { --node: 56px; position: relative; margin-top: 28px; }
+.pr__list { display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: 32px; }
+.pr__rail { position: absolute; z-index: 0; left: calc(var(--node) / 2); top: calc(var(--node) / 2 - 1px); width: calc(75% + 24px); height: 2px;
+  border-radius: 2px; background: var(--border); overflow: hidden; }
+.pr__fill { position: absolute; inset: 0; background: var(--ink); transform-origin: left center; }
+.pr__step { position: relative; }
+.pr__node { position: relative; z-index: 1; display: grid; place-items: center; width: var(--node); height: var(--node); border-radius: 50%;
+  background: var(--lime); border: 1px solid var(--lime); color: var(--ink); box-shadow: 0 0 0 8px var(--bg); transition: transform .5s var(--ease); }
+.pr__node svg { width: 22px; height: 22px; stroke-width: 1.8; transition: transform .5s var(--ease); }
+.pr__ring { position: absolute; inset: -1px; border-radius: 50%; border: 2px solid var(--lime); opacity: 0; pointer-events: none; }
+.pr__label { display: block; margin-top: 28px; font-size: 12px; font-weight: 500; letter-spacing: .12em; text-transform: uppercase; color: var(--text-muted); }
+.pr h3 { position: relative; display: inline-block; margin: 8px 0 10px; font-size: 24px; letter-spacing: -0.03em; }
+.pr h3::after { content: ""; position: absolute; z-index: -1; left: -2px; right: -2px; bottom: .08em; height: .32em; border-radius: 3px;
+  background: var(--lime); transform: scaleX(0); transform-origin: left; transition: transform .55s var(--ease); }
+.pr__step p { max-width: 32ch; color: var(--text-muted); font-size: 14.5px; }
+.pr__tags { margin-top: 16px; display: flex; flex-wrap: wrap; gap: 6px; }
+.pr__tags li { font-size: 12.5px; padding: 5px 11px; border-radius: 999px; background: #fff; border: 1px solid var(--border); }
+.pr__step:hover .pr__node { transform: translateY(-4px); }
+.pr__step:hover .pr__node svg { transform: rotate(-10deg) scale(1.08); }
+.pr__step:hover h3::after { transform: scaleX(1); }
 
 /* ---------- Experience ---------- */
 .exp-head { display: flex; justify-content: space-between; align-items: flex-end; gap: 24px; flex-wrap: wrap; margin-bottom: clamp(32px, 4vw, 48px); }
@@ -938,12 +914,9 @@ html:not(.has-drag) .beyond__hint { display: none; }
 .dc:not(.is-3d) .dc__progress, .dc:not(.is-3d) .dc__nav { display: none; }
 
 /* White chips and icons on gray cards get a hairline so they hold up on the light gray */
-.rw-card__arrow, .acc-icon,
-.process__num, .process__icon, .process__tags li, .cs-blk-steps li:last-child span {
+.rw-card__arrow, .acc-icon, .cs-blk-steps li:last-child span {
   box-shadow: inset 0 0 0 1px var(--border);
 }
-.process__tags li { background: #fff; }
-.process__step:hover .process__num, .process__step:hover .process__icon, .process__step:hover .process__tags li { box-shadow: none; }
 
 /* ---------- GSAP motion ---------- */
 .gsap .is-tweening { transition: none !important; }
@@ -978,8 +951,12 @@ html:not(.has-drag) .beyond__hint { display: none; }
   .xp2__edu { order: 2; margin-top: 28px; }
   .edu { grid-template-columns: repeat(2, minmax(0, 1fr)); }
   .live { grid-template-columns: repeat(2, minmax(0, 1fr)); }
-  .process { grid-template-columns: repeat(2, 1fr); }
-  .process__step:nth-child(2n)::after { display: none; }
+  .pr__list { grid-template-columns: 1fr; gap: 40px; }
+  .pr__step { padding-left: calc(var(--node) + 24px); min-height: var(--node); }
+  .pr__node { position: absolute; left: 0; top: 0; }
+  .pr__label { margin-top: 4px; }
+  .pr__rail { top: calc(var(--node) / 2); bottom: 0; left: calc(var(--node) / 2 - 1px); width: 2px; height: auto; }
+  .pr__fill { transform-origin: center top; }
 }
 
 @media (max-width: 900px) {
@@ -1022,7 +999,7 @@ html:not(.has-drag) .beyond__hint { display: none; }
   .soc__icon { width: 30px; height: 30px; margin-right: auto; }
   .soc__name { margin-right: auto; }
   .hero__role { font-size: 12px; }
-  .process, .rw-grid, .live { grid-template-columns: 1fr; }
+  .rw-grid, .live { grid-template-columns: 1fr; }
   .dc__progress { display: none; }
   .dc.is-3d .dc__card { width: 74vw; }
   .dc.is-3d .dc__track { height: 64vw; }
@@ -1046,8 +1023,8 @@ html:not(.has-drag) .beyond__hint { display: none; }
   .tl2__points { grid-template-columns: 1fr; }
   .edu { grid-template-columns: 1fr; }
 
-  .process__step:not(:last-child)::after { display: block; top: auto; right: auto; bottom: -24px; left: 50%; transform: translateX(-50%) rotate(90deg); }
-  .process__ghost { font-size: 96px; }
+  .pr { --node: 48px; }
+  .pr h3 { font-size: 21px; }
   .stats { gap: 12px; }
   .stat { min-height: 0; gap: 22px; padding: 20px; }
   .stat__value { font-size: 40px; }
