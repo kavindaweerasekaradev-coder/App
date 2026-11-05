@@ -502,6 +502,8 @@ def render(p, prev_p, next_p, version):
 
   <script src="../assets/js/vendor/gsap.min.js?v=3.12.5" defer></script>
   <script src="../assets/js/vendor/ScrollTrigger.min.js?v=3.12.5" defer></script>
+  <script src="../assets/js/vendor/lenis.min.js?v=1.1.13" defer></script>
+  <script src="../assets/js/smooth.js?v={version}" defer></script>
   <script src="../assets/js/vendor/Draggable.min.js?v=3.12.5" defer></script>
   <script src="../assets/js/carousel.js?v={version}" defer></script>
   <script src="../assets/js/showcase.js?v={version}" defer></script>
