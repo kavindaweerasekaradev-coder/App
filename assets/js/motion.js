@@ -299,25 +299,21 @@
           .from(stats.querySelector('.st-chart__area'), { autoAlpha: 0, duration: 0.8 }, 0.6)
           .from(stats.querySelector('.st-chart__dot'), { scale: 0, duration: 0.5, ease: 'back.out(3)' }, 1.4);
       }
-      // 2. UI kit: parts pop in, then loop little interactions
-      var kit = stats.querySelector('.st-kit');
-      if (kit) {
-        var parts = kit.querySelectorAll(':scope > span');
-        var check = kit.querySelector('.st-kit__check path');
-        gsap.set(check, { strokeDashoffset: 22 });
-        gsap.from(parts, { scale: 0.4, autoAlpha: 0, duration: 0.6, ease: 'back.out(2)', stagger: 0.08, scrollTrigger: st,
-          onComplete: function () {
-            var knob = kit.querySelector('.st-kit__toggle i'), tog = kit.querySelector('.st-kit__toggle');
-            gsap.timeline({ repeat: -1, repeatDelay: 0.6, defaults: { ease: 'power3.inOut' } })
-              .to(kit.querySelector('.st-kit__btn'), { scale: 0.92, duration: 0.15, yoyo: true, repeat: 1 })
-              .to(knob, { x: 22, duration: 0.45 }, 0.3).to(tog, { backgroundColor: '#d4f55c', duration: 0.45 }, 0.3)
-              .to(check, { strokeDashoffset: 0, duration: 0.45 }, 0.6)
-              .to(kit.querySelector('.st-kit__slider i'), { left: '78%', duration: 1, ease: 'power2.inOut' }, 0.5)
-              .to({}, { duration: 1.2 })
-              .to(knob, { x: 0, duration: 0.45 }).to(tog, { backgroundColor: '#f1f1ee', duration: 0.45 }, '<')
-              .to(check, { strokeDashoffset: 22, duration: 0.35 }, '<')
-              .to(kit.querySelector('.st-kit__slider i'), { left: '0%', duration: 0.9, ease: 'power2.inOut' }, '<');
-          } });
+      // 2. AI card: the prompt types itself, the tools pop in, then it loops through a few prompts
+      var ai = stats.querySelector('.st-ai');
+      if (ai) {
+        var txt = ai.querySelector('.st-ai__text'), tools = ai.querySelectorAll('.tool-logo');
+        var prompts = ['3 layout ideas', 'Sum up interviews', 'Friendlier UX copy', 'Prototype checkout'];
+        var tl = gsap.timeline({ paused: true, repeat: -1 });
+        prompts.forEach(function (str) {
+          var o = { n: 0 };
+          tl.to(o, { n: str.length, duration: str.length * 0.045, ease: 'none', onUpdate: function () { txt.textContent = str.slice(0, Math.round(o.n)); } })
+            .fromTo(tools, { y: 10, autoAlpha: 0, scale: 0.6 }, { y: 0, autoAlpha: 1, scale: 1, duration: 0.45, ease: 'back.out(2.4)', stagger: 0.08 })
+            .to(ai.querySelector('.st-ai__spark'), { rotation: '+=180', scale: 1.25, duration: 0.5, yoyo: true, repeat: 1, ease: 'power2.inOut' }, '<')
+            .to({}, { duration: 1.4 })
+            .to(o, { n: 0, duration: str.length * 0.02, ease: 'none', onUpdate: function () { txt.textContent = str.slice(0, Math.round(o.n)); } });
+        });
+        ScrollTrigger.create({ trigger: stats, start: 'top 80%', once: true, onEnter: function () { txt.textContent = ''; tl.play(0); } });
       }
       // 3. logos drop into a stack
       gsap.from(stats.querySelectorAll('.st-logo'), { y: -40, autoAlpha: 0, rotation: function () { return gsap.utils.random(-20, 20); },
