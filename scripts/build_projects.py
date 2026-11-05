@@ -236,7 +236,7 @@ def chapter(c):
     screen readers; narrow screens show the text, plus a cropped screen image if there is one."""
     board = c.get("board")
     ui = c.get("board_ui")
-    board_html = (f'<figure class="cs-board" aria-hidden="true"><img src="../{board["src"]}" alt="" '
+    board_html = (f'<figure class="cs-board" aria-hidden="true"><img src="../{board["src"]}"{img_attrs(board["src"], board["width"], "(max-width: 900px) 100vw, 1280px")} alt="" '
                   f'width="{board["width"]}" height="{board["height"]}" loading="lazy" decoding="async" /></figure>') if board else ""
     ui_html = (f'<figure class="cs-blk-image cs-board-ui"><img src="../{ui["src"]}" '
                f'alt="{e(c["label"])} screens from the Ledgr prototype" width="{ui["width"]}" height="{ui["height"]}" '
