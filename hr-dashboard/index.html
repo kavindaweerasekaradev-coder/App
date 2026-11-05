@@ -151,7 +151,7 @@ button:focus-visible,a:focus-visible,input:focus-visible{outline:2px solid #2B27
 <span class="ping" style="position: absolute; top: 9px; right: 11px; width: 8px; height: 8px; border-radius: 999px; background: #EF4456; border: 2px solid #FFFFFF;"></span>
 </button>
 <button type="button" aria-label="Account menu" style="display: flex; align-items: center; gap: 8px; border: none; background: transparent; padding: 0 4px 0 0;">
-<span style="width: 44px; height: 44px; border-radius: 999px; background: #2B2725; color: var(--accent); display: flex; align-items: center; justify-content: center; font-size: 14px; font-weight: 700;">KW</span>
+<span style="width: 44px; height: 44px; border-radius: 999px; background: #FDE1D0; display: flex; align-items: center; justify-content: center; overflow: hidden; box-shadow: 0 0 0 2px #2B2725;"><img src="assets/avatars/kavinda-weerasekara.svg" alt="" width="44" height="44" style="width: 100%; height: 100%; display: block;"></span>
 <svg class="chev" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M6 9l6 6 6-6"/></svg>
 </button>
 </div>
@@ -421,6 +421,11 @@ All departments
 (function () {
   var chip = function (bg, fg) { return 'display:inline-flex;align-items:center;padding:4px 10px;border-radius:999px;font-size:12px;font-weight:600;background:' + bg + ';color:' + fg + ';'; };
   var esc = function (s) { return String(s).replace(/[&<>"]/g, function (c) { return { '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;' }[c]; }); };
+  // Portraits live in assets/avatars/, named after each person
+  var photo = function (name) {
+    var slug = name.toLowerCase().normalize('NFD').replace(/[\u0300-\u036f]/g, '').replace(/[^a-z]+/g, '-');
+    return '<img src="assets/avatars/' + slug + '.svg" alt="" width="40" height="40" loading="lazy" style="width:100%;height:100%;display:block;">';
+  };
   var data = {
     weekly: { bars: [['Mon', 94], ['Tue', 97], ['Wed', 91], ['Thu', 98], ['Fri', 89]], avg: '93.8%', delta: '+1.6% vs last week', label: 'day this week' },
     monthly: { bars: [['May', 91], ['Jun', 93], ['Jul', 88], ['Aug', 90], ['Sep', 94], ['Oct', 96]], avg: '92.0%', delta: '+2.4% vs previous 6 months', label: 'month' }
@@ -469,7 +474,7 @@ All departments
       return !q || (e[2] + ' ' + e[3] + ' ' + e[4] + ' ' + e[5]).toLowerCase().indexOf(q) !== -1;
     }).map(function (e, i) {
       return '<tr class="row row-in" style="animation-delay:' + (i * 50) + 'ms"><td style="' + td + '"><div style="display:flex;align-items:center;gap:12px;">' +
-        '<span style="width:36px;height:36px;flex:none;border-radius:999px;background:' + e[1] + ';display:flex;align-items:center;justify-content:center;font-size:13px;font-weight:700;color:#2B2725;">' + e[0] + '</span>' +
+        '<span style="width:36px;height:36px;flex:none;border-radius:999px;background:' + e[1] + ';display:flex;align-items:center;justify-content:center;overflow:hidden;">' + photo(e[2]) + '</span>' +
         '<div style="display:flex;flex-direction:column;"><a href="employees.html#emp-' + (employees.indexOf(e) + 1) + '" style="font-weight:600;text-decoration:none;">' + esc(e[2]) + '</a><span style="font-size:12px;color:#6E6762;">' + esc(e[3]) + '</span></div></div></td>' +
         '<td style="' + td + '">' + e[4] + '</td><td style="' + td + '">' + e[5] + '</td>' +
         '<td style="' + td + '"><span style="' + statusChip[e[6]] + '">' + e[6] + '</span></td>' +
@@ -497,7 +502,7 @@ All departments
           '<button type="button" class="icon-btn" data-i="' + i + '" data-r="Declined" aria-label="Decline ' + l.name + '" style="width:44px;height:44px;border-radius:999px;border:1px solid #E5E0DC;background:#FFFFFF;display:flex;align-items:center;justify-content:center;">' + x + '</button>' +
           '<button type="button" class="icon-btn" data-i="' + i + '" data-r="Approved" aria-label="Approve ' + l.name + '" style="width:44px;height:44px;border-radius:999px;border:none;background:#2B2725;color:var(--accent);display:flex;align-items:center;justify-content:center;">' + check + '</button></div>';
       return '<div class="leave-row' + (i === justDecided ? ' flash' : '') + '" style="display:flex;align-items:center;gap:12px;padding:12px;border-radius:18px;background:#F8F6F4;">' +
-        '<span style="width:40px;height:40px;flex:none;border-radius:999px;background:' + l.tint + ';display:flex;align-items:center;justify-content:center;font-size:13px;font-weight:700;color:#2B2725;">' + l.initials + '</span>' +
+        '<span style="width:40px;height:40px;flex:none;border-radius:999px;background:' + l.tint + ';display:flex;align-items:center;justify-content:center;overflow:hidden;">' + photo(l.name) + '</span>' +
         '<div style="flex:1 1 auto;min-width:0;display:flex;flex-direction:column;gap:2px;"><span style="font-size:14px;font-weight:600;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;">' + l.name + '</span>' +
         '<span style="font-size:12px;color:#6E6762;">' + l.type + ' · ' + l.dates + '</span></div>' + action + '</div>';
     }).join('');

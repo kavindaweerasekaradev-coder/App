@@ -44,11 +44,13 @@ scripts/sync_behance.py        # Behance import, run by .github/workflows/behanc
 
 ```
 hr-dashboard/overview.html   # Project page: user flow, screens, palette
+hr-dashboard/flow.html       # App flow map: every page, step and decision, plus a page-by-page breakdown
 hr-dashboard/login.html      # Log in and reset password (login.html#forgot opens the reset screen)
 hr-dashboard/signup.html     # Five-step sign-up: account, email code, company, invites, done
 hr-dashboard/index.html      # Dashboard
 hr-dashboard/employees.html  # Directory, profile panel (#emp-<id>) and add-employee form (#add)
 hr-dashboard/auth.css        # Styles shared by the log-in and sign-up pages
+hr-dashboard/assets/avatars/ # Portraits of the sample people (DiceBear Notionists, CC0 1.0)
 ```
 
 Log in and sign-up both lead to the dashboard, and the dashboard's Sign out icon returns to log in.
