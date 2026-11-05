@@ -1,0 +1,405 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>App flow — Staffora</title>
+<meta name="description" content="The complete user flow of the Staffora HR prototype: every page, step and decision, from sign up and log in to the dashboard and employees.">
+<link rel="icon" href="../favicon.ico">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&amp;display=swap">
+<style>
+:root {
+  --accent: #F47B36; --accent-dark: #B4501A; --peach: #FDE1D0; --ink: #2B2725;
+  --muted: #6E6762; --line: #E5E0DC; --soft: #F4F1EE; --bg: #F1F0EE; --edge: #B9B0A9;
+}
+* { box-sizing: border-box; }
+body { margin: 0; background: var(--bg); color: var(--ink); font-family: 'Plus Jakarta Sans', system-ui, sans-serif; font-size: 15px; line-height: 1.55; }
+a { color: inherit; }
+h1, h2, h3, p { margin: 0; }
+a:focus-visible, button:focus-visible { outline: 2px solid var(--ink); outline-offset: 3px; }
+.wrap { max-width: 1440px; margin: 0 auto; padding: 20px 16px 64px; display: flex; flex-direction: column; gap: 20px; }
+
+/* Header */
+.top { display: flex; align-items: center; justify-content: space-between; gap: 12px; flex-wrap: wrap; background: #FFFFFF; border-radius: 999px; padding: 10px 10px 10px 16px; }
+.brand { display: flex; align-items: center; gap: 10px; font-size: 19px; font-weight: 800; letter-spacing: -0.02em; text-decoration: none; }
+.brand-mark { width: 38px; height: 38px; border-radius: 12px; background: var(--accent); display: grid; place-items: center; }
+.top-links { display: flex; align-items: center; gap: 6px; flex-wrap: wrap; }
+.pill { display: inline-flex; align-items: center; gap: 8px; height: 44px; padding: 0 18px; border-radius: 999px; font-weight: 600; font-size: 14px; text-decoration: none; transition: background-color .2s ease, transform .15s ease, box-shadow .2s ease; }
+.pill:active { transform: scale(.96); }
+.pill-ghost:hover { background: var(--soft); }
+.pill-ghost[aria-current="page"] { background: var(--soft); }
+.pill-dark { background: var(--ink); color: #FFFFFF; }
+.pill-dark:hover { box-shadow: 0 10px 24px rgba(43,39,37,.22); transform: translateY(-1px); }
+
+/* Intro */
+.intro { display: flex; justify-content: space-between; align-items: flex-end; gap: 20px; flex-wrap: wrap; padding: 12px 6px 0; }
+.eyebrow { font-size: 12px; font-weight: 700; letter-spacing: .08em; text-transform: uppercase; color: var(--accent-dark); }
+.intro h1 { font-size: 40px; line-height: 1.1; font-weight: 700; letter-spacing: -0.03em; margin-top: 8px; }
+.intro p { color: var(--muted); max-width: 560px; margin-top: 10px; }
+.legend { display: flex; flex-wrap: wrap; gap: 8px; list-style: none; margin: 0; padding: 0; }
+.legend li { display: inline-flex; align-items: center; gap: 8px; height: 34px; padding: 0 12px 0 8px; border-radius: 999px; background: #FFFFFF; font-size: 12px; font-weight: 600; }
+.legend i { width: 18px; height: 18px; border-radius: 6px; display: inline-block; }
+
+/* Diagram */
+.board { background: #FFFFFF; border-radius: 28px; padding: 8px; }
+.board-head { display: flex; justify-content: space-between; align-items: center; gap: 12px; flex-wrap: wrap; padding: 14px 16px 6px; }
+.board-head h2 { font-size: 18px; font-weight: 700; }
+.swipe { display: none; font-size: 12px; color: var(--muted); align-items: center; gap: 6px; }
+.scroller { overflow-x: auto; border-radius: 22px; background: var(--soft); background-image: radial-gradient(#E2DCD7 1px, transparent 1px); background-size: 18px 18px; }
+.canvas { position: relative; min-width: 1360px; padding: 40px 36px 72px 64px; }
+.grid { display: grid; grid-template-columns: repeat(9, minmax(0, 1fr)); grid-template-rows: repeat(4, auto); column-gap: 30px; row-gap: 70px; position: relative; z-index: 1; }
+.lanes { position: absolute; left: 10px; top: 40px; bottom: 72px; display: grid; grid-template-rows: repeat(4, auto); row-gap: 70px; z-index: 1; pointer-events: none; }
+.edges { position: absolute; inset: 0; width: 100%; height: 100%; z-index: 0; overflow: visible; }
+.edges path { fill: none; stroke: var(--edge); stroke-width: 2; stroke-linecap: round; stroke-linejoin: round; transition: stroke .2s ease, stroke-width .2s ease, opacity .2s ease; }
+.edges path.dashed { stroke-dasharray: 5 6; }
+.edges path.draw { stroke-dasharray: 1; stroke-dashoffset: 1; animation: draw .9s cubic-bezier(.4,0,.2,1) forwards; }
+.edges.dim path { opacity: .25; }
+.edges path.hot { stroke: var(--accent); stroke-width: 2.5; opacity: 1; }
+.labels { position: absolute; inset: 0; z-index: 2; pointer-events: none; }
+.label { position: absolute; transform: translate(-50%, -50%); white-space: nowrap; font-size: 11px; font-weight: 700; padding: 3px 8px; border-radius: 999px; background: #FFFFFF; color: var(--muted); box-shadow: 0 0 0 1px var(--line); transition: color .2s ease, box-shadow .2s ease, opacity .2s ease; animation: fade .4s ease .7s backwards; }
+.label.yes { color: #1C6B37; }
+.label.no { color: #A3262A; }
+.labels.dim .label { opacity: .35; }
+.label.hot { color: var(--accent-dark); box-shadow: 0 0 0 1.5px var(--accent); opacity: 1; }
+
+.node { position: relative; display: flex; flex-direction: column; gap: 3px; min-height: 84px; padding: 12px 12px 12px; border-radius: 16px; background: #FFFFFF; border: 1.5px solid var(--line); text-decoration: none; color: var(--ink); animation: rise .5s cubic-bezier(.2,.7,.2,1) backwards; transition: transform .2s ease, box-shadow .2s ease, border-color .2s ease; }
+a.node:hover, .node.hot { transform: translateY(-2px); box-shadow: 0 10px 24px rgba(43,39,37,.12); border-color: var(--ink); }
+.node .file { font-size: 10px; font-weight: 700; letter-spacing: .04em; text-transform: uppercase; color: var(--muted); display: flex; align-items: center; gap: 5px; }
+.node strong { font-size: 13.5px; font-weight: 700; line-height: 1.25; }
+.node small { font-size: 11.5px; color: var(--muted); line-height: 1.35; }
+.node .num { position: absolute; top: -10px; right: 10px; min-width: 22px; height: 22px; padding: 0 6px; border-radius: 999px; background: var(--ink); color: #FFFFFF; font-size: 11px; font-weight: 700; display: grid; place-items: center; }
+.node.start { background: var(--ink); border-color: var(--ink); color: #FFFFFF; }
+.node.start .file, .node.start small { color: #C9C1BB; }
+.node.start .num { background: var(--accent); color: var(--ink); }
+.node.hub { background: var(--accent); border-color: var(--accent); }
+.node.hub .file, .node.hub small { color: #4A2410; }
+.node.decision { background: var(--peach); border: 1.5px dashed var(--accent); }
+.node.decision .file { color: var(--accent-dark); }
+.node.end { background: #E3F5E8; border-color: #BFE3CB; }
+.node.end .file { color: #1C6B37; }
+.node.page::before { content: ''; position: absolute; left: 12px; right: 12px; top: -1.5px; height: 3px; border-radius: 0 0 4px 4px; background: var(--accent); }
+.node.start.page::before, .node.hub.page::before { display: none; }
+.lane { display: flex; align-items: center; }
+.lane span { writing-mode: vertical-rl; transform: rotate(180deg); font-size: 11px; font-weight: 700; letter-spacing: .08em; text-transform: uppercase; color: var(--muted); }
+
+/* Page by page */
+.section { background: #FFFFFF; border-radius: 28px; padding: 32px; }
+.section-head { display: flex; justify-content: space-between; align-items: flex-end; gap: 16px; flex-wrap: wrap; margin-bottom: 22px; }
+.section-head h2 { font-size: 26px; font-weight: 700; letter-spacing: -0.02em; margin-top: 6px; }
+.section-head p { color: var(--muted); max-width: 460px; }
+.pages { display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 14px; }
+.page { border-radius: 22px; background: var(--soft); padding: 22px; display: flex; flex-direction: column; gap: 14px; }
+.page-top { display: flex; justify-content: space-between; align-items: flex-start; gap: 10px; }
+.page h3 { font-size: 18px; font-weight: 700; }
+.page code { font-family: inherit; font-size: 12px; font-weight: 600; color: var(--muted); }
+.open { flex: none; width: 38px; height: 38px; border-radius: 999px; background: #FFFFFF; display: grid; place-items: center; transition: background-color .2s ease, transform .3s cubic-bezier(.2,.7,.2,1); }
+.open:hover { background: var(--accent); transform: rotate(45deg); }
+.page ol { margin: 0; padding: 0; list-style: none; display: flex; flex-direction: column; gap: 8px; counter-reset: s; }
+.page ol li { counter-increment: s; display: flex; gap: 10px; font-size: 14px; }
+.page ol li::before { content: counter(s); flex: none; width: 22px; height: 22px; border-radius: 999px; background: #FFFFFF; font-size: 11px; font-weight: 700; display: grid; place-items: center; margin-top: 1px; }
+.goes { display: flex; flex-wrap: wrap; gap: 6px; align-items: center; padding-top: 12px; border-top: 1px solid #E8E2DD; font-size: 12px; color: var(--muted); }
+.goes a { display: inline-flex; align-items: center; gap: 4px; height: 30px; padding: 0 10px; border-radius: 999px; background: #FFFFFF; color: var(--ink); font-weight: 600; text-decoration: none; transition: background-color .2s ease; }
+.goes a:hover { background: var(--peach); }
+
+.foot { display: flex; justify-content: space-between; align-items: center; gap: 12px; flex-wrap: wrap; padding: 8px 8px 0; color: var(--muted); font-size: 13px; }
+.foot a { font-weight: 600; color: var(--ink); }
+
+@keyframes rise { from { opacity: 0; transform: translateY(10px); } to { opacity: 1; transform: none; } }
+@keyframes draw { to { stroke-dashoffset: 0; } }
+@keyframes fade { from { opacity: 0; } to { opacity: 1; } }
+
+@media (max-width: 860px) {
+  .top { border-radius: 24px; }
+  .intro h1 { font-size: 31px; }
+  .section { padding: 22px 18px; border-radius: 24px; }
+  .board { border-radius: 24px; }
+  .swipe { display: inline-flex; }
+}
+@media (max-width: 520px) { .top-links .pill-ghost { display: none; } }
+@media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after { animation-duration: .01ms !important; animation-delay: 0ms !important; transition-duration: .01ms !important; }
+  .edges path.draw { stroke-dashoffset: 0; }
+}
+</style>
+<script src="../assets/js/analytics.js" defer></script>
+</head>
+<body>
+<div class="wrap">
+
+  <header class="top">
+    <a href="overview.html" class="brand">
+      <span class="brand-mark"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#2B2725" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="9" cy="8" r="3.2"/><path d="M3 19.5c.9-3.4 3.2-5 6-5s5.1 1.6 6 5"/><path d="M15.5 4.8a3.2 3.2 0 0 1 0 6.4M17.5 14.6c1.8.7 2.9 2.3 3.4 4.9"/></svg></span>
+      Staffora
+    </a>
+    <nav class="top-links" aria-label="Project">
+      <a href="overview.html" class="pill pill-ghost">Overview</a>
+      <a href="flow.html" class="pill pill-ghost" aria-current="page">App flow</a>
+      <a href="login.html" class="pill pill-dark">Open prototype
+        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6"/></svg>
+      </a>
+    </nav>
+  </header>
+
+  <section class="intro">
+    <div>
+      <p class="eyebrow">App flow</p>
+      <h1>Every page, step and decision</h1>
+      <p>How people move through Staffora, from their first visit to managing the team. Every box is a real screen: click one to open it. Hover a box to trace where it leads.</p>
+    </div>
+    <ul class="legend" aria-label="Legend">
+      <li><i style="background: var(--ink);"></i>Start</li>
+      <li><i style="background: #FFFFFF; box-shadow: inset 0 0 0 1.5px var(--line), inset 0 3px 0 var(--accent);"></i>Page</li>
+      <li><i style="background: #FFFFFF; box-shadow: inset 0 0 0 1.5px var(--line);"></i>Step on a page</li>
+      <li><i style="background: var(--peach); box-shadow: inset 0 0 0 1.5px var(--accent);"></i>Decision</li>
+      <li><i style="background: var(--accent);"></i>Main hub</li>
+      <li><i style="background: #E3F5E8; box-shadow: inset 0 0 0 1.5px #BFE3CB;"></i>Done</li>
+    </ul>
+  </section>
+
+  <section class="board" aria-labelledby="map-title">
+    <div class="board-head">
+      <h2 id="map-title">User flow map</h2>
+      <span class="swipe"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6"/></svg>Swipe sideways to follow the flow</span>
+    </div>
+    <div class="scroller" tabindex="0" aria-label="User flow map, scrolls sideways">
+      <div class="canvas" id="canvas">
+        <svg class="edges" id="edges" aria-hidden="true">
+          <defs>
+            <marker id="arrow-grey" viewBox="0 0 10 10" refX="8.5" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M0 0L10 5L0 10z" fill="#B9B0A9"/></marker>
+            <marker id="arrow-hot" viewBox="0 0 10 10" refX="8.5" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M0 0L10 5L0 10z" fill="#F47B36"/></marker>
+          </defs>
+        </svg>
+        <div class="labels" id="labels"></div>
+        <div class="lanes" aria-hidden="true" id="lanes">
+          <div class="lane"><span>Sign up</span></div>
+          <div class="lane"><span>Log in · App</span></div>
+          <div class="lane"><span>Recover · People</span></div>
+          <div class="lane"><span>&nbsp;</span></div>
+        </div>
+        <div class="grid" id="grid">
+          <a class="node start page" data-id="overview" href="overview.html" style="grid-area: 1 / 1;"><span class="num">0</span><span class="file">overview.html</span><strong>Project overview</strong><small>Where the visit starts</small></a>
+          <a class="node page" data-id="su1" href="signup.html" style="grid-area: 1 / 2;"><span class="num">1</span><span class="file">signup.html</span><strong>Create account</strong><small>Name, email, password</small></a>
+          <a class="node" data-id="su2" href="signup.html" style="grid-area: 1 / 3;"><span class="num">2</span><span class="file">Sign up</span><strong>Verify email</strong><small>6-digit code, resend</small></a>
+          <a class="node" data-id="su3" href="signup.html" style="grid-area: 1 / 4;"><span class="num">3</span><span class="file">Sign up</span><strong>Your company</strong><small>Name, size, industry</small></a>
+          <a class="node" data-id="su4" href="signup.html" style="grid-area: 1 / 5;"><span class="num">4</span><span class="file">Sign up</span><strong>Invite team</strong><small>Add emails, optional</small></a>
+          <a class="node end" data-id="su5" href="signup.html" style="grid-area: 1 / 6;"><span class="file">Sign up</span><strong>All set</strong><small>Workspace summary</small></a>
+          <a class="node" data-id="status" href="employees.html#emp-1" style="grid-area: 1 / 8;"><span class="file">Profile</span><strong>Change status</strong><small>Active, remote, on leave</small></a>
+          <a class="node" data-id="remove" href="employees.html#emp-1" style="grid-area: 1 / 9;"><span class="file">Profile</span><strong>Remove</strong><small>Confirm, then undo</small></a>
+
+          <a class="node page" data-id="login" href="login.html" style="grid-area: 2 / 2;"><span class="file">login.html</span><strong>Log in</strong><small>Email, password, SSO</small></a>
+          <div class="node decision" data-id="check" style="grid-area: 2 / 3;"><span class="file">Decision</span><strong>Details match?</strong><small>Password of 8+ characters</small></div>
+          <a class="node hub page" data-id="dash" href="index.html" style="grid-area: 2 / 6;"><span class="file">index.html</span><strong>Dashboard</strong><small>Stats, attendance, leave, payroll</small></a>
+          <a class="node page" data-id="emp" href="employees.html" style="grid-area: 2 / 7;"><span class="file">employees.html</span><strong>Employees</strong><small>Search, filter, export</small></a>
+          <a class="node" data-id="profile" href="employees.html#emp-1" style="grid-area: 2 / 8;"><span class="file">Employees</span><strong>Profile panel</strong><small>Contact, job, time off</small></a>
+
+          <a class="node" data-id="forgot" href="login.html#forgot" style="grid-area: 3 / 2;"><span class="file">Log in</span><strong>Forgot password</strong><small>Enter work email</small></a>
+          <a class="node" data-id="signout" href="index.html" style="grid-area: 3 / 6;"><span class="file">Dashboard</span><strong>Sign out</strong><small>Side menu icon</small></a>
+          <a class="node" data-id="add1" href="employees.html#add" style="grid-area: 3 / 7;"><span class="num">1</span><span class="file">Add employee</span><strong>Personal</strong><small>Name, email, location</small></a>
+          <a class="node" data-id="add2" href="employees.html#add" style="grid-area: 3 / 8;"><span class="num">2</span><span class="file">Add employee</span><strong>Job</strong><small>Title, team, start date</small></a>
+          <a class="node" data-id="add3" href="employees.html#add" style="grid-area: 3 / 9;"><span class="num">3</span><span class="file">Add employee</span><strong>Review</strong><small>Edit any section</small></a>
+
+          <a class="node" data-id="sent" href="login.html#forgot" style="grid-area: 4 / 2;"><span class="file">Log in</span><strong>Link sent</strong><small>Then back to log in</small></a>
+          <a class="node end" data-id="added" href="employees.html" style="grid-area: 4 / 9;"><span class="file">Employees</span><strong>Added</strong><small>Shown first, highlighted</small></a>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="section" aria-labelledby="pages-title">
+    <div class="section-head">
+      <div><p class="eyebrow">Page by page</p><h2 id="pages-title">What each page does and where it leads</h2></div>
+      <p>The same flow as the map, written out for each of the five pages.</p>
+    </div>
+    <div class="pages">
+      <article class="page">
+        <div class="page-top"><div><h3>Project overview</h3><code>overview.html</code></div><a class="open" href="overview.html" aria-label="Open the project overview"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M7 17L17 7M8 7h9v9"/></svg></a></div>
+        <ol><li>Read what Staffora is and who designed it</li><li>See the four flows and every screen</li><li>Pick where to start</li></ol>
+        <div class="goes">Leads to <a href="login.html">Log in</a><a href="signup.html">Sign up</a><a href="index.html">Dashboard</a><a href="employees.html">Employees</a><a href="flow.html">App flow</a></div>
+      </article>
+      <article class="page">
+        <div class="page-top"><div><h3>Log in</h3><code>login.html</code></div><a class="open" href="login.html" aria-label="Open log in"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M7 17L17 7M8 7h9v9"/></svg></a></div>
+        <ol><li>Enter work email and password</li><li>Wrong details show an error and stay here</li><li>Correct details open the dashboard</li><li>Forgot password: enter email, then “Link sent”, then back to log in</li></ol>
+        <div class="goes">Leads to <a href="index.html">Dashboard</a><a href="signup.html">Sign up</a><a href="login.html#forgot">Reset password</a></div>
+      </article>
+      <article class="page">
+        <div class="page-top"><div><h3>Sign up</h3><code>signup.html</code></div><a class="open" href="signup.html" aria-label="Open sign up"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M7 17L17 7M8 7h9v9"/></svg></a></div>
+        <ol><li>Create account: name, email, password, terms</li><li>Verify email with a 6-digit code</li><li>Company name, team size and industry</li><li>Invite teammates, or skip</li><li>“All set” summary, then the dashboard</li></ol>
+        <div class="goes">Leads to <a href="index.html">Dashboard</a><a href="login.html">Log in</a></div>
+      </article>
+      <article class="page">
+        <div class="page-top"><div><h3>Dashboard</h3><code>index.html</code></div><a class="open" href="index.html" aria-label="Open the dashboard"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M7 17L17 7M8 7h9v9"/></svg></a></div>
+        <ol><li>Greets you by name and time of day</li><li>Headcount, attendance chart, payroll and today’s attendance</li><li>Approve or decline leave requests</li><li>Click a name in the team table to open their profile</li></ol>
+        <div class="goes">Leads to <a href="employees.html">Employees</a><a href="employees.html#add">Add employee</a><a href="employees.html#emp-1">A profile</a><a href="login.html">Sign out</a></div>
+      </article>
+      <article class="page">
+        <div class="page-top"><div><h3>Employees</h3><code>employees.html</code></div><a class="open" href="employees.html" aria-label="Open employees"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M7 17L17 7M8 7h9v9"/></svg></a></div>
+        <ol><li>Search, filter by status or department, sort, export</li><li>Open a profile: change status, see manager and time off</li><li>Remove someone, with a confirmation and undo</li><li>Add employee in 3 steps: personal, job, review</li></ol>
+        <div class="goes">Leads to <a href="index.html">Dashboard</a><a href="login.html">Sign out</a></div>
+      </article>
+    </div>
+  </section>
+
+  <footer class="foot">
+    <span>Staffora is a design concept. Names and numbers are sample data.</span>
+    <a href="overview.html">Back to the project overview</a>
+  </footer>
+</div>
+
+<script>
+(function () {
+  var canvas = document.getElementById('canvas');
+  var svg = document.getElementById('edges');
+  var labelsEl = document.getElementById('labels');
+  var NS = 'http://www.w3.org/2000/svg';
+  var reduced = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+
+  // Each edge returns its points from the node boxes: L/R/T/B give the middle of a side,
+  // with an optional offset along that side.
+  var edges = [
+    { from: 'overview', to: 'su1', route: 'h' },
+    { from: 'overview', to: 'login', route: function (a, b) { return [B(a), [a.cx, b.cy], L(b)]; } },
+    { from: 'su1', to: 'su2', route: 'h' },
+    { from: 'su2', to: 'su3', route: 'h' },
+    { from: 'su3', to: 'su4', route: 'h' },
+    { from: 'su4', to: 'su5', route: 'h' },
+    { from: 'su5', to: 'dash', route: 'v' },
+    { from: 'login', to: 'su1', route: function (a, b) { return [T(a, -28), B(b, -28)]; }, both: true, label: 'Create account', at: 0.5 },
+    { from: 'login', to: 'check', route: 'h' },
+    { from: 'check', to: 'dash', route: 'h', label: 'Yes', kind: 'yes' },
+    { from: 'check', to: 'login', route: function (a, b, g) { var y = a.bottom + g.row * 0.42; return [B(a), [a.cx, y], [b.cx + 28, y], B(b, 28)]; }, label: 'No, show error', kind: 'no', dashed: true, seg: 1 },
+    { from: 'login', to: 'forgot', route: function (a, b) { return [B(a, -28), T(b, -28)]; }, label: 'Forgot?' },
+    { from: 'forgot', to: 'sent', route: 'v' },
+    { from: 'sent', to: 'login', route: function (a, b) { var x = canvasLeftBus(b); return [L(a), [x, a.cy], [x, b.cy + 14], [b.left, b.cy + 14]]; }, dashed: true },
+    { from: 'dash', to: 'emp', route: 'h' },
+    { from: 'emp', to: 'profile', route: 'h' },
+    { from: 'profile', to: 'status', route: 'v' },
+    { from: 'profile', to: 'remove', route: function (a, b) { return [R(a), [b.cx, a.cy], B(b)]; } },
+    { from: 'dash', to: 'signout', route: 'v' },
+    { from: 'signout', to: 'login', route: function (a, b, g) { var y = g.bottom; var x = canvasLeftBus(b); return [B(a), [a.cx, y], [x, y], [x, b.cy + 14], [b.left, b.cy + 14]]; }, label: 'Back to log in', seg: 1, dashed: true },
+    { from: 'emp', to: 'add1', route: 'v', label: 'Add employee' },
+    { from: 'add1', to: 'add2', route: 'h' },
+    { from: 'add2', to: 'add3', route: 'h' },
+    { from: 'add3', to: 'added', route: 'v' }
+  ];
+
+  function box(id) {
+    var el = document.querySelector('[data-id="' + id + '"]');
+    var c = canvas.getBoundingClientRect(), r = el.getBoundingClientRect();
+    var b = { left: r.left - c.left, top: r.top - c.top, width: r.width, height: r.height };
+    b.right = b.left + b.width; b.bottom = b.top + b.height; b.cx = b.left + b.width / 2; b.cy = b.top + b.height / 2;
+    return b;
+  }
+  function L(b, o) { return [b.left, b.cy + (o || 0)]; }
+  function R(b, o) { return [b.right, b.cy + (o || 0)]; }
+  function T(b, o) { return [b.cx + (o || 0), b.top]; }
+  function B(b, o) { return [b.cx + (o || 0), b.bottom]; }
+  function canvasLeftBus(b) { return b.left - 30; }
+
+  // Round the corners of an orthogonal path
+  function roundPath(pts, r) {
+    var d = 'M' + pts[0][0] + ' ' + pts[0][1];
+    for (var i = 1; i < pts.length - 1; i++) {
+      var p = pts[i], a = pts[i - 1], n = pts[i + 1];
+      var d1 = Math.hypot(p[0] - a[0], p[1] - a[1]), d2 = Math.hypot(n[0] - p[0], n[1] - p[1]);
+      var rr = Math.min(r, d1 / 2, d2 / 2);
+      var s = [p[0] + (a[0] - p[0]) / d1 * rr, p[1] + (a[1] - p[1]) / d1 * rr];
+      var e = [p[0] + (n[0] - p[0]) / d2 * rr, p[1] + (n[1] - p[1]) / d2 * rr];
+      d += ' L' + s[0] + ' ' + s[1] + ' Q' + p[0] + ' ' + p[1] + ' ' + e[0] + ' ' + e[1];
+    }
+    var last = pts[pts.length - 1];
+    return d + ' L' + last[0] + ' ' + last[1];
+  }
+
+  var drawn = false;
+  function draw() {
+    var grid = document.getElementById('grid').getBoundingClientRect(), c = canvas.getBoundingClientRect();
+    var rowGap = parseFloat(getComputedStyle(document.getElementById('grid')).rowGap) || 70;
+    var g = { row: rowGap, bottom: grid.bottom - c.top + 36 };
+    svg.setAttribute('viewBox', '0 0 ' + canvas.offsetWidth + ' ' + canvas.offsetHeight);
+    svg.querySelectorAll('path.edge').forEach(function (p) { p.remove(); });
+    labelsEl.innerHTML = '';
+    edges.forEach(function (e, i) {
+      var a = box(e.from), b = box(e.to), pts;
+      if (e.route === 'h') pts = a.cx < b.cx ? [R(a), L(b)] : [L(a), R(b)];
+      else if (e.route === 'v') pts = a.cy < b.cy ? [B(a), T(b)] : [T(a), B(b)];
+      else pts = e.route(a, b, g);
+      var path = document.createElementNS(NS, 'path');
+      path.setAttribute('d', roundPath(pts, 14));
+      path.setAttribute('class', 'edge' + (e.dashed ? ' dashed' : '') + (!drawn && !reduced && !e.dashed ? ' draw' : ''));
+      if (!e.dashed) path.setAttribute('pathLength', '1');
+      path.setAttribute('marker-end', 'url(#arrow-grey)');
+      if (e.both) path.setAttribute('marker-start', 'url(#arrow-grey)');
+      if (!drawn && !reduced) path.style.animationDelay = (150 + i * 45) + 'ms';
+      path.dataset.from = e.from; path.dataset.to = e.to;
+      svg.appendChild(path);
+      e.el = path;
+      if (e.label) {
+        var seg = e.seg != null ? e.seg : longest(pts);
+        var p1 = pts[seg], p2 = pts[seg + 1], t = e.at != null ? e.at : 0.5;
+        var lab = document.createElement('span');
+        lab.className = 'label' + (e.kind ? ' ' + e.kind : '');
+        lab.textContent = e.label;
+        lab.style.left = (p1[0] + (p2[0] - p1[0]) * t) + 'px';
+        lab.style.top = (p1[1] + (p2[1] - p1[1]) * t) + 'px';
+        labelsEl.appendChild(lab);
+        e.labelEl = lab;
+      }
+    });
+    drawn = true;
+  }
+  function longest(pts) {
+    var best = 0, len = -1;
+    for (var i = 0; i < pts.length - 1; i++) {
+      var l = Math.hypot(pts[i + 1][0] - pts[i][0], pts[i + 1][1] - pts[i][1]);
+      if (l > len) { len = l; best = i; }
+    }
+    return best;
+  }
+
+  // Line the lane labels up with the grid rows
+  function lanes() {
+    var rows = [].slice.call(document.querySelectorAll('#grid > *')).reduce(function (acc, n) {
+      var r = parseInt(n.style.gridArea, 10); var h = n.getBoundingClientRect().height;
+      acc[r - 1] = Math.max(acc[r - 1] || 0, h); return acc;
+    }, []);
+    document.getElementById('lanes').style.gridTemplateRows = rows.map(function (h) { return h + 'px'; }).join(' ');
+  }
+
+  // Hovering or focusing a box highlights the edges that touch it
+  function highlight(id) {
+    var on = !!id;
+    svg.classList.toggle('dim', on); labelsEl.classList.toggle('dim', on);
+    edges.forEach(function (e) {
+      var hot = on && (e.from === id || e.to === id);
+      e.el.classList.toggle('hot', hot);
+      e.el.setAttribute('marker-end', hot ? 'url(#arrow-hot)' : 'url(#arrow-grey)');
+      if (e.both) e.el.setAttribute('marker-start', hot ? 'url(#arrow-hot)' : 'url(#arrow-grey)');
+      if (e.labelEl) e.labelEl.classList.toggle('hot', hot);
+    });
+    document.querySelectorAll('.node').forEach(function (n) {
+      var linked = on && edges.some(function (e) { return (e.from === id && e.to === n.dataset.id) || (e.to === id && e.from === n.dataset.id); });
+      n.classList.toggle('hot', linked);
+    });
+  }
+  document.querySelectorAll('.node').forEach(function (n, i) {
+    n.style.animationDelay = (i * 30) + 'ms';
+    n.addEventListener('mouseenter', function () { highlight(n.dataset.id); });
+    n.addEventListener('mouseleave', function () { highlight(null); });
+    n.addEventListener('focus', function () { highlight(n.dataset.id); });
+    n.addEventListener('blur', function () { highlight(null); });
+  });
+
+  function layout() { lanes(); draw(); }
+  var pending = null;
+  window.addEventListener('resize', function () { cancelAnimationFrame(pending); pending = requestAnimationFrame(layout); });
+  // Draw once the web font has loaded so the boxes have their final size
+  var started = false;
+  function start() { if (!started) { started = true; layout(); } }
+  if (document.fonts && document.fonts.ready) document.fonts.ready.then(start);
+  window.addEventListener('load', start);
+  setTimeout(start, 1500);
+})();
+</script>
+</body>
+</html>

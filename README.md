@@ -44,6 +44,7 @@ scripts/sync_behance.py        # Behance import, run by .github/workflows/behanc
 
 ```
 hr-dashboard/overview.html   # Project page: user flow, screens, palette
+hr-dashboard/flow.html       # App flow map: every page, step and decision, plus a page-by-page breakdown
 hr-dashboard/login.html      # Log in and reset password (login.html#forgot opens the reset screen)
 hr-dashboard/signup.html     # Five-step sign-up: account, email code, company, invites, done
 hr-dashboard/index.html      # Dashboard
