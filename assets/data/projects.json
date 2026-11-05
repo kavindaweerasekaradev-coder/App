@@ -208,7 +208,9 @@
           ]
         }
       ]
-    }
+    },
+    "live_url": "https://dominos-mu.vercel.app/",
+    "live_label": "View live prototype"
   },
   {
     "slug": "personal-finance-dashboard",

@@ -1045,6 +1045,7 @@ html:not(.has-drag) .beyond__hint { display: none; }
   .rw-card__arrow { width: 40px; height: 40px; }
   .rw-head .btn { width: 100%; justify-content: space-between; }
   .cs-page-hero__ctas .btn { width: 100%; justify-content: space-between; }
+  .cs-page-hero__ctas .btn--outline { justify-content: center; }
   .cs-embed__frame { min-height: 300px; padding: 16px; }
   .contact__title br { display: none; }
   .contact__actions .btn { flex: 1 1 100%; }
@@ -1138,3 +1139,6 @@ html:not(.gsap) .shw__row[data-dir="1"] .shw__track { animation-direction: rever
 .hero-in--3 { animation-delay: .7s; }
 @keyframes word-up { from { transform: translateY(110%); } }
 @keyframes fade-up { from { opacity: 0; transform: translateY(24px); } }
+
+.cs-page-hero__ctas, .pj-cta__btns { display: flex; flex-wrap: wrap; gap: 12px; }
+.pj-cta__btns { flex: none; }
