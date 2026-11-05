@@ -21,6 +21,18 @@
     });
   }
 
+  // Buttons: wrap the label for the hover text roll, and mark download arrows
+  document.querySelectorAll('.btn').forEach(function (btn) {
+    Array.prototype.slice.call(btn.childNodes).forEach(function (n) {
+      if (n.nodeType !== 3 || !n.textContent.trim()) return;
+      var text = n.textContent.trim(), outer = document.createElement('span'), inner = document.createElement('span');
+      outer.className = 'btn__label'; inner.textContent = text; inner.setAttribute('data-t', text);
+      outer.appendChild(inner); btn.replaceChild(outer, n);
+    });
+    var c = btn.querySelector('.btn__circle path');
+    if (c && /^M12 5v14/.test(c.getAttribute('d') || '')) c.closest('.btn__circle').classList.add('is-down');
+  });
+
   // Mobile menu
   var burger = document.getElementById('nav-burger');
   var links = document.getElementById('nav-links');
