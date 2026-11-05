@@ -29,10 +29,10 @@
 
   var mm = gsap.matchMedia();
 
-  // Process rail: on desktop the section pins while a glowing comet travels along the line. Each node it
-  // reaches fills lime and pops, its icon draws itself, the step's illustration plays (notes + lens,
+  // Process rail: plays once when the section comes into view (not tied to scroll position). A glowing
+  // comet runs the line; each card's node pops lime, its icon draws, its illustration plays (notes + lens,
   // flow links, wireframe painting into UI, checklist + shipped badge) and the copy rises in.
-  // Everything is scrubbed, so scrolling back rewinds it.
+  // Hovering a card replays its illustration.
   var pr = document.querySelector('.pr');
   if (pr) {
     var prSteps = gsap.utils.toArray('.pr__step', pr);
@@ -84,46 +84,68 @@
       var vertical = ctx.conditions.narrow;
       if (!vertical && !ctx.conditions.wide) return;
       prSteps.forEach(function (s) { var h = s.querySelector('h3'); if (!h.querySelector('.sw')) splitWords(h); });
-      function railLen() {
-        return vertical ? prSteps[prSteps.length - 1].offsetTop - prSteps[0].offsetTop : prRail.offsetWidth;
+      function sizeRail() {
+        if (vertical) prRail.style.height = prTrack.style.height = (prSteps[prSteps.length - 1].offsetTop - prSteps[0].offsetTop) + 'px';
       }
       function sizeRail() { if (vertical) prRail.style.height = prTrack.style.height = railLen() + 'px'; }
       sizeRail();
       ScrollTrigger.addEventListener('refreshInit', sizeRail);
-
-      var axis = vertical ? 'scaleY' : 'scaleX', fillTo = {}, cometTo = {};
+      var axis = vertical ? 'scaleY' : 'scaleX', pos = vertical ? 'top' : 'left', n = prSteps.length;
       gsap.set(prFill, vertical ? { scaleY: 0, scaleX: 1 } : { scaleX: 0, scaleY: 1 });
-      fillTo[axis] = 1;
-      cometTo[vertical ? 'top' : 'left'] = '100%';
-      var span = prSteps.length - 1;
-      var tl = gsap.timeline({ defaults: { ease: 'none' }, scrollTrigger: vertical
-        ? { trigger: pr, start: 'top 70%', end: 'bottom 60%', scrub: 0.8 }
-        : { trigger: pr.parentNode, start: 'center 54%', end: '+=' + Math.round(window.innerHeight * 1.8), pin: true, scrub: 0.8 } });
-      tl.fromTo(prComet, { autoAlpha: 0, scale: 0 }, { autoAlpha: 1, scale: 1, duration: 0.15 }, 0)
-        .to(prFill, Object.assign({ duration: span }, fillTo), 0)
-        .to(prComet, Object.assign({ duration: span }, cometTo), 0)
-        .to(prComet, { scale: 2.2, autoAlpha: 0, duration: 0.3 }, span + 0.1);
+      gsap.set(prComet, { autoAlpha: 0, scale: 0 });
 
-      prSteps.forEach(function (s, i) {
+      // One self-playing timeline per card: node pops lime, icon draws, illustration plays, copy rises
+      var cards = prSteps.map(function (s) {
         var node = s.querySelector('.pr__node'), ring = s.querySelector('.pr__ring'), art = s.querySelector('.pr__art');
         var shapes = node.querySelectorAll('svg path, svg circle');
         var words = s.querySelectorAll('h3 .sw__i'), rest = s.querySelectorAll('.pr__label, p, .pr__tags li');
         shapes.forEach(function (el) { var len = el.getTotalLength ? el.getTotalLength() + 1 : 60; gsap.set(el, { strokeDasharray: len, strokeDashoffset: len }); });
         gsap.set(node, { backgroundColor: '#ffffff', borderColor: '#e4e4e0', scale: 0.86 });
         gsap.set(words, { yPercent: 110 });
-        gsap.set(rest, { autoAlpha: 0.15, y: 16 });
-        gsap.set(art, { autoAlpha: 0.35, scale: 0.94 });
-        var at = i;
-        tl.to(node, { backgroundColor: LIME, borderColor: LIME, scale: 1, duration: 0.25, ease: 'back.out(3)' }, at)
-          .fromTo(ring, { scale: 1, autoAlpha: 0.9 }, { scale: 1.8, autoAlpha: 0, duration: 0.4, ease: 'power2.out', immediateRender: false }, at + 0.05)
-          .to(shapes, { strokeDashoffset: 0, duration: 0.3, ease: 'power2.out' }, at + 0.05)
-          .to(art, { autoAlpha: 1, scale: 1, duration: 0.2, ease: 'power2.out' }, at)
-          .to(words, { yPercent: 0, duration: 0.25, stagger: 0.05, ease: 'power3.out' }, at + 0.1)
-          .to(rest, { autoAlpha: 1, y: 0, duration: 0.25, stagger: 0.04, ease: 'power3.out' }, at + 0.18);
-        Object.keys(arts).forEach(function (k) { if (art.classList.contains(k)) arts[k](art, tl, at + 0.05); });
+        gsap.set(rest, { autoAlpha: 0, y: 16 });
+        gsap.set(art, { autoAlpha: 0, y: 24, scale: 0.96 });
+        var artTl = gsap.timeline();
+        Object.keys(arts).forEach(function (k) { if (art.classList.contains(k)) arts[k](art, artTl, 0); });
+        var tl = gsap.timeline({ paused: true });
+        tl.to(node, { backgroundColor: LIME, borderColor: LIME, scale: 1, duration: 0.45, ease: 'back.out(3)' }, 0)
+          .fromTo(ring, { scale: 1, autoAlpha: 0.9 }, { scale: 1.8, autoAlpha: 0, duration: 0.7, ease: 'power2.out', immediateRender: false }, 0.05)
+          .to(shapes, { strokeDashoffset: 0, duration: 0.5, ease: 'power2.out' }, 0.1)
+          .to(art, { autoAlpha: 1, y: 0, scale: 1, duration: 0.6, ease: 'power3.out', clearProps: 'transform,translate,scale,opacity,visibility' }, 0.05)
+          .add(artTl.timeScale(0.55), 0.2)
+          .to(words, { yPercent: 0, duration: 0.6, stagger: 0.06, ease: 'power3.out' }, 0.25)
+          .to(rest, { autoAlpha: 1, y: 0, duration: 0.5, stagger: 0.05, ease: 'power3.out' }, 0.35);
+        // hovering a card replays its illustration once the card has played
+        var hover = function () { if (tl.progress() === 1 && !artTl.isActive()) artTl.restart(); };
+        s.addEventListener('mouseenter', hover);
+        return { tl: tl, hover: hover, el: s };
       });
-      tl.to({}, { duration: 0.4 }); // brief hold on the finished state before unpinning
-      return function () { ScrollTrigger.removeEventListener('refreshInit', sizeRail); prRail.style.height = prTrack.style.height = ''; };
+
+      var triggers = [];
+      if (!vertical) {
+        // Desktop: when the section comes into view, the comet runs the line and each card plays in turn
+        var master = gsap.timeline({ paused: true }), step = 0.9;
+        master.to(prComet, { autoAlpha: 1, scale: 1, duration: 0.3 }, 0)
+          .to(prFill, Object.assign({ duration: step * (n - 1), ease: 'power1.inOut' }, (function () { var o = {}; o[axis] = 1; return o; })()), 0.1)
+          .to(prComet, Object.assign({ duration: step * (n - 1), ease: 'power1.inOut' }, (function () { var o = {}; o[pos] = '100%'; return o; })()), 0.1)
+          .to(prComet, { scale: 2.4, autoAlpha: 0, duration: 0.5 }, 0.1 + step * (n - 1));
+        cards.forEach(function (c, i) { master.add(c.tl.paused(false), 0.1 + i * step); });
+        triggers.push(ScrollTrigger.create({ trigger: pr, start: 'top 72%', once: true, onEnter: function () { master.play(); } }));
+      } else {
+        // Mobile: each card plays when it comes into view, and the line grows down to it
+        cards.forEach(function (c, i) {
+          triggers.push(ScrollTrigger.create({ trigger: c.el, start: 'top 78%', once: true, onEnter: function () {
+            var f = {}, p = {}; f[axis] = n > 1 ? i / (n - 1) : 1; p[pos] = (n > 1 ? i / (n - 1) * 100 : 100) + '%';
+            gsap.to(prFill, Object.assign({ duration: 0.7, ease: 'power2.inOut' }, f));
+            gsap.to(prComet, Object.assign({ autoAlpha: i === n - 1 ? 0 : 1, scale: 1, duration: 0.7, ease: 'power2.inOut' }, p));
+            c.tl.play();
+          } }));
+        });
+      }
+      return function () {
+        triggers.forEach(function (t) { t.kill(); });
+        cards.forEach(function (c) { c.el.removeEventListener('mouseenter', c.hover); });
+        ScrollTrigger.removeEventListener('refreshInit', sizeRail); prRail.style.height = prTrack.style.height = '';
+      };
     });
   }
 
