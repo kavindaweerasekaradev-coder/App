@@ -372,6 +372,7 @@ def render(p, prev_p, next_p, version):
         <a href="../index.html#about">About</a>
         <a href="../index.html#services">Services</a>
         <a href="../index.html#experience">Experience</a>
+        <a href="../explorations/">Explorations</a>
         <a href="../assets/docs/Kavinda-Weerasekara-CV.pdf?v=3" download>Download CV</a>
       </nav>
 
@@ -536,14 +537,84 @@ def main():
         with open(path, "w", encoding="utf-8") as f:
             f.write(render(p, prev_p, next_p, version))
         print("wrote", os.path.relpath(path, ROOT))
+    write_explorations(version)
     write_sitemap(projects)
+
+
+
+def write_explorations(version):
+    """explorations/index.html: a full-screen wall of design shots with a click-to-enlarge viewer."""
+    with open(os.path.join(ROOT, "assets", "data", "explorations.json"), encoding="utf-8") as f:
+        items = json.load(f)
+    tiles = "\n".join(
+        f'      <a class="ex-tile" href="{e(it["href"] if it["href"].startswith("http") else it["href"])}" data-full="../{it["src"]}" '
+        f'data-fw="{it["fw"]}" data-fh="{it["fh"]}" data-title="{e(it["title"])}"{" target=\"_blank\" rel=\"noopener\"" if it["href"].startswith("http") else ""}>'
+        f'<img src="../{it["thumb"]}" alt="{e(it["title"])}" width="{it["w"]}" height="{it["h"]}" loading="{"eager" if i < 12 else "lazy"}" decoding="async" /></a>'
+        for i, it in enumerate(items))
+    html = f"""<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Design explorations — Kavinda Weerasekara</title>
+  <meta name="description" content="A wall of UI explorations by Kavinda Weerasekara: web and mobile shots across fintech, travel, health, e-commerce and more." />
+  <meta name="author" content="Kavinda Weerasekara" />
+  <link rel="canonical" href="{SITE}explorations/" />
+  <meta name="theme-color" content="#ffffff" />
+  <meta property="og:type" content="website" />
+  <meta property="og:title" content="Design explorations — Kavinda Weerasekara" />
+  <meta property="og:description" content="A wall of web and mobile UI explorations." />
+  <meta property="og:url" content="{SITE}explorations/" />
+  <meta property="og:image" content="{SITE}{items[0]["src"]}" />
+  <link rel="icon" href="../assets/img/favicon-32.png?v=2" sizes="32x32" type="image/png" />
+  <link rel="icon" href="../assets/img/favicon-192.png?v=2" sizes="192x192" type="image/png" />
+  <link rel="apple-touch-icon" href="../assets/img/apple-touch-icon.png?v=2" />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="../assets/css/style.css?v={version}" />
+  <script>document.documentElement.classList.add('js')</script>
+  <script src="../assets/js/analytics.js" defer></script>
+</head>
+<body class="ex-page">
+  <a class="skip-link" href="#wall">Skip to the explorations</a>
+  <a class="ex-back" href="../">
+    <svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M19 12H5M11 6l-6 6 6 6"/></svg>
+    Back to home
+  </a>
+  <header class="ex-head">
+    <h1>Design explorations</h1>
+    <p>Click a screen to see it full size</p>
+  </header>
+  <main class="ex-wall" id="wall" aria-label="Design explorations">
+{tiles}
+  </main>
+  <div class="ex-viewer" hidden aria-hidden="true">
+    <div class="ex-viewer__bg"></div>
+    <figure class="ex-viewer__fig"><img alt="" /><figcaption><span class="ex-viewer__title"></span><a class="ex-viewer__link" target="_blank" rel="noopener">View on Dribbble ↗</a></figcaption></figure>
+    <button type="button" class="ex-viewer__close" aria-label="Close">
+      <svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true"><path d="M6 6l12 12M18 6L6 18"/></svg>
+    </button>
+  </div>
+  <script src="../assets/js/vendor/gsap.min.js?v=3.12.5" defer></script>
+  <script src="../assets/js/vendor/ScrollTrigger.min.js?v=3.12.5" defer></script>
+  <script src="../assets/js/vendor/lenis.min.js?v=1.1.13" defer></script>
+  <script src="../assets/js/smooth.js?v={version}" defer></script>
+  <script src="../assets/js/explorations.js?v={version}" defer></script>
+</body>
+</html>
+"""
+    os.makedirs(os.path.join(ROOT, "explorations"), exist_ok=True)
+    with open(os.path.join(ROOT, "explorations", "index.html"), "w", encoding="utf-8") as f:
+        f.write(html)
+    print("wrote explorations/index.html")
 
 
 def write_sitemap(projects):
     """sitemap.xml for search engines: the home page and every case study."""
     import datetime
     today = datetime.date.today().isoformat()
-    urls = [(SITE, "1.0")] + [(f"{SITE}case-studies/{p['slug']}.html", "0.8") for p in projects]
+    urls = [(SITE, "1.0"), (SITE + "explorations/", "0.7")] + [(f"{SITE}case-studies/{p['slug']}.html", "0.8") for p in projects]
     body = "".join(f"  <url><loc>{u}</loc><lastmod>{today}</lastmod><priority>{pr}</priority></url>\n" for u, pr in urls)
     with open(os.path.join(ROOT, "sitemap.xml"), "w", encoding="utf-8") as f:
         f.write('<?xml version="1.0" encoding="UTF-8"?>\n<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">\n' + body + "</urlset>\n")
