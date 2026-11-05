@@ -32,6 +32,7 @@
   mm.add('(prefers-reduced-motion: reduce)', function () {
     document.querySelectorAll('.reveal').forEach(function (el) { el.classList.add('is-visible'); });
     document.querySelectorAll('.beyond__mark').forEach(function (el) { el.classList.add('is-built'); });
+    gsap.set('.hero__social li', { autoAlpha: 1 });
   });
 
   mm.add('(prefers-reduced-motion: no-preference)', function () {
@@ -337,6 +338,21 @@
           });
         });
       }
+    }
+
+    // Hero social pills: pop in after the CTAs, gentle magnetic pull
+    var socs = gsap.utils.toArray('.hero__social li');
+    if (socs.length) {
+      gsap.fromTo(socs, { autoAlpha: 0, y: 18, scale: 0.85 }, { autoAlpha: 1, y: 0, scale: 1, duration: 0.8, ease: 'back.out(1.8)', stagger: 0.09, delay: 1.05 });
+      gsap.fromTo('.hero__social .soc__icon', { rotate: -120, scale: 0 }, { rotate: 0, scale: 1, duration: 0.9, ease: 'back.out(2.2)', stagger: 0.09, delay: 1.2 });
+      document.querySelectorAll('.hero__social .soc').forEach(function (a) {
+        var xTo = gsap.quickTo(a, 'x', { duration: 0.5, ease: 'power3.out' }), yTo = gsap.quickTo(a, 'y', { duration: 0.5, ease: 'power3.out' });
+        a.addEventListener('mousemove', function (e) {
+          var r = a.getBoundingClientRect();
+          xTo((e.clientX - r.left - r.width / 2) * 0.2); yTo((e.clientY - r.top - r.height / 2) * 0.3);
+        });
+        a.addEventListener('mouseleave', function () { xTo(0); yTo(0); });
+      });
     }
 
     // Toolkit chips: springy entrance, independent drifting, cursor parallax and orbiting rings

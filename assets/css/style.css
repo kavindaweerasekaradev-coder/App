@@ -186,8 +186,24 @@ a, button, summary, label, [role="button"] { cursor: pointer; }
 .hero__lead { max-width: 440px; font-size: clamp(17px, 1.5vw, 20px); color: var(--text-muted); }
 .hero__actions { display: grid; gap: 20px; justify-items: end; }
 .hero__ctas { display: flex; flex-wrap: wrap; gap: 12px; }
-.hero__social { display: flex; flex-wrap: wrap; gap: 8px 24px; font-size: 14px; color: var(--text-muted); }
-.hero__social a:hover { color: var(--text); }
+.hero__social { display: flex; flex-wrap: wrap; gap: 8px; }
+.soc { position: relative; isolation: isolate; overflow: hidden; display: inline-flex; align-items: center; gap: 8px; height: 44px; padding: 0 14px 0 6px;
+  border-radius: 999px; background: #fff; border: 1px solid var(--border); color: var(--ink); font-size: 14px; font-weight: 500;
+  box-shadow: 0 1px 2px rgba(14,14,14,.04); transition: color .35s var(--ease), border-color .35s var(--ease), box-shadow .45s var(--ease); }
+.soc::before { content: ""; position: absolute; inset: 0; z-index: -1; background: var(--brand); border-radius: inherit;
+  clip-path: circle(0% at 22px 50%); transition: clip-path .6s var(--ease); }
+.soc__icon { display: grid; place-items: center; width: 30px; height: 30px; border-radius: 50%; background: var(--brand); color: #fff; flex: none;
+  transition: background-color .35s var(--ease), color .35s var(--ease); }
+.soc__icon { position: relative; overflow: hidden; }
+.soc__icon svg { transition: transform .55s var(--ease); }
+.soc__arrow { position: absolute; transform: translate(-150%, 150%); }
+.soc:hover, .soc:focus-visible { color: #fff; border-color: var(--brand); box-shadow: 0 12px 26px -8px var(--brand); }
+.soc:hover::before, .soc:focus-visible::before { clip-path: circle(150% at 22px 50%); }
+.soc:hover .soc__icon, .soc:focus-visible .soc__icon { background: #fff; color: var(--brand); }
+.soc:hover .soc__icon svg:first-child, .soc:focus-visible .soc__icon svg:first-child { transform: translate(150%, -150%); }
+.soc:hover .soc__arrow, .soc:focus-visible .soc__arrow { transform: none; }
+.js .hero__social li { opacity: 0; }
+.js:not(.gsap) .hero__social li { animation: fade-up .7s 1s cubic-bezier(.2,.7,.2,1) both; }
 .btn--outline { border-color: var(--border); background: #fff; color: var(--ink); }
 .btn--outline:hover { border-color: var(--ink); box-shadow: 0 10px 24px rgba(14,14,14,.08); }
 .btn__icon { flex: none; overflow: visible; margin-left: -4px; }
@@ -1000,6 +1016,11 @@ html:not(.has-drag) .beyond__hint { display: none; }
   .hero__ctas, .hero__actions { width: 100%; }
   .hero__ctas .btn { flex: 1 1 100%; justify-content: space-between; }
   .hero__ctas .btn--outline { padding: 0 18px 0 22px; }
+  .hero__social { width: 100%; }
+  .hero__social li { flex: 1 1 0; min-width: 0; }
+  .soc { width: 100%; justify-content: center; gap: 8px; height: 42px; padding: 0 12px 0 5px; font-size: 13px; }
+  .soc__icon { width: 30px; height: 30px; margin-right: auto; }
+  .soc__name { margin-right: auto; }
   .hero__role { font-size: 12px; }
   .process, .rw-grid, .live { grid-template-columns: 1fr; }
   .dc__progress { display: none; }
