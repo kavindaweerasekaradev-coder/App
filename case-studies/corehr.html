@@ -30,7 +30,11 @@
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet" />
-  <link rel="stylesheet" href="../assets/css/style.css?v=20261105b" />
+  <link rel="stylesheet" href="../assets/css/style.css?v=20261105d" />
+  <script>document.documentElement.classList.add('js')</script>
+  <link rel="preload" href="../assets/js/vendor/gsap.min.js?v=3.12.5" as="script" />
+  <link rel="preload" href="../assets/js/vendor/ScrollTrigger.min.js?v=3.12.5" as="script" />
+  <link rel="preload" href="../assets/js/motion.js?v=20261105d" as="script" />
   <script src="../assets/js/analytics.js" defer></script>
 </head>
 <body>
@@ -67,14 +71,14 @@
     <!-- ===================== INTRO ===================== -->
     <section class="cs-page-hero">
       <div class="container">
-        <a class="pill cs-back reveal" href="../index.html#work"><svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M19 12H5M11 18l-6-6 6-6"/></svg> Recent work</a>
+        <a class="pill cs-back hero-in hero-in--1" href="../index.html#work"><svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M19 12H5M11 18l-6-6 6-6"/></svg> Recent work</a>
 
         <div class="cs-page-hero__grid">
-          <div class="reveal">
-            <p class="label">UI/UX case study · 2024</p>
-            <h1 class="cs-page-hero__title">CoreHR<br /><span class="soft">The future of human resources</span></h1>
+          <div>
+            <p class="label hero-in hero-in--1">UI/UX case study · 2024</p>
+            <h1 class="cs-page-hero__title hero-in" aria-label="CoreHR The future of human resources"><span class="sw"><span class="sw__i" style="--i:0">CoreHR</span></span><br /><span class="soft"><span class="sw"><span class="sw__i" style="--i:1">The</span></span> <span class="sw"><span class="sw__i" style="--i:2">future</span></span> <span class="sw"><span class="sw__i" style="--i:3">of</span></span> <span class="sw"><span class="sw__i" style="--i:4">human</span></span> <span class="sw"><span class="sw__i" style="--i:5">resources</span></span></span></h1>
           </div>
-          <div class="cs-page-hero__side reveal">
+          <div class="cs-page-hero__side hero-in hero-in--2">
             <p class="cs-page-hero__lead">A comprehensive HR management system that streamlines HR processes within organisations.</p>
             <ul class="pj-tags"><li>UI/UX</li><li>Web Design</li><li>Branding</li><li>HR system</li><li>Dashboard</li></ul>
             <div class="cs-page-hero__ctas">
@@ -86,7 +90,7 @@
           </div>
         </div>
 
-        <dl class="cs-facts reveal">
+        <dl class="cs-facts hero-in hero-in--3">
           <div><dt>Year</dt><dd>2024</dd></div>
           <div><dt>Category</dt><dd>HR Management System</dd></div>
           <div><dt>Company</dt><dd>Nimi Technologies</dd></div>
@@ -97,8 +101,8 @@
 
     <!-- ===================== COVER ===================== -->
     <section class="container">
-      <figure class="cs-page-cover reveal">
-        <img src="../assets/img/case-studies/corehr/00-cover.webp" alt="CoreHR cover" width="1600" height="1730" />
+      <figure class="cs-page-cover hero-in hero-in--3">
+        <img src="../assets/img/case-studies/corehr/00-cover.webp" srcset="../assets/img/case-studies/corehr/00-cover-600.webp 600w, ../assets/img/case-studies/corehr/00-cover-1000.webp 1000w, ../assets/img/case-studies/corehr/00-cover.webp 1600w" sizes="(max-width: 1340px) 100vw, 1280px" alt="CoreHR cover" width="1600" height="1730" fetchpriority="high" decoding="async" />
       </figure>
     </section>
 
@@ -115,7 +119,7 @@
             <div class="cs-chapter__main">
               <h2 class="cs-chapter__title reveal">CoreHR provides a comprehensive HR management solution, offering seamless employee tracking, attendance management, payroll processing, and task scheduling—all within an intuitive interface.</h2>
               
-              <div class="cs-chapter__block reveal"><figure class="cs-blk-image"><img src="../assets/img/case-studies/corehr/01-brand.webp" alt="CoreHR logo on a light card next to a photo of a professional sitting in an office" width="1600" height="996" loading="lazy" /></figure></div>
+              <div class="cs-chapter__block reveal"><figure class="cs-blk-image"><img src="../assets/img/case-studies/corehr/01-brand.webp" srcset="../assets/img/case-studies/corehr/01-brand-600.webp 600w, ../assets/img/case-studies/corehr/01-brand-1000.webp 1000w, ../assets/img/case-studies/corehr/01-brand.webp 1600w" sizes="(max-width: 900px) 100vw, 860px" alt="CoreHR logo on a light card next to a photo of a professional sitting in an office" width="1600" height="996" loading="lazy" decoding="async" /></figure></div>
             </div>
           </div>
         </div>
@@ -154,7 +158,7 @@
             <div class="cs-chapter__main">
               <h2 class="cs-chapter__title reveal">Discovery</h2>
               
-              <div class="cs-chapter__block reveal"><ol class="cs-blk-cards"><li><span class="process__num">01</span><h4>Research</h4><p>Conducted interviews and surveys to understand the specific needs of HR managers and employees.</p></li><li><span class="process__num">02</span><h4>User Journey</h4><p>Mapped user touchpoints to streamline HR processes and remove bottlenecks.</p></li><li><span class="process__num">03</span><h4>Interview</h4><p>User-centered interviews to ensure the design aligns with end-user expectations.</p></li></ol></div><div class="cs-chapter__block reveal"><blockquote class="cs-blk-quote"><p class="cs-blk-label">Understanding HR Challenges</p><p>We conducted comprehensive research to identify the pain points HR teams face, from managing schedules to handling payroll and employee data.</p></blockquote></div><div class="cs-chapter__block reveal"><figure class="cs-blk-image"><img src="../assets/img/case-studies/corehr/02-research.webp" alt="An HR professional with a clipboard interviewing a candidate across a table" width="1600" height="783" loading="lazy" /></figure></div>
+              <div class="cs-chapter__block reveal"><ol class="cs-blk-cards"><li><span class="process__num">01</span><h4>Research</h4><p>Conducted interviews and surveys to understand the specific needs of HR managers and employees.</p></li><li><span class="process__num">02</span><h4>User Journey</h4><p>Mapped user touchpoints to streamline HR processes and remove bottlenecks.</p></li><li><span class="process__num">03</span><h4>Interview</h4><p>User-centered interviews to ensure the design aligns with end-user expectations.</p></li></ol></div><div class="cs-chapter__block reveal"><blockquote class="cs-blk-quote"><p class="cs-blk-label">Understanding HR Challenges</p><p>We conducted comprehensive research to identify the pain points HR teams face, from managing schedules to handling payroll and employee data.</p></blockquote></div><div class="cs-chapter__block reveal"><figure class="cs-blk-image"><img src="../assets/img/case-studies/corehr/02-research.webp" srcset="../assets/img/case-studies/corehr/02-research-600.webp 600w, ../assets/img/case-studies/corehr/02-research-1000.webp 1000w, ../assets/img/case-studies/corehr/02-research.webp 1600w" sizes="(max-width: 900px) 100vw, 860px" alt="An HR professional with a clipboard interviewing a candidate across a table" width="1600" height="783" loading="lazy" decoding="async" /></figure></div>
             </div>
           </div>
         </div>
@@ -180,7 +184,7 @@
             <div class="cs-chapter__main">
               <h2 class="cs-chapter__title reveal">Ready to simplify your HR tasks? Let&#x27;s manage your work schedule, take care of payroll, or maybe explore employee data?</h2>
               <p class="cs-chapter__lead reveal">The CoreHR assistant provides quick responses to employee inquiries and supports HR teams with managing schedules, payroll, and employee data—all tailored to your company&#x27;s needs.</p>
-              <div class="cs-chapter__block reveal"><div class="cs-blk-chips"><p class="cs-blk-label">Assistant</p><ul><li>Work schedule</li><li>Payroll</li><li>Employee data</li></ul></div></div><div class="cs-chapter__block reveal"><figure class="cs-blk-image"><img src="../assets/img/case-studies/corehr/03-dashboard.webp" alt="CoreHR dashboard on a desktop monitor with workforce stats, weekly attendance trend and today&#x27;s priorities" width="1600" height="1324" loading="lazy" /></figure></div>
+              <div class="cs-chapter__block reveal"><div class="cs-blk-chips"><p class="cs-blk-label">Assistant</p><ul><li>Work schedule</li><li>Payroll</li><li>Employee data</li></ul></div></div><div class="cs-chapter__block reveal"><figure class="cs-blk-image"><img src="../assets/img/case-studies/corehr/03-dashboard.webp" srcset="../assets/img/case-studies/corehr/03-dashboard-600.webp 600w, ../assets/img/case-studies/corehr/03-dashboard-1000.webp 1000w, ../assets/img/case-studies/corehr/03-dashboard.webp 1600w" sizes="(max-width: 900px) 100vw, 860px" alt="CoreHR dashboard on a desktop monitor with workforce stats, weekly attendance trend and today&#x27;s priorities" width="1600" height="1324" loading="lazy" decoding="async" /></figure></div>
             </div>
           </div>
         </div>
@@ -193,7 +197,7 @@
             <div class="cs-chapter__main">
               <h2 class="cs-chapter__title reveal">Reimagining HR Simplicity</h2>
               <p class="cs-chapter__lead reveal">CoreHR is designed to simplify HR processes and provide a user-friendly experience for HR managers and employees alike.</p>
-              <div class="cs-chapter__block reveal"><figure class="cs-blk-image"><img src="../assets/img/case-studies/corehr/04-login.webp" alt="CoreHR login screen: Glad to Have You Back! with email, password and Access Your Dashboard button" width="1600" height="1014" loading="lazy" /></figure></div>
+              <div class="cs-chapter__block reveal"><figure class="cs-blk-image"><img src="../assets/img/case-studies/corehr/04-login.webp" srcset="../assets/img/case-studies/corehr/04-login-600.webp 600w, ../assets/img/case-studies/corehr/04-login-1000.webp 1000w, ../assets/img/case-studies/corehr/04-login.webp 1600w" sizes="(max-width: 900px) 100vw, 860px" alt="CoreHR login screen: Glad to Have You Back! with email, password and Access Your Dashboard button" width="1600" height="1014" loading="lazy" decoding="async" /></figure></div>
             </div>
           </div>
         </div>
@@ -206,7 +210,7 @@
             <div class="cs-chapter__main">
               <h2 class="cs-chapter__title reveal">Satoshi</h2>
               <p class="cs-chapter__lead reveal">A modern and highly legible sans-serif font, Satoshi is designed for versatility and functionality across both digital and print mediums. Its clean, geometric lines provide an excellent balance between aesthetics and readability, making it a perfect choice for professional platforms like CoreHR.</p>
-              <div class="cs-chapter__block reveal"><figure class="cs-blk-image"><img src="../assets/img/case-studies/corehr/05-satoshi.webp" alt="Satoshi Regular type specimen" width="1600" height="604" loading="lazy" /></figure></div><div class="cs-chapter__block reveal"><ul class="cs-blk-swatches"><li><span class="cs-blk-swatches__chip" style="background:#95A5FD"></span><strong>#95A5FD</strong></li><li><span class="cs-blk-swatches__chip" style="background:#1C1C1C"></span><strong>#1C1C1C</strong></li><li><span class="cs-blk-swatches__chip" style="background:#FFFFFF"></span><strong>#FFFFFF</strong></li></ul></div><div class="cs-chapter__block reveal"><figure class="cs-blk-image"><img src="../assets/img/case-studies/corehr/06-departments.webp" alt="CoreHR departments page listing team members by team" width="1600" height="1129" loading="lazy" /></figure></div>
+              <div class="cs-chapter__block reveal"><figure class="cs-blk-image"><img src="../assets/img/case-studies/corehr/05-satoshi.webp" srcset="../assets/img/case-studies/corehr/05-satoshi-600.webp 600w, ../assets/img/case-studies/corehr/05-satoshi-1000.webp 1000w, ../assets/img/case-studies/corehr/05-satoshi.webp 1600w" sizes="(max-width: 900px) 100vw, 860px" alt="Satoshi Regular type specimen" width="1600" height="604" loading="lazy" decoding="async" /></figure></div><div class="cs-chapter__block reveal"><ul class="cs-blk-swatches"><li><span class="cs-blk-swatches__chip" style="background:#95A5FD"></span><strong>#95A5FD</strong></li><li><span class="cs-blk-swatches__chip" style="background:#1C1C1C"></span><strong>#1C1C1C</strong></li><li><span class="cs-blk-swatches__chip" style="background:#FFFFFF"></span><strong>#FFFFFF</strong></li></ul></div><div class="cs-chapter__block reveal"><figure class="cs-blk-image"><img src="../assets/img/case-studies/corehr/06-departments.webp" srcset="../assets/img/case-studies/corehr/06-departments-600.webp 600w, ../assets/img/case-studies/corehr/06-departments-1000.webp 1000w, ../assets/img/case-studies/corehr/06-departments.webp 1600w" sizes="(max-width: 900px) 100vw, 860px" alt="CoreHR departments page listing team members by team" width="1600" height="1129" loading="lazy" decoding="async" /></figure></div>
             </div>
           </div>
         </div>
@@ -219,7 +223,7 @@
             <div class="cs-chapter__main">
               <h2 class="cs-chapter__title reveal">CoreHR&#x27;s Dark Mode Vision</h2>
               <p class="cs-chapter__lead reveal">Highlight the user-centric reasoning behind introducing dark mode, focusing on usability, reducing eye strain, and offering a sleek, professional look.</p>
-              <div class="cs-chapter__block reveal"><figure class="cs-blk-image"><img src="../assets/img/case-studies/corehr/07-dark-laptop.webp" alt="CoreHR dashboard in dark mode on a laptop" width="1600" height="1010" loading="lazy" /></figure></div><div class="cs-chapter__block reveal"><blockquote class="cs-blk-quote"><p class="cs-blk-label">Focus on Simplicity</p><p>Prioritizing clean, modern UI elements that provide clarity and ease of navigation.</p></blockquote></div><div class="cs-chapter__block reveal"><figure class="cs-blk-image"><img src="../assets/img/case-studies/corehr/08-dark-pair.webp" alt="CoreHR logo on a dark card next to the dark-mode departments page on a laptop" width="1600" height="1006" loading="lazy" /></figure></div>
+              <div class="cs-chapter__block reveal"><figure class="cs-blk-image"><img src="../assets/img/case-studies/corehr/07-dark-laptop.webp" srcset="../assets/img/case-studies/corehr/07-dark-laptop-600.webp 600w, ../assets/img/case-studies/corehr/07-dark-laptop-1000.webp 1000w, ../assets/img/case-studies/corehr/07-dark-laptop.webp 1600w" sizes="(max-width: 900px) 100vw, 860px" alt="CoreHR dashboard in dark mode on a laptop" width="1600" height="1010" loading="lazy" decoding="async" /></figure></div><div class="cs-chapter__block reveal"><blockquote class="cs-blk-quote"><p class="cs-blk-label">Focus on Simplicity</p><p>Prioritizing clean, modern UI elements that provide clarity and ease of navigation.</p></blockquote></div><div class="cs-chapter__block reveal"><figure class="cs-blk-image"><img src="../assets/img/case-studies/corehr/08-dark-pair.webp" srcset="../assets/img/case-studies/corehr/08-dark-pair-600.webp 600w, ../assets/img/case-studies/corehr/08-dark-pair-1000.webp 1000w, ../assets/img/case-studies/corehr/08-dark-pair.webp 1600w" sizes="(max-width: 900px) 100vw, 860px" alt="CoreHR logo on a dark card next to the dark-mode departments page on a laptop" width="1600" height="1006" loading="lazy" decoding="async" /></figure></div>
             </div>
           </div>
         </div>
@@ -232,7 +236,7 @@
             <div class="cs-chapter__main">
               <h2 class="cs-chapter__title reveal">Bringing CoreHR to Life</h2>
               <p class="cs-chapter__lead reveal">Our branded essentials ensure that CoreHR&#x27;s identity isn&#x27;t just digital—it&#x27;s tangible, creating a lasting connection with the audience.</p>
-              <div class="cs-chapter__block reveal"><figure class="cs-blk-image"><img src="../assets/img/case-studies/corehr/09-merch.webp" alt="Periwinkle CoreHR cap and branded cups reading Reimagining HR Simplicity" width="1600" height="802" loading="lazy" /></figure></div>
+              <div class="cs-chapter__block reveal"><figure class="cs-blk-image"><img src="../assets/img/case-studies/corehr/09-merch.webp" srcset="../assets/img/case-studies/corehr/09-merch-600.webp 600w, ../assets/img/case-studies/corehr/09-merch-1000.webp 1000w, ../assets/img/case-studies/corehr/09-merch.webp 1600w" sizes="(max-width: 900px) 100vw, 860px" alt="Periwinkle CoreHR cap and branded cups reading Reimagining HR Simplicity" width="1600" height="802" loading="lazy" decoding="async" /></figure></div>
             </div>
           </div>
         </div>
@@ -273,7 +277,7 @@
           <article class="rw-card reveal">
             <a class="rw-card__link" href="travelsphere.html">
               <div class="rw-card__media">
-                <img src="../assets/img/behance/212043297.png" alt="TravelSphere cover" width="808" height="632" loading="lazy" />
+                <img src="../assets/img/behance/212043297.webp" alt="TravelSphere cover" width="808" height="632" loading="lazy" decoding="async" />
               </div>
               <div class="rw-card__body">
                 <div>
@@ -288,7 +292,7 @@
           <article class="rw-card reveal">
             <a class="rw-card__link" href="dominos.html">
               <div class="rw-card__media">
-                <img src="../assets/img/behance/257665725.jpg" alt="Domino’s Sri Lanka cover" width="808" height="632" loading="lazy" />
+                <img src="../assets/img/behance/257665725.webp" alt="Domino’s Sri Lanka cover" width="808" height="632" loading="lazy" decoding="async" />
               </div>
               <div class="rw-card__body">
                 <div>
@@ -340,12 +344,12 @@
     </div>
   </footer>
 
-  <script src="../assets/js/vendor/gsap.min.js?v=3.12.5"></script>
-  <script src="../assets/js/vendor/ScrollTrigger.min.js?v=3.12.5"></script>
-  <script src="../assets/js/vendor/Draggable.min.js?v=3.12.5"></script>
-  <script src="../assets/js/carousel.js?v=20261105b" defer></script>
-  <script src="../assets/js/showcase.js?v=20261105b" defer></script>
-  <script src="../assets/js/motion.js?v=20261105b"></script>
-  <script src="../assets/js/main.js?v=20261105b"></script>
+  <script src="../assets/js/vendor/gsap.min.js?v=3.12.5" defer></script>
+  <script src="../assets/js/vendor/ScrollTrigger.min.js?v=3.12.5" defer></script>
+  <script src="../assets/js/vendor/Draggable.min.js?v=3.12.5" defer></script>
+  <script src="../assets/js/carousel.js?v=20261105d" defer></script>
+  <script src="../assets/js/showcase.js?v=20261105d" defer></script>
+  <script src="../assets/js/motion.js?v=20261105d" defer></script>
+  <script src="../assets/js/main.js?v=20261105d" defer></script>
 </body>
 </html>

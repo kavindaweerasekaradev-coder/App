@@ -32,6 +32,32 @@ def asset_version():
     return m.group(1) if m else "1"
 
 
+def srcset(src, width, prefix="../"):
+    """srcset with the -600/-1000 WebP copies made by optimize_images.py, when they exist."""
+    base, ext = os.path.splitext(src)
+    parts = [f"{prefix}{base}-{w}.webp {w}w" for w in (600, 1000)
+             if os.path.exists(os.path.join(ROOT, f"{base}-{w}.webp"))]
+    return ", ".join(parts + [f"{prefix}{src} {width}w"]) if parts else ""
+
+
+def img_attrs(src, width, sizes, prefix="../"):
+    ss = srcset(src, width, prefix)
+    return f' srcset="{ss}" sizes="{sizes}"' if ss else ""
+
+
+def webp_cover(src):
+    """Prefer the WebP copy of a Behance cover."""
+    base, ext = os.path.splitext(src)
+    return base + ".webp" if ext.lower() != ".webp" and os.path.exists(os.path.join(ROOT, base + ".webp")) else src
+
+
+
+def split_words(text, start=0):
+    """Wrap each word in .sw/.sw__i so CSS can rise it in on first paint (no JS wait)."""
+    words = text.split()
+    return " ".join(f'<span class="sw"><span class="sw__i" style="--i:{start + i}">{w}</span></span>' for i, w in enumerate(words))
+
+
 def card(p, num, prefix="", label=None):
     """A Recent work card. Used on the home page and for previous/next links on project pages."""
     href = prefix + "case-studies/" + p["slug"] + ".html" if prefix == "" else p["slug"] + ".html"
@@ -40,7 +66,7 @@ def card(p, num, prefix="", label=None):
     return f"""          <article class="rw-card reveal">
             <a class="rw-card__link" href="{href}">
               <div class="rw-card__media">
-                <img src="{prefix}{p['cover']}" alt="{e(p['name'])} cover" width="808" height="632" loading="lazy" />
+                <img src="{prefix}{p['cover']}" alt="{e(p['name'])} cover" width="808" height="632" loading="lazy" decoding="async" />
               </div>
               <div class="rw-card__body">
                 <div>
@@ -130,7 +156,7 @@ def block(b):
         sets = "".join(
             f'<div class="sc__set sc__set--{st["kind"]}" data-set="{i}"{"" if i == 0 else " hidden"}><ul class="sc__track">' + "".join(
                 f'<li class="sc__slide" data-caption="{e(it["caption"])}"><img src="../{it["src"]}" alt="{e(it["alt"])}" '
-                f'width="{it["width"]}" height="{it["height"]}" loading="lazy" draggable="false" /></li>' for it in st["items"])
+                f'width="{it["width"]}" height="{it["height"]}" loading="lazy" decoding="async" draggable="false" /></li>' for it in st["items"])
             + '</ul></div>' for i, st in enumerate(b["sets"]))
         first = b["sets"][0]
         light = " sc--light" if b.get("light") else ""
@@ -143,8 +169,8 @@ def block(b):
                 f'<span class="sc__nav"><button type="button" class="sc__btn sc__prev" aria-label="Previous screen">{arrow("M15 6l-6 6 6 6")}</button>'
                 f'<button type="button" class="sc__btn sc__next" aria-label="Next screen">{arrow("M9 6l6 6-6 6")}</button></span></div></div>')
     if t == "image":
-        return (f'<figure class="cs-blk-image"><img src="../{b["src"]}" alt="{e(b["alt"])}" '
-                f'width="{b["width"]}" height="{b["height"]}" loading="lazy" /></figure>')
+        return (f'<figure class="cs-blk-image"><img src="../{b["src"]}"{img_attrs(b["src"], b["width"], "(max-width: 900px) 100vw, 860px")} alt="{e(b["alt"])}" '
+                f'width="{b["width"]}" height="{b["height"]}" loading="lazy" decoding="async" /></figure>')
     if t == "themes":
         card = ('<div class="ledgr-card"><p class="ledgr-card__eyebrow">Primary account · Northbank •••• 4821</p>'
                 '<p class="ledgr-card__label">Total balance · 4 accounts</p>'
@@ -202,7 +228,7 @@ def chapter(c):
     board = c.get("board")
     ui = c.get("board_ui")
     board_html = (f'<figure class="cs-board" aria-hidden="true"><img src="../{board["src"]}" alt="" '
-                  f'width="{board["width"]}" height="{board["height"]}" loading="lazy" /></figure>') if board else ""
+                  f'width="{board["width"]}" height="{board["height"]}" loading="lazy" decoding="async" /></figure>') if board else ""
     ui_html = (f'<figure class="cs-blk-image cs-board-ui"><img src="../{ui["src"]}" '
                f'alt="{e(c["label"])} screens from the Ledgr prototype" width="{ui["width"]}" height="{ui["height"]}" '
                f'loading="lazy" /></figure>') if ui else ""
@@ -262,7 +288,7 @@ def gallery(p):
         return ""
     def row(st, direction):
         items = "".join(
-            f'<figure class="shw__item"><img src="../{it["src"]}" alt="{e(it["alt"])}" width="{it["width"]}" height="{it["height"]}" loading="lazy" draggable="false" />'
+            f'<figure class="shw__item"><img src="../{it["src"]}"{img_attrs(it["src"], it["width"], "(max-width: 900px) 70vw, 560px" if st["kind"] == "web" else "210px")} alt="{e(it["alt"])}" width="{it["width"]}" height="{it["height"]}" loading="lazy" decoding="async" draggable="false" />'
             f'<figcaption>{e(it["caption"])}</figcaption></figure>' for it in st["items"])
         return (f'<div class="shw__row shw__row--{st["kind"]}" data-dir="{direction}" aria-label="{e(st["label"])} screens">'
                 f'<div class="shw__track">{items}<div class="shw__dup" aria-hidden="true">{items}</div></div></div>')
@@ -321,6 +347,10 @@ def render(p, prev_p, next_p, version):
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600{extra_fonts}&display=swap" rel="stylesheet" />
   <link rel="stylesheet" href="../assets/css/style.css?v={version}" />
+  <script>document.documentElement.classList.add('js')</script>
+  <link rel="preload" href="../assets/js/vendor/gsap.min.js?v=3.12.5" as="script" />
+  <link rel="preload" href="../assets/js/vendor/ScrollTrigger.min.js?v=3.12.5" as="script" />
+  <link rel="preload" href="../assets/js/motion.js?v={version}" as="script" />
   <script src="../assets/js/analytics.js" defer></script>
 </head>
 <body>
@@ -357,14 +387,14 @@ def render(p, prev_p, next_p, version):
     <!-- ===================== INTRO ===================== -->
     <section class="cs-page-hero">
       <div class="container">
-        <a class="pill cs-back reveal" href="../index.html#work">{BACK} Recent work</a>
+        <a class="pill cs-back hero-in hero-in--1" href="../index.html#work">{BACK} Recent work</a>
 
         <div class="cs-page-hero__grid">
-          <div class="reveal">
-            <p class="label">{e(p['kind'])} · {p['year']}</p>
-            <h1 class="cs-page-hero__title">{e(p.get('hero_title', p['name']))}<br /><span class="soft">{e(p['subtitle'])}</span></h1>
+          <div>
+            <p class="label hero-in hero-in--1">{e(p['kind'])} · {p['year']}</p>
+            <h1 class="cs-page-hero__title hero-in" aria-label="{e(p.get('hero_title', p['name']))} {e(p['subtitle'])}">{split_words(e(p.get('hero_title', p['name'])))}<br /><span class="soft">{split_words(e(p['subtitle']), len(p.get('hero_title', p['name']).split()))}</span></h1>
           </div>
-          <div class="cs-page-hero__side reveal">
+          <div class="cs-page-hero__side hero-in hero-in--2">
             <p class="cs-page-hero__lead">{e(p['lead'])}</p>
             <ul class="pj-tags">{tags}</ul>
             <div class="cs-page-hero__ctas">
@@ -376,7 +406,7 @@ def render(p, prev_p, next_p, version):
           </div>
         </div>
 
-        <dl class="cs-facts reveal">
+        <dl class="cs-facts hero-in hero-in--3">
 {facts}
         </dl>
       </div>
@@ -384,8 +414,8 @@ def render(p, prev_p, next_p, version):
 
     <!-- ===================== COVER ===================== -->
     <section class="container">
-      <figure class="cs-page-cover reveal">
-        <img src="../{cover['src']}" alt="{e(p['name'])} cover" width="{cover['width']}" height="{cover['height']}" />
+      <figure class="cs-page-cover hero-in hero-in--3">
+        <img src="../{cover['src']}"{img_attrs(cover['src'], cover['width'], "(max-width: 1340px) 100vw, 1280px")} alt="{e(p['name'])} cover" width="{cover['width']}" height="{cover['height']}" fetchpriority="high" decoding="async" />
       </figure>
     </section>
 
@@ -462,19 +492,22 @@ def render(p, prev_p, next_p, version):
     </div>
   </footer>
 
-  <script src="../assets/js/vendor/gsap.min.js?v=3.12.5"></script>
-  <script src="../assets/js/vendor/ScrollTrigger.min.js?v=3.12.5"></script>
-  <script src="../assets/js/vendor/Draggable.min.js?v=3.12.5"></script>
+  <script src="../assets/js/vendor/gsap.min.js?v=3.12.5" defer></script>
+  <script src="../assets/js/vendor/ScrollTrigger.min.js?v=3.12.5" defer></script>
+  <script src="../assets/js/vendor/Draggable.min.js?v=3.12.5" defer></script>
   <script src="../assets/js/carousel.js?v={version}" defer></script>
   <script src="../assets/js/showcase.js?v={version}" defer></script>
-  <script src="../assets/js/motion.js?v={version}"></script>
-  <script src="../assets/js/main.js?v={version}"></script>
+  <script src="../assets/js/motion.js?v={version}" defer></script>
+  <script src="../assets/js/main.js?v={version}" defer></script>
 </body>
 </html>
 """
 
 
 def main():
+    import importlib.util
+    spec = importlib.util.spec_from_file_location("optimize_images", os.path.join(ROOT, "scripts", "optimize_images.py"))
+    mod = importlib.util.module_from_spec(spec); spec.loader.exec_module(mod); mod.main()
     with open(os.path.join(ROOT, "assets", "data", "projects.json"), encoding="utf-8") as f:
         projects = json.load(f)
     with open(os.path.join(ROOT, "assets", "data", "behance-projects.json"), encoding="utf-8") as f:
@@ -482,7 +515,7 @@ def main():
 
     for p in projects:
         b = behance[p["behance_id"]]
-        p["cover"] = b["cover"]
+        p["cover"] = webp_cover(b["cover"])
         p["url"] = b["url"]
         p["year"] = (b.get("published") or "")[:4]
         if p.get("case_study"):

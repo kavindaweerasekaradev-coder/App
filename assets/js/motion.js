@@ -44,26 +44,9 @@
     document.body.appendChild(bar);
     gsap.to(bar, { scaleX: 1, ease: 'none', scrollTrigger: { start: 0, end: 'max', scrub: 0.3 } });
 
-    // Hero intro (home page)
-    var hero = document.querySelector('.hero');
-    if (hero) {
-      var heroParts = hero.querySelectorAll('.hero__intro, .hero__lead, .hero__actions');
-      heroParts.forEach(function (el) { el.classList.remove('reveal'); });
-      var title = hero.querySelector('.hero__title');
-      title.classList.remove('reveal');
-      var words = splitWords(title);
-      gsap.timeline({ defaults: { ease: 'power4.out' } })
-        .from('.nav', { y: -24, autoAlpha: 0, duration: 0.8 })
-        .from(heroParts[0], { y: 24, autoAlpha: 0, duration: 0.8 }, 0.1)
-        .from(words, { yPercent: 115, duration: 1.1, stagger: 0.06 }, 0.2)
-        .from([heroParts[1], heroParts[2]], { y: 30, autoAlpha: 0, duration: 0.9, stagger: 0.12, ease: ease }, 0.6);
-    }
-
-    // Case study hero
-    var csTitle = document.querySelector('.cs-page-hero__title');
-    if (csTitle) {
-      gsap.from(splitWords(csTitle), { yPercent: 115, duration: 1.1, stagger: 0.05, ease: 'power4.out', delay: 0.1 });
-    }
+    // The home and case study heroes animate with CSS (.hero-in) so they show on first paint
+    // without waiting for this script; only the nav slides in here.
+    gsap.from('.nav', { y: -24, autoAlpha: 0, duration: 0.8, ease: 'power4.out' });
 
     // Section headings: words mask up on scroll
     document.querySelectorAll('main h2:not(.contact__title):not(.beyond__title)').forEach(function (h) {
