@@ -224,17 +224,42 @@ def compare(pair, i, h):
 
 
 def readyme_page(data, version, h):
-    e, BACK, ARROW, block = h["e"], h["BACK"], h["ARROW"], h["block"]
+    e, BACK, ARROW, block, sw = h["e"], h["BACK"], h["ARROW"], h["block"], h["split_words"]
     r = data["readyme"]
     p = next(x for x in data["products"] if x["slug"] == "readyme")
+    IMG = "../assets/img/shipped/readyme/"
     tags = "".join(f"<li>{e(c)}</li>" for c in p["chips"])
     facts = "\n".join(f"          <div><dt>{e(k)}</dt><dd>{e(v)}</dd></div>" for k, v in r["facts"])
     app, tool = p["links"][0][1], p["links"][1][1]
-    goals = "".join(f'<div class="rm-goal reveal"><span class="rm-goal__n">{i:02d}</span><h3>{e(t)}</h3><p>{e(d)}</p></div>'
-                    for i, (t, d) in enumerate(r["goals"], 1))
+
+    def head(label, title, soft="", extra=""):
+        return (f'<div class="rm-head{extra} reveal"><p class="label">{e(label)}</p>'
+                f'<h2 class="rm-h2">{e(title)}{" <span class=\"soft\">" + e(soft) + "</span>" if soft else ""}</h2></div>')
+
+    glance = "".join(f'<div class="rm-glance__item"><h3>{e(t)}</h3><p>{e(x)}</p></div>' for t, x in r["glance"])
+    stats = "".join(f'<div class="rm-stat"><span class="rm-stat__n" data-count="{n}">{n}</span><p>{e(t)}</p></div>' for n, _, t in r["stats"])
+    aud = "".join(
+        f'<div class="rm-aud reveal"><span class="rm-aud__tag">{e(t)}</span><p class="rm-aud__lead">{e(x)}</p><p class="rm-aud__sub">What they need</p><ul>'
+        + "".join(f"<li>{e(i)}</li>" for i in needs) + "</ul></div>" for t, x, needs in r["audiences"])
+    pins = "".join(f'<button type="button" class="rm-pin" style="--x:{x}%;--y:{y}%" data-i="{i}" aria-label="Issue {i + 1}: {e(t)}">{i + 1}</button>'
+                   for i, (x, y, t, _) in enumerate(r["audit"]))
+    issues = "".join(f'<li class="rm-issue" data-i="{i}"><span class="rm-issue__n">{i + 1}</span><div><h3>{e(t)}</h3><p>{e(x)}</p></div></li>'
+                     for i, (_, _, t, x) in enumerate(r["audit"]))
+    principles = "".join(f'<div class="rm-goal reveal"><span class="rm-goal__n">{i:02d}</span><h3>{e(t)}</h3><p>{e(x)}</p></div>'
+                         for i, (t, x) in enumerate(r["principles"], 1))
+    ia_old = "".join(f'<li>{e(t)}</li>' for t in r["ia_old"])
+    ia_new = "".join(f'<li><strong>{e(t)}</strong><span>{e(x)}</span></li>' for t, x in r["ia_new"])
+    journey = "".join(
+        f'<li class="rm-step"><figure><img src="{IMG}new-{k}.webp" alt="New ReadyMe {e(t.lower())} screen" width="393" height="852" loading="lazy" decoding="async" /></figure>'
+        f'<span class="rm-step__n">{i:02d}</span><h3>{e(t)}</h3><p>{e(x)}</p></li>' for i, (k, t, x) in enumerate(r["journey"], 1))
     pairs = "\n".join(compare(x, i, h) for i, x in enumerate(r["pairs"]))
+    swatches = "".join(f'<li class="rm-swatch"><span class="rm-swatch__chip" style="background:{c}"></span><strong>{e(n)}</strong><code>{c}</code><small>{e(u)}</small></li>'
+                       for n, c, u in r["palette"])
+    comps = "".join(f'<figure class="rm-comp rm-comp--{k}"><img src="{IMG}{k}.webp" alt="{e(t)} component from the new ReadyMe app" width="{w}" height="{hh}" loading="lazy" decoding="async" /><figcaption>{e(t)}</figcaption></figure>'
+                    for k, t, w, hh in r["components"])
     system = "".join(f'<div class="rm-sys__col reveal"><h3>{e(t)}</h3><ul>' + "".join(f"<li>{e(x)}</li>" for x in items) + "</ul></div>"
                      for t, items in r["system"])
+    metrics = "".join(f'<div class="rm-metric reveal"><span class="rm-metric__i" aria-hidden="true"><svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M5 20v-6M12 20V9M19 20V4"/></svg></span><h3>{e(t)}</h3><p>{e(x)}</p></div>' for t, x in r["metrics"])
     captions = {"home": "Discover · learning paths, tutors and exam prep", "paths": "Latest learning paths",
                 "course": "Course hub", "question": "Question view", "answer": "Choosing an answer",
                 "login": "Welcome back", "plans": "Unlock full access"}
@@ -243,13 +268,16 @@ def readyme_page(data, version, h):
         "label": "New app", "kind": "mobile",
         "items": [{"src": f"assets/img/shipped/readyme/new-{k}.webp", "caption": captions[k],
                    "alt": f"New ReadyMe {captions[k].lower()} screen", "width": 393, "height": 852} for k in order]}]})
-    body = f"""    <section class="cs-page-hero">
+    toc = [("glance", "At a glance"), ("audit", "UX audit"), ("ia", "Navigation"), ("journey", "Journey"), ("before-after", "Before → after"), ("system", "Design system"), ("success", "Success")]
+    toc_html = "".join(f'<a href="#{i}">{e(t)}</a>' for i, t in toc)
+
+    body = f"""    <section class="cs-page-hero rm-top">
       <div class="container">
         <a class="pill cs-back hero-in hero-in--1" href="./">{BACK} Shipped products</a>
         <div class="cs-page-hero__grid">
           <div>
-            <p class="label hero-in hero-in--1">Shipped product · EdTech</p>
-            <h1 class="cs-page-hero__title hero-in" aria-label="{e(r['title'])} — {e(r['subtitle'])}">{h['split_words'](e(r['title']))}<br /><span class="soft">{h['split_words'](e(r['subtitle']), 1)}</span></h1>
+            <p class="label hero-in hero-in--1">Shipped product · EdTech · Full redesign</p>
+            <h1 class="cs-page-hero__title hero-in" aria-label="{e(r['title'])} — {e(r['subtitle'])}">{sw(e(r['title']))}<br /><span class="soft">{sw(e(r['subtitle']), 1)}</span></h1>
           </div>
           <div class="cs-page-hero__side hero-in hero-in--2">
             <p class="cs-page-hero__lead">{e(r['lead'])}</p>
@@ -267,44 +295,88 @@ def readyme_page(data, version, h):
     </section>
 
     <section class="container">
-      <div class="rm-hero hero-in hero-in--3" aria-label="The ReadyMe home screen before and after the redesign">
-        <figure class="rm-phone rm-phone--old"><img src="../assets/img/shipped/readyme/old-home.webp" alt="Old ReadyMe home: a list of exam subjects with a subscribe banner" width="393" height="852" fetchpriority="high" decoding="async" /><figcaption>Before</figcaption></figure>
-        <span class="rm-hero__arrow" aria-hidden="true">{ARROW}</span>
-        <figure class="rm-phone rm-phone--new"><img src="../assets/img/shipped/readyme/new-home.webp" alt="New ReadyMe home: a Discover feed of learning paths and tutors" width="393" height="852" fetchpriority="high" decoding="async" /><figcaption>After</figcaption></figure>
+      <div class="rm-stage" aria-label="The ReadyMe app before and after the redesign">
+        <span class="rm-stage__glow" aria-hidden="true"></span>
+        <figure class="rm-dev rm-dev--old"><img src="{IMG}old-home.webp" alt="Old ReadyMe home: a list of exam subjects with a subscribe banner" width="393" height="852" fetchpriority="high" decoding="async" /><figcaption>Before</figcaption></figure>
+        <figure class="rm-dev rm-dev--l"><img src="{IMG}new-paths.webp" alt="New ReadyMe learning paths list" width="393" height="852" decoding="async" /></figure>
+        <figure class="rm-dev rm-dev--c"><img src="{IMG}new-home.webp" alt="New ReadyMe Discover home with learning paths and tutors" width="393" height="852" fetchpriority="high" decoding="async" /><figcaption>After</figcaption></figure>
+        <figure class="rm-dev rm-dev--r"><img src="{IMG}new-course.webp" alt="New ReadyMe course hub" width="393" height="852" decoding="async" /></figure>
+        <span class="rm-chip rm-chip--1" aria-hidden="true"><i></i>Discovery-first home</span>
+        <span class="rm-chip rm-chip--2" aria-hidden="true"><i></i>4-tab navigation</span>
+        <span class="rm-chip rm-chip--3" aria-hidden="true"><i></i>One design system</span>
+        <span class="rm-chip rm-chip--4" aria-hidden="true">★ 5.0 path cards</span>
+      </div>
+      <nav class="rm-toc" aria-label="On this page">{toc_html}</nav>
+    </section>
+
+    <section class="section" id="glance">
+      <div class="container">
+        {head("At a glance", "Same product, same brand colour.", "A completely new experience.")}
+        <div class="rm-glance reveal">{glance}</div>
+        <div class="rm-stats">{stats}</div>
       </div>
     </section>
 
-    <section class="section">
+    <section class="section section--flush-top">
       <div class="container">
-        <div class="rm-intro">
-          <div class="reveal">
-            <p class="label">The challenge</p>
-            <h2 class="rm-h2">A product that worked, <span class="soft">but felt heavy.</span></h2>
+        {head("Who it's for", "Two audiences,", "one learning loop.")}
+        <div class="rm-auds">{aud}</div>
+      </div>
+    </section>
+
+    <section class="section section--flush-top" id="audit">
+      <div class="container">
+        {head("UX audit", "Where the old app got in the way.", "Hover a number to see the issue.")}
+        <div class="rm-audit">
+          <div class="rm-audit__shot reveal">
+            <img src="{IMG}old-home.webp" alt="The old ReadyMe home screen, annotated with numbered issues" width="393" height="852" loading="lazy" decoding="async" />
+            {pins}
           </div>
-          <div class="rm-intro__text reveal">{''.join(f'<p>{e(x)}</p>' for x in r['challenge'])}</div>
-        </div>
-        <div class="rm-goals">{goals}</div>
-      </div>
-    </section>
-
-    <section class="section section--flush-top" id="before-after">
-      <div class="container">
-        <div class="rm-head reveal">
-          <p class="label">Before → after</p>
-          <h2 class="rm-h2">Seven flows, redesigned. <span class="soft">Drag to compare.</span></h2>
-        </div>
-        <div class="rm-pairs">
-{pairs}
+          <ol class="rm-issues">{issues}</ol>
         </div>
       </div>
     </section>
 
     <section class="section section--flush-top">
       <div class="container">
-        <div class="rm-head reveal">
-          <p class="label">Design system</p>
-          <h2 class="rm-h2">One system <span class="soft">behind every screen.</span></h2>
+        {head("Design principles", "Three rules", "for every decision.")}
+        <div class="rm-goals">{principles}</div>
+      </div>
+    </section>
+
+    <section class="section section--flush-top" id="ia">
+      <div class="container">
+        {head("Information architecture", "Navigation rebuilt", "around learning.")}
+        <div class="rm-ia reveal">
+          <div class="rm-ia__col rm-ia__col--old"><p class="rm-ia__label">Before · 3 tabs</p><ul>{ia_old}</ul></div>
+          <span class="rm-ia__arrow" aria-hidden="true">{ARROW}</span>
+          <div class="rm-ia__col rm-ia__col--new"><p class="rm-ia__label">After · 4 tabs</p><ul>{ia_new}</ul></div>
         </div>
+        <p class="rm-ia__note reveal">Settings moved inside Account, discovery got its own home, and ongoing learning is always one tap away in My paths.</p>
+      </div>
+    </section>
+
+    <section class="section section--flush-top" id="journey">
+      <div class="container">
+        {head("The new learner journey", "From browsing", "to practising in five steps.")}
+        <div class="rm-journey-wrap"><span class="rm-journey__line" aria-hidden="true"><i></i></span><ol class="rm-journey">{journey}</ol></div>
+      </div>
+    </section>
+
+    <section class="section section--flush-top" id="before-after">
+      <div class="container">
+        {head("Before → after", "Seven flows, redesigned.", "Drag to compare.")}
+        <div class="rm-pairs">
+{pairs}
+        </div>
+      </div>
+    </section>
+
+    <section class="section section--flush-top" id="system">
+      <div class="container">
+        {head("Design system", "One system", "behind every screen.")}
+        <ul class="rm-palette">{swatches}</ul>
+        <div class="rm-comps">{comps}</div>
         <div class="rm-sys">{system}</div>
       </div>
     </section>
@@ -317,6 +389,13 @@ def readyme_page(data, version, h):
           <p class="cs-gallery__lead">The new ReadyMe, screen by screen. Drag, swipe or use the arrows.</p>
         </div>
         {carousel}
+      </div>
+    </section>
+
+    <section class="section section--flush-top" id="success">
+      <div class="container">
+        {head("Measuring success", "What success looks like", "after launch.")}
+        <div class="rm-metrics">{metrics}</div>
         <p class="sp-note reveal">{e(data['note'])}</p>
       </div>
     </section>
@@ -327,7 +406,7 @@ def readyme_page(data, version, h):
           <div>
             <p class="label label--light">Live product</p>
             <h2 class="pj-cta__title">ReadyMe is live <span class="soft">on the App Store.</span></h2>
-            <p class="pj-cta__text">Try the student app, or see the authoring tool teachers use to build learning paths.</p>
+            <p class="pj-cta__text">Try the student app, or see the authoring tool tutors use to build learning paths.</p>
           </div>
           <div class="pj-cta__btns"><a class="btn btn--lime btn--arrow" href="{e(app)}" target="_blank" rel="noopener">App Store<span class="btn__circle">{ARROW}</span></a><a class="btn btn--glass" href="{e(tool)}" target="_blank" rel="noopener">Authoring tool</a></div>
         </div>
@@ -336,7 +415,8 @@ def readyme_page(data, version, h):
 """
     scripts = ('  <script src="../assets/js/vendor/Draggable.min.js?v=3.12.5" defer></script>\n'
                f'  <script src="../assets/js/carousel.js?v={version}" defer></script>\n'
-               f'  <script src="../assets/js/compare.js?v={version}" defer></script>\n')
+               f'  <script src="../assets/js/compare.js?v={version}" defer></script>\n'
+               f'  <script src="../assets/js/readyme.js?v={version}" defer></script>\n')
     return shell(h, version, title="ReadyMe redesign — case study by Kavinda Weerasekara",
                  desc=r["lead"], path="shipped/readyme.html", og_image="assets/img/shipped/readyme/new-home.webp",
                  body=body, scripts=scripts)
