@@ -12,26 +12,26 @@
 <style>
 /* Attendance-only styles; shared pieces live in app.css */
 .top-grid { display: grid; grid-template-columns: minmax(0, 1fr) minmax(0, 1.6fr); gap: 20px; }
-.myday { background: var(--ink); color: #FFFFFF; border-radius: var(--radius); padding: 24px; display: flex; flex-direction: column; gap: 18px; position: relative; overflow: hidden; }
-.myday::after { content: ''; position: absolute; right: -70px; bottom: -70px; width: 210px; height: 210px; border-radius: 999px; border: 34px solid #36312E; }
+.myday { background: var(--dark); color: #FFFFFF; border-radius: var(--radius); padding: 24px; display: flex; flex-direction: column; gap: 18px; position: relative; overflow: hidden; }
+.myday::after { content: ''; position: absolute; right: -70px; bottom: -70px; width: 210px; height: 210px; border-radius: 999px; border: 34px solid #4A7592; }
 .myday > * { position: relative; z-index: 1; }
 .myday-top { display: flex; justify-content: space-between; align-items: center; gap: 10px; }
 .myday-top h2 { font-size: 16px; font-weight: 600; }
-.badge { font-size: 12px; font-weight: 700; padding: 5px 12px; border-radius: 999px; background: #4B4541; }
+.badge { font-size: 12px; font-weight: 700; padding: 5px 12px; border-radius: 999px; background: #4A5863; }
 .badge.in { background: #3FA46A; }
 .badge.out { background: var(--accent); color: var(--ink); }
 .clock { font-size: 52px; font-weight: 700; letter-spacing: -0.03em; line-height: 1; font-variant-numeric: tabular-nums; }
-.clock small { font-size: 20px; color: #90877F; margin-left: 4px; }
-.today-line { color: #C9C1BB; font-size: 14px; margin-top: 6px; }
+.clock small { font-size: 20px; color: #A7C0D0; margin-left: 4px; }
+.today-line { color: #E1ECF3; font-size: 14px; margin-top: 6px; }
 .shift { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 8px; }
-.shift div { background: #3C3633; border-radius: 14px; padding: 10px 12px; }
-.shift span { display: block; font-size: 12px; color: #C9C1BB; }
+.shift div { background: #4E7A96; border-radius: 14px; padding: 10px 12px; }
+.shift span { display: block; font-size: 12px; color: #E1ECF3; }
 .shift strong { font-size: 15px; font-variant-numeric: tabular-nums; }
 .punch { height: 54px; border-radius: 999px; border: none; font-size: 15px; font-weight: 700; display: inline-flex; align-items: center; justify-content: center; gap: 10px; background: var(--accent); color: var(--ink); transition: transform .15s ease, box-shadow .2s ease, background-color .2s ease; position: relative; }
-.punch:hover { box-shadow: 0 10px 24px rgba(244,123,54,.35); transform: translateY(-1px); }
+.punch:hover { box-shadow: 0 10px 24px rgba(134,205,150,.35); transform: translateY(-1px); }
 .punch:active { transform: scale(.97); }
 .punch.out { background: #FFFFFF; }
-.punch:disabled { background: #3C3633; color: #C9C1BB; cursor: default; box-shadow: none; transform: none; }
+.punch:disabled { background: #4E7A96; color: #E1ECF3; cursor: default; box-shadow: none; transform: none; }
 .punch .pulse { width: 10px; height: 10px; border-radius: 999px; background: currentColor; position: relative; }
 .punch .pulse::after { content: ''; position: absolute; inset: 0; border-radius: 999px; background: currentColor; animation: ping 1.6s ease-out infinite; }
 @keyframes ping { from { transform: scale(1); opacity: .6; } to { transform: scale(2.6); opacity: 0; } }
@@ -53,7 +53,7 @@
 .trow.head { animation: none; font-size: 12px; color: var(--muted); font-weight: 600; padding-top: 0; }
 .trow.head:hover { background: none; }
 .trow .num { font-variant-numeric: tabular-nums; text-align: right; }
-.trow .num.dim { color: #A39A93; }
+.trow .num.dim { color: #8C99A4; }
 .who { display: flex; align-items: center; gap: 12px; min-width: 0; }
 .who .avatar { width: 38px; height: 38px; font-size: 12px; }
 .who button { border: none; background: none; padding: 0; font-weight: 700; font-size: 14px; text-align: left; cursor: pointer; }
@@ -75,7 +75,7 @@
 .cell.absent { background: #FDE4E4; color: #A3262A; }
 .cell.leave { background: #EDE3FF; color: #5B3BA8; }
 .cell.remote { background: #E1ECFF; color: #1D4ED8; }
-.cell.future { background: repeating-linear-gradient(135deg, #F4F1EE 0 4px, #FBF9F7 4px 8px); color: #A39A93; }
+.cell.future { background: repeating-linear-gradient(135deg, #F1F5F8 0 4px, #F7FAFC 4px 8px); color: #8C99A4; }
 .legend { display: flex; gap: 12px; flex-wrap: wrap; font-size: 12px; color: var(--muted); }
 .legend span { display: inline-flex; align-items: center; gap: 6px; }
 .legend i { width: 12px; height: 12px; border-radius: 4px; display: inline-block; }
@@ -93,9 +93,9 @@
 .req-info span { font-size: 12px; color: var(--muted); }
 .req-actions { display: flex; gap: 6px; }
 .icon-btn { width: 44px; height: 44px; border-radius: 999px; display: grid; place-items: center; border: 1px solid var(--line); background: #FFFFFF; transition: border-color .2s ease, transform .15s ease; }
-.icon-btn:hover { border-color: var(--ink); }
+.icon-btn:hover { border-color: var(--dark); }
 .icon-btn:active { transform: scale(.92); }
-.icon-btn.approve { background: var(--ink); border-color: var(--ink); color: var(--accent); }
+.icon-btn.approve { background: var(--dark); border-color: var(--dark); color: var(--accent); }
 .balances { display: flex; flex-direction: column; gap: 12px; }
 .bal { padding: 14px 16px; border-radius: 18px; background: var(--soft-2); }
 .bal-top { display: flex; justify-content: space-between; font-size: 13px; margin-bottom: 8px; }
@@ -121,7 +121,7 @@ textarea.input { height: auto; min-height: 90px; padding: 12px 14px; resize: ver
   .fix { grid-template-columns: repeat(2, minmax(0, 1fr)); }
   .fix .small-btn { grid-column: 1 / -1; }
 }
-.small-btn { height: 44px; padding: 0 16px; border-radius: 999px; border: none; background: var(--ink); color: #FFFFFF; font-size: 13px; font-weight: 700; transition: transform .15s ease; }
+.small-btn { height: 44px; padding: 0 16px; border-radius: 999px; border: none; background: var(--dark); color: #FFFFFF; font-size: 13px; font-weight: 700; transition: transform .15s ease; }
 .small-btn:active { transform: scale(.95); }
 </style>
 <script src="../assets/js/analytics.js" defer></script>
@@ -131,7 +131,7 @@ textarea.input { height: auto; min-height: 90px; padding: 12px 14px; resize: ver
 <div class="wrap">
   <header class="topbar enter">
     <a href="overview.html" class="brand" aria-label="Staffora project overview">
-      <span class="brand-mark"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="#2B2725" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="9" cy="8" r="3.2"/><path d="M3 19.5c.9-3.4 3.2-5 6-5s5.1 1.6 6 5"/><path d="M15.5 4.8a3.2 3.2 0 0 1 0 6.4M17.5 14.6c1.8.7 2.9 2.3 3.4 4.9"/></svg></span>
+      <span class="brand-mark"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="#1F2933" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="9" cy="8" r="3.2"/><path d="M3 19.5c.9-3.4 3.2-5 6-5s5.1 1.6 6 5"/><path d="M15.5 4.8a3.2 3.2 0 0 1 0 6.4M17.5 14.6c1.8.7 2.9 2.3 3.4 4.9"/></svg></span>
       Staffora
     </a>
     <nav class="mainnav" aria-label="Primary">
@@ -193,7 +193,7 @@ textarea.input { height: auto; min-height: 90px; padding: 12px 14px; resize: ver
           <section class="stats" aria-label="Today" id="stats" style="gap: 10px;"></section>
           <div>
             <div class="split" role="img" aria-label="212 on time, 16 late, 20 absent">
-              <i style="width: 85.5%; background: var(--accent); animation-delay: 300ms;"></i><i style="width: 6.5%; background: var(--ink); animation-delay: 500ms;"></i><i style="width: 8%; background: #D8D0CA; animation-delay: 600ms;"></i>
+              <i style="width: 85.5%; background: var(--accent); animation-delay: 300ms;"></i><i style="width: 6.5%; background: var(--dark); animation-delay: 500ms;"></i><i style="width: 8%; background: #CCD5DC; animation-delay: 600ms;"></i>
             </div>
           </div>
         </div>
@@ -287,7 +287,7 @@ textarea.input { height: auto; min-height: 90px; padding: 12px 14px; resize: ver
   var reduced = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
   var esc = function (s) { return String(s).replace(/[&<>"]/g, function (c) { return { '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;' }[c]; }); };
   var DAY = 86400000;
-  var TINT = { Design: '#FDE1D0', Engineering: '#DCE8FF', Finance: '#EDE3FF', Marketing: '#FFE6CC', People: '#D9F3EA', Sales: '#FCE4EE' };
+  var TINT = { Design: '#DDF1E2', Engineering: '#DCE8FF', Finance: '#EDE3FF', Marketing: '#FFE6CC', People: '#D9F3EA', Sales: '#FCE4EE' };
   var ICON_CHECK = '<svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12.5l4.5 4.5L19 7.5"/></svg>';
   var ARROW = '<svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M7 17L17 7M8 7h9v9"/></svg>';
   function iso(d) { return new Date(d.getTime() - d.getTimezoneOffset() * 60000).toISOString().slice(0, 10); }
@@ -453,7 +453,7 @@ textarea.input { height: auto; min-height: 90px; padding: 12px 14px; resize: ver
       return '<div class="bal"><div class="bal-top"><span>' + k + '</span><span><strong>' + left + ' left</strong> of ' + b.total + '</span></div><div class="meter" role="img" aria-label="' + b.used + ' of ' + b.total + ' days used"><span style="width:' + Math.round(b.used / b.total * 100) + '%"></span></div></div>';
     }).join('');
     document.getElementById('mine').innerHTML = mine.length ? mine.map(function (r) {
-      return '<li class="req' + (r.id === flashId ? ' flash' : '') + '"><div class="req-info"><strong>' + r.type + '</strong><span>' + range(r) + ' · ' + r.days + (r.days === 1 ? ' day' : ' days') + '</span></div><span class="status" style="background:#FDE1D0;color:#B4501A">Pending</span><button type="button" class="icon-btn" data-cancel="' + r.id + '" aria-label="Cancel this request">' + ICON_X + '</button></li>';
+      return '<li class="req' + (r.id === flashId ? ' flash' : '') + '"><div class="req-info"><strong>' + r.type + '</strong><span>' + range(r) + ' · ' + r.days + (r.days === 1 ? ' day' : ' days') + '</span></div><span class="status" style="background:#DDF1E2;color:#2D6B43">Pending</span><button type="button" class="icon-btn" data-cancel="' + r.id + '" aria-label="Cancel this request">' + ICON_X + '</button></li>';
     }).join('') : '';
   }
   document.getElementById('requests').addEventListener('click', function (ev) {

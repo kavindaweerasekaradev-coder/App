@@ -12,25 +12,25 @@
 <style>
 /* Payroll-only styles; shared pieces live in app.css */
 .run { display: grid; grid-template-columns: minmax(0, 1.5fr) minmax(0, 1fr); gap: 20px; }
-.run-card { background: var(--ink); color: #FFFFFF; border-radius: var(--radius); padding: 26px; position: relative; overflow: hidden; display: flex; flex-direction: column; gap: 20px; }
-.run-card::after { content: ''; position: absolute; right: -60px; top: -60px; width: 200px; height: 200px; border-radius: 999px; border: 34px solid #36312E; }
+.run-card { background: var(--dark); color: #FFFFFF; border-radius: var(--radius); padding: 26px; position: relative; overflow: hidden; display: flex; flex-direction: column; gap: 20px; }
+.run-card::after { content: ''; position: absolute; right: -60px; top: -60px; width: 200px; height: 200px; border-radius: 999px; border: 34px solid #4A7592; }
 .run-card > * { position: relative; z-index: 1; }
 .run-top { display: flex; justify-content: space-between; align-items: center; gap: 12px; flex-wrap: wrap; }
 .run-top h2 { font-size: 17px; font-weight: 600; }
-.run-status { font-size: 12px; font-weight: 700; padding: 5px 12px; border-radius: 999px; background: #4B4541; color: #FFFFFF; }
+.run-status { font-size: 12px; font-weight: 700; padding: 5px 12px; border-radius: 999px; background: #4A5863; color: #FFFFFF; }
 .run-status.ready { background: var(--accent); color: var(--ink); }
 .run-status.done { background: #3FA46A; color: #FFFFFF; }
-.run-total span { display: block; font-size: 13px; color: #C9C1BB; }
+.run-total span { display: block; font-size: 13px; color: #E1ECF3; }
 .run-total strong { font-size: 44px; font-weight: 700; letter-spacing: -0.03em; line-height: 1.05; }
-.run-total strong small { font-size: 26px; color: #90877F; }
+.run-total strong small { font-size: 26px; color: #A7C0D0; }
 .run-meta { display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: 10px; }
-.run-meta div { background: #3C3633; border-radius: 16px; padding: 12px 14px; }
-.run-meta span { display: block; font-size: 12px; color: #C9C1BB; }
+.run-meta div { background: #4E7A96; border-radius: 16px; padding: 12px 14px; }
+.run-meta span { display: block; font-size: 12px; color: #E1ECF3; }
 .run-meta strong { font-size: 15px; font-weight: 700; }
 .run-actions { display: flex; gap: 10px; flex-wrap: wrap; }
 .run-actions .btn { flex: 1 1 160px; height: 50px; }
-.btn-ghost-dark { background: transparent; color: #FFFFFF; border: 1px solid #4B4541; }
-.btn-ghost-dark:hover { background: #3C3633; }
+.btn-ghost-dark { background: transparent; color: #FFFFFF; border: 1px solid #4A5863; }
+.btn-ghost-dark:hover { background: #4E7A96; }
 .checklist { background: #FFFFFF; border-radius: var(--radius); padding: 22px; display: flex; flex-direction: column; gap: 12px; }
 .checklist h2 { font-size: 16px; font-weight: 700; }
 .checks { list-style: none; margin: 0; padding: 0; display: flex; flex-direction: column; gap: 8px; }
@@ -67,15 +67,15 @@ table.pay tfoot td { font-weight: 700; border-top: 2px solid var(--ink); }
 .history li.new { animation: flash 2s ease; border-radius: 14px; }
 
 /* Payslip */
-.slip-total { display: flex; justify-content: space-between; align-items: baseline; padding: 16px; border-radius: 18px; background: var(--ink); color: #FFFFFF; margin-bottom: 12px; }
-.slip-total span { font-size: 13px; color: #C9C1BB; }
+.slip-total { display: flex; justify-content: space-between; align-items: baseline; padding: 16px; border-radius: 18px; background: var(--dark); color: #FFFFFF; margin-bottom: 12px; }
+.slip-total span { font-size: 13px; color: #E1ECF3; }
 .slip-total strong { font-size: 28px; font-weight: 700; letter-spacing: -0.02em; font-variant-numeric: tabular-nums; }
 .block .row dd.neg { color: #A3262A; }
 
 /* Run wizard */
 .modal.wide { width: min(880px, calc(100vw - 24px)); }
 .mini { width: 92px; height: 38px; padding: 0 10px; border-radius: 10px; border: 1.5px solid var(--line); text-align: right; font: inherit; font-size: 14px; outline: none; transition: border-color .2s ease, box-shadow .2s ease; }
-.mini:focus { border-color: var(--accent); box-shadow: 0 0 0 3px rgba(244,123,54,.15); }
+.mini:focus { border-color: var(--accent); box-shadow: 0 0 0 3px rgba(134,205,150,.15); }
 .issues { list-style: none; margin: 0; padding: 0; display: flex; flex-direction: column; gap: 10px; }
 .issue { display: flex; gap: 14px; align-items: flex-start; padding: 16px; border-radius: 18px; background: #FEF3E6; flex-wrap: wrap; transition: background-color .3s ease; }
 .issue.fixed { background: #EAF7EE; }
@@ -87,7 +87,7 @@ table.pay tfoot td { font-weight: 700; border-top: 2px solid var(--ink); }
 .issue-actions { display: flex; gap: 8px; flex-wrap: wrap; align-items: center; margin-top: 10px; }
 .issue-actions .input { height: 40px; width: 220px; font-size: 14px; }
 .sum { border-radius: 20px; background: var(--soft-2); padding: 6px 18px; }
-.sum .row { display: flex; justify-content: space-between; gap: 16px; padding: 12px 0; border-top: 1px solid #EFEAE6; font-variant-numeric: tabular-nums; }
+.sum .row { display: flex; justify-content: space-between; gap: 16px; padding: 12px 0; border-top: 1px solid #E8EDF1; font-variant-numeric: tabular-nums; }
 .sum .row:first-child { border-top: none; }
 .sum .row span { color: var(--muted); }
 .sum .row strong { font-weight: 700; }
@@ -116,7 +116,7 @@ table.pay tfoot td { font-weight: 700; border-top: 2px solid var(--ink); }
 <div class="wrap">
   <header class="topbar enter">
     <a href="overview.html" class="brand" aria-label="Staffora project overview">
-      <span class="brand-mark"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="#2B2725" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="9" cy="8" r="3.2"/><path d="M3 19.5c.9-3.4 3.2-5 6-5s5.1 1.6 6 5"/><path d="M15.5 4.8a3.2 3.2 0 0 1 0 6.4M17.5 14.6c1.8.7 2.9 2.3 3.4 4.9"/></svg></span>
+      <span class="brand-mark"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="#1F2933" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="9" cy="8" r="3.2"/><path d="M3 19.5c.9-3.4 3.2-5 6-5s5.1 1.6 6 5"/><path d="M15.5 4.8a3.2 3.2 0 0 1 0 6.4M17.5 14.6c1.8.7 2.9 2.3 3.4 4.9"/></svg></span>
       Staffora
     </a>
     <nav class="mainnav" aria-label="Primary">
@@ -258,7 +258,7 @@ table.pay tfoot td { font-weight: 700; border-top: 2px solid var(--ink); }
     </div>
     <div class="fstep" data-fstep="4">
       <div class="done-screen">
-        <div class="done-badge"><svg width="40" height="40" viewBox="0 0 24 24" fill="none" stroke="#2B2725" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12.5l4.5 4.5L19 7.5"/></svg></div>
+        <div class="done-badge"><svg width="40" height="40" viewBox="0 0 24 24" fill="none" stroke="#1F2933" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12.5l4.5 4.5L19 7.5"/></svg></div>
         <h3 id="doneTitle" tabindex="-1">Payroll submitted</h3>
         <p id="doneText"></p>
       </div>
@@ -277,7 +277,7 @@ table.pay tfoot td { font-weight: 700; border-top: 2px solid var(--ink); }
   var reduced = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
   var esc = function (s) { return String(s).replace(/[&<>"]/g, function (c) { return { '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;' }[c]; }); };
   var money = function (n, cents) { return '$' + Number(n).toLocaleString('en-US', { minimumFractionDigits: cents ? 2 : 0, maximumFractionDigits: cents ? 2 : 0 }); };
-  var TINT = { Design: '#FDE1D0', Engineering: '#DCE8FF', Finance: '#EDE3FF', Marketing: '#FFE6CC', People: '#D9F3EA', Sales: '#FCE4EE' };
+  var TINT = { Design: '#DDF1E2', Engineering: '#DCE8FF', Finance: '#EDE3FF', Marketing: '#FFE6CC', People: '#D9F3EA', Sales: '#FCE4EE' };
   var ICON_CHECK = '<svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12.5l4.5 4.5L19 7.5"/></svg>';
   var ICON_WARN = '<svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" aria-hidden="true"><path d="M12 8v5M12 16.5h.01"/><circle cx="12" cy="12" r="9"/></svg>';
 
@@ -386,7 +386,7 @@ table.pay tfoot td { font-weight: 700; border-top: 2px solid var(--ink); }
       return '<tr data-slip="' + p.id + '"><td><div class="who"><span class="avatar" style="background:' + TINT[p.dept] + '" aria-hidden="true">' + face(p) + '</span><div><button type="button" data-slip="' + p.id + '">' + esc(full(p)) + '</button><span>' + esc(p.role) + '</span></div></div></td>' +
         '<td class="num">' + money(p.base) + '</td><td class="num">' + (c.overtime ? money(c.overtime) : '—') + '</td><td class="num">' + (p.bonus ? money(p.bonus) : '—') + '</td>' +
         '<td class="num"><strong>' + money(c.gross) + '</strong></td><td class="num">−' + money(c.deductions) + '</td><td class="num">' + money(c.net) + '</td>' +
-        '<td><span class="status" style="' + (flagged ? 'background:#FDEBD3;color:#9A4A00' : run.status === 'Scheduled' ? 'background:#E3F5E8;color:#1C6B37' : 'background:#F4F1EE;color:#4B4541') + '">' + (flagged ? 'Needs attention' : run.status === 'Scheduled' ? 'Scheduled' : 'Ready') + '</span></td></tr>';
+        '<td><span class="status" style="' + (flagged ? 'background:#FDEBD3;color:#9A4A00' : run.status === 'Scheduled' ? 'background:#E3F5E8;color:#1C6B37' : 'background:#F1F5F8;color:#4A5863') + '">' + (flagged ? 'Needs attention' : run.status === 'Scheduled' ? 'Scheduled' : 'Ready') + '</span></td></tr>';
     }).join('') : '<tr><td colspan="8" style="color:var(--muted)">No one matches “' + esc(q) + '”.</td></tr>';
     var sum = rows.reduce(function (a, p) { var c = calc(p); a.base += p.base; a.ot += c.overtime; a.bonus += p.bonus; a.gross += c.gross; a.ded += c.deductions; a.net += c.net; return a; }, { base: 0, ot: 0, bonus: 0, gross: 0, ded: 0, net: 0 });
     document.getElementById('payFoot').innerHTML = rows.length ? '<tr><td>Total for these ' + rows.length + '</td><td class="num">' + money(sum.base) + '</td><td class="num">' + money(sum.ot) + '</td><td class="num">' + money(sum.bonus) + '</td><td class="num">' + money(sum.gross) + '</td><td class="num">−' + money(sum.ded) + '</td><td class="num">' + money(sum.net) + '</td><td></td></tr>' : '';
@@ -394,7 +394,7 @@ table.pay tfoot td { font-weight: 700; border-top: 2px solid var(--ink); }
     var hist = (run.status === 'Scheduled' ? [{ month: periodName, paid: null, gross: t.gross, people: 248, scheduled: true }] : []).concat(runs);
     document.getElementById('history').innerHTML = hist.map(function (h) {
       return '<li class="' + (h.scheduled && justSubmitted ? 'new' : '') + '"><div class="month"><strong>' + h.month + '</strong><span>' + (h.scheduled ? 'Pays ' + payDateLabel : 'Paid ' + new Date(h.paid + 'T00:00:00').toLocaleDateString('en-GB', { day: 'numeric', month: 'short' })) + ' · ' + h.people + ' people</span></div>' +
-        '<span class="amt">' + money(h.gross) + '</span><span class="status" style="' + (h.scheduled ? 'background:#FDE1D0;color:#B4501A' : 'background:#E3F5E8;color:#1C6B37') + '">' + (h.scheduled ? 'Scheduled' : 'Paid') + '</span></li>';
+        '<span class="amt">' + money(h.gross) + '</span><span class="status" style="' + (h.scheduled ? 'background:#DDF1E2;color:#2D6B43' : 'background:#E3F5E8;color:#1C6B37') + '">' + (h.scheduled ? 'Scheduled' : 'Paid') + '</span></li>';
     }).join('');
   }
   var justSubmitted = false;
@@ -452,7 +452,7 @@ table.pay tfoot td { font-weight: 700; border-top: 2px solid var(--ink); }
     document.getElementById('slipPeriod').textContent = 'Payslip · ' + periodName;
     document.getElementById('slipBody').innerHTML =
       '<div class="profile-hero"><span class="avatar" style="background:' + TINT[p.dept] + '" aria-hidden="true">' + face(p) + '</span><h2 id="sName">' + esc(full(p)) + '</h2><p>' + esc(p.role) + ' · ' + p.dept + '</p>' +
-      '<span class="status" style="background:#FDE1D0;color:#B4501A">Pays ' + payDateLabel + '</span></div>' +
+      '<span class="status" style="background:#DDF1E2;color:#2D6B43">Pays ' + payDateLabel + '</span></div>' +
       '<div class="slip-total"><span>Take-home pay</span><strong>' + money(c.net, true) + '</strong></div>' +
       '<div class="block"><h3>Earnings</h3><dl>' + row('Base salary', money(p.base, true)) +
         row('Overtime' + (p.ot ? ' · ' + p.ot + ' h at ' + money(rate(p), true) : ''), c.overtime ? money(c.overtime, true) : '—') +

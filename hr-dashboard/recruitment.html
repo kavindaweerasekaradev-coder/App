@@ -18,17 +18,17 @@
 .roles-head h2, .board-title h2 { font-size: 18px; font-weight: 700; }
 .roles { display: grid; grid-auto-flow: column; grid-auto-columns: minmax(230px, 1fr); gap: 10px; overflow-x: auto; padding: 2px 2px 6px; scroll-snap-type: x proximity; scrollbar-width: thin; }
 .role { position: relative; text-align: left; border: 1.5px solid transparent; background: var(--soft-2); border-radius: 20px; padding: 16px; display: flex; flex-direction: column; gap: 10px; scroll-snap-align: start; transition: border-color .2s ease, background-color .2s ease, transform .2s ease, box-shadow .2s ease; animation: rise .5s cubic-bezier(.2,.7,.2,1) backwards; }
-.role:hover { background: #FFFFFF; border-color: var(--line); transform: translateY(-2px); box-shadow: 0 10px 24px rgba(43,39,37,.08); }
-.role[aria-pressed="true"] { background: var(--ink); border-color: var(--ink); color: #FFFFFF; }
-.role[aria-pressed="true"] .role-meta, .role[aria-pressed="true"] .role-foot { color: #C9C1BB; }
-.role[aria-pressed="true"] .bar { background: #4B4541; }
+.role:hover { background: #FFFFFF; border-color: var(--line); transform: translateY(-2px); box-shadow: 0 10px 24px rgba(31,41,51,.08); }
+.role[aria-pressed="true"] { background: var(--dark); border-color: var(--dark); color: #FFFFFF; }
+.role[aria-pressed="true"] .role-meta, .role[aria-pressed="true"] .role-foot { color: #E1ECF3; }
+.role[aria-pressed="true"] .bar { background: #4A5863; }
 .role.all { justify-content: center; align-items: flex-start; }
 .role.new { animation: rise .5s cubic-bezier(.2,.7,.2,1) backwards, flash 2s ease; }
 .role strong { font-size: 15px; font-weight: 700; line-height: 1.3; }
 .role-meta { font-size: 12px; color: var(--muted); }
 .role-foot { display: flex; justify-content: space-between; align-items: center; gap: 8px; font-size: 12px; color: var(--muted); }
 .role-foot b { color: inherit; font-weight: 700; }
-.bar { display: flex; height: 6px; border-radius: 999px; overflow: hidden; background: #ECE7E3; gap: 2px; }
+.bar { display: flex; height: 6px; border-radius: 999px; overflow: hidden; background: #E4E9EE; gap: 2px; }
 .bar i { display: block; height: 100%; }
 .pill-new { font-size: 11px; font-weight: 700; padding: 2px 8px; border-radius: 999px; background: var(--accent); color: var(--ink); }
 
@@ -38,18 +38,18 @@
 .board-tools .search { flex: 0 1 260px; width: 260px; }
 .toggle-btn { height: 44px; padding: 0 16px; border-radius: 999px; border: 1px solid var(--line); background: #FFFFFF; font-size: 13px; font-weight: 600; display: inline-flex; align-items: center; gap: 8px; transition: background-color .2s ease; }
 .toggle-btn:hover { background: var(--soft); }
-.toggle-btn[aria-pressed="true"] { background: var(--ink); color: #FFFFFF; border-color: var(--ink); }
+.toggle-btn[aria-pressed="true"] { background: var(--dark); color: #FFFFFF; border-color: var(--dark); }
 .board { display: grid; grid-auto-flow: column; grid-auto-columns: minmax(214px, 1fr); gap: 12px; overflow-x: auto; padding-bottom: 6px; scroll-snap-type: x proximity; }
 .col { background: var(--soft-2); border-radius: 20px; padding: 12px; display: flex; flex-direction: column; gap: 10px; min-height: 320px; scroll-snap-align: start; border: 1.5px dashed transparent; transition: border-color .2s ease, background-color .2s ease; }
-.col.over { border-color: var(--accent); background: #FEF1E9; }
-.col.rejected { background: #FAF7F5; opacity: .9; }
+.col.over { border-color: var(--accent); background: #EEF8F0; }
+.col.rejected { background: #F5F8FA; opacity: .9; }
 .col-head { display: flex; align-items: center; justify-content: space-between; gap: 8px; padding: 2px 4px; }
 .col-head h3 { font-size: 13px; font-weight: 700; display: flex; align-items: center; gap: 8px; }
 .col-head h3 i { width: 10px; height: 10px; border-radius: 999px; display: inline-block; }
 .col-head span { font-size: 12px; font-weight: 700; min-width: 24px; height: 24px; padding: 0 8px; border-radius: 999px; background: #FFFFFF; display: grid; place-items: center; }
 .cards { list-style: none; margin: 0; padding: 0; display: flex; flex-direction: column; gap: 8px; flex: 1; }
 .cand { position: relative; background: #FFFFFF; border: 1px solid var(--line); border-radius: 16px; padding: 12px; display: flex; flex-direction: column; gap: 10px; cursor: grab; animation: rise .4s cubic-bezier(.2,.7,.2,1) backwards; transition: box-shadow .2s ease, transform .2s ease, border-color .2s ease, opacity .2s ease; }
-.cand:hover { box-shadow: 0 10px 22px rgba(43,39,37,.1); transform: translateY(-2px); border-color: #D8D0CA; }
+.cand:hover { box-shadow: 0 10px 22px rgba(31,41,51,.1); transform: translateY(-2px); border-color: #CCD5DC; }
 .cand.dragging { opacity: .4; transform: rotate(-2deg); }
 .cand.moved { animation: pop-in .45s cubic-bezier(.2,.8,.2,1), flash 1.6s ease; }
 .cand-top { display: flex; align-items: center; gap: 10px; }
@@ -59,7 +59,7 @@
 .cand-name button::after { content: ''; position: absolute; inset: 0; border-radius: 16px; }
 .cand-name span { display: block; font-size: 12px; color: var(--muted); overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
 .cand-foot { display: flex; justify-content: space-between; align-items: center; gap: 8px; font-size: 12px; color: var(--muted); }
-.stars { display: inline-flex; gap: 1px; color: #E8DFD8; }
+.stars { display: inline-flex; gap: 1px; color: #DCE3E8; }
 .stars svg.on { color: var(--accent); }
 .when { display: inline-flex; align-items: center; gap: 6px; font-size: 12px; font-weight: 600; padding: 4px 10px; border-radius: 999px; background: var(--peach); color: var(--accent-dark); align-self: flex-start; }
 .col-empty { flex: 1; border: 1.5px dashed var(--line); border-radius: 16px; display: grid; place-items: center; text-align: center; font-size: 12px; color: var(--muted); padding: 16px; min-height: 90px; }
@@ -70,10 +70,10 @@
 .stage-steps button { width: 100%; height: 40px; border: none; border-radius: 12px; background: transparent; font-size: 11px; font-weight: 700; color: var(--muted); transition: background-color .2s ease, color .2s ease; }
 .stage-steps button:hover { background: #FFFFFF; color: var(--ink); }
 .stage-steps button.done { color: var(--ink); }
-.stage-steps button[aria-current="step"] { background: var(--ink); color: #FFFFFF; }
+.stage-steps button[aria-current="step"] { background: var(--dark); color: #FFFFFF; }
 .rate { display: flex; align-items: center; justify-content: space-between; gap: 12px; padding: 12px 16px; border-radius: 16px; background: var(--soft-2); margin-bottom: 12px; }
 .rate-stars { display: flex; gap: 2px; }
-.rate-stars button { width: 34px; height: 34px; border: none; border-radius: 10px; background: transparent; color: #E2D8D0; display: grid; place-items: center; transition: transform .15s ease, color .2s ease, background-color .2s ease; }
+.rate-stars button { width: 34px; height: 34px; border: none; border-radius: 10px; background: transparent; color: #DCE3E8; display: grid; place-items: center; transition: transform .15s ease, color .2s ease, background-color .2s ease; }
 .rate-stars button:hover { background: #FFFFFF; transform: scale(1.1); }
 .rate-stars button.on { color: var(--accent); }
 .interview { display: flex; gap: 12px; align-items: center; padding: 14px 16px; border-radius: 16px; background: var(--peach); margin-bottom: 12px; }
@@ -82,10 +82,10 @@
 .interview .cal span { display: block; font-size: 18px; font-weight: 800; padding: 2px 0 4px; }
 .interview .info { flex: 1; min-width: 0; }
 .interview .info strong { display: block; font-size: 14px; }
-.interview .info span { font-size: 12px; color: #6B3A1C; }
+.interview .info span { font-size: 12px; color: #24563A; }
 .interview.none { background: var(--soft-2); }
 .interview.none .info span { color: var(--muted); }
-.small-btn { height: 36px; padding: 0 14px; border-radius: 999px; border: none; background: var(--ink); color: #FFFFFF; font-size: 12px; font-weight: 700; flex: none; transition: transform .15s ease; }
+.small-btn { height: 36px; padding: 0 14px; border-radius: 999px; border: none; background: var(--dark); color: #FFFFFF; font-size: 12px; font-weight: 700; flex: none; transition: transform .15s ease; }
 .small-btn:active { transform: scale(.95); }
 .small-btn.light { background: #FFFFFF; color: var(--ink); }
 .notes { list-style: none; margin: 0; padding: 0 0 4px; display: flex; flex-direction: column; gap: 8px; }
@@ -93,7 +93,7 @@
 .note small { display: block; font-size: 11px; color: var(--muted); margin-top: 2px; }
 .note-form { display: flex; gap: 8px; padding: 10px 0 14px; }
 .note-form textarea { flex: 1; min-height: 44px; max-height: 140px; resize: vertical; border-radius: 14px; border: 1.5px solid var(--line); padding: 10px 12px; font: inherit; font-size: 14px; outline: none; transition: border-color .2s ease, box-shadow .2s ease; }
-.note-form textarea:focus { border-color: var(--accent); box-shadow: 0 0 0 4px rgba(244,123,54,.15); }
+.note-form textarea:focus { border-color: var(--accent); box-shadow: 0 0 0 4px rgba(134,205,150,.15); }
 textarea.input { height: auto; min-height: 110px; padding: 12px 14px; resize: vertical; font: inherit; font-size: 15px; line-height: 1.5; }
 .review-list { margin: 6px 0 0; padding-left: 18px; font-size: 14px; }
 .reason-chips { margin-top: 14px; }
@@ -119,7 +119,7 @@ textarea.input { height: auto; min-height: 110px; padding: 12px 14px; resize: ve
 
   <header class="topbar enter">
     <a href="overview.html" class="brand" aria-label="Staffora project overview">
-      <span class="brand-mark"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="#2B2725" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="9" cy="8" r="3.2"/><path d="M3 19.5c.9-3.4 3.2-5 6-5s5.1 1.6 6 5"/><path d="M15.5 4.8a3.2 3.2 0 0 1 0 6.4M17.5 14.6c1.8.7 2.9 2.3 3.4 4.9"/></svg></span>
+      <span class="brand-mark"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="#1F2933" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="9" cy="8" r="3.2"/><path d="M3 19.5c.9-3.4 3.2-5 6-5s5.1 1.6 6 5"/><path d="M15.5 4.8a3.2 3.2 0 0 1 0 6.4M17.5 14.6c1.8.7 2.9 2.3 3.4 4.9"/></svg></span>
       Staffora
     </a>
     <nav class="mainnav" aria-label="Primary">
@@ -336,9 +336,9 @@ textarea.input { height: auto; min-height: 110px; padding: 12px 14px; resize: ve
   }
 
   var STAGES = ['Applied', 'Screening', 'Interview', 'Offer', 'Hired'];
-  var STAGE_COLOR = { Applied: '#D8D0CA', Screening: '#A9C4F5', Interview: '#F47B36', Offer: '#E0A43C', Hired: '#3FA46A', Rejected: '#C9A4A9' };
+  var STAGE_COLOR = { Applied: '#CCD5DC', Screening: '#A9C4F5', Interview: '#86CD96', Offer: '#E0A43C', Hired: '#3FA46A', Rejected: '#C9A4A9' };
   var DEPTS = ['Design', 'Engineering', 'Finance', 'Marketing', 'People', 'Sales'];
-  var TINT = { Design: '#FDE1D0', Engineering: '#DCE8FF', Finance: '#EDE3FF', Marketing: '#FFE6CC', People: '#D9F3EA', Sales: '#FCE4EE' };
+  var TINT = { Design: '#DDF1E2', Engineering: '#DCE8FF', Finance: '#EDE3FF', Marketing: '#FFE6CC', People: '#D9F3EA', Sales: '#FCE4EE' };
   var INTERVIEWERS = ['Ravi Jayasuriya', 'Aisha Rahman', 'Nadia Perera', 'Tomás García', 'Lucas Martin', 'Kavinda Weerasekara'];
   var STAR = '<svg width="13" height="13" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M12 3.5l2.6 5.3 5.9.9-4.2 4.1 1 5.8L12 16.9l-5.3 2.7 1-5.8-4.2-4.1 5.9-.9z"/></svg>';
   var ICON_CHECK = '<svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12.5l4.5 4.5L19 7.5"/></svg>';
@@ -417,7 +417,7 @@ textarea.input { height: auto; min-height: 110px; padding: 12px 14px; resize: ve
     var tiles = [
       ['Open positions', openings, 'var(--accent)', 'var(--ink)', '<rect x="3" y="7" width="18" height="13" rx="3"/><path d="M8 7V5a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2"/>'],
       ['In the pipeline', active.length, '#E1ECFF', '#1D4ED8', '<circle cx="9" cy="8" r="3.5"/><path d="M2.5 20c.8-3.6 3.4-5.5 6.5-5.5s5.7 1.9 6.5 5.5"/><path d="M16 4.6a3.5 3.5 0 0 1 0 6.8"/>'],
-      ['Interviews booked', interviews, '#FDE1D0', '#B4501A', '<rect x="3" y="5" width="18" height="16" rx="3"/><path d="M8 3v4M16 3v4M3 10h18"/>'],
+      ['Interviews booked', interviews, '#DDF1E2', '#2D6B43', '<rect x="3" y="5" width="18" height="16" rx="3"/><path d="M8 3v4M16 3v4M3 10h18"/>'],
       ['Offers out · hired', offers + ' · ' + hired, '#E3F5E8', '#1C6B37', '<path d="M5 12.5l4.5 4.5L19 7.5"/>']
     ];
     document.getElementById('stats').innerHTML = tiles.map(function (t) {
@@ -465,7 +465,7 @@ textarea.input { height: auto; min-height: 110px; padding: 12px 14px; resize: ve
         (items.length ? '<ul class="cards">' + items.map(function (c, i) {
           var j = job(c.jobId);
           return '<li class="cand' + (c.id === state.movedId ? ' moved' : '') + '" draggable="true" data-id="' + c.id + '" style="animation-delay:' + i * 40 + 'ms">' +
-            '<div class="cand-top"><span class="avatar" style="background:' + (j ? TINT[j.dept] : '#FDE1D0') + '" aria-hidden="true">' + face(c) + '</span>' +
+            '<div class="cand-top"><span class="avatar" style="background:' + (j ? TINT[j.dept] : '#DDF1E2') + '" aria-hidden="true">' + face(c) + '</span>' +
             '<div class="cand-name"><button type="button" data-open="' + c.id + '">' + esc(full(c)) + '</button><span>' + esc(j ? j.title : 'Role closed') + '</span></div></div>' +
             (c.stage === 'Interview' && c.interview ? '<span class="when"><svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" aria-hidden="true"><circle cx="12" cy="12" r="9"/><path d="M12 7v5l3 2"/></svg>' + interviewLabel(c.interview) + '</span>' : '') +
             '<div class="cand-foot">' + stars(c.rating) + '<span>' + since(c.stageSince) + '</span></div></li>';
@@ -583,9 +583,9 @@ textarea.input { height: auto; min-height: 110px; padding: 12px 14px; resize: ve
           '<button type="button" class="small-btn light" id="reschedule">Reschedule</button></div>'
       : '<div class="interview none"><div class="info"><strong>No interview booked</strong><span>Book one to move them forward.</span></div><button type="button" class="small-btn" id="reschedule">Schedule</button></div>';
     drawerBody.innerHTML =
-      '<div class="profile-hero"><span class="avatar" style="background:' + (j ? TINT[j.dept] : '#FDE1D0') + '" aria-hidden="true">' + face(c) + '</span>' +
+      '<div class="profile-hero"><span class="avatar" style="background:' + (j ? TINT[j.dept] : '#DDF1E2') + '" aria-hidden="true">' + face(c) + '</span>' +
         '<h2 id="cName">' + esc(full(c)) + '</h2><p>Applied for ' + esc(j ? j.title : 'a closed role') + '</p>' +
-        '<span class="status" style="background:' + (c.stage === 'Rejected' ? '#FDE4E4;color:#A3262A' : c.stage === 'Hired' ? '#E3F5E8;color:#1C6B37' : '#FDE1D0;color:#B4501A') + '">' + c.stage + (c.stage === 'Rejected' && c.reason ? ' · ' + esc(c.reason) : '') + '</span></div>' +
+        '<span class="status" style="background:' + (c.stage === 'Rejected' ? '#FDE4E4;color:#A3262A' : c.stage === 'Hired' ? '#E3F5E8;color:#1C6B37' : '#DDF1E2;color:#2D6B43') + '">' + c.stage + (c.stage === 'Rejected' && c.reason ? ' · ' + esc(c.reason) : '') + '</span></div>' +
       '<ol class="stage-steps" aria-label="Move to stage">' + STAGES.map(function (s, i) {
         return '<li><button type="button" data-stage="' + s + '" class="' + (i < idx ? 'done' : '') + '"' + (s === c.stage ? ' aria-current="step"' : '') + '>' + s + '</button></li>';
       }).join('') + '</ol>' +
@@ -742,13 +742,13 @@ textarea.input { height: auto; min-height: 110px; padding: 12px 14px; resize: ve
   function money(v) { return v ? 'LKR ' + Number(v).toLocaleString('en-US') : ''; }
   function buildJobReview() {
     var d = jobDraft();
-    var row = function (k, v) { return '<div class="row" style="display:flex;justify-content:space-between;gap:16px;padding:10px 0;border-top:1px solid #EFEAE6"><dt style="color:var(--muted)">' + k + '</dt><dd style="margin:0;font-weight:600;text-align:right;overflow-wrap:anywhere">' + v + '</dd></div>'; };
+    var row = function (k, v) { return '<div class="row" style="display:flex;justify-content:space-between;gap:16px;padding:10px 0;border-top:1px solid #E8EDF1"><dt style="color:var(--muted)">' + k + '</dt><dd style="margin:0;font-weight:600;text-align:right;overflow-wrap:anywhere">' + v + '</dd></div>'; };
     g('jobPreview').innerHTML = '<span class="avatar" style="background:' + TINT[d.dept] + ';color:var(--ink)" aria-hidden="true"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="7" width="18" height="13" rx="3"/><path d="M8 7V5a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2"/></svg></span>' +
       '<div><strong>' + esc(d.title) + '</strong><span>' + d.dept + ' · ' + esc(d.location) + ' · ' + d.type + '</span></div>';
     g('reviewRole').innerHTML = row('Department', d.dept) + row('Location', esc(d.location)) + row('Type', d.type) + row('Openings', d.openings);
     g('reviewDetails').innerHTML = row('Salary', d.min || d.max ? esc([money(d.min), money(d.max)].filter(Boolean).join(' – ')) + ' / month' : 'Not shown') +
-      '<div style="padding:10px 0;border-top:1px solid #EFEAE6"><dt style="color:var(--muted)">About the role</dt><dd style="margin:4px 0 0;white-space:pre-line">' + esc(d.about) + '</dd></div>' +
-      (d.reqs.length ? '<div style="padding:10px 0;border-top:1px solid #EFEAE6"><dt style="color:var(--muted)">Requirements</dt><dd style="margin:0"><ul class="review-list">' + d.reqs.map(function (r) { return '<li>' + esc(r) + '</li>'; }).join('') + '</ul></dd></div>' : '');
+      '<div style="padding:10px 0;border-top:1px solid #E8EDF1"><dt style="color:var(--muted)">About the role</dt><dd style="margin:4px 0 0;white-space:pre-line">' + esc(d.about) + '</dd></div>' +
+      (d.reqs.length ? '<div style="padding:10px 0;border-top:1px solid #E8EDF1"><dt style="color:var(--muted)">Requirements</dt><dd style="margin:0"><ul class="review-list">' + d.reqs.map(function (r) { return '<li>' + esc(r) + '</li>'; }).join('') + '</ul></dd></div>' : '');
   }
   function openPost() {
     postForm.reset();
