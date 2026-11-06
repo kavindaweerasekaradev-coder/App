@@ -17,7 +17,7 @@
 
   <header class="topbar enter">
     <a href="overview.html" class="brand" aria-label="Staffora project overview">
-      <span class="brand-mark"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="#2B2725" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="9" cy="8" r="3.2"/><path d="M3 19.5c.9-3.4 3.2-5 6-5s5.1 1.6 6 5"/><path d="M15.5 4.8a3.2 3.2 0 0 1 0 6.4M17.5 14.6c1.8.7 2.9 2.3 3.4 4.9"/></svg></span>
+      <span class="brand-mark"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="#1F2933" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="9" cy="8" r="3.2"/><path d="M3 19.5c.9-3.4 3.2-5 6-5s5.1 1.6 6 5"/><path d="M15.5 4.8a3.2 3.2 0 0 1 0 6.4M17.5 14.6c1.8.7 2.9 2.3 3.4 4.9"/></svg></span>
       Staffora
     </a>
     <nav class="mainnav" aria-label="Primary">
@@ -203,7 +203,7 @@
   var esc = function (s) { return String(s).replace(/[&<>"]/g, function (c) { return { '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;' }[c]; }); };
 
   var DEPTS = ['Design', 'Engineering', 'Finance', 'Marketing', 'People', 'Sales'];
-  var TINT = { Design: '#FDE1D0', Engineering: '#DCE8FF', Finance: '#EDE3FF', Marketing: '#FFE6CC', People: '#D9F3EA', Sales: '#FCE4EE' };
+  var TINT = { Design: '#DDF1E2', Engineering: '#DCE8FF', Finance: '#EDE3FF', Marketing: '#FFE6CC', People: '#D9F3EA', Sales: '#FCE4EE' };
   var STATUS = {
     'Active': 'background:#E3F5E8;color:#1C6B37;',
     'Remote': 'background:#E1ECFF;color:#1D4ED8;',
@@ -513,7 +513,7 @@
   }
   function buildReview() {
     var d = draft(), mgr = byId(d.manager);
-    var row = function (k, v) { return '<div class="row" style="display:flex;justify-content:space-between;gap:16px;padding:10px 0;border-top:1px solid #EFEAE6"><dt style="color:var(--muted)">' + k + '</dt><dd style="margin:0;font-weight:600;text-align:right;overflow-wrap:anywhere">' + esc(v) + '</dd></div>'; };
+    var row = function (k, v) { return '<div class="row" style="display:flex;justify-content:space-between;gap:16px;padding:10px 0;border-top:1px solid #E8EDF1"><dt style="color:var(--muted)">' + k + '</dt><dd style="margin:0;font-weight:600;text-align:right;overflow-wrap:anywhere">' + esc(v) + '</dd></div>'; };
     f('previewCard').innerHTML = '<span class="avatar" style="background:' + TINT[d.dept] + '" aria-hidden="true">' + esc((d.first.charAt(0) + d.last.charAt(0)).toUpperCase()) + '</span>' +
       '<div><strong>' + esc(d.first + ' ' + d.last) + '</strong><span>' + esc(d.role) + ' · ' + d.dept + '</span></div>';
     f('reviewPersonal').innerHTML = row('Work email', d.email) + row('Phone', d.phone || '—') + row('Location', d.location);

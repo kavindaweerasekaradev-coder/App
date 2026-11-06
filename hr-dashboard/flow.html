@@ -10,8 +10,8 @@
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&amp;display=swap">
 <style>
 :root {
-  --accent: #F47B36; --accent-dark: #B4501A; --peach: #FDE1D0; --ink: #2B2725;
-  --muted: #6E6762; --line: #E5E0DC; --soft: #F4F1EE; --bg: #F1F0EE; --edge: #B9B0A9;
+  --accent: #86CD96; --accent-dark: #2D6B43; --peach: #DDF1E2; --ink: #1F2933; --dark: #3E6B88;
+  --muted: #67737E; --line: #E1E7EC; --soft: #F1F5F8; --bg: #EEF2F5; --edge: #A9B6C0;
 }
 * { box-sizing: border-box; }
 body { margin: 0; background: var(--bg); color: var(--ink); font-family: 'Plus Jakarta Sans', system-ui, sans-serif; font-size: 15px; line-height: 1.55; }
@@ -29,8 +29,8 @@ a:focus-visible, button:focus-visible { outline: 2px solid var(--ink); outline-o
 .pill:active { transform: scale(.96); }
 .pill-ghost:hover { background: var(--soft); }
 .pill-ghost[aria-current="page"] { background: var(--soft); }
-.pill-dark { background: var(--ink); color: #FFFFFF; }
-.pill-dark:hover { box-shadow: 0 10px 24px rgba(43,39,37,.22); transform: translateY(-1px); }
+.pill-dark { background: var(--dark); color: #FFFFFF; }
+.pill-dark:hover { box-shadow: 0 10px 24px rgba(31,41,51,.22); transform: translateY(-1px); }
 
 /* Intro */
 .intro { display: flex; justify-content: space-between; align-items: flex-end; gap: 20px; flex-wrap: wrap; padding: 12px 6px 0; }
@@ -46,7 +46,7 @@ a:focus-visible, button:focus-visible { outline: 2px solid var(--ink); outline-o
 .board-head { display: flex; justify-content: space-between; align-items: center; gap: 12px; flex-wrap: wrap; padding: 14px 16px 6px; }
 .board-head h2 { font-size: 18px; font-weight: 700; }
 .swipe { display: none; font-size: 12px; color: var(--muted); align-items: center; gap: 6px; }
-.scroller { overflow-x: auto; border-radius: 22px; background: var(--soft); background-image: radial-gradient(#E2DCD7 1px, transparent 1px); background-size: 18px 18px; }
+.scroller { overflow-x: auto; border-radius: 22px; background: var(--soft); background-image: radial-gradient(#D9E1E7 1px, transparent 1px); background-size: 18px 18px; }
 .canvas { position: relative; min-width: 1360px; padding: 40px 36px 72px 64px; }
 .grid { display: grid; grid-template-columns: repeat(9, minmax(0, 1fr)); grid-template-rows: repeat(8, auto); column-gap: 30px; row-gap: 70px; position: relative; z-index: 1; }
 .lanes { position: absolute; left: 10px; top: 40px; bottom: 72px; display: grid; grid-template-rows: repeat(8, auto); row-gap: 70px; z-index: 1; pointer-events: none; }
@@ -64,16 +64,16 @@ a:focus-visible, button:focus-visible { outline: 2px solid var(--ink); outline-o
 .label.hot { color: var(--accent-dark); box-shadow: 0 0 0 1.5px var(--accent); opacity: 1; }
 
 .node { position: relative; display: flex; flex-direction: column; gap: 3px; min-height: 84px; padding: 12px 12px 12px; border-radius: 16px; background: #FFFFFF; border: 1.5px solid var(--line); text-decoration: none; color: var(--ink); animation: rise .5s cubic-bezier(.2,.7,.2,1) backwards; transition: transform .2s ease, box-shadow .2s ease, border-color .2s ease; }
-a.node:hover, .node.hot { transform: translateY(-2px); box-shadow: 0 10px 24px rgba(43,39,37,.12); border-color: var(--ink); }
+a.node:hover, .node.hot { transform: translateY(-2px); box-shadow: 0 10px 24px rgba(31,41,51,.12); border-color: var(--dark); }
 .node .file { font-size: 10px; font-weight: 700; letter-spacing: .04em; text-transform: uppercase; color: var(--muted); display: flex; align-items: center; gap: 5px; }
 .node strong { font-size: 13.5px; font-weight: 700; line-height: 1.25; }
 .node small { font-size: 11.5px; color: var(--muted); line-height: 1.35; }
-.node .num { position: absolute; top: -10px; right: 10px; min-width: 22px; height: 22px; padding: 0 6px; border-radius: 999px; background: var(--ink); color: #FFFFFF; font-size: 11px; font-weight: 700; display: grid; place-items: center; }
-.node.start { background: var(--ink); border-color: var(--ink); color: #FFFFFF; }
-.node.start .file, .node.start small { color: #C9C1BB; }
+.node .num { position: absolute; top: -10px; right: 10px; min-width: 22px; height: 22px; padding: 0 6px; border-radius: 999px; background: var(--dark); color: #FFFFFF; font-size: 11px; font-weight: 700; display: grid; place-items: center; }
+.node.start { background: var(--dark); border-color: var(--dark); color: #FFFFFF; }
+.node.start .file, .node.start small { color: #E1ECF3; }
 .node.start .num { background: var(--accent); color: var(--ink); }
 .node.hub { background: var(--accent); border-color: var(--accent); }
-.node.hub .file, .node.hub small { color: #4A2410; }
+.node.hub .file, .node.hub small { color: #1F4A2C; }
 .node.decision { background: var(--peach); border: 1.5px dashed var(--accent); }
 .node.decision .file { color: var(--accent-dark); }
 .node.end { background: #E3F5E8; border-color: #BFE3CB; }
@@ -98,7 +98,7 @@ a.node:hover, .node.hot { transform: translateY(-2px); box-shadow: 0 10px 24px r
 .page ol { margin: 0; padding: 0; list-style: none; display: flex; flex-direction: column; gap: 8px; counter-reset: s; }
 .page ol li { counter-increment: s; display: flex; gap: 10px; font-size: 14px; }
 .page ol li::before { content: counter(s); flex: none; width: 22px; height: 22px; border-radius: 999px; background: #FFFFFF; font-size: 11px; font-weight: 700; display: grid; place-items: center; margin-top: 1px; }
-.goes { display: flex; flex-wrap: wrap; gap: 6px; align-items: center; padding-top: 12px; border-top: 1px solid #E8E2DD; font-size: 12px; color: var(--muted); }
+.goes { display: flex; flex-wrap: wrap; gap: 6px; align-items: center; padding-top: 12px; border-top: 1px solid #E1E7EC; font-size: 12px; color: var(--muted); }
 .goes a { display: inline-flex; align-items: center; gap: 4px; height: 30px; padding: 0 10px; border-radius: 999px; background: #FFFFFF; color: var(--ink); font-weight: 600; text-decoration: none; transition: background-color .2s ease; }
 .goes a:hover { background: var(--peach); }
 
@@ -129,7 +129,7 @@ a.node:hover, .node.hot { transform: translateY(-2px); box-shadow: 0 10px 24px r
 
   <header class="top">
     <a href="overview.html" class="brand">
-      <span class="brand-mark"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#2B2725" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="9" cy="8" r="3.2"/><path d="M3 19.5c.9-3.4 3.2-5 6-5s5.1 1.6 6 5"/><path d="M15.5 4.8a3.2 3.2 0 0 1 0 6.4M17.5 14.6c1.8.7 2.9 2.3 3.4 4.9"/></svg></span>
+      <span class="brand-mark"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#1F2933" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="9" cy="8" r="3.2"/><path d="M3 19.5c.9-3.4 3.2-5 6-5s5.1 1.6 6 5"/><path d="M15.5 4.8a3.2 3.2 0 0 1 0 6.4M17.5 14.6c1.8.7 2.9 2.3 3.4 4.9"/></svg></span>
       Staffora
     </a>
     <nav class="top-links" aria-label="Project">
@@ -148,7 +148,7 @@ a.node:hover, .node.hot { transform: translateY(-2px); box-shadow: 0 10px 24px r
       <p>How people move through Staffora, from their first visit to managing the team. Every box is a real screen: click one to open it. Hover a box to trace where it leads.</p>
     </div>
     <ul class="legend" aria-label="Legend">
-      <li><i style="background: var(--ink);"></i>Start</li>
+      <li><i style="background: var(--dark);"></i>Start</li>
       <li><i style="background: #FFFFFF; box-shadow: inset 0 0 0 1.5px var(--line), inset 0 3px 0 var(--accent);"></i>Page</li>
       <li><i style="background: #FFFFFF; box-shadow: inset 0 0 0 1.5px var(--line);"></i>Step on a page</li>
       <li><i style="background: var(--peach); box-shadow: inset 0 0 0 1.5px var(--accent);"></i>Decision</li>
@@ -166,8 +166,8 @@ a.node:hover, .node.hot { transform: translateY(-2px); box-shadow: 0 10px 24px r
       <div class="canvas" id="canvas">
         <svg class="edges" id="edges" aria-hidden="true">
           <defs>
-            <marker id="arrow-grey" viewBox="0 0 10 10" refX="8.5" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M0 0L10 5L0 10z" fill="#B9B0A9"/></marker>
-            <marker id="arrow-hot" viewBox="0 0 10 10" refX="8.5" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M0 0L10 5L0 10z" fill="#F47B36"/></marker>
+            <marker id="arrow-grey" viewBox="0 0 10 10" refX="8.5" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M0 0L10 5L0 10z" fill="#A9B6C0"/></marker>
+            <marker id="arrow-hot" viewBox="0 0 10 10" refX="8.5" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M0 0L10 5L0 10z" fill="#86CD96"/></marker>
           </defs>
         </svg>
         <div class="labels" id="labels"></div>
