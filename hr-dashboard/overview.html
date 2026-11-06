@@ -161,7 +161,7 @@ a:focus-visible { outline: 2px solid var(--ink); outline-offset: 3px; }
     <div>
       <p class="eyebrow">Web app concept · UI/UX</p>
       <h1 id="title">Staffora, an <span>HR workspace</span> for people, time off and payroll.</h1>
-      <p class="lead">A clickable prototype covering the full journey: create an account, verify your email, set up your company, invite your team, log in, then run the dashboard and manage your people.</p>
+      <p class="lead">A clickable prototype covering the full journey: create an account, verify your email, set up your company, invite your team, log in, then run the dashboard, manage your people and hire new ones.</p>
       <div class="cta">
         <a href="login.html" class="pill pill-accent">Start at log in
           <svg class="arrow" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6"/></svg>
@@ -172,14 +172,14 @@ a:focus-visible { outline: 2px solid var(--ink); outline-offset: 3px; }
     <ul class="facts">
       <li><span>Designer</span><strong>Kavinda Weerasekara</strong></li>
       <li><span>Type</span><strong>Responsive web app</strong></li>
-      <li><span>Screens</span><strong>Log in, sign up, dashboard, employees</strong></li>
+      <li><span>Screens</span><strong>Log in, sign up, dashboard, employees, recruitment</strong></li>
       <li><span>Built with</span><strong>HTML, CSS, JavaScript</strong></li>
     </ul>
   </section>
 
   <section class="section reveal" id="flow" aria-labelledby="flow-title">
     <div class="section-head">
-      <div><p class="eyebrow">User flow</p><h2 id="flow-title">Four flows through the product</h2></div>
+      <div><p class="eyebrow">User flow</p><h2 id="flow-title">Five flows through the product</h2></div>
       <div style="display: flex; flex-direction: column; align-items: flex-start; gap: 12px;"><p>Every step below is a working screen. Click one to jump straight to it.</p><a href="flow.html" class="pill pill-dark">See the full app flow map <svg class="arrow" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6"/></svg></a></div>
     </div>
     <div class="flows">
@@ -217,6 +217,20 @@ a:focus-visible { outline: 2px solid var(--ink); outline-offset: 3px; }
           <span class="node"><span class="num">4</span>Review</span>
           <span class="to" aria-hidden="true"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14M13 6l6 6-6 6"/></svg></span>
           <a class="node end" href="employees.html"><span class="num">5</span>Added to team</a>
+        </div>
+      </div>
+      <div class="flow">
+        <p class="flow-name">Hire people<small>Recruitment</small></p>
+        <div class="nodes">
+          <a class="node start" href="recruitment.html"><span class="num">1</span>Pipeline</a>
+          <span class="to" aria-hidden="true"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14M13 6l6 6-6 6"/></svg></span>
+          <a class="node" href="recruitment.html#cand-3"><span class="num">2</span>Candidate</a>
+          <span class="to" aria-hidden="true"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14M13 6l6 6-6 6"/></svg></span>
+          <a class="node" href="recruitment.html#cand-1"><span class="num">3</span>Interview</a>
+          <span class="to" aria-hidden="true"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14M13 6l6 6-6 6"/></svg></span>
+          <a class="node" href="recruitment.html#cand-5"><span class="num">4</span>Offer</a>
+          <span class="to" aria-hidden="true"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14M13 6l6 6-6 6"/></svg></span>
+          <a class="node end" href="recruitment.html#cand-11"><span class="num">5</span>Hired</a>
         </div>
       </div>
       <div class="flow">
@@ -303,6 +317,19 @@ a:focus-visible { outline: 2px solid var(--ink); outline-offset: 3px; }
           </div>
         </div>
         <div class="screen-body"><h3>Employees</h3><p>Searchable directory, profile panel with status and time off, and a 3-step add-employee form.</p>
+          <span class="open">Open <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6"/></svg></span></div>
+      </a>
+      <a class="screen-card" href="recruitment.html">
+        <div class="thumb" aria-hidden="true" style="flex-direction: column; background: var(--bg);">
+          <div style="display: flex; gap: 6px;"><div class="bar" style="width: 30%; height: 18px; border-radius: 8px; background: var(--ink);"></div><div class="bar" style="width: 30%; height: 18px; border-radius: 8px; background: #FFFFFF;"></div><div class="bar" style="width: 30%; height: 18px; border-radius: 8px; background: #FFFFFF;"></div></div>
+          <div style="display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: 6px; flex: 1;">
+            <div class="box col" style="padding: 6px; background: #FBF9F7;"><div class="bar" style="width: 60%; background: #D8D0CA;"></div><div class="box" style="height: 26px; background: #FFFFFF;"></div><div class="box" style="height: 26px; background: #FFFFFF;"></div></div>
+            <div class="box col" style="padding: 6px; background: #FBF9F7;"><div class="bar" style="width: 60%; background: #A9C4F5;"></div><div class="box" style="height: 26px; background: #FFFFFF;"></div></div>
+            <div class="box col" style="padding: 6px; background: #FBF9F7;"><div class="bar o" style="width: 60%;"></div><div class="box" style="height: 26px; background: #FFFFFF;"></div><div class="box" style="height: 26px; background: #FFFFFF;"></div></div>
+            <div class="box col" style="padding: 6px; background: #FBF9F7;"><div class="bar" style="width: 60%; background: #3FA46A;"></div><div class="box" style="height: 26px; background: #FFFFFF;"></div></div>
+          </div>
+        </div>
+        <div class="screen-body"><h3>Recruitment</h3><p>Open roles, a drag-and-drop candidate pipeline, interviews, offers, and posting a new job.</p>
           <span class="open">Open <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6"/></svg></span></div>
       </a>
     </div>

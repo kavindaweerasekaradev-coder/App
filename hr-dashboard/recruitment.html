@@ -1,0 +1,821 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Recruitment — Staffora</title>
+<meta name="description" content="Open roles, candidate pipeline, interviews and hiring for the Staffora HR dashboard concept by Kavinda Weerasekara.">
+<link rel="icon" href="../favicon.ico">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&amp;display=swap">
+<link rel="stylesheet" href="app.css">
+<style>
+/* Recruitment-only styles; shared pieces live in app.css */
+.stats { grid-template-columns: repeat(4, minmax(0, 1fr)); }
+
+/* Roles strip */
+.roles-head { display: flex; justify-content: space-between; align-items: center; gap: 12px; flex-wrap: wrap; }
+.roles-head h2, .board-title h2 { font-size: 18px; font-weight: 700; }
+.roles { display: grid; grid-auto-flow: column; grid-auto-columns: minmax(230px, 1fr); gap: 10px; overflow-x: auto; padding: 2px 2px 6px; scroll-snap-type: x proximity; scrollbar-width: thin; }
+.role { position: relative; text-align: left; border: 1.5px solid transparent; background: var(--soft-2); border-radius: 20px; padding: 16px; display: flex; flex-direction: column; gap: 10px; scroll-snap-align: start; transition: border-color .2s ease, background-color .2s ease, transform .2s ease, box-shadow .2s ease; animation: rise .5s cubic-bezier(.2,.7,.2,1) backwards; }
+.role:hover { background: #FFFFFF; border-color: var(--line); transform: translateY(-2px); box-shadow: 0 10px 24px rgba(43,39,37,.08); }
+.role[aria-pressed="true"] { background: var(--ink); border-color: var(--ink); color: #FFFFFF; }
+.role[aria-pressed="true"] .role-meta, .role[aria-pressed="true"] .role-foot { color: #C9C1BB; }
+.role[aria-pressed="true"] .bar { background: #4B4541; }
+.role.all { justify-content: center; align-items: flex-start; }
+.role.new { animation: rise .5s cubic-bezier(.2,.7,.2,1) backwards, flash 2s ease; }
+.role strong { font-size: 15px; font-weight: 700; line-height: 1.3; }
+.role-meta { font-size: 12px; color: var(--muted); }
+.role-foot { display: flex; justify-content: space-between; align-items: center; gap: 8px; font-size: 12px; color: var(--muted); }
+.role-foot b { color: inherit; font-weight: 700; }
+.bar { display: flex; height: 6px; border-radius: 999px; overflow: hidden; background: #ECE7E3; gap: 2px; }
+.bar i { display: block; height: 100%; }
+.pill-new { font-size: 11px; font-weight: 700; padding: 2px 8px; border-radius: 999px; background: var(--accent); color: var(--ink); }
+
+/* Board */
+.board-title { display: flex; justify-content: space-between; align-items: center; gap: 12px; flex-wrap: wrap; }
+.board-tools { display: flex; gap: 8px; flex-wrap: nowrap; align-items: center; }
+.board-tools .search { flex: 0 1 260px; width: 260px; }
+.toggle-btn { height: 44px; padding: 0 16px; border-radius: 999px; border: 1px solid var(--line); background: #FFFFFF; font-size: 13px; font-weight: 600; display: inline-flex; align-items: center; gap: 8px; transition: background-color .2s ease; }
+.toggle-btn:hover { background: var(--soft); }
+.toggle-btn[aria-pressed="true"] { background: var(--ink); color: #FFFFFF; border-color: var(--ink); }
+.board { display: grid; grid-auto-flow: column; grid-auto-columns: minmax(214px, 1fr); gap: 12px; overflow-x: auto; padding-bottom: 6px; scroll-snap-type: x proximity; }
+.col { background: var(--soft-2); border-radius: 20px; padding: 12px; display: flex; flex-direction: column; gap: 10px; min-height: 320px; scroll-snap-align: start; border: 1.5px dashed transparent; transition: border-color .2s ease, background-color .2s ease; }
+.col.over { border-color: var(--accent); background: #FEF1E9; }
+.col.rejected { background: #FAF7F5; opacity: .9; }
+.col-head { display: flex; align-items: center; justify-content: space-between; gap: 8px; padding: 2px 4px; }
+.col-head h3 { font-size: 13px; font-weight: 700; display: flex; align-items: center; gap: 8px; }
+.col-head h3 i { width: 10px; height: 10px; border-radius: 999px; display: inline-block; }
+.col-head span { font-size: 12px; font-weight: 700; min-width: 24px; height: 24px; padding: 0 8px; border-radius: 999px; background: #FFFFFF; display: grid; place-items: center; }
+.cards { list-style: none; margin: 0; padding: 0; display: flex; flex-direction: column; gap: 8px; flex: 1; }
+.cand { position: relative; background: #FFFFFF; border: 1px solid var(--line); border-radius: 16px; padding: 12px; display: flex; flex-direction: column; gap: 10px; cursor: grab; animation: rise .4s cubic-bezier(.2,.7,.2,1) backwards; transition: box-shadow .2s ease, transform .2s ease, border-color .2s ease, opacity .2s ease; }
+.cand:hover { box-shadow: 0 10px 22px rgba(43,39,37,.1); transform: translateY(-2px); border-color: #D8D0CA; }
+.cand.dragging { opacity: .4; transform: rotate(-2deg); }
+.cand.moved { animation: pop-in .45s cubic-bezier(.2,.8,.2,1), flash 1.6s ease; }
+.cand-top { display: flex; align-items: center; gap: 10px; }
+.cand .avatar { width: 40px; height: 40px; font-size: 13px; }
+.cand-name { min-width: 0; flex: 1; }
+.cand-name button { border: none; background: none; padding: 0; font-size: 14px; font-weight: 700; text-align: left; display: block; max-width: 100%; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; cursor: pointer; }
+.cand-name button::after { content: ''; position: absolute; inset: 0; border-radius: 16px; }
+.cand-name span { display: block; font-size: 12px; color: var(--muted); overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+.cand-foot { display: flex; justify-content: space-between; align-items: center; gap: 8px; font-size: 12px; color: var(--muted); }
+.stars { display: inline-flex; gap: 1px; color: #E8DFD8; }
+.stars svg.on { color: var(--accent); }
+.when { display: inline-flex; align-items: center; gap: 6px; font-size: 12px; font-weight: 600; padding: 4px 10px; border-radius: 999px; background: var(--peach); color: var(--accent-dark); align-self: flex-start; }
+.col-empty { flex: 1; border: 1.5px dashed var(--line); border-radius: 16px; display: grid; place-items: center; text-align: center; font-size: 12px; color: var(--muted); padding: 16px; min-height: 90px; }
+.drag-hint { font-size: 12px; color: var(--muted); }
+
+/* Candidate drawer */
+.stage-steps { list-style: none; margin: 0 0 18px; padding: 4px; display: grid; grid-template-columns: repeat(5, minmax(0, 1fr)); gap: 4px; background: var(--soft); border-radius: 16px; }
+.stage-steps button { width: 100%; height: 40px; border: none; border-radius: 12px; background: transparent; font-size: 11px; font-weight: 700; color: var(--muted); transition: background-color .2s ease, color .2s ease; }
+.stage-steps button:hover { background: #FFFFFF; color: var(--ink); }
+.stage-steps button.done { color: var(--ink); }
+.stage-steps button[aria-current="step"] { background: var(--ink); color: #FFFFFF; }
+.rate { display: flex; align-items: center; justify-content: space-between; gap: 12px; padding: 12px 16px; border-radius: 16px; background: var(--soft-2); margin-bottom: 12px; }
+.rate-stars { display: flex; gap: 2px; }
+.rate-stars button { width: 34px; height: 34px; border: none; border-radius: 10px; background: transparent; color: #E2D8D0; display: grid; place-items: center; transition: transform .15s ease, color .2s ease, background-color .2s ease; }
+.rate-stars button:hover { background: #FFFFFF; transform: scale(1.1); }
+.rate-stars button.on { color: var(--accent); }
+.interview { display: flex; gap: 12px; align-items: center; padding: 14px 16px; border-radius: 16px; background: var(--peach); margin-bottom: 12px; }
+.interview .cal { width: 46px; flex: none; border-radius: 12px; background: #FFFFFF; text-align: center; overflow: hidden; }
+.interview .cal b { display: block; font-size: 10px; font-weight: 700; text-transform: uppercase; background: var(--accent); color: var(--ink); padding: 2px 0; }
+.interview .cal span { display: block; font-size: 18px; font-weight: 800; padding: 2px 0 4px; }
+.interview .info { flex: 1; min-width: 0; }
+.interview .info strong { display: block; font-size: 14px; }
+.interview .info span { font-size: 12px; color: #6B3A1C; }
+.interview.none { background: var(--soft-2); }
+.interview.none .info span { color: var(--muted); }
+.small-btn { height: 36px; padding: 0 14px; border-radius: 999px; border: none; background: var(--ink); color: #FFFFFF; font-size: 12px; font-weight: 700; flex: none; transition: transform .15s ease; }
+.small-btn:active { transform: scale(.95); }
+.small-btn.light { background: #FFFFFF; color: var(--ink); }
+.notes { list-style: none; margin: 0; padding: 0 0 4px; display: flex; flex-direction: column; gap: 8px; }
+.note { padding: 10px 12px; border-radius: 14px; background: #FFFFFF; font-size: 13px; animation: pop-in .35s cubic-bezier(.2,.8,.2,1); }
+.note small { display: block; font-size: 11px; color: var(--muted); margin-top: 2px; }
+.note-form { display: flex; gap: 8px; padding: 10px 0 14px; }
+.note-form textarea { flex: 1; min-height: 44px; max-height: 140px; resize: vertical; border-radius: 14px; border: 1.5px solid var(--line); padding: 10px 12px; font: inherit; font-size: 14px; outline: none; transition: border-color .2s ease, box-shadow .2s ease; }
+.note-form textarea:focus { border-color: var(--accent); box-shadow: 0 0 0 4px rgba(244,123,54,.15); }
+textarea.input { height: auto; min-height: 110px; padding: 12px 14px; resize: vertical; font: inherit; font-size: 15px; line-height: 1.5; }
+.review-list { margin: 6px 0 0; padding-left: 18px; font-size: 14px; }
+.reason-chips { margin-top: 14px; }
+
+@keyframes pop-in { 0% { opacity: 0; transform: scale(.92); } 70% { opacity: 1; transform: scale(1.02); } 100% { transform: scale(1); } }
+
+@media (max-width: 1100px) { .stats { grid-template-columns: repeat(2, minmax(0, 1fr)); } }
+@media (max-width: 760px) {
+  .board { grid-auto-columns: minmax(250px, 82%); }
+  .board-tools { width: 100%; flex-wrap: wrap; }
+  .board-tools .search { width: auto; }
+  .board-tools .search { flex: 1 1 100%; }
+  .roles { grid-auto-columns: minmax(220px, 78%); }
+  .drag-hint { display: none; }
+}
+@media (hover: none) { .cand:hover, .role:hover { transform: none; box-shadow: none; } }
+</style>
+<script src="../assets/js/analytics.js" defer></script>
+</head>
+<body>
+<div class="page">
+<div class="wrap">
+
+  <header class="topbar enter">
+    <a href="overview.html" class="brand" aria-label="Staffora project overview">
+      <span class="brand-mark"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="#2B2725" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="9" cy="8" r="3.2"/><path d="M3 19.5c.9-3.4 3.2-5 6-5s5.1 1.6 6 5"/><path d="M15.5 4.8a3.2 3.2 0 0 1 0 6.4M17.5 14.6c1.8.7 2.9 2.3 3.4 4.9"/></svg></span>
+      Staffora
+    </a>
+    <nav class="mainnav" aria-label="Primary">
+      <a href="index.html">Dashboard</a>
+      <a href="employees.html">Employees</a>
+      <a href="recruitment.html" aria-current="page">Recruitment</a>
+      <a href="#">Payroll</a>
+      <a href="#">Attendance</a>
+    </nav>
+    <div class="top-actions">
+      <button type="button" class="circle-btn" aria-label="Search candidates" id="focusSearch"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" aria-hidden="true"><circle cx="11" cy="11" r="7"/><path d="M20 20l-3.5-3.5"/></svg></button>
+      <button type="button" class="circle-btn" aria-label="Notifications"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M6 16v-5a6 6 0 1 1 12 0v5l1.5 2h-15z"/><path d="M10 20.5a2 2 0 0 0 4 0"/></svg></button>
+      <button type="button" class="me" aria-label="Account menu"><img src="assets/avatars/kavinda-weerasekara.svg" alt="" width="44" height="44"></button>
+    </div>
+  </header>
+
+  <div class="body">
+    <aside class="rail enter" aria-label="Sections">
+      <div class="rail-group">
+        <a href="index.html" aria-label="Overview"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" aria-hidden="true"><rect x="3.5" y="3.5" width="7" height="7" rx="2"/><rect x="13.5" y="3.5" width="7" height="7" rx="2"/><rect x="3.5" y="13.5" width="7" height="7" rx="2"/><rect x="13.5" y="13.5" width="7" height="7" rx="2"/></svg></a>
+        <a href="employees.html" aria-label="Employees"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" aria-hidden="true"><circle cx="9" cy="8" r="3.5"/><path d="M2.5 20c.8-3.6 3.4-5.5 6.5-5.5s5.7 1.9 6.5 5.5"/><path d="M16 4.6a3.5 3.5 0 0 1 0 6.8M18 14.8c1.9.7 3.1 2.5 3.5 5.2"/></svg></a>
+        <a href="recruitment.html" aria-label="Recruitment" aria-current="page"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="3" y="7" width="18" height="13" rx="3"/><path d="M8 7V5a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2M3 12.5h18"/></svg></a>
+        <a href="#" aria-label="Time off"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" aria-hidden="true"><rect x="3" y="5" width="18" height="16" rx="3"/><path d="M8 3v4M16 3v4M3 10h18M9 15l2 2 4-4"/></svg></a>
+        <a href="#" aria-label="Payroll"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" aria-hidden="true"><rect x="3" y="6" width="18" height="14" rx="3"/><path d="M3 10.5h18M15.5 15h2.5"/></svg></a>
+        <a href="#" aria-label="Reports"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" aria-hidden="true"><path d="M5 20V11M11 20V5M17 20v-7M3 20h18"/></svg></a>
+      </div>
+      <div class="rail-group">
+        <a href="#" aria-label="Settings"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" aria-hidden="true"><path d="M4 6h9M19 6h1M4 12h3M13 12h7M4 18h11M21 18h-1"/><circle cx="16" cy="6" r="2.2"/><circle cx="10" cy="12" r="2.2"/><circle cx="18" cy="18" r="2.2"/></svg></a>
+        <a href="login.html" aria-label="Sign out"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M15 4h3a2 2 0 0 1 2 2v12a2 2 0 0 1-2 2h-3M10 8l-4 4 4 4M6 12h10"/></svg></a>
+      </div>
+    </aside>
+
+    <main class="content">
+      <div class="head enter" style="animation-delay: 60ms;">
+        <div>
+          <p class="crumbs"><a href="index.html">Dashboard</a><span aria-hidden="true">/</span><span>Recruitment</span></p>
+          <h1>Recruitment</h1>
+          <p class="sub" id="subline">Open roles and everyone in the pipeline.</p>
+        </div>
+        <div class="head-actions">
+          <button type="button" class="btn btn-dark" id="postBtn">
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true"><path d="M12 5v14M5 12h14"/></svg>
+            Post a job
+          </button>
+        </div>
+      </div>
+
+      <section class="stats enter" style="animation-delay: 120ms;" aria-label="Summary" id="stats"></section>
+
+      <section class="panel enter" style="animation-delay: 180ms;" aria-labelledby="roles-title">
+        <div class="roles-head">
+          <h2 id="roles-title">Open roles</h2>
+          <span class="count" id="rolesCount"></span>
+        </div>
+        <div class="roles" id="roles" role="group" aria-label="Filter the pipeline by role"></div>
+      </section>
+
+      <section class="panel enter" style="animation-delay: 240ms;" aria-labelledby="board-title">
+        <div class="board-title">
+          <div>
+            <h2 id="board-title">Candidate pipeline</h2>
+            <p class="drag-hint">Drag a card to another column, or open it to change its stage.</p>
+          </div>
+          <div class="board-tools">
+            <label class="search">
+              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true"><circle cx="11" cy="11" r="7"/><path d="M20 20l-3.5-3.5"/></svg>
+              <span class="sr-only">Search candidates</span>
+              <input type="search" id="q" placeholder="Search candidates">
+            </label>
+            <button type="button" class="toggle-btn" id="showRejected" aria-pressed="false">Rejected <span id="rejCount">0</span></button>
+          </div>
+        </div>
+        <p class="count" id="boardCount" aria-live="polite"></p>
+        <div class="board" id="board"></div>
+      </section>
+    </main>
+  </div>
+</div>
+</div>
+
+<!-- Candidate drawer -->
+<div class="scrim" id="scrim" hidden></div>
+<aside class="drawer" id="drawer" role="dialog" aria-modal="true" aria-labelledby="cName" hidden>
+  <div class="drawer-head">
+    <p>Candidate</p>
+    <button type="button" class="circle-btn" data-close aria-label="Close candidate"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" aria-hidden="true"><path d="M6 6l12 12M18 6L6 18"/></svg></button>
+  </div>
+  <div class="drawer-scroll" id="drawerBody"></div>
+  <div class="drawer-foot" id="drawerFoot"></div>
+</aside>
+
+<!-- Schedule interview -->
+<div class="modal small" id="scheduleModal" role="dialog" aria-modal="true" aria-labelledby="schedTitle" hidden>
+  <div class="modal-head">
+    <div><h2 id="schedTitle">Schedule interview</h2><p id="schedSub"></p></div>
+    <button type="button" class="circle-btn" data-close aria-label="Close"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" aria-hidden="true"><path d="M6 6l12 12M18 6L6 18"/></svg></button>
+  </div>
+  <form id="schedForm" novalidate style="display: contents;">
+    <div class="modal-body">
+      <div class="grid2">
+        <div class="field"><label for="sDate">Date</label><input class="input" id="sDate" type="date" aria-describedby="sDate-err"><p class="error" id="sDate-err"></p></div>
+        <div class="field"><label for="sTime">Time</label><select class="input" id="sTime"></select></div>
+        <div class="field full"><label for="sWith">Interviewer</label><select class="input" id="sWith"></select></div>
+        <div class="field full"><span class="group-label" id="sTypeLabel">Format</span>
+          <div class="chips" role="radiogroup" aria-labelledby="sTypeLabel">
+            <label class="chip"><input type="radio" name="sType" value="Video call" checked><span>Video call</span></label>
+            <label class="chip"><input type="radio" name="sType" value="On-site"><span>On-site</span></label>
+            <label class="chip"><input type="radio" name="sType" value="Phone"><span>Phone</span></label>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="modal-foot">
+      <button type="button" class="btn btn-outline" data-close>Cancel</button>
+      <button type="submit" class="btn btn-dark" id="schedSave">Book interview</button>
+    </div>
+  </form>
+</div>
+
+<!-- Reject -->
+<div class="modal small" id="rejectModal" role="alertdialog" aria-modal="true" aria-labelledby="rejTitle" aria-describedby="rejText" hidden>
+  <div class="modal-body" style="padding-top: 26px;">
+    <span class="confirm-icon"><svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true"><circle cx="12" cy="12" r="9"/><path d="M8 8l8 8"/></svg></span>
+    <h2 id="rejTitle" style="font-size: 20px; font-weight: 700;">Reject candidate?</h2>
+    <p id="rejText" style="color: var(--muted); margin-top: 6px;"></p>
+    <div class="chips reason-chips" role="radiogroup" aria-label="Reason">
+      <label class="chip"><input type="radio" name="reason" value="Not the right fit" checked><span>Not the right fit</span></label>
+      <label class="chip"><input type="radio" name="reason" value="Withdrew"><span>Withdrew</span></label>
+      <label class="chip"><input type="radio" name="reason" value="Role filled"><span>Role filled</span></label>
+    </div>
+  </div>
+  <div class="modal-foot">
+    <button type="button" class="btn btn-outline" data-close>Cancel</button>
+    <button type="button" class="btn btn-danger" id="confirmReject">Reject</button>
+  </div>
+</div>
+
+<!-- Post a job -->
+<div class="modal" id="postModal" role="dialog" aria-modal="true" aria-labelledby="postTitle" hidden>
+  <div class="modal-head">
+    <div><h2 id="postTitle">Post a job</h2><p id="postSub">Step 1 of 3 · Role</p></div>
+    <button type="button" class="circle-btn" data-close aria-label="Close"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" aria-hidden="true"><path d="M6 6l12 12M18 6L6 18"/></svg></button>
+  </div>
+  <div class="stepper" aria-hidden="true">
+    <div class="on" data-dot="1"><i></i>Role</div>
+    <div data-dot="2"><i></i>Details</div>
+    <div data-dot="3"><i></i>Review</div>
+  </div>
+  <form id="postForm" novalidate style="display: contents;">
+    <div class="modal-body">
+      <div class="fstep active" data-fstep="1">
+        <div class="grid2">
+          <div class="field full"><label for="jTitle">Job title</label><input class="input" id="jTitle" autocomplete="off" placeholder="e.g. Senior Product Designer" aria-describedby="jTitle-err"><p class="error" id="jTitle-err"></p></div>
+          <div class="field"><label for="jDept">Department</label><select class="input" id="jDept"></select></div>
+          <div class="field"><label for="jLocation">Location</label><select class="input" id="jLocation"><option>Colombo</option><option>Kandy</option><option>Remote</option><option>Singapore</option><option>London</option></select></div>
+          <div class="field full"><span class="group-label" id="jTypeLabel">Employment type</span>
+            <div class="chips" role="radiogroup" aria-labelledby="jTypeLabel">
+              <label class="chip"><input type="radio" name="jType" value="Full-time" checked><span>Full-time</span></label>
+              <label class="chip"><input type="radio" name="jType" value="Part-time"><span>Part-time</span></label>
+              <label class="chip"><input type="radio" name="jType" value="Contract"><span>Contract</span></label>
+              <label class="chip"><input type="radio" name="jType" value="Intern"><span>Intern</span></label>
+            </div>
+          </div>
+          <div class="field"><label for="jOpenings">Openings</label><input class="input" id="jOpenings" type="number" min="1" max="20" value="1" aria-describedby="jOpenings-err"><p class="error" id="jOpenings-err"></p></div>
+        </div>
+      </div>
+      <div class="fstep" data-fstep="2">
+        <div class="grid2">
+          <div class="field"><label for="jMin">Salary from <span class="opt">(optional)</span></label><input class="input" id="jMin" type="number" min="0" step="1000" placeholder="e.g. 250000"></div>
+          <div class="field"><label for="jMax">Salary to <span class="opt">(optional)</span></label><input class="input" id="jMax" type="number" min="0" step="1000" placeholder="e.g. 400000" aria-describedby="jMax-err"><p class="error" id="jMax-err"></p></div>
+          <div class="field full"><label for="jAbout">About the role</label><textarea class="input" id="jAbout" rows="4" placeholder="What will this person do in their first six months?" aria-describedby="jAbout-err"></textarea><p class="error" id="jAbout-err"></p></div>
+          <div class="field full"><label for="jReqs">Requirements <span class="opt">(one per line)</span></label><textarea class="input" id="jReqs" rows="4" placeholder="3+ years in a similar role&#10;Clear written communication"></textarea></div>
+        </div>
+      </div>
+      <div class="fstep" data-fstep="3">
+        <div class="preview-card" id="jobPreview"></div>
+        <div class="review">
+          <div class="review-head"><h3>Role</h3><button type="button" class="link-btn" data-goto="1">Edit</button></div>
+          <dl id="reviewRole"></dl>
+        </div>
+        <div class="review">
+          <div class="review-head"><h3>Details</h3><button type="button" class="link-btn" data-goto="2">Edit</button></div>
+          <dl id="reviewDetails"></dl>
+        </div>
+        <label class="check"><input type="checkbox" id="jCareers" checked> <span>Also list it on the public careers page</span></label>
+      </div>
+    </div>
+    <div class="modal-foot">
+      <button type="button" class="btn btn-outline" id="postBack">Cancel</button>
+      <button type="submit" class="btn btn-dark" id="postNext">Continue</button>
+    </div>
+  </form>
+</div>
+
+<div id="toastHost" aria-live="polite"></div>
+
+<script>
+(function () {
+  var reduced = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+  var esc = function (s) { return String(s).replace(/[&<>"]/g, function (c) { return { '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;' }[c]; }); };
+  var DAY = 86400000;
+  function iso(d) { return new Date(d.getTime() - d.getTimezoneOffset() * 60000).toISOString().slice(0, 10); }
+  function daysAgo(n) { return iso(new Date(Date.now() - n * DAY)); }
+  // n working days from today, skipping weekends
+  function nextWeekday(n) {
+    var d = new Date();
+    while (n > 0) { d = new Date(d.getTime() + DAY); if (d.getDay() !== 0 && d.getDay() !== 6) n--; }
+    return iso(d);
+  }
+  function fmt(isoDate, opts) { return new Date(isoDate + 'T00:00:00').toLocaleDateString('en-GB', opts || { day: 'numeric', month: 'short' }); }
+  function since(isoDate) {
+    var n = Math.max(0, Math.round((Date.now() - new Date(isoDate + 'T00:00:00')) / DAY));
+    return n === 0 ? 'Today' : n === 1 ? '1 day' : n + ' days';
+  }
+
+  var STAGES = ['Applied', 'Screening', 'Interview', 'Offer', 'Hired'];
+  var STAGE_COLOR = { Applied: '#D8D0CA', Screening: '#A9C4F5', Interview: '#F47B36', Offer: '#E0A43C', Hired: '#3FA46A', Rejected: '#C9A4A9' };
+  var DEPTS = ['Design', 'Engineering', 'Finance', 'Marketing', 'People', 'Sales'];
+  var TINT = { Design: '#FDE1D0', Engineering: '#DCE8FF', Finance: '#EDE3FF', Marketing: '#FFE6CC', People: '#D9F3EA', Sales: '#FCE4EE' };
+  var INTERVIEWERS = ['Ravi Jayasuriya', 'Aisha Rahman', 'Nadia Perera', 'Tomás García', 'Lucas Martin', 'Kavinda Weerasekara'];
+  var STAR = '<svg width="13" height="13" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M12 3.5l2.6 5.3 5.9.9-4.2 4.1 1 5.8L12 16.9l-5.3 2.7 1-5.8-4.2-4.1 5.9-.9z"/></svg>';
+  var ICON_CHECK = '<svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12.5l4.5 4.5L19 7.5"/></svg>';
+
+  // ---------- Sample data (totals match the dashboard: 14 open positions) ----------
+  var seedJobs = [
+    [1, 'Senior Product Designer', 'Design', 'Colombo', 2, 24],
+    [2, 'Frontend Engineer', 'Engineering', 'Remote', 4, 18],
+    [3, 'Data Analyst', 'Finance', 'Colombo', 2, 30],
+    [4, 'HR Generalist', 'People', 'Colombo', 1, 12],
+    [5, 'Account Executive', 'Sales', 'Singapore', 3, 9],
+    [6, 'Customer Success Lead', 'Sales', 'London', 2, 3]
+  ].map(function (r) { return { id: r[0], title: r[1], dept: r[2], location: r[3], type: 'Full-time', openings: r[4], posted: daysAgo(r[5]), about: '', reqs: [], min: '', max: '' }; });
+
+  var seedCands = [
+    // id, first, last, job, stage, applied days ago, in stage days, rating, source, years, location, interview [days ahead, time, with, type]
+    [1, 'Leah', 'Thompson', 1, 'Interview', 16, 3, 5, 'Referral', 7, 'Colombo', [1, '10:00', 'Ravi Jayasuriya', 'On-site']],
+    [2, 'Kenji', 'Watanabe', 2, 'Applied', 2, 2, 0, 'Careers page', 4, 'Remote'],
+    [3, 'Zara', 'Ahmed', 2, 'Screening', 9, 4, 4, 'LinkedIn', 5, 'Remote'],
+    [4, 'Mateo', 'Costa', 1, 'Screening', 11, 2, 3, 'LinkedIn', 6, 'London'],
+    [5, 'Chloé', 'Dubois', 3, 'Offer', 21, 2, 5, 'Referral', 3, 'Colombo'],
+    [6, 'Samuel', 'Mensah', 2, 'Interview', 14, 5, 4, 'Careers page', 6, 'Remote', [2, '14:30', 'Aisha Rahman', 'Video call']],
+    [7, 'Ananya', 'Rao', 4, 'Applied', 3, 3, 0, 'Careers page', 2, 'Colombo'],
+    [8, 'Oliver', 'Grant', 3, 'Applied', 1, 1, 0, 'LinkedIn', 2, 'London'],
+    [9, 'Mei', 'Lin', 1, 'Applied', 4, 4, 0, 'Dribbble', 5, 'Singapore'],
+    [10, 'Arjun', 'Patel', 4, 'Screening', 8, 1, 3, 'Referral', 4, 'Kandy'],
+    [11, 'Ruth', 'Alemu', 3, 'Hired', 28, 4, 5, 'LinkedIn', 4, 'Colombo'],
+    [12, 'Jonas', 'Berg', 5, 'Interview', 7, 1, 4, 'LinkedIn', 8, 'Singapore', [3, '11:00', 'Tomás García', 'Video call']]
+  ].map(function (r) {
+    var c = { id: r[0], first: r[1], last: r[2], jobId: r[3], stage: r[4], applied: daysAgo(r[5]), stageSince: daysAgo(r[6]), rating: r[7],
+      source: r[8], years: r[9], location: r[10], interview: null, notes: [], prevStage: null,
+      email: (r[1] + '.' + r[2]).toLowerCase().normalize('NFD').replace(/[̀-ͯ]/g, '') + '@mail.com',
+      phone: '+94 71 ' + String(200 + r[0] * 41).slice(-3) + ' ' + String(5000 + r[0] * 377).slice(-4) };
+    if (r[11]) c.interview = { date: nextWeekday(r[11][0]), time: r[11][1], with: r[11][2], type: r[11][3] };
+    return c;
+  });
+  seedCands[0].notes.push({ by: 'Ravi Jayasuriya', text: 'Strong portfolio, especially the onboarding case study.', at: daysAgo(4) });
+  seedCands[4].notes.push({ by: 'Lucas Martin', text: 'Offer sent. Start date flexible from December.', at: daysAgo(2) });
+
+  var KEY = 'staffora:recruitment';
+  var jobs = seedJobs, cands = seedCands;
+  try {
+    var saved = JSON.parse(sessionStorage.getItem(KEY) || 'null');
+    if (saved && Array.isArray(saved.jobs) && Array.isArray(saved.cands)) { jobs = saved.jobs; cands = saved.cands; }
+  } catch (e) {}
+  function save() { try { sessionStorage.setItem(KEY, JSON.stringify({ jobs: jobs, cands: cands })); } catch (e) {} }
+
+  function job(id) { for (var i = 0; i < jobs.length; i++) if (jobs[i].id === id) return jobs[i]; return null; }
+  function cand(id) { for (var i = 0; i < cands.length; i++) if (cands[i].id === id) return cands[i]; return null; }
+  function full(c) { return c.first + ' ' + c.last; }
+  function initials(c) { return (c.first.charAt(0) + c.last.charAt(0)).toUpperCase(); }
+  function slug(c) { return full(c).toLowerCase().normalize('NFD').replace(/[̀-ͯ]/g, '').replace(/[^a-z]+/g, '-'); }
+  function face(c) {
+    if (c.photo === false) return initials(c);
+    return '<img src="assets/avatars/' + slug(c) + '.svg" alt="" width="84" height="84" loading="lazy" data-i="' + initials(c) + '" onerror="this.replaceWith(document.createTextNode(this.dataset.i))">';
+  }
+  function stars(n) {
+    var s = '<span class="stars" role="img" aria-label="' + (n ? 'Rated ' + n + ' out of 5' : 'Not rated yet') + '">';
+    for (var i = 1; i <= 5; i++) s += STAR.replace('<svg', '<svg class="' + (i <= n ? 'on' : '') + '"');
+    return s + '</span>';
+  }
+  function interviewLabel(iv) {
+    return fmt(iv.date, { weekday: 'short', day: 'numeric', month: 'short' }) + ', ' + iv.time;
+  }
+
+  // ---------- Rendering ----------
+  var state = { jobId: null, q: '', showRejected: false, movedId: null, newJobId: null };
+
+  function renderStats() {
+    var active = cands.filter(function (c) { return c.stage !== 'Rejected' && c.stage !== 'Hired'; });
+    var openings = jobs.reduce(function (n, j) { return n + (+j.openings || 0); }, 0);
+    var interviews = cands.filter(function (c) { return c.stage === 'Interview' && c.interview; }).length;
+    var offers = cands.filter(function (c) { return c.stage === 'Offer'; }).length;
+    var hired = cands.filter(function (c) { return c.stage === 'Hired'; }).length;
+    document.getElementById('subline').textContent = jobs.length + ' roles · ' + openings + ' open positions · ' + active.length + ' people in the pipeline';
+    var tiles = [
+      ['Open positions', openings, 'var(--accent)', 'var(--ink)', '<rect x="3" y="7" width="18" height="13" rx="3"/><path d="M8 7V5a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2"/>'],
+      ['In the pipeline', active.length, '#E1ECFF', '#1D4ED8', '<circle cx="9" cy="8" r="3.5"/><path d="M2.5 20c.8-3.6 3.4-5.5 6.5-5.5s5.7 1.9 6.5 5.5"/><path d="M16 4.6a3.5 3.5 0 0 1 0 6.8"/>'],
+      ['Interviews booked', interviews, '#FDE1D0', '#B4501A', '<rect x="3" y="5" width="18" height="16" rx="3"/><path d="M8 3v4M16 3v4M3 10h18"/>'],
+      ['Offers out · hired', offers + ' · ' + hired, '#E3F5E8', '#1C6B37', '<path d="M5 12.5l4.5 4.5L19 7.5"/>']
+    ];
+    document.getElementById('stats').innerHTML = tiles.map(function (t) {
+      return '<div class="stat"><span class="stat-icon" style="background:' + t[2] + ';color:' + t[3] + '"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">' + t[4] + '</svg></span><div><strong>' + t[1] + '</strong><span>' + t[0] + '</span></div></div>';
+    }).join('');
+  }
+
+  function renderRoles() {
+    var html = '<button type="button" class="role all" data-job="" aria-pressed="' + (state.jobId === null) + '"><strong>All roles</strong><span class="role-meta">' + jobs.length + ' roles, every candidate</span></button>';
+    html += jobs.map(function (j, i) {
+      var mine = cands.filter(function (c) { return c.jobId === j.id && c.stage !== 'Rejected'; });
+      var fresh = mine.filter(function (c) { return c.stage === 'Applied' && (Date.now() - new Date(c.applied + 'T00:00:00')) < 4 * DAY; }).length;
+      var bar = STAGES.map(function (s) {
+        var n = mine.filter(function (c) { return c.stage === s; }).length;
+        return n ? '<i style="flex:' + n + ';background:' + STAGE_COLOR[s] + '"></i>' : '';
+      }).join('');
+      return '<button type="button" class="role' + (j.id === state.newJobId ? ' new' : '') + '" data-job="' + j.id + '" aria-pressed="' + (state.jobId === j.id) + '" style="animation-delay:' + (i * 40) + 'ms">' +
+        '<div style="display:flex;justify-content:space-between;gap:8px;align-items:flex-start"><strong>' + esc(j.title) + '</strong>' + (fresh ? '<span class="pill-new">' + fresh + ' new</span>' : '') + '</div>' +
+        '<span class="role-meta">' + j.dept + ' · ' + esc(j.location) + ' · ' + j.openings + (+j.openings === 1 ? ' opening' : ' openings') + '</span>' +
+        '<span class="bar" aria-hidden="true">' + (bar || '') + '</span>' +
+        '<span class="role-foot"><span><b>' + mine.length + '</b> ' + (mine.length === 1 ? 'candidate' : 'candidates') + '</span><span>Posted ' + fmt(j.posted) + '</span></span></button>';
+    }).join('');
+    document.getElementById('roles').innerHTML = html;
+    document.getElementById('rolesCount').textContent = state.jobId ? 'Showing ' + job(state.jobId).title : 'Pick a role to filter the pipeline';
+  }
+
+  function visible() {
+    var q = state.q.trim().toLowerCase();
+    return cands.filter(function (c) {
+      if (state.jobId && c.jobId !== state.jobId) return false;
+      var j = job(c.jobId);
+      return !q || (full(c) + ' ' + (j ? j.title : '') + ' ' + c.source).toLowerCase().indexOf(q) !== -1;
+    });
+  }
+
+  function renderBoard() {
+    var list = visible();
+    var cols = STAGES.concat(state.showRejected ? ['Rejected'] : []);
+    var rejected = cands.filter(function (c) { return c.stage === 'Rejected' && (!state.jobId || c.jobId === state.jobId); }).length;
+    document.getElementById('rejCount').textContent = rejected;
+    document.getElementById('board').innerHTML = cols.map(function (s) {
+      var items = list.filter(function (c) { return c.stage === s; });
+      return '<section class="col' + (s === 'Rejected' ? ' rejected' : '') + '" data-stage="' + s + '" aria-label="' + s + ', ' + items.length + '">' +
+        '<div class="col-head"><h3><i style="background:' + STAGE_COLOR[s] + '"></i>' + s + '</h3><span>' + items.length + '</span></div>' +
+        (items.length ? '<ul class="cards">' + items.map(function (c, i) {
+          var j = job(c.jobId);
+          return '<li class="cand' + (c.id === state.movedId ? ' moved' : '') + '" draggable="true" data-id="' + c.id + '" style="animation-delay:' + i * 40 + 'ms">' +
+            '<div class="cand-top"><span class="avatar" style="background:' + (j ? TINT[j.dept] : '#FDE1D0') + '" aria-hidden="true">' + face(c) + '</span>' +
+            '<div class="cand-name"><button type="button" data-open="' + c.id + '">' + esc(full(c)) + '</button><span>' + esc(j ? j.title : 'Role closed') + '</span></div></div>' +
+            (c.stage === 'Interview' && c.interview ? '<span class="when"><svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" aria-hidden="true"><circle cx="12" cy="12" r="9"/><path d="M12 7v5l3 2"/></svg>' + interviewLabel(c.interview) + '</span>' : '') +
+            '<div class="cand-foot">' + stars(c.rating) + '<span>' + since(c.stageSince) + '</span></div></li>';
+        }).join('') + '</ul>' : '<div class="col-empty">' + emptyText(s) + '</div>') +
+        '</section>';
+    }).join('');
+    var shown = list.filter(function (c) { return c.stage !== 'Rejected' || state.showRejected; }).length;
+    document.getElementById('boardCount').textContent = shown + (shown === 1 ? ' candidate' : ' candidates') + (state.jobId ? ' for ' + job(state.jobId).title : ' across all roles') + (state.q ? ' matching “' + state.q.trim() + '”' : '');
+  }
+  function emptyText(s) {
+    if (state.q) return 'No matches here';
+    if (state.jobId && !cands.some(function (c) { return c.jobId === state.jobId; })) return s === 'Applied' ? 'No applicants yet. Share the role to start the pipeline.' : '—';
+    return s === 'Rejected' ? 'No one rejected' : 'Drop a candidate here';
+  }
+  function render() { renderStats(); renderRoles(); renderBoard(); }
+
+  document.getElementById('roles').addEventListener('click', function (ev) {
+    var b = ev.target.closest('.role'); if (!b) return;
+    state.jobId = b.dataset.job ? +b.dataset.job : null; state.newJobId = null; state.movedId = null;
+    history.replaceState(null, '', state.jobId ? '#job-' + state.jobId : location.pathname + location.search);
+    renderRoles(); renderBoard();
+  });
+  document.getElementById('q').addEventListener('input', function (ev) { state.q = ev.target.value; state.movedId = null; renderBoard(); });
+  document.getElementById('focusSearch').addEventListener('click', function () { document.getElementById('q').focus(); });
+  document.getElementById('showRejected').addEventListener('click', function () {
+    state.showRejected = !state.showRejected; this.setAttribute('aria-pressed', String(state.showRejected)); renderBoard();
+  });
+
+  // ---------- Moving candidates ----------
+  function moveTo(c, stage, opts) {
+    opts = opts || {};
+    if (!c || c.stage === stage) return;
+    var from = c.stage;
+    if (stage === 'Rejected') c.prevStage = from;
+    c.stage = stage; c.stageSince = daysAgo(0);
+    if (stage !== 'Interview' && STAGES.indexOf(stage) < STAGES.indexOf('Interview')) c.interview = null;
+    state.movedId = c.id;
+    save(); render();
+    if (!drawer.hidden && currentId === c.id) renderCandidate(c);
+    if (opts.quiet) return;
+    if (stage === 'Hired') toast(c.first + ' is hired', 'Create employee profile', function () { createEmployee(c); });
+    else if (stage === 'Interview' && !c.interview) toast(c.first + ' moved to Interview', 'Schedule', function () { openSchedule(c); });
+    else toast(c.first + ' moved to ' + stage, 'Undo', function () { moveTo(c, from, { quiet: true }); toast(c.first + ' moved back to ' + from); });
+  }
+
+  // Drag and drop between columns
+  var board = document.getElementById('board'), dragId = null;
+  board.addEventListener('dragstart', function (ev) {
+    var li = ev.target.closest('.cand'); if (!li) return;
+    dragId = +li.dataset.id; li.classList.add('dragging');
+    ev.dataTransfer.effectAllowed = 'move';
+    try { ev.dataTransfer.setData('text/plain', String(dragId)); } catch (e) {}
+  });
+  board.addEventListener('dragend', function (ev) {
+    var li = ev.target.closest('.cand'); if (li) li.classList.remove('dragging');
+    board.querySelectorAll('.col.over').forEach(function (c) { c.classList.remove('over'); });
+  });
+  board.addEventListener('dragover', function (ev) {
+    var col = ev.target.closest('.col'); if (!col || dragId === null) return;
+    ev.preventDefault(); ev.dataTransfer.dropEffect = 'move';
+    board.querySelectorAll('.col.over').forEach(function (c) { if (c !== col) c.classList.remove('over'); });
+    col.classList.add('over');
+  });
+  board.addEventListener('drop', function (ev) {
+    var col = ev.target.closest('.col'); if (!col || dragId === null) return;
+    ev.preventDefault();
+    var c = cand(dragId); dragId = null;
+    col.classList.remove('over');
+    moveTo(c, col.dataset.stage);
+  });
+
+  // ---------- Overlays (focus handling shared by the drawer and modals) ----------
+  var scrim = document.getElementById('scrim'), openStack = [];
+  function openLayer(el, focusEl) {
+    var prev = document.activeElement;
+    clearTimeout(toastTimer); document.getElementById('toastHost').innerHTML = '';
+    el.hidden = false; scrim.hidden = false; document.body.classList.add('locked');
+    openStack.push({ el: el, prev: prev });
+    scrim.style.zIndex = openStack.length > 1 ? 55 : 40;
+    el.style.zIndex = openStack.length > 1 ? 56 : 50;
+    setTimeout(function () { (focusEl || el.querySelector('button, input, select, a')).focus(); }, reduced ? 0 : 60);
+  }
+  function closeTop() {
+    var top = openStack.pop(); if (!top) return;
+    top.el.hidden = true;
+    if (!openStack.length) { scrim.hidden = true; document.body.classList.remove('locked'); }
+    else scrim.style.zIndex = 40;
+    if ((top.el.id === 'drawer' && location.hash.indexOf('#cand-') === 0) || (top.el.id === 'postModal' && location.hash === '#post'))
+      history.replaceState(null, '', state.jobId ? '#job-' + state.jobId : location.pathname + location.search);
+    if (top.prev && document.contains(top.prev)) top.prev.focus();
+  }
+  scrim.addEventListener('click', closeTop);
+  document.addEventListener('click', function (ev) { if (ev.target.closest('[data-close]')) closeTop(); });
+  document.addEventListener('keydown', function (ev) {
+    if (!openStack.length) return;
+    var el = openStack[openStack.length - 1].el;
+    if (ev.key === 'Escape') { ev.preventDefault(); closeTop(); return; }
+    if (ev.key !== 'Tab') return;
+    var f = Array.prototype.filter.call(el.querySelectorAll('a[href], button:not([disabled]), input, select, textarea'), function (n) { return n.offsetParent !== null; });
+    if (!f.length) return;
+    if (ev.shiftKey && document.activeElement === f[0]) { ev.preventDefault(); f[f.length - 1].focus(); }
+    else if (!ev.shiftKey && document.activeElement === f[f.length - 1]) { ev.preventDefault(); f[0].focus(); }
+  });
+
+  // ---------- Candidate drawer ----------
+  var drawer = document.getElementById('drawer'), drawerBody = document.getElementById('drawerBody'), drawerFoot = document.getElementById('drawerFoot');
+  var currentId = null;
+  var NEXT = { Applied: 'Move to screening', Screening: 'Schedule interview', Interview: 'Make offer', Offer: 'Mark as hired', Hired: 'Create employee profile', Rejected: 'Restore' };
+
+  function renderCandidate(c) {
+    var j = job(c.jobId), idx = STAGES.indexOf(c.stage);
+    var ivHtml = c.interview
+      ? '<div class="interview"><span class="cal" aria-hidden="true"><b>' + fmt(c.interview.date, { month: 'short' }) + '</b><span>' + fmt(c.interview.date, { day: 'numeric' }) + '</span></span>' +
+          '<div class="info"><strong>' + interviewLabel(c.interview) + '</strong><span>' + esc(c.interview.type) + ' with ' + esc(c.interview.with) + '</span></div>' +
+          '<button type="button" class="small-btn light" id="reschedule">Reschedule</button></div>'
+      : '<div class="interview none"><div class="info"><strong>No interview booked</strong><span>Book one to move them forward.</span></div><button type="button" class="small-btn" id="reschedule">Schedule</button></div>';
+    drawerBody.innerHTML =
+      '<div class="profile-hero"><span class="avatar" style="background:' + (j ? TINT[j.dept] : '#FDE1D0') + '" aria-hidden="true">' + face(c) + '</span>' +
+        '<h2 id="cName">' + esc(full(c)) + '</h2><p>Applied for ' + esc(j ? j.title : 'a closed role') + '</p>' +
+        '<span class="status" style="background:' + (c.stage === 'Rejected' ? '#FDE4E4;color:#A3262A' : c.stage === 'Hired' ? '#E3F5E8;color:#1C6B37' : '#FDE1D0;color:#B4501A') + '">' + c.stage + (c.stage === 'Rejected' && c.reason ? ' · ' + esc(c.reason) : '') + '</span></div>' +
+      '<ol class="stage-steps" aria-label="Move to stage">' + STAGES.map(function (s, i) {
+        return '<li><button type="button" data-stage="' + s + '" class="' + (i < idx ? 'done' : '') + '"' + (s === c.stage ? ' aria-current="step"' : '') + '>' + s + '</button></li>';
+      }).join('') + '</ol>' +
+      '<div class="quick">' +
+        '<a href="mailto:' + esc(c.email) + '"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="3" y="5" width="18" height="14" rx="3"/><path d="M4 7l8 6 8-6"/></svg>Email</a>' +
+        '<a href="tel:' + esc(c.phone.replace(/\s/g, '')) + '"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 4h4l2 5-2.5 1.5a11 11 0 0 0 5 5L15 13l5 2v4a2 2 0 0 1-2 2A16 16 0 0 1 3 6a2 2 0 0 1 2-2"/></svg>Call</a></div>' +
+      '<div class="rate"><strong style="font-size:14px">Your rating</strong><div class="rate-stars" role="group" aria-label="Rating">' +
+        [1, 2, 3, 4, 5].map(function (n) { return '<button type="button" data-rate="' + n + '" class="' + (n <= c.rating ? 'on' : '') + '" aria-pressed="' + (n === c.rating) + '" aria-label="Rate ' + n + ' out of 5">' + STAR.replace(/13/g, '20') + '</button>'; }).join('') +
+      '</div></div>' +
+      ivHtml +
+      '<div class="block"><h3>Details</h3><dl>' +
+        '<div class="row"><dt>Email</dt><dd>' + esc(c.email) + '</dd></div>' +
+        '<div class="row"><dt>Phone</dt><dd>' + esc(c.phone) + '</dd></div>' +
+        '<div class="row"><dt>Location</dt><dd>' + esc(c.location) + '</dd></div>' +
+        '<div class="row"><dt>Experience</dt><dd>' + c.years + (c.years === 1 ? ' year' : ' years') + '</dd></div>' +
+        '<div class="row"><dt>Source</dt><dd>' + esc(c.source) + '</dd></div>' +
+        '<div class="row"><dt>Applied</dt><dd>' + fmt(c.applied, { day: 'numeric', month: 'short', year: 'numeric' }) + '</dd></div></dl></div>' +
+      '<div class="block"><h3>Notes</h3>' +
+        '<ul class="notes" id="notes">' + (c.notes.length ? c.notes.map(function (n) { return '<li class="note">' + esc(n.text) + '<small>' + esc(n.by) + ' · ' + fmt(n.at) + '</small></li>'; }).join('') : '<li class="note" style="color:var(--muted)">No notes yet.</li>') + '</ul>' +
+        '<form class="note-form" id="noteForm"><label class="sr-only" for="noteText">Add a note</label><textarea id="noteText" rows="1" placeholder="Add a note for the hiring team"></textarea><button type="submit" class="small-btn" style="height:44px">Add</button></form></div>';
+
+    var actions = [];
+    if (c.stage !== 'Rejected' && c.stage !== 'Hired') actions.push('<button type="button" class="btn remove-btn" id="rejectBtn">Reject</button>');
+    actions.push('<button type="button" class="btn ' + (c.stage === 'Offer' || c.stage === 'Hired' ? 'btn-accent' : 'btn-dark') + '" id="nextBtn">' + NEXT[c.stage] + '</button>');
+    drawerFoot.innerHTML = actions.join('');
+  }
+
+  function openCandidate(id) {
+    var c = cand(id); if (!c) return;
+    currentId = id;
+    renderCandidate(c);
+    if (drawer.hidden) openLayer(drawer, drawer.querySelector('[data-close]'));
+    else drawerBody.scrollTop = 0;
+  }
+  document.addEventListener('click', function (ev) {
+    var b = ev.target.closest('[data-open]'); if (!b) return;
+    history.replaceState(null, '', '#cand-' + b.dataset.open);
+    openCandidate(+b.dataset.open);
+  });
+
+  drawer.addEventListener('click', function (ev) {
+    var c = cand(currentId); if (!c) return;
+    var t;
+    if ((t = ev.target.closest('.stage-steps button'))) {
+      var s = t.dataset.stage;
+      if (s === 'Interview' && !c.interview) return openSchedule(c);
+      moveTo(c, s);
+      var again = drawer.querySelector('.stage-steps button[data-stage="' + s + '"]'); if (again) again.focus();
+    } else if ((t = ev.target.closest('[data-rate]'))) {
+      var n = +t.dataset.rate;
+      c.rating = c.rating === n ? 0 : n; save(); renderCandidate(c); renderBoard();
+      drawer.querySelector('[data-rate="' + n + '"]').focus();
+    } else if (ev.target.closest('#reschedule')) {
+      openSchedule(c);
+    } else if (ev.target.closest('#rejectBtn')) {
+      document.getElementById('rejText').textContent = full(c) + ' will be moved out of the pipeline. You can restore them later from Rejected.';
+      openLayer(document.getElementById('rejectModal'), document.getElementById('confirmReject'));
+    } else if (ev.target.closest('#nextBtn')) {
+      if (c.stage === 'Applied') moveTo(c, 'Screening');
+      else if (c.stage === 'Screening') openSchedule(c);
+      else if (c.stage === 'Interview') moveTo(c, 'Offer');
+      else if (c.stage === 'Offer') moveTo(c, 'Hired');
+      else if (c.stage === 'Hired') createEmployee(c);
+      else if (c.stage === 'Rejected') { moveTo(c, c.prevStage || 'Applied', { quiet: true }); toast(c.first + ' restored to ' + c.stage); }
+    }
+  });
+  drawer.addEventListener('submit', function (ev) {
+    if (ev.target.id !== 'noteForm') return;
+    ev.preventDefault();
+    var c = cand(currentId), text = document.getElementById('noteText').value.trim();
+    if (!c || !text) return;
+    var who = 'Kavinda'; try { who = sessionStorage.getItem('staffora:name') || who; } catch (e) {}
+    c.notes.push({ by: who, text: text, at: daysAgo(0) }); save(); renderCandidate(c);
+    document.getElementById('noteText').focus();
+  });
+
+  document.getElementById('confirmReject').addEventListener('click', function () {
+    var c = cand(currentId); if (!c) return;
+    c.reason = document.querySelector('input[name="reason"]:checked').value;
+    closeTop();
+    var from = c.stage;
+    moveTo(c, 'Rejected', { quiet: true });
+    toast(c.first + ' rejected', 'Undo', function () { moveTo(c, from, { quiet: true }); toast(c.first + ' is back in ' + from); });
+  });
+
+  function createEmployee(c) {
+    var j = job(c.jobId);
+    var loc = ['Colombo', 'Kandy', 'Remote', 'Singapore', 'London'].indexOf(c.location) !== -1 ? c.location : 'Colombo';
+    try {
+      sessionStorage.setItem('staffora:prefill', JSON.stringify({ first: c.first, last: c.last, email: (c.first + '.' + c.last).toLowerCase().normalize('NFD').replace(/[̀-ͯ]/g, '').replace(/[^a-z.]/g, '') + '@staffora.co',
+        phone: c.phone, role: j ? j.title : '', dept: j ? j.dept : '', location: loc }));
+    } catch (e) {}
+    window.location.href = 'employees.html#add';
+  }
+
+  // ---------- Schedule interview ----------
+  var schedModal = document.getElementById('scheduleModal'), schedFor = null;
+  var times = []; for (var h = 9; h <= 17; h++) { times.push((h < 10 ? '0' : '') + h + ':00'); if (h < 17) times.push((h < 10 ? '0' : '') + h + ':30'); }
+  document.getElementById('sTime').innerHTML = times.map(function (t) { return '<option>' + t + '</option>'; }).join('');
+  document.getElementById('sWith').innerHTML = INTERVIEWERS.map(function (n) { return '<option>' + esc(n) + '</option>'; }).join('');
+  function openSchedule(c) {
+    schedFor = c.id;
+    var iv = c.interview, j = job(c.jobId);
+    document.getElementById('schedSub').textContent = full(c) + ' · ' + (j ? j.title : '');
+    document.getElementById('schedTitle').textContent = iv ? 'Reschedule interview' : 'Schedule interview';
+    document.getElementById('sDate').value = iv ? iv.date : nextWeekday(1);
+    document.getElementById('sDate').min = daysAgo(0);
+    document.getElementById('sTime').value = iv ? iv.time : '10:00';
+    document.getElementById('sWith').value = iv ? iv.with : (j && j.dept === 'Design' ? 'Ravi Jayasuriya' : j && j.dept === 'Engineering' ? 'Aisha Rahman' : 'Nadia Perera');
+    document.querySelectorAll('input[name="sType"]').forEach(function (r) { r.checked = r.value === (iv ? iv.type : 'Video call'); });
+    document.getElementById('sDate-err').textContent = ''; document.getElementById('sDate').setAttribute('aria-invalid', 'false');
+    openLayer(schedModal, document.getElementById('sDate'));
+  }
+  document.getElementById('schedForm').addEventListener('submit', function (ev) {
+    ev.preventDefault();
+    var c = cand(schedFor), d = document.getElementById('sDate');
+    if (!d.value || d.value < daysAgo(0)) {
+      document.getElementById('sDate-err').textContent = 'Pick today or a later date.'; d.setAttribute('aria-invalid', 'true');
+      d.classList.remove('shake'); void d.offsetWidth; d.classList.add('shake'); d.focus(); return;
+    }
+    c.interview = { date: d.value, time: document.getElementById('sTime').value, with: document.getElementById('sWith').value, type: document.querySelector('input[name="sType"]:checked').value };
+    closeTop();
+    if (c.stage !== 'Interview') moveTo(c, 'Interview', { quiet: true }); else { save(); render(); if (!drawer.hidden) renderCandidate(c); }
+    toast('Interview booked for ' + interviewLabel(c.interview) + (c.interview.with ? ' with ' + c.interview.with.split(' ')[0] : ''));
+  });
+
+  // ---------- Post a job ----------
+  var postModal = document.getElementById('postModal'), postForm = document.getElementById('postForm'), pstep = 1;
+  var g = function (id) { return document.getElementById(id); };
+  g('jDept').innerHTML = DEPTS.map(function (d) { return '<option>' + d + '</option>'; }).join('');
+  function perr(id, msg) {
+    var el = g(id); g(id + '-err').textContent = msg || ''; el.setAttribute('aria-invalid', msg ? 'true' : 'false');
+    if (msg) { el.classList.remove('shake'); void el.offsetWidth; el.classList.add('shake'); }
+    return !msg;
+  }
+  ['jTitle', 'jOpenings', 'jMax', 'jAbout'].forEach(function (id) { g(id).addEventListener('input', function () { perr(id, ''); }); });
+  var pNames = ['Role', 'Details', 'Review'];
+  function goPost(n) {
+    pstep = n;
+    postModal.querySelectorAll('.fstep').forEach(function (s) { s.classList.toggle('active', +s.dataset.fstep === n); });
+    postModal.querySelectorAll('.stepper div').forEach(function (d) { d.classList.toggle('on', +d.dataset.dot <= n); });
+    g('postSub').textContent = 'Step ' + n + ' of 3 · ' + pNames[n - 1];
+    g('postBack').textContent = n === 1 ? 'Cancel' : 'Back';
+    g('postNext').textContent = n === 3 ? 'Publish role' : 'Continue';
+    if (n === 3) buildJobReview();
+    var first = postModal.querySelector('.fstep.active input, .fstep.active textarea, .fstep.active button');
+    if (first) setTimeout(function () { first.focus(); }, reduced ? 0 : 50);
+  }
+  function jobDraft() {
+    return { title: g('jTitle').value.trim(), dept: g('jDept').value, location: g('jLocation').value, type: postForm.querySelector('input[name="jType"]:checked').value,
+      openings: +g('jOpenings').value, min: g('jMin').value, max: g('jMax').value, about: g('jAbout').value.trim(),
+      reqs: g('jReqs').value.split('\n').map(function (r) { return r.trim(); }).filter(Boolean) };
+  }
+  function money(v) { return v ? 'LKR ' + Number(v).toLocaleString('en-US') : ''; }
+  function buildJobReview() {
+    var d = jobDraft();
+    var row = function (k, v) { return '<div class="row" style="display:flex;justify-content:space-between;gap:16px;padding:10px 0;border-top:1px solid #EFEAE6"><dt style="color:var(--muted)">' + k + '</dt><dd style="margin:0;font-weight:600;text-align:right;overflow-wrap:anywhere">' + v + '</dd></div>'; };
+    g('jobPreview').innerHTML = '<span class="avatar" style="background:' + TINT[d.dept] + ';color:var(--ink)" aria-hidden="true"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="7" width="18" height="13" rx="3"/><path d="M8 7V5a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2"/></svg></span>' +
+      '<div><strong>' + esc(d.title) + '</strong><span>' + d.dept + ' · ' + esc(d.location) + ' · ' + d.type + '</span></div>';
+    g('reviewRole').innerHTML = row('Department', d.dept) + row('Location', esc(d.location)) + row('Type', d.type) + row('Openings', d.openings);
+    g('reviewDetails').innerHTML = row('Salary', d.min || d.max ? esc([money(d.min), money(d.max)].filter(Boolean).join(' – ')) + ' / month' : 'Not shown') +
+      '<div style="padding:10px 0;border-top:1px solid #EFEAE6"><dt style="color:var(--muted)">About the role</dt><dd style="margin:4px 0 0;white-space:pre-line">' + esc(d.about) + '</dd></div>' +
+      (d.reqs.length ? '<div style="padding:10px 0;border-top:1px solid #EFEAE6"><dt style="color:var(--muted)">Requirements</dt><dd style="margin:0"><ul class="review-list">' + d.reqs.map(function (r) { return '<li>' + esc(r) + '</li>'; }).join('') + '</ul></dd></div>' : '');
+  }
+  function openPost() {
+    postForm.reset();
+    ['jTitle', 'jOpenings', 'jMax', 'jAbout'].forEach(function (id) { perr(id, ''); });
+    goPost(1);
+    openLayer(postModal, g('jTitle'));
+  }
+  g('postBtn').addEventListener('click', openPost);
+  g('postBack').addEventListener('click', function () { if (pstep === 1) closeTop(); else goPost(pstep - 1); });
+  postModal.querySelectorAll('[data-goto]').forEach(function (b) { b.addEventListener('click', function () { goPost(+b.dataset.goto); }); });
+  postForm.addEventListener('submit', function (ev) {
+    ev.preventDefault();
+    var d = jobDraft();
+    if (pstep === 1) {
+      var ok = perr('jTitle', d.title ? '' : 'Enter a job title.');
+      ok = perr('jOpenings', d.openings >= 1 && d.openings <= 20 ? '' : 'Enter 1 to 20 openings.') && ok;
+      if (!ok) { postModal.querySelector('[aria-invalid="true"]').focus(); return; }
+      return goPost(2);
+    }
+    if (pstep === 2) {
+      var ok2 = perr('jMax', d.min && d.max && +d.max < +d.min ? 'The top of the range should be higher than the start.' : '');
+      ok2 = perr('jAbout', d.about.length >= 20 ? '' : 'Add a sentence or two (20+ characters) about the role.') && ok2;
+      if (!ok2) { postModal.querySelector('[aria-invalid="true"]').focus(); return; }
+      return goPost(3);
+    }
+    var btn = g('postNext');
+    btn.disabled = true;
+    btn.innerHTML = '<span class="spinner" aria-hidden="true" style="border-color:rgba(255,255,255,.3);border-top-color:#fff"></span>Publishing…';
+    setTimeout(function () {
+      var id = jobs.reduce(function (m, j) { return Math.max(m, j.id); }, 0) + 1;
+      jobs.unshift({ id: id, title: d.title, dept: d.dept, location: d.location, type: d.type, openings: d.openings, posted: daysAgo(0), about: d.about, reqs: d.reqs, min: d.min, max: d.max });
+      save();
+      btn.disabled = false;
+      closeTop();
+      state.jobId = id; state.newJobId = id; state.q = ''; g('q').value = '';
+      history.replaceState(null, '', '#job-' + id);
+      render();
+      g('roles').scrollTo({ left: 0, behavior: reduced ? 'auto' : 'smooth' });
+      toast('“' + d.title + '” is live' + (g('jCareers').checked ? ' and on the careers page' : ''), 'Copy link', function () {
+        var url = location.href.split('#')[0] + '#job-' + id;
+        if (navigator.clipboard) navigator.clipboard.writeText(url).then(function () { toast('Link copied'); }, function () { toast('Copy failed. The link is ' + url); });
+        else toast('The link is ' + url);
+      });
+    }, reduced ? 0 : 900);
+  });
+
+  // ---------- Toast ----------
+  var toastTimer = null;
+  function toast(msg, actionLabel, action) {
+    var host = document.getElementById('toastHost');
+    clearTimeout(toastTimer);
+    host.innerHTML = '<div class="toast"><span class="ok">' + ICON_CHECK + '</span><p>' + esc(msg) + '</p>' + (actionLabel ? '<button type="button">' + actionLabel + '</button>' : '') + '</div>';
+    if (actionLabel) host.querySelector('button').addEventListener('click', function () { host.innerHTML = ''; action(); });
+    toastTimer = setTimeout(function () { host.innerHTML = ''; }, 6000);
+  }
+
+  // ---------- Start ----------
+  function fromHash() {
+    var h = location.hash;
+    if (h === '#post') { if (postModal.hidden) openPost(); }
+    else if (h.indexOf('#cand-') === 0) openCandidate(+h.slice(6));
+    else if (h.indexOf('#job-') === 0 && job(+h.slice(5))) { state.jobId = +h.slice(5); renderRoles(); renderBoard(); }
+  }
+  render();
+  fromHash();
+  window.addEventListener('hashchange', fromHash);
+})();
+</script>
+</body>
+</html>

@@ -48,8 +48,8 @@ a:focus-visible, button:focus-visible { outline: 2px solid var(--ink); outline-o
 .swipe { display: none; font-size: 12px; color: var(--muted); align-items: center; gap: 6px; }
 .scroller { overflow-x: auto; border-radius: 22px; background: var(--soft); background-image: radial-gradient(#E2DCD7 1px, transparent 1px); background-size: 18px 18px; }
 .canvas { position: relative; min-width: 1360px; padding: 40px 36px 72px 64px; }
-.grid { display: grid; grid-template-columns: repeat(9, minmax(0, 1fr)); grid-template-rows: repeat(4, auto); column-gap: 30px; row-gap: 70px; position: relative; z-index: 1; }
-.lanes { position: absolute; left: 10px; top: 40px; bottom: 72px; display: grid; grid-template-rows: repeat(4, auto); row-gap: 70px; z-index: 1; pointer-events: none; }
+.grid { display: grid; grid-template-columns: repeat(9, minmax(0, 1fr)); grid-template-rows: repeat(6, auto); column-gap: 30px; row-gap: 70px; position: relative; z-index: 1; }
+.lanes { position: absolute; left: 10px; top: 40px; bottom: 72px; display: grid; grid-template-rows: repeat(6, auto); row-gap: 70px; z-index: 1; pointer-events: none; }
 .edges { position: absolute; inset: 0; width: 100%; height: 100%; z-index: 0; overflow: visible; }
 .edges path { fill: none; stroke: var(--edge); stroke-width: 2; stroke-linecap: round; stroke-linejoin: round; transition: stroke .2s ease, stroke-width .2s ease, opacity .2s ease; }
 .edges path.dashed { stroke-dasharray: 5 6; }
@@ -176,6 +176,8 @@ a.node:hover, .node.hot { transform: translateY(-2px); box-shadow: 0 10px 24px r
           <div class="lane"><span>Log in · App</span></div>
           <div class="lane"><span>Recover · People</span></div>
           <div class="lane"><span>&nbsp;</span></div>
+          <div class="lane"><span>Hire</span></div>
+          <div class="lane"><span>&nbsp;</span></div>
         </div>
         <div class="grid" id="grid">
           <a class="node start page" data-id="overview" href="overview.html" style="grid-area: 1 / 1;"><span class="num">0</span><span class="file">overview.html</span><strong>Project overview</strong><small>Where the visit starts</small></a>
@@ -201,6 +203,15 @@ a.node:hover, .node.hot { transform: translateY(-2px); box-shadow: 0 10px 24px r
 
           <a class="node" data-id="sent" href="login.html#forgot" style="grid-area: 4 / 2;"><span class="file">Log in</span><strong>Link sent</strong><small>Then back to log in</small></a>
           <a class="node end" data-id="added" href="employees.html" style="grid-area: 4 / 9;"><span class="file">Employees</span><strong>Added</strong><small>Shown first, highlighted</small></a>
+          <a class="node" data-id="post" href="recruitment.html#post" style="grid-area: 4 / 8;"><span class="file">Recruitment</span><strong>Post a job</strong><small>Role, details, review</small></a>
+
+          <a class="node page" data-id="rec" href="recruitment.html" style="grid-area: 5 / 7;"><span class="file">recruitment.html</span><strong>Recruitment</strong><small>Open roles, pipeline</small></a>
+          <a class="node" data-id="cand" href="recruitment.html#cand-3" style="grid-area: 5 / 8;"><span class="num">1</span><span class="file">Recruitment</span><strong>Candidate</strong><small>Rate, notes, move stage</small></a>
+          <a class="node" data-id="interview" href="recruitment.html#cand-1" style="grid-area: 5 / 9;"><span class="num">2</span><span class="file">Recruitment</span><strong>Interview</strong><small>Date, time, interviewer</small></a>
+
+          <a class="node" data-id="prefill" href="employees.html#add" style="grid-area: 6 / 7;"><span class="file">Employees</span><strong>Add employee</strong><small>Details filled in</small></a>
+          <a class="node end" data-id="hired" href="recruitment.html#cand-11" style="grid-area: 6 / 8;"><span class="num">4</span><span class="file">Recruitment</span><strong>Hired</strong><small>Create their profile</small></a>
+          <a class="node decision" data-id="offer" href="recruitment.html#cand-5" style="grid-area: 6 / 9;"><span class="num">3</span><span class="file">Decision</span><strong>Make an offer?</strong><small>Or reject, with undo</small></a>
         </div>
       </div>
     </div>
@@ -209,7 +220,7 @@ a.node:hover, .node.hot { transform: translateY(-2px); box-shadow: 0 10px 24px r
   <section class="section" aria-labelledby="pages-title">
     <div class="section-head">
       <div><p class="eyebrow">Page by page</p><h2 id="pages-title">What each page does and where it leads</h2></div>
-      <p>The same flow as the map, written out for each of the five pages.</p>
+      <p>The same flow as the map, written out for each of the six pages.</p>
     </div>
     <div class="pages">
       <article class="page">
@@ -230,12 +241,17 @@ a.node:hover, .node.hot { transform: translateY(-2px); box-shadow: 0 10px 24px r
       <article class="page">
         <div class="page-top"><div><h3>Dashboard</h3><code>index.html</code></div><a class="open" href="index.html" aria-label="Open the dashboard"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M7 17L17 7M8 7h9v9"/></svg></a></div>
         <ol><li>Greets you by name and time of day</li><li>Headcount, attendance chart, payroll and today’s attendance</li><li>Approve or decline leave requests</li><li>Click a name in the team table to open their profile</li></ol>
-        <div class="goes">Leads to <a href="employees.html">Employees</a><a href="employees.html#add">Add employee</a><a href="employees.html#emp-1">A profile</a><a href="login.html">Sign out</a></div>
+        <div class="goes">Leads to <a href="employees.html">Employees</a><a href="recruitment.html">Recruitment</a><a href="employees.html#add">Add employee</a><a href="employees.html#emp-1">A profile</a><a href="login.html">Sign out</a></div>
       </article>
       <article class="page">
         <div class="page-top"><div><h3>Employees</h3><code>employees.html</code></div><a class="open" href="employees.html" aria-label="Open employees"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M7 17L17 7M8 7h9v9"/></svg></a></div>
         <ol><li>Search, filter by status or department, sort, export</li><li>Open a profile: change status, see manager and time off</li><li>Remove someone, with a confirmation and undo</li><li>Add employee in 3 steps: personal, job, review</li></ol>
         <div class="goes">Leads to <a href="index.html">Dashboard</a><a href="login.html">Sign out</a></div>
+      </article>
+      <article class="page">
+        <div class="page-top"><div><h3>Recruitment</h3><code>recruitment.html</code></div><a class="open" href="recruitment.html" aria-label="Open recruitment"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M7 17L17 7M8 7h9v9"/></svg></a></div>
+        <ol><li>Pick a role to filter the pipeline, or post a new job in 3 steps</li><li>Drag candidates between Applied, Screening, Interview, Offer and Hired</li><li>Open a candidate to rate them, add notes, book an interview or reject</li><li>Mark as hired, then create their employee profile with details filled in</li></ol>
+        <div class="goes">Leads to <a href="employees.html#add">Add employee</a><a href="index.html">Dashboard</a><a href="login.html">Sign out</a></div>
       </article>
     </div>
   </section>
@@ -280,7 +296,14 @@ a.node:hover, .node.hot { transform: translateY(-2px); box-shadow: 0 10px 24px r
     { from: 'emp', to: 'add1', route: 'v', label: 'Add employee' },
     { from: 'add1', to: 'add2', route: 'h' },
     { from: 'add2', to: 'add3', route: 'h' },
-    { from: 'add3', to: 'added', route: 'v' }
+    { from: 'add3', to: 'added', route: 'v' },
+    { from: 'dash', to: 'rec', route: function (a, b) { var x = a.right + 15; return [R(a, 24), [x, a.cy + 24], [x, b.cy], L(b)]; } },
+    { from: 'rec', to: 'post', route: function (a, b) { return [T(a, 24), [a.cx + 24, b.cy], L(b)]; } },
+    { from: 'rec', to: 'cand', route: 'h' },
+    { from: 'cand', to: 'interview', route: 'h', label: 'Schedule' },
+    { from: 'interview', to: 'offer', route: 'v' },
+    { from: 'offer', to: 'hired', route: 'h', label: 'Yes', kind: 'yes' },
+    { from: 'hired', to: 'prefill', route: 'h' }
   ];
 
   function box(id) {
