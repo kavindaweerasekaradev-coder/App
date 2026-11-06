@@ -87,7 +87,6 @@
       function sizeRail() {
         if (vertical) prRail.style.height = prTrack.style.height = (prSteps[prSteps.length - 1].offsetTop - prSteps[0].offsetTop) + 'px';
       }
-      function sizeRail() { if (vertical) prRail.style.height = prTrack.style.height = railLen() + 'px'; }
       sizeRail();
       ScrollTrigger.addEventListener('refreshInit', sizeRail);
       var axis = vertical ? 'scaleY' : 'scaleX', pos = vertical ? 'top' : 'left', n = prSteps.length;
