@@ -140,7 +140,7 @@ def product_card(p, h):
     e, ARROW = h["e"], h["ARROW"]
     chips = "".join(f"<li>{e(c)}</li>" for c in p["chips"])
     links = "".join(
-        f'<a class="live__go" href="{e(u)}" target="_blank" rel="noopener" aria-label="{e(aria)}">{e(label)}<span class="live__go-icon"></span></a>'
+        f'<a class="live__go" href="{e(u)}" target="_blank" rel="noopener" aria-label="{e(aria)}">{e(label)}<span class="live__go-icon"><svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M7 17 17 7M8 7h9v9"/></svg></span></a>'
         for label, u, aria in p["links"])
     role = (f"<p>{e(p['role'])}</p>" if p.get("role") else "") + (
         "<ul>" + "".join(f"<li>{e(x)}</li>" for x in p["role_points"]) + "</ul>" if p.get("role_points") else "")
@@ -162,7 +162,7 @@ def product_card(p, h):
             <ul class="live__chips" aria-label="Platforms">{chips}</ul>
             <div class="live__links">{cs}{links}</div>
             <div class="live__foot">
-              <details class="live__role"><summary>My role <span class="live__plus"></span></summary><div class="live__role-body">{role}</div></details>
+              <details class="live__role"><summary>My role <span class="live__plus"><svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true"><path d="M12 5v14M5 12h14"/></svg></span></summary><div class="live__role-body">{role}</div></details>
             </div>
           </article>"""
 
