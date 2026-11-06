@@ -50,7 +50,9 @@ hr-dashboard/signup.html     # Five-step sign-up: account, email code, company, 
 hr-dashboard/index.html      # Dashboard
 hr-dashboard/employees.html  # Directory, profile panel (#emp-<id>) and add-employee form (#add)
 hr-dashboard/recruitment.html # Open roles, candidate pipeline (#cand-<id>, #job-<id>) and post-a-job form (#post)
-hr-dashboard/app.css         # Styles shared by the employees and recruitment pages
+hr-dashboard/payroll.html     # Pay run with review, issue checks and approval (#run), payslips (#slip-<id>), history
+hr-dashboard/attendance.html  # Check in/out, team today (#emp-<id>), week view, time off (#leave, #request)
+hr-dashboard/app.css         # Styles shared by the employees, recruitment, payroll and attendance pages
 hr-dashboard/auth.css        # Styles shared by the log-in and sign-up pages
 hr-dashboard/assets/avatars/ # Portraits of the sample people (DiceBear Notionists, CC0 1.0)
 ```

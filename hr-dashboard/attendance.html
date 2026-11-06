@@ -1,0 +1,623 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Attendance — Staffora</title>
+<meta name="description" content="Check-in, team attendance, weekly overview and time-off requests for the Staffora HR dashboard concept by Kavinda Weerasekara.">
+<link rel="icon" href="../favicon.ico">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&amp;display=swap">
+<link rel="stylesheet" href="app.css">
+<style>
+/* Attendance-only styles; shared pieces live in app.css */
+.top-grid { display: grid; grid-template-columns: minmax(0, 1fr) minmax(0, 1.6fr); gap: 20px; }
+.myday { background: var(--ink); color: #FFFFFF; border-radius: var(--radius); padding: 24px; display: flex; flex-direction: column; gap: 18px; position: relative; overflow: hidden; }
+.myday::after { content: ''; position: absolute; right: -70px; bottom: -70px; width: 210px; height: 210px; border-radius: 999px; border: 34px solid #36312E; }
+.myday > * { position: relative; z-index: 1; }
+.myday-top { display: flex; justify-content: space-between; align-items: center; gap: 10px; }
+.myday-top h2 { font-size: 16px; font-weight: 600; }
+.badge { font-size: 12px; font-weight: 700; padding: 5px 12px; border-radius: 999px; background: #4B4541; }
+.badge.in { background: #3FA46A; }
+.badge.out { background: var(--accent); color: var(--ink); }
+.clock { font-size: 52px; font-weight: 700; letter-spacing: -0.03em; line-height: 1; font-variant-numeric: tabular-nums; }
+.clock small { font-size: 20px; color: #90877F; margin-left: 4px; }
+.today-line { color: #C9C1BB; font-size: 14px; margin-top: 6px; }
+.shift { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 8px; }
+.shift div { background: #3C3633; border-radius: 14px; padding: 10px 12px; }
+.shift span { display: block; font-size: 12px; color: #C9C1BB; }
+.shift strong { font-size: 15px; font-variant-numeric: tabular-nums; }
+.punch { height: 54px; border-radius: 999px; border: none; font-size: 15px; font-weight: 700; display: inline-flex; align-items: center; justify-content: center; gap: 10px; background: var(--accent); color: var(--ink); transition: transform .15s ease, box-shadow .2s ease, background-color .2s ease; position: relative; }
+.punch:hover { box-shadow: 0 10px 24px rgba(244,123,54,.35); transform: translateY(-1px); }
+.punch:active { transform: scale(.97); }
+.punch.out { background: #FFFFFF; }
+.punch:disabled { background: #3C3633; color: #C9C1BB; cursor: default; box-shadow: none; transform: none; }
+.punch .pulse { width: 10px; height: 10px; border-radius: 999px; background: currentColor; position: relative; }
+.punch .pulse::after { content: ''; position: absolute; inset: 0; border-radius: 999px; background: currentColor; animation: ping 1.6s ease-out infinite; }
+@keyframes ping { from { transform: scale(1); opacity: .6; } to { transform: scale(2.6); opacity: 0; } }
+
+.stats { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+.split { display: flex; gap: 4px; height: 12px; margin-top: 4px; }
+.split i { display: block; border-radius: 999px; transform-origin: left; animation: grow-x .9s cubic-bezier(.2,.8,.2,1) backwards; }
+@keyframes grow-x { from { transform: scaleX(0); } to { transform: scaleX(1); } }
+.overview { background: #FFFFFF; border-radius: var(--radius); padding: 22px; display: flex; flex-direction: column; gap: 14px; }
+.overview h2, .panel-head h2 { font-size: 18px; font-weight: 700; }
+.panel-head { display: flex; justify-content: space-between; align-items: center; gap: 12px; flex-wrap: wrap; }
+.panel-head p { font-size: 13px; color: var(--muted); }
+
+/* Team today */
+.team-list { list-style: none; margin: 0; padding: 0; display: flex; flex-direction: column; }
+.trow { display: grid; grid-template-columns: minmax(200px, 1.6fr) minmax(100px, 1fr) repeat(3, minmax(70px, .7fr)) 36px; gap: 12px; align-items: center; padding: 12px 6px; border-top: 1px solid var(--line); position: relative; transition: background-color .2s ease; animation: rise .4s cubic-bezier(.2,.7,.2,1) backwards; }
+.trow:first-child { border-top: none; }
+.trow:hover { background: var(--soft-2); border-radius: 14px; }
+.trow.head { animation: none; font-size: 12px; color: var(--muted); font-weight: 600; padding-top: 0; }
+.trow.head:hover { background: none; }
+.trow .num { font-variant-numeric: tabular-nums; text-align: right; }
+.trow .num.dim { color: #A39A93; }
+.who { display: flex; align-items: center; gap: 12px; min-width: 0; }
+.who .avatar { width: 38px; height: 38px; font-size: 12px; }
+.who button { border: none; background: none; padding: 0; font-weight: 700; font-size: 14px; text-align: left; cursor: pointer; }
+.who button::after { content: ''; position: absolute; inset: 0; border-radius: 14px; }
+.who span { display: block; font-size: 12px; color: var(--muted); white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+.go { width: 32px; height: 32px; border-radius: 999px; background: #FFFFFF; border: 1px solid var(--line); display: grid; place-items: center; transition: background-color .2s ease, border-color .2s ease, transform .3s cubic-bezier(.2,.7,.2,1); }
+.trow:hover .go { background: var(--accent); border-color: var(--accent); transform: rotate(45deg); }
+
+/* Week grid */
+.week { display: grid; grid-template-columns: minmax(150px, 1.4fr) repeat(5, minmax(56px, 1fr)); gap: 6px; align-items: center; min-width: 560px; }
+.week .dayhead { font-size: 12px; font-weight: 700; color: var(--muted); text-align: center; padding-bottom: 4px; }
+.week .dayhead.today { color: var(--accent-dark); }
+.week .name { font-size: 13px; font-weight: 600; display: flex; align-items: center; gap: 8px; min-width: 0; }
+.week .name .avatar { width: 28px; height: 28px; }
+.week .name span { white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+.cell { position: relative; height: 34px; border-radius: 10px; display: grid; place-items: center; font-size: 11px; font-weight: 700; animation: pop-in .35s cubic-bezier(.2,.8,.2,1) backwards; }
+.cell.ontime { background: #E3F5E8; color: #1C6B37; }
+.cell.late { background: #FDEBD3; color: #9A4A00; }
+.cell.absent { background: #FDE4E4; color: #A3262A; }
+.cell.leave { background: #EDE3FF; color: #5B3BA8; }
+.cell.remote { background: #E1ECFF; color: #1D4ED8; }
+.cell.future { background: repeating-linear-gradient(135deg, #F4F1EE 0 4px, #FBF9F7 4px 8px); color: #A39A93; }
+.legend { display: flex; gap: 12px; flex-wrap: wrap; font-size: 12px; color: var(--muted); }
+.legend span { display: inline-flex; align-items: center; gap: 6px; }
+.legend i { width: 12px; height: 12px; border-radius: 4px; display: inline-block; }
+.scroll-x { overflow-x: auto; position: relative; }
+@keyframes pop-in { 0% { opacity: 0; transform: scale(.8); } 100% { opacity: 1; transform: none; } }
+
+/* Time off */
+.leave-grid { display: grid; grid-template-columns: minmax(0, 1.6fr) minmax(0, 1fr); gap: 20px; }
+.requests { list-style: none; margin: 0; padding: 0; display: flex; flex-direction: column; gap: 8px; }
+.req { display: flex; align-items: center; gap: 12px; padding: 12px; border-radius: 18px; background: var(--soft-2); flex-wrap: wrap; animation: rise .4s cubic-bezier(.2,.7,.2,1) backwards; }
+.req.flash { animation: flash 1.6s ease; }
+.req .avatar { width: 40px; height: 40px; }
+.req-info { flex: 1 1 180px; min-width: 0; }
+.req-info strong { display: block; font-size: 14px; }
+.req-info span { font-size: 12px; color: var(--muted); }
+.req-actions { display: flex; gap: 6px; }
+.icon-btn { width: 44px; height: 44px; border-radius: 999px; display: grid; place-items: center; border: 1px solid var(--line); background: #FFFFFF; transition: border-color .2s ease, transform .15s ease; }
+.icon-btn:hover { border-color: var(--ink); }
+.icon-btn:active { transform: scale(.92); }
+.icon-btn.approve { background: var(--ink); border-color: var(--ink); color: var(--accent); }
+.balances { display: flex; flex-direction: column; gap: 12px; }
+.bal { padding: 14px 16px; border-radius: 18px; background: var(--soft-2); }
+.bal-top { display: flex; justify-content: space-between; font-size: 13px; margin-bottom: 8px; }
+.bal-top strong { font-weight: 700; }
+.meter { height: 10px; border-radius: 999px; background: var(--peach); overflow: hidden; }
+.meter span { display: block; height: 100%; border-radius: 999px; background: var(--accent); transform-origin: left; animation: grow-x .9s .2s cubic-bezier(.2,.8,.2,1) backwards; transition: width .5s cubic-bezier(.2,.8,.2,1); }
+.days-calc { display: flex; justify-content: space-between; align-items: center; gap: 12px; padding: 14px 16px; border-radius: 16px; background: var(--peach); margin-top: 14px; font-size: 14px; }
+.days-calc strong { font-size: 20px; font-weight: 800; }
+.days-calc.bad { background: #FDE4E4; color: #A3262A; }
+.week-head-day { display: block; font-size: 10px; font-weight: 600; }
+textarea.input { height: auto; min-height: 90px; padding: 12px 14px; resize: vertical; font: inherit; font-size: 15px; }
+.fix { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)) auto; gap: 8px; align-items: end; padding: 4px 0 14px; }
+.fix .input { height: 44px; }
+
+@media (max-width: 1100px) { .top-grid, .leave-grid { grid-template-columns: minmax(0, 1fr); } }
+@media (max-width: 760px) {
+  .myday { border-radius: 20px; padding: 20px; }
+  .clock { font-size: 44px; }
+  .overview { border-radius: 20px; padding: 18px; }
+  .trow { grid-template-columns: minmax(0, 1fr) auto 32px; }
+  .trow .hide-sm, .trow.head { display: none; }
+  .trow .status-cell { justify-self: end; }
+  .fix { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+  .fix .small-btn { grid-column: 1 / -1; }
+}
+.small-btn { height: 44px; padding: 0 16px; border-radius: 999px; border: none; background: var(--ink); color: #FFFFFF; font-size: 13px; font-weight: 700; transition: transform .15s ease; }
+.small-btn:active { transform: scale(.95); }
+</style>
+<script src="../assets/js/analytics.js" defer></script>
+</head>
+<body>
+<div class="page">
+<div class="wrap">
+  <header class="topbar enter">
+    <a href="overview.html" class="brand" aria-label="Staffora project overview">
+      <span class="brand-mark"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="#2B2725" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="9" cy="8" r="3.2"/><path d="M3 19.5c.9-3.4 3.2-5 6-5s5.1 1.6 6 5"/><path d="M15.5 4.8a3.2 3.2 0 0 1 0 6.4M17.5 14.6c1.8.7 2.9 2.3 3.4 4.9"/></svg></span>
+      Staffora
+    </a>
+    <nav class="mainnav" aria-label="Primary">
+      <a href="index.html">Dashboard</a>
+      <a href="employees.html">Employees</a>
+      <a href="recruitment.html">Recruitment</a>
+      <a href="payroll.html">Payroll</a>
+      <a href="attendance.html" aria-current="page">Attendance</a>
+    </nav>
+    <div class="top-actions">
+      <button type="button" class="circle-btn" aria-label="Search people" id="focusSearch"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" aria-hidden="true"><circle cx="11" cy="11" r="7"/><path d="M20 20l-3.5-3.5"/></svg></button>
+      <button type="button" class="circle-btn" aria-label="Notifications"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M6 16v-5a6 6 0 1 1 12 0v5l1.5 2h-15z"/><path d="M10 20.5a2 2 0 0 0 4 0"/></svg></button>
+      <button type="button" class="me" aria-label="Account menu"><img src="assets/avatars/kavinda-weerasekara.svg" alt="" width="44" height="44"></button>
+    </div>
+  </header>
+  <div class="body">
+    <aside class="rail enter" aria-label="Sections">
+      <div class="rail-group">
+        <a href="index.html" aria-label="Overview"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" aria-hidden="true"><rect x="3.5" y="3.5" width="7" height="7" rx="2"/><rect x="13.5" y="3.5" width="7" height="7" rx="2"/><rect x="3.5" y="13.5" width="7" height="7" rx="2"/><rect x="13.5" y="13.5" width="7" height="7" rx="2"/></svg></a>
+        <a href="employees.html" aria-label="Employees"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" aria-hidden="true"><circle cx="9" cy="8" r="3.5"/><path d="M2.5 20c.8-3.6 3.4-5.5 6.5-5.5s5.7 1.9 6.5 5.5"/><path d="M16 4.6a3.5 3.5 0 0 1 0 6.8M18 14.8c1.9.7 3.1 2.5 3.5 5.2"/></svg></a>
+        <a href="recruitment.html" aria-label="Recruitment"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="3" y="7" width="18" height="13" rx="3"/><path d="M8 7V5a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2M3 12.5h18"/></svg></a>
+        <a href="attendance.html" aria-label="Time off" aria-current="page"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" aria-hidden="true"><rect x="3" y="5" width="18" height="16" rx="3"/><path d="M8 3v4M16 3v4M3 10h18M9 15l2 2 4-4"/></svg></a>
+        <a href="payroll.html" aria-label="Payroll"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" aria-hidden="true"><rect x="3" y="6" width="18" height="14" rx="3"/><path d="M3 10.5h18M15.5 15h2.5"/></svg></a>
+        <a href="#" aria-label="Reports"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" aria-hidden="true"><path d="M5 20V11M11 20V5M17 20v-7M3 20h18"/></svg></a>
+      </div>
+      <div class="rail-group">
+        <a href="#" aria-label="Settings"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" aria-hidden="true"><path d="M4 6h9M19 6h1M4 12h3M13 12h7M4 18h11M21 18h-1"/><circle cx="16" cy="6" r="2.2"/><circle cx="10" cy="12" r="2.2"/><circle cx="18" cy="18" r="2.2"/></svg></a>
+        <a href="login.html" aria-label="Sign out"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M15 4h3a2 2 0 0 1 2 2v12a2 2 0 0 1-2 2h-3M10 8l-4 4 4 4M6 12h10"/></svg></a>
+      </div>
+    </aside>
+    <main class="content">
+      <div class="head enter" style="animation-delay: 60ms;">
+        <div>
+          <p class="crumbs"><a href="index.html">Dashboard</a><span aria-hidden="true">/</span><span>Attendance</span></p>
+          <h1>Attendance</h1>
+          <p class="sub" id="subline">Who’s in today, this week and time off.</p>
+        </div>
+        <div class="head-actions">
+          <button type="button" class="btn btn-dark" id="requestBtn">
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true"><rect x="3" y="5" width="18" height="16" rx="3"/><path d="M8 3v4M16 3v4M3 10h18M12 13v5M9.5 15.5h5"/></svg>
+            Request time off
+          </button>
+        </div>
+      </div>
+
+      <section class="top-grid enter" style="animation-delay: 120ms;">
+        <div class="myday" aria-labelledby="myday-title">
+          <div class="myday-top"><h2 id="myday-title">My day</h2><span class="badge" id="myBadge">Not checked in</span></div>
+          <div><div class="clock" id="clock" aria-live="off">--:--</div><p class="today-line" id="todayLine"></p></div>
+          <div class="shift">
+            <div><span>Checked in</span><strong id="myIn">—</strong></div>
+            <div><span>Checked out</span><strong id="myOut">—</strong></div>
+            <div><span>Worked</span><strong id="myHours">0h 00m</strong></div>
+          </div>
+          <button type="button" class="punch" id="punch"><span class="pulse" aria-hidden="true"></span><span id="punchLabel">Check in</span></button>
+        </div>
+        <div class="overview" aria-labelledby="today-title">
+          <div class="panel-head"><div><h2 id="today-title">Today across the company</h2><p>All 248 employees</p></div></div>
+          <section class="stats" aria-label="Today" id="stats" style="gap: 10px;"></section>
+          <div>
+            <div class="split" role="img" aria-label="212 on time, 16 late, 20 absent">
+              <i style="width: 85.5%; background: var(--accent); animation-delay: 300ms;"></i><i style="width: 6.5%; background: var(--ink); animation-delay: 500ms;"></i><i style="width: 8%; background: #D8D0CA; animation-delay: 600ms;"></i>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <section class="panel enter" style="animation-delay: 180ms;" aria-labelledby="team-title">
+        <div class="panel-head">
+          <div><h2 id="team-title">Team today</h2><p id="teamNote"></p></div>
+          <label class="search" style="flex: 0 1 280px;">
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true"><circle cx="11" cy="11" r="7"/><path d="M20 20l-3.5-3.5"/></svg>
+            <span class="sr-only">Search people</span>
+            <input type="search" id="q" placeholder="Search people">
+          </label>
+        </div>
+        <div class="tabs" role="group" aria-label="Filter by status" id="tabs"></div>
+        <ul class="team-list" id="team"></ul>
+      </section>
+
+      <section class="panel enter" style="animation-delay: 240ms;" aria-labelledby="week-title">
+        <div class="panel-head">
+          <div><h2 id="week-title">This week</h2><p id="weekRange"></p></div>
+          <div class="legend" aria-hidden="true"><span><i style="background:#E3F5E8"></i>On time</span><span><i style="background:#FDEBD3"></i>Late</span><span><i style="background:#E1ECFF"></i>Remote</span><span><i style="background:#EDE3FF"></i>On leave</span><span><i style="background:#FDE4E4"></i>Absent</span></div>
+        </div>
+        <div class="scroll-x"><div class="week" id="week"></div></div>
+      </section>
+
+      <section class="leave-grid enter" style="animation-delay: 300ms;" id="leave">
+        <div class="panel" aria-labelledby="req-title">
+          <div class="panel-head"><div><h2 id="req-title">Time-off requests</h2><p id="reqNote"></p></div></div>
+          <ul class="requests" id="requests"></ul>
+        </div>
+        <div class="panel" aria-labelledby="bal-title">
+          <div class="panel-head"><div><h2 id="bal-title">My balances</h2><p>Resets on 1 January</p></div></div>
+          <div class="balances" id="balances"></div>
+          <ul class="requests" id="mine" style="margin-top: 4px;"></ul>
+        </div>
+      </section>
+    </main>
+  </div>
+</div>
+</div>
+
+<!-- Person drawer -->
+<div class="scrim" id="scrim" hidden></div>
+<aside class="drawer" id="drawer" role="dialog" aria-modal="true" aria-labelledby="pName" hidden>
+  <div class="drawer-head">
+    <p>Attendance</p>
+    <button type="button" class="circle-btn" data-close aria-label="Close"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" aria-hidden="true"><path d="M6 6l12 12M18 6L6 18"/></svg></button>
+  </div>
+  <div class="drawer-scroll" id="drawerBody"></div>
+  <div class="drawer-foot">
+    <a class="btn btn-outline" id="profileLink" href="employees.html">Open profile</a>
+    <button type="button" class="btn btn-dark" data-close>Done</button>
+  </div>
+</aside>
+
+<!-- Request time off -->
+<div class="modal" id="reqModal" role="dialog" aria-modal="true" aria-labelledby="reqTitle" hidden>
+  <div class="modal-head">
+    <div><h2 id="reqTitle">Request time off</h2><p>Your manager, Nadia Perera, will be asked to approve it.</p></div>
+    <button type="button" class="circle-btn" data-close aria-label="Close"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" aria-hidden="true"><path d="M6 6l12 12M18 6L6 18"/></svg></button>
+  </div>
+  <form id="reqForm" novalidate style="display: contents;">
+    <div class="modal-body">
+      <div class="grid2">
+        <div class="field full"><span class="group-label" id="typeLabel">Type</span>
+          <div class="chips" role="radiogroup" aria-labelledby="typeLabel">
+            <label class="chip"><input type="radio" name="rType" value="Annual leave" checked><span>Annual leave</span></label>
+            <label class="chip"><input type="radio" name="rType" value="Sick leave"><span>Sick leave</span></label>
+            <label class="chip"><input type="radio" name="rType" value="Unpaid leave"><span>Unpaid leave</span></label>
+          </div>
+        </div>
+        <div class="field"><label for="rFrom">From</label><input class="input" id="rFrom" type="date" aria-describedby="rFrom-err"><p class="error" id="rFrom-err"></p></div>
+        <div class="field"><label for="rTo">To</label><input class="input" id="rTo" type="date" aria-describedby="rTo-err"><p class="error" id="rTo-err"></p></div>
+        <div class="field full"><label class="check"><input type="checkbox" id="rHalf"> <span>Half day (only for a single day)</span></label></div>
+        <div class="field full"><label for="rNote">Note for your manager <span class="opt">(optional)</span></label><textarea class="input" id="rNote" rows="3" placeholder="e.g. Family wedding in Galle"></textarea></div>
+      </div>
+      <div class="days-calc" id="daysCalc" aria-live="polite"></div>
+    </div>
+    <div class="modal-foot">
+      <button type="button" class="btn btn-outline" data-close>Cancel</button>
+      <button type="submit" class="btn btn-dark" id="reqSubmit">Send request</button>
+    </div>
+  </form>
+</div>
+
+<div id="toastHost" aria-live="polite"></div>
+
+<script>
+(function () {
+  var reduced = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+  var esc = function (s) { return String(s).replace(/[&<>"]/g, function (c) { return { '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;' }[c]; }); };
+  var DAY = 86400000;
+  var TINT = { Design: '#FDE1D0', Engineering: '#DCE8FF', Finance: '#EDE3FF', Marketing: '#FFE6CC', People: '#D9F3EA', Sales: '#FCE4EE' };
+  var ICON_CHECK = '<svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12.5l4.5 4.5L19 7.5"/></svg>';
+  var ARROW = '<svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M7 17L17 7M8 7h9v9"/></svg>';
+  function iso(d) { return new Date(d.getTime() - d.getTimezoneOffset() * 60000).toISOString().slice(0, 10); }
+  function fmt(isoDate, opts) { return new Date(isoDate + 'T00:00:00').toLocaleDateString('en-GB', opts || { day: 'numeric', month: 'short' }); }
+  function pad(n) { return (n < 10 ? '0' : '') + n; }
+  function hm(mins) { return Math.floor(mins / 60) + 'h ' + pad(Math.round(mins % 60)) + 'm'; }
+  function toMin(t) { var p = t.split(':'); return +p[0] * 60 + +p[1]; }
+
+  // Today's sample team, matching the employees page (Priya and Ishan are on leave there)
+  var team = [
+    [1, 'Amaya', 'Silva', 'Product Designer', 'Design', 'On time', '08:52', null],
+    [2, 'Daniel', 'Okafor', 'Backend Engineer', 'Engineering', 'Remote', '08:30', null],
+    [3, 'Priya', 'Nair', 'Growth Lead', 'Marketing', 'On leave', null, null],
+    [4, 'Lucas', 'Martin', 'Payroll Specialist', 'Finance', 'On time', '08:41', null],
+    [5, 'Hana', 'Kim', 'QA Engineer', 'Engineering', 'Late', '09:47', null],
+    [6, 'Ravi', 'Jayasuriya', 'Head of Design', 'Design', 'On time', '08:15', null],
+    [7, 'Nadia', 'Perera', 'HR Manager', 'People', 'On time', '08:05', null],
+    [8, 'Marcus', 'Lee', 'Account Executive', 'Sales', 'Absent', null, null],
+    [9, 'Ishan', 'Fernando', 'Frontend Engineer', 'Engineering', 'On leave', null, null],
+    [10, 'Sofia', 'Rossi', 'Content Strategist', 'Marketing', 'Remote', '10:02', null],
+    [11, 'Tomás', 'García', 'Sales Manager', 'Sales', 'Late', '09:21', null],
+    [12, 'Aisha', 'Rahman', 'Engineering Manager', 'Engineering', 'Remote', '08:38', null]
+  ].map(function (r) { return { id: r[0], first: r[1], last: r[2], role: r[3], dept: r[4], status: r[5], usual: r[5], in: r[6], out: r[7] }; });
+  var STATUS = {
+    'On time': 'background:#E3F5E8;color:#1C6B37', 'Late': 'background:#FDEBD3;color:#9A4A00', 'Remote': 'background:#E1ECFF;color:#1D4ED8',
+    'On leave': 'background:#EDE3FF;color:#5B3BA8', 'Absent': 'background:#FDE4E4;color:#A3262A'
+  };
+  var CELL = { 'On time': 'ontime', 'Late': 'late', 'Remote': 'remote', 'On leave': 'leave', 'Absent': 'absent' };
+
+  // Requests waiting for approval (the same three as on the dashboard)
+  var today = new Date(); today.setHours(0, 0, 0, 0);
+  function addWorkdays(d, n) { d = new Date(d); while (n > 0) { d = new Date(d.getTime() + DAY); if (d.getDay() % 6) n--; } return d; }
+  var requests = [
+    { id: 1, who: 7, type: 'Annual leave', from: iso(addWorkdays(today, 6)), to: iso(addWorkdays(today, 8)), days: 3, note: 'Family visit', status: 'Pending' },
+    { id: 2, who: 8, type: 'Sick leave', from: iso(today), to: iso(today), days: 1, note: 'Flu', status: 'Pending' },
+    { id: 3, who: 9, type: 'Parental leave', from: iso(addWorkdays(today, 4)), to: iso(addWorkdays(today, 23)), days: 20, note: '', status: 'Pending' }
+  ];
+  var balances = { 'Annual leave': { used: 6, total: 20 }, 'Sick leave': { used: 1, total: 7 }, 'Unpaid leave': { used: 0, total: 10 } };
+  var mine = [];
+  var me = { inAt: null, outAt: null };
+
+  var KEY = 'staffora:attendance';
+  try {
+    var saved = JSON.parse(sessionStorage.getItem(KEY) || 'null');
+    if (saved && saved.day === iso(today)) { team = saved.team; requests = saved.requests; balances = saved.balances; mine = saved.mine; me = saved.me; }
+  } catch (e) {}
+  function save() { try { sessionStorage.setItem(KEY, JSON.stringify({ day: iso(today), team: team, requests: requests, balances: balances, mine: mine, me: me })); } catch (e) {} }
+
+  function byId(id) { for (var i = 0; i < team.length; i++) if (team[i].id === id) return team[i]; return null; }
+  function full(p) { return p.first + ' ' + p.last; }
+  function slug(p) { return full(p).toLowerCase().normalize('NFD').replace(/[̀-ͯ]/g, '').replace(/[^a-z]+/g, '-'); }
+  function face(p, size) { return '<img src="assets/avatars/' + slug(p) + '.svg" alt="" width="' + (size || 38) + '" height="' + (size || 38) + '" loading="lazy">'; }
+  function nowHM() { var d = new Date(); return pad(d.getHours()) + ':' + pad(d.getMinutes()); }
+  function minsSince(t) { var d = new Date(); return Math.max(0, d.getHours() * 60 + d.getMinutes() - toMin(t)); }
+
+  // ---------- My day ----------
+  var userName = 'Kavinda'; try { userName = sessionStorage.getItem('staffora:name') || userName; } catch (e) {}
+  function tick() {
+    var d = new Date();
+    document.getElementById('clock').innerHTML = pad(d.getHours()) + ':' + pad(d.getMinutes()) + '<small>' + pad(d.getSeconds()) + '</small>';
+    if (me.inAt && !me.outAt) document.getElementById('myHours').textContent = hm(minsSince(me.inAt));
+  }
+  function renderMe() {
+    document.getElementById('todayLine').textContent = today.toLocaleDateString('en-GB', { weekday: 'long', day: 'numeric', month: 'long' }) + ' · Shift 09:00–17:30';
+    var badge = document.getElementById('myBadge'), btn = document.getElementById('punch'), label = document.getElementById('punchLabel');
+    document.getElementById('myIn').textContent = me.inAt || '—';
+    document.getElementById('myOut').textContent = me.outAt || '—';
+    if (!me.inAt) { badge.textContent = 'Not checked in'; badge.className = 'badge'; label.textContent = 'Check in'; btn.className = 'punch'; btn.disabled = false; document.getElementById('myHours').textContent = '0h 00m'; }
+    else if (!me.outAt) { badge.textContent = toMin(me.inAt) > toMin('09:15') ? 'Checked in · late' : 'Checked in'; badge.className = 'badge in'; label.textContent = 'Check out'; btn.className = 'punch out'; btn.disabled = false; }
+    else { badge.textContent = 'Done for today'; badge.className = 'badge out'; label.textContent = 'See you tomorrow, ' + userName; btn.disabled = true; document.getElementById('myHours').textContent = hm(Math.max(0, toMin(me.outAt) - toMin(me.inAt))); }
+  }
+  document.getElementById('punch').addEventListener('click', function () {
+    if (!me.inAt) { me.inAt = nowHM(); toast('Checked in at ' + me.inAt + '. Have a good day, ' + userName + '.', 'Undo', function () { me.inAt = null; save(); renderMe(); }); }
+    else if (!me.outAt) { me.outAt = nowHM(); toast('Checked out at ' + me.outAt + ' · ' + hm(Math.max(0, toMin(me.outAt) - toMin(me.inAt))) + ' worked', 'Undo', function () { me.outAt = null; save(); renderMe(); }); }
+    save(); renderMe(); tick();
+  });
+
+  // ---------- Company today ----------
+  function renderStats() {
+    var tiles = [
+      ['Checked in', '228 / 248', 'var(--accent)', 'var(--ink)', '<path d="M5 12.5l4.5 4.5L19 7.5"/>'],
+      ['On time', '212', '#E3F5E8', '#1C6B37', '<circle cx="12" cy="12" r="9"/><path d="M12 7v5l3 2"/>'],
+      ['Late', '16', '#FDEBD3', '#9A4A00', '<path d="M12 8v5M12 16.5h.01"/><circle cx="12" cy="12" r="9"/>'],
+      ['Absent or on leave', '20', '#FDE4E4', '#A3262A', '<circle cx="12" cy="12" r="9"/><path d="M8 8l8 8"/>']
+    ];
+    document.getElementById('stats').innerHTML = tiles.map(function (t) {
+      return '<div class="stat" style="background:var(--soft-2)"><span class="stat-icon" style="background:' + t[2] + ';color:' + t[3] + '"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">' + t[4] + '</svg></span><div><strong>' + t[1] + '</strong><span>' + t[0] + '</span></div></div>';
+    }).join('');
+  }
+
+  // ---------- Team today ----------
+  var filter = 'All', q = '';
+  function renderTeam() {
+    var tabs = ['All', 'On time', 'Late', 'Remote', 'On leave', 'Absent'];
+    document.getElementById('tabs').innerHTML = tabs.map(function (t) {
+      var n = t === 'All' ? team.length : team.filter(function (p) { return p.status === t; }).length;
+      return '<button type="button" data-status="' + t + '" aria-pressed="' + (filter === t) + '">' + t + '<span class="n">' + n + '</span></button>';
+    }).join('');
+    var rows = team.filter(function (p) { return (filter === 'All' || p.status === filter) && (!q || (full(p) + ' ' + p.role + ' ' + p.dept).toLowerCase().indexOf(q) !== -1); });
+    var inCount = team.filter(function (p) { return p.in; }).length;
+    document.getElementById('teamNote').textContent = inCount + ' of ' + team.length + ' sample people have checked in. Click someone to fix their times.';
+    document.getElementById('team').innerHTML = '<li class="trow head" aria-hidden="true"><span>Name</span><span>Status</span><span class="num">In</span><span class="num">Out</span><span class="num">Hours</span><span></span></li>' +
+      (rows.length ? rows.map(function (p, i) {
+        var mins = p.in ? (p.out ? toMin(p.out) - toMin(p.in) : minsSince(p.in)) : 0;
+        return '<li class="trow" style="animation-delay:' + i * 30 + 'ms"><div class="who"><span class="avatar" style="background:' + TINT[p.dept] + '" aria-hidden="true">' + face(p) + '</span><div style="min-width:0"><button type="button" data-open="' + p.id + '">' + esc(full(p)) + '</button><span>' + esc(p.role) + '</span></div></div>' +
+          '<span class="status-cell"><span class="status" style="' + STATUS[p.status] + '">' + p.status + '</span></span>' +
+          '<span class="num hide-sm' + (p.in ? '' : ' dim') + '">' + (p.in || '—') + '</span><span class="num hide-sm' + (p.out ? '' : ' dim') + '">' + (p.out || (p.in ? 'Working' : '—')) + '</span>' +
+          '<span class="num hide-sm' + (mins ? '' : ' dim') + '">' + (mins ? hm(mins) : '—') + '</span><span class="go" aria-hidden="true">' + ARROW + '</span></li>';
+      }).join('') : '<li class="trow" style="grid-template-columns:1fr"><span style="color:var(--muted)">No one matches.</span></li>');
+  }
+  document.getElementById('tabs').addEventListener('click', function (ev) { var b = ev.target.closest('[data-status]'); if (!b) return; filter = b.dataset.status; renderTeam(); });
+  document.getElementById('q').addEventListener('input', function (ev) { q = ev.target.value.trim().toLowerCase(); renderTeam(); });
+
+  // ---------- Week ----------
+  var monday = new Date(today); monday.setDate(today.getDate() - ((today.getDay() + 6) % 7));
+  var days = [0, 1, 2, 3, 4].map(function (i) { var d = new Date(monday); d.setDate(monday.getDate() + i); return d; });
+  // A stable pattern for earlier days, from each person's id
+  // Earlier days follow each person's usual status, not today's
+  function pastStatus(p, i) {
+    var usual = p.usual || p.status;
+    if (usual === 'On leave') return 'On leave';
+    var pattern = ['On time', 'On time', 'Late', 'On time', 'Remote', 'On time', 'On time', 'Absent'];
+    if (usual === 'Remote' && (p.id + i) % 3) return 'Remote';
+    return pattern[(p.id * 3 + i * 5) % pattern.length];
+  }
+  function renderWeek() {
+    document.getElementById('weekRange').textContent = fmt(iso(days[0])) + ' – ' + fmt(iso(days[4]), { day: 'numeric', month: 'short', year: 'numeric' });
+    var html = '<span></span>' + days.map(function (d) {
+      var isToday = iso(d) === iso(today);
+      return '<span class="dayhead' + (isToday ? ' today' : '') + '">' + d.toLocaleDateString('en-GB', { weekday: 'short' }) + '<span class="week-head-day">' + d.getDate() + (isToday ? ' · Today' : '') + '</span></span>';
+    }).join('');
+    team.forEach(function (p, r) {
+      html += '<span class="name"><span class="avatar" style="background:' + TINT[p.dept] + '" aria-hidden="true">' + face(p, 28) + '</span><span>' + esc(full(p)) + '</span></span>';
+      days.forEach(function (d, i) {
+        var key = iso(d), s, label;
+        if (key > iso(today)) { s = 'future'; label = 'Upcoming'; }
+        else { var st = key === iso(today) ? p.status : pastStatus(p, i); s = CELL[st]; label = st; }
+        var short = s === 'future' ? '' : s === 'ontime' ? '✓' : s === 'late' ? 'Late' : s === 'remote' ? 'WFH' : s === 'leave' ? 'Leave' : 'Off';
+        html += '<span class="cell ' + s + '" style="animation-delay:' + (r * 25 + i * 20) + 'ms" title="' + esc(full(p)) + ', ' + d.toLocaleDateString('en-GB', { weekday: 'long' }) + ': ' + label + '"><span aria-hidden="true">' + short + '</span><span class="sr-only">' + esc(full(p)) + ', ' + d.toLocaleDateString('en-GB', { weekday: 'long' }) + ': ' + label + '</span></span>';
+      });
+    });
+    document.getElementById('week').innerHTML = html;
+  }
+
+  // ---------- Time off ----------
+  var ICON_X = '<svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" aria-hidden="true"><path d="M6 6l12 12M18 6L6 18"/></svg>';
+  var ICON_OK = '<svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12.5l4.5 4.5L19 7.5"/></svg>';
+  var flashId = null;
+  function range(r) { return r.from === r.to ? fmt(r.from, { weekday: 'short', day: 'numeric', month: 'short' }) : fmt(r.from) + ' – ' + fmt(r.to); }
+  function renderLeave() {
+    var pending = requests.filter(function (r) { return r.status === 'Pending'; }).length;
+    document.getElementById('reqNote').textContent = pending ? pending + ' waiting for your approval' : 'You’re all caught up';
+    document.getElementById('requests').innerHTML = requests.map(function (r) {
+      var p = byId(r.who);
+      var action = r.status === 'Pending'
+        ? '<div class="req-actions"><button type="button" class="icon-btn" data-decide="Declined" data-id="' + r.id + '" aria-label="Decline ' + esc(full(p)) + '’s request">' + ICON_X + '</button><button type="button" class="icon-btn approve" data-decide="Approved" data-id="' + r.id + '" aria-label="Approve ' + esc(full(p)) + '’s request">' + ICON_OK + '</button></div>'
+        : '<span class="status" style="' + (r.status === 'Approved' ? 'background:#E3F5E8;color:#1C6B37' : 'background:#FDE4E4;color:#A3262A') + '">' + r.status + '</span>';
+      return '<li class="req' + (r.id === flashId ? ' flash' : '') + '"><span class="avatar" style="background:' + TINT[p.dept] + '" aria-hidden="true">' + face(p, 40) + '</span>' +
+        '<div class="req-info"><strong>' + esc(full(p)) + '</strong><span>' + r.type + ' · ' + range(r) + ' · ' + r.days + (r.days === 1 ? ' day' : ' days') + (r.note ? ' · “' + esc(r.note) + '”' : '') + '</span></div>' + action + '</li>';
+    }).join('');
+    document.getElementById('balances').innerHTML = Object.keys(balances).map(function (k) {
+      var b = balances[k], left = b.total - b.used;
+      return '<div class="bal"><div class="bal-top"><span>' + k + '</span><span><strong>' + left + ' left</strong> of ' + b.total + '</span></div><div class="meter" role="img" aria-label="' + b.used + ' of ' + b.total + ' days used"><span style="width:' + Math.round(b.used / b.total * 100) + '%"></span></div></div>';
+    }).join('');
+    document.getElementById('mine').innerHTML = mine.length ? mine.map(function (r) {
+      return '<li class="req' + (r.id === flashId ? ' flash' : '') + '"><div class="req-info"><strong>' + r.type + '</strong><span>' + range(r) + ' · ' + r.days + (r.days === 1 ? ' day' : ' days') + '</span></div><span class="status" style="background:#FDE1D0;color:#B4501A">Pending</span><button type="button" class="icon-btn" data-cancel="' + r.id + '" aria-label="Cancel this request">' + ICON_X + '</button></li>';
+    }).join('') : '';
+  }
+  document.getElementById('requests').addEventListener('click', function (ev) {
+    var b = ev.target.closest('[data-decide]'); if (!b) return;
+    var r = requests.filter(function (x) { return x.id === +b.dataset.id; })[0], p = byId(r.who), prev = p.status;
+    r.status = b.dataset.decide; flashId = r.id;
+    if (r.status === 'Approved' && r.from === iso(today)) { p.status = 'On leave'; }
+    save(); renderLeave(); renderTeam(); renderWeek();
+    toast(p.first + '’s ' + r.type.toLowerCase() + ' ' + r.status.toLowerCase(), 'Undo', function () { r.status = 'Pending'; p.status = prev; flashId = r.id; save(); renderLeave(); renderTeam(); renderWeek(); });
+  });
+  document.getElementById('mine').addEventListener('click', function (ev) {
+    var b = ev.target.closest('[data-cancel]'); if (!b) return;
+    var r = mine.filter(function (x) { return x.id === +b.dataset.cancel; })[0];
+    mine = mine.filter(function (x) { return x !== r; }); balances[r.type].used -= r.days; save(); renderLeave();
+    toast('Request cancelled. ' + r.days + (r.days === 1 ? ' day' : ' days') + ' back in your balance.');
+  });
+
+  // ---------- Overlays ----------
+  var scrim = document.getElementById('scrim'), openStack = [];
+  function openLayer(el, focusEl) {
+    var prev = document.activeElement;
+    clearTimeout(toastTimer); document.getElementById('toastHost').innerHTML = '';
+    el.hidden = false; scrim.hidden = false; document.body.classList.add('locked');
+    openStack.push({ el: el, prev: prev });
+    setTimeout(function () { (focusEl || el.querySelector('button, input, select, a')).focus(); }, reduced ? 0 : 60);
+  }
+  function closeTop() {
+    var top = openStack.pop(); if (!top) return;
+    top.el.hidden = true;
+    if (!openStack.length) { scrim.hidden = true; document.body.classList.remove('locked'); }
+    if (location.hash && location.hash !== '#leave') history.replaceState(null, '', location.pathname + location.search);
+    if (top.prev && document.contains(top.prev)) top.prev.focus();
+  }
+  scrim.addEventListener('click', closeTop);
+  document.addEventListener('click', function (ev) { if (ev.target.closest('[data-close]')) closeTop(); });
+  document.addEventListener('keydown', function (ev) {
+    if (!openStack.length) return;
+    var el = openStack[openStack.length - 1].el;
+    if (ev.key === 'Escape') { ev.preventDefault(); closeTop(); return; }
+    if (ev.key !== 'Tab') return;
+    var f = Array.prototype.filter.call(el.querySelectorAll('a[href], button:not([disabled]), input, select, textarea'), function (n) { return n.offsetParent !== null; });
+    if (!f.length) return;
+    if (ev.shiftKey && document.activeElement === f[0]) { ev.preventDefault(); f[f.length - 1].focus(); }
+    else if (!ev.shiftKey && document.activeElement === f[f.length - 1]) { ev.preventDefault(); f[0].focus(); }
+  });
+
+  // ---------- Person drawer ----------
+  var drawer = document.getElementById('drawer'), currentId = null;
+  function renderPerson(p) {
+    var mins = p.in ? (p.out ? toMin(p.out) - toMin(p.in) : minsSince(p.in)) : 0;
+    var weekRows = days.map(function (d, i) {
+      var key = iso(d), st = key > iso(today) ? 'Upcoming' : key === iso(today) ? p.status : pastStatus(p, i);
+      return '<div class="row"><dt>' + d.toLocaleDateString('en-GB', { weekday: 'long', day: 'numeric' }) + '</dt><dd>' + (st === 'Upcoming' ? '<span style="color:var(--muted)">Upcoming</span>' : '<span class="status" style="' + STATUS[st] + '">' + st + '</span>') + '</dd></div>';
+    }).join('');
+    var canFix = p.status !== 'On leave';
+    document.getElementById('drawerBody').innerHTML =
+      '<div class="profile-hero"><span class="avatar" style="background:' + TINT[p.dept] + '" aria-hidden="true">' + face(p, 84) + '</span><h2 id="pName">' + esc(full(p)) + '</h2><p>' + esc(p.role) + ' · ' + p.dept + '</p><span class="status" style="' + STATUS[p.status] + '">' + p.status + ' today</span></div>' +
+      '<div class="block"><h3>Today</h3><dl>' +
+        '<div class="row"><dt>Checked in</dt><dd>' + (p.in || '—') + '</dd></div><div class="row"><dt>Checked out</dt><dd>' + (p.out || (p.in ? 'Still working' : '—')) + '</dd></div>' +
+        '<div class="row"><dt>Hours</dt><dd>' + (mins ? hm(mins) : '—') + '</dd></div></dl>' +
+        (canFix ? '<form class="fix" id="fixForm"><div class="field"><label for="fixIn">In</label><input class="input" type="time" id="fixIn" value="' + (p.in || '') + '"></div><div class="field"><label for="fixOut">Out</label><input class="input" type="time" id="fixOut" value="' + (p.out || '') + '"></div><button type="submit" class="small-btn">Save times</button></form><p class="error" id="fix-err" style="margin:-6px 0 12px"></p>' : '') +
+      '</div>' +
+      '<div class="block"><h3>This week</h3><dl>' + weekRows + '</dl></div>';
+    document.getElementById('profileLink').href = 'employees.html#emp-' + p.id;
+  }
+  function openPerson(id) {
+    var p = byId(id); if (!p) return;
+    currentId = id; renderPerson(p);
+    if (drawer.hidden) openLayer(drawer, drawer.querySelector('[data-close]'));
+  }
+  document.addEventListener('click', function (ev) {
+    var b = ev.target.closest('[data-open]'); if (!b) return;
+    history.replaceState(null, '', '#emp-' + b.dataset.open);
+    openPerson(+b.dataset.open);
+  });
+  drawer.addEventListener('submit', function (ev) {
+    if (ev.target.id !== 'fixForm') return;
+    ev.preventDefault();
+    var p = byId(currentId), tin = document.getElementById('fixIn').value, tout = document.getElementById('fixOut').value;
+    var err = !tin && tout ? 'Add a check-in time first.' : tin && tout && toMin(tout) <= toMin(tin) ? 'Check-out has to be after check-in.' : '';
+    document.getElementById('fix-err').textContent = err;
+    if (err) return;
+    p.in = tin || null; p.out = tout || null;
+    if (p.in) { if (p.status === 'Absent') p.status = toMin(p.in) > toMin('09:15') ? 'Late' : 'On time'; else if (p.status !== 'Remote') p.status = toMin(p.in) > toMin('09:15') ? 'Late' : 'On time'; }
+    else if (p.status !== 'Remote') p.status = 'Absent';
+    save(); renderPerson(p); renderTeam(); renderWeek();
+    toast('Times saved for ' + p.first);
+  });
+
+  // ---------- Request time off ----------
+  var reqModal = document.getElementById('reqModal'), f = function (id) { return document.getElementById(id); };
+  function workdays(a, b) {
+    if (!a || !b || b < a) return 0;
+    var d = new Date(a + 'T00:00:00'), end = new Date(b + 'T00:00:00'), n = 0;
+    while (d <= end) { if (d.getDay() % 6) n++; d = new Date(d.getTime() + DAY); }
+    return n;
+  }
+  function reqType() { return document.querySelector('input[name="rType"]:checked').value; }
+  function requested() {
+    var n = workdays(f('rFrom').value, f('rTo').value);
+    return f('rHalf').checked && n === 1 ? 0.5 : n;
+  }
+  function updateCalc() {
+    var n = requested(), b = balances[reqType()], left = b.total - b.used, box = f('daysCalc');
+    f('rHalf').disabled = workdays(f('rFrom').value, f('rTo').value) !== 1;
+    if (f('rHalf').disabled) f('rHalf').checked = false;
+    var over = n > left;
+    box.className = 'days-calc' + (over ? ' bad' : '');
+    box.innerHTML = '<span>' + (n ? (over ? 'That’s more than your ' + left + ' days of ' + reqType().toLowerCase() + ' left.' : 'Working days off · ' + (left - n) + ' left after this') : 'Pick your dates to see how many days this uses.') + '</span><strong>' + n + (n === 1 ? ' day' : ' days') + '</strong>';
+  }
+  ['rFrom', 'rTo', 'rHalf'].forEach(function (id) { f(id).addEventListener('input', function () { f(id + '-err') && (f(id + '-err').textContent = ''); updateCalc(); }); });
+  document.querySelectorAll('input[name="rType"]').forEach(function (r) { r.addEventListener('change', updateCalc); });
+  f('rFrom').addEventListener('change', function () { if (!f('rTo').value || f('rTo').value < f('rFrom').value) f('rTo').value = f('rFrom').value; updateCalc(); });
+  function openRequest() {
+    f('reqForm').reset();
+    var start = iso(addWorkdays(today, 5));
+    f('rFrom').value = start; f('rTo').value = start; f('rFrom').min = iso(today); f('rTo').min = iso(today);
+    f('rFrom-err').textContent = ''; f('rTo-err').textContent = '';
+    updateCalc();
+    openLayer(reqModal, document.querySelector('input[name="rType"]:checked'));
+  }
+  f('requestBtn').addEventListener('click', openRequest);
+  f('reqForm').addEventListener('submit', function (ev) {
+    ev.preventDefault();
+    var from = f('rFrom').value, to = f('rTo').value, n = requested(), b = balances[reqType()];
+    var e1 = !from ? 'Pick a start date.' : from < iso(today) ? 'Pick today or later.' : '';
+    var e2 = !to ? 'Pick an end date.' : to < from ? 'End date is before the start.' : !n ? 'Those dates are all on a weekend.' : n > b.total - b.used ? 'Not enough days left.' : '';
+    f('rFrom-err').textContent = e1; f('rTo-err').textContent = e2;
+    if (e1 || e2) { (e1 ? f('rFrom') : f('rTo')).focus(); return; }
+    var btn = f('reqSubmit');
+    btn.disabled = true; btn.innerHTML = '<span class="spinner" aria-hidden="true" style="border-color:rgba(255,255,255,.3);border-top-color:#fff"></span>Sending…';
+    setTimeout(function () {
+      btn.disabled = false; btn.textContent = 'Send request';
+      var id = Date.now();
+      mine.unshift({ id: id, type: reqType(), from: from, to: to, days: n });
+      b.used += n; flashId = id; save();
+      closeTop(); renderLeave();
+      document.getElementById('leave').scrollIntoView({ behavior: reduced ? 'auto' : 'smooth', block: 'start' });
+      toast('Request sent to Nadia for ' + n + (n === 1 ? ' day' : ' days'));
+    }, reduced ? 0 : 800);
+  });
+
+  // ---------- Toast ----------
+  var toastTimer = null;
+  function toast(msg, actionLabel, action) {
+    var host = document.getElementById('toastHost');
+    clearTimeout(toastTimer);
+    host.innerHTML = '<div class="toast"><span class="ok">' + ICON_CHECK + '</span><p>' + esc(msg) + '</p>' + (actionLabel ? '<button type="button">' + actionLabel + '</button>' : '') + '</div>';
+    if (actionLabel) host.querySelector('button').addEventListener('click', function () { host.innerHTML = ''; action(); });
+    toastTimer = setTimeout(function () { host.innerHTML = ''; }, 5000);
+  }
+
+  renderMe(); tick(); setInterval(tick, 1000);
+  renderStats(); renderTeam(); renderWeek(); renderLeave();
+  document.getElementById('subline').textContent = today.toLocaleDateString('en-GB', { weekday: 'long', day: 'numeric', month: 'long' }) + ' · 228 of 248 people checked in';
+  function fromHash() {
+    var h = location.hash;
+    if (h === '#request') { if (reqModal.hidden) openRequest(); }
+    else if (h.indexOf('#emp-') === 0) openPerson(+h.slice(5));
+    else if (h === '#leave') document.getElementById('leave').scrollIntoView({ block: 'start' });
+  }
+  fromHash();
+  window.addEventListener('hashchange', fromHash);
+})();
+</script>
+</body>
+</html>

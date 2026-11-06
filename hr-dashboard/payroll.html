@@ -1,0 +1,592 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Payroll — Staffora</title>
+<meta name="description" content="Pay runs, payslips and payroll history for the Staffora HR dashboard concept by Kavinda Weerasekara.">
+<link rel="icon" href="../favicon.ico">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&amp;display=swap">
+<link rel="stylesheet" href="app.css">
+<style>
+/* Payroll-only styles; shared pieces live in app.css */
+.run { display: grid; grid-template-columns: minmax(0, 1.5fr) minmax(0, 1fr); gap: 20px; }
+.run-card { background: var(--ink); color: #FFFFFF; border-radius: var(--radius); padding: 26px; position: relative; overflow: hidden; display: flex; flex-direction: column; gap: 20px; }
+.run-card::after { content: ''; position: absolute; right: -60px; top: -60px; width: 200px; height: 200px; border-radius: 999px; border: 34px solid #36312E; }
+.run-card > * { position: relative; z-index: 1; }
+.run-top { display: flex; justify-content: space-between; align-items: center; gap: 12px; flex-wrap: wrap; }
+.run-top h2 { font-size: 17px; font-weight: 600; }
+.run-status { font-size: 12px; font-weight: 700; padding: 5px 12px; border-radius: 999px; background: #4B4541; color: #FFFFFF; }
+.run-status.ready { background: var(--accent); color: var(--ink); }
+.run-status.done { background: #3FA46A; color: #FFFFFF; }
+.run-total span { display: block; font-size: 13px; color: #C9C1BB; }
+.run-total strong { font-size: 44px; font-weight: 700; letter-spacing: -0.03em; line-height: 1.05; }
+.run-total strong small { font-size: 26px; color: #90877F; }
+.run-meta { display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: 10px; }
+.run-meta div { background: #3C3633; border-radius: 16px; padding: 12px 14px; }
+.run-meta span { display: block; font-size: 12px; color: #C9C1BB; }
+.run-meta strong { font-size: 15px; font-weight: 700; }
+.run-actions { display: flex; gap: 10px; flex-wrap: wrap; }
+.run-actions .btn { flex: 1 1 160px; height: 50px; }
+.btn-ghost-dark { background: transparent; color: #FFFFFF; border: 1px solid #4B4541; }
+.btn-ghost-dark:hover { background: #3C3633; }
+.checklist { background: #FFFFFF; border-radius: var(--radius); padding: 22px; display: flex; flex-direction: column; gap: 12px; }
+.checklist h2 { font-size: 16px; font-weight: 700; }
+.checks { list-style: none; margin: 0; padding: 0; display: flex; flex-direction: column; gap: 8px; }
+.checks li { display: flex; align-items: center; gap: 12px; padding: 12px 14px; border-radius: 16px; background: var(--soft-2); font-size: 14px; }
+.checks .dot { width: 26px; height: 26px; flex: none; border-radius: 999px; display: grid; place-items: center; }
+.checks .ok .dot { background: #E3F5E8; color: #1C6B37; }
+.checks .warn .dot { background: #FDEBD3; color: #9A4A00; }
+.checks small { display: block; font-size: 12px; color: var(--muted); }
+
+.table-wrap { overflow-x: auto; }
+table.pay { width: 100%; min-width: 760px; border-collapse: collapse; font-size: 14px; }
+table.pay th { text-align: left; font-size: 12px; font-weight: 600; color: var(--muted); padding: 0 12px 12px; white-space: nowrap; }
+table.pay td { padding: 12px; border-top: 1px solid var(--line); white-space: nowrap; }
+table.pay th.num, table.pay td.num { text-align: right; font-variant-numeric: tabular-nums; }
+table.pay tbody tr { transition: background-color .2s ease; cursor: pointer; }
+table.pay tbody tr:hover { background: var(--soft-2); }
+table.pay tfoot td { font-weight: 700; border-top: 2px solid var(--ink); }
+.who { display: flex; align-items: center; gap: 12px; }
+.who .avatar { width: 36px; height: 36px; font-size: 12px; }
+.who button { border: none; background: none; padding: 0; font-weight: 700; font-size: 14px; text-align: left; }
+.who button:hover { text-decoration: underline; text-underline-offset: 3px; }
+.who span { display: block; font-size: 12px; color: var(--muted); }
+.panel-head { display: flex; justify-content: space-between; align-items: center; gap: 12px; flex-wrap: wrap; }
+.panel-head h2 { font-size: 18px; font-weight: 700; }
+.panel-head p { font-size: 13px; color: var(--muted); }
+
+.history { list-style: none; margin: 0; padding: 0; display: flex; flex-direction: column; }
+.history li { display: flex; align-items: center; gap: 14px; padding: 12px 4px; border-top: 1px solid var(--line); flex-wrap: wrap; }
+.history li:first-child { border-top: none; }
+.history .month { flex: 1 1 160px; }
+.history .month strong { display: block; font-size: 14px; }
+.history .month span { font-size: 12px; color: var(--muted); }
+.history .amt { font-weight: 700; font-variant-numeric: tabular-nums; }
+.history li.new { animation: flash 2s ease; border-radius: 14px; }
+
+/* Payslip */
+.slip-total { display: flex; justify-content: space-between; align-items: baseline; padding: 16px; border-radius: 18px; background: var(--ink); color: #FFFFFF; margin-bottom: 12px; }
+.slip-total span { font-size: 13px; color: #C9C1BB; }
+.slip-total strong { font-size: 28px; font-weight: 700; letter-spacing: -0.02em; font-variant-numeric: tabular-nums; }
+.block .row dd.neg { color: #A3262A; }
+
+/* Run wizard */
+.modal.wide { width: min(880px, calc(100vw - 24px)); }
+.mini { width: 92px; height: 38px; padding: 0 10px; border-radius: 10px; border: 1.5px solid var(--line); text-align: right; font: inherit; font-size: 14px; outline: none; transition: border-color .2s ease, box-shadow .2s ease; }
+.mini:focus { border-color: var(--accent); box-shadow: 0 0 0 3px rgba(244,123,54,.15); }
+.issues { list-style: none; margin: 0; padding: 0; display: flex; flex-direction: column; gap: 10px; }
+.issue { display: flex; gap: 14px; align-items: flex-start; padding: 16px; border-radius: 18px; background: #FEF3E6; flex-wrap: wrap; transition: background-color .3s ease; }
+.issue.fixed { background: #EAF7EE; }
+.issue .dot { width: 34px; height: 34px; flex: none; border-radius: 12px; display: grid; place-items: center; background: #FDEBD3; color: #9A4A00; }
+.issue.fixed .dot { background: #D2F0DC; color: #1C6B37; }
+.issue-body { flex: 1 1 260px; min-width: 0; }
+.issue-body strong { display: block; font-size: 14px; }
+.issue-body p { font-size: 13px; color: var(--muted); margin-top: 2px; }
+.issue-actions { display: flex; gap: 8px; flex-wrap: wrap; align-items: center; margin-top: 10px; }
+.issue-actions .input { height: 40px; width: 220px; font-size: 14px; }
+.sum { border-radius: 20px; background: var(--soft-2); padding: 6px 18px; }
+.sum .row { display: flex; justify-content: space-between; gap: 16px; padding: 12px 0; border-top: 1px solid #EFEAE6; font-variant-numeric: tabular-nums; }
+.sum .row:first-child { border-top: none; }
+.sum .row span { color: var(--muted); }
+.sum .row strong { font-weight: 700; }
+.sum .row.big strong { font-size: 22px; }
+.done-screen { text-align: center; padding: 10px 0 6px; }
+.done-badge { width: 84px; height: 84px; margin: 0 auto 18px; border-radius: 999px; background: var(--accent); display: grid; place-items: center; box-shadow: 0 0 0 10px var(--peach); animation: pop-in .6s cubic-bezier(.2,.8,.2,1); }
+.done-badge path { stroke-dasharray: 30; stroke-dashoffset: 30; animation: draw .5s .3s ease forwards; }
+.done-screen h3 { font-size: 22px; font-weight: 700; }
+.done-screen p { color: var(--muted); margin-top: 6px; }
+@keyframes pop-in { 0% { opacity: 0; transform: scale(.7); } 70% { opacity: 1; transform: scale(1.05); } 100% { transform: scale(1); } }
+@keyframes draw { to { stroke-dashoffset: 0; } }
+
+@media (max-width: 1100px) { .run { grid-template-columns: minmax(0, 1fr); } }
+@media (max-width: 760px) {
+  .run-meta { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+  .run-total strong { font-size: 36px; }
+  .run-card { padding: 20px; border-radius: 20px; }
+  .checklist { border-radius: 20px; padding: 18px; }
+  .modal.wide { width: 100%; }
+}
+</style>
+<script src="../assets/js/analytics.js" defer></script>
+</head>
+<body>
+<div class="page">
+<div class="wrap">
+  <header class="topbar enter">
+    <a href="overview.html" class="brand" aria-label="Staffora project overview">
+      <span class="brand-mark"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="#2B2725" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="9" cy="8" r="3.2"/><path d="M3 19.5c.9-3.4 3.2-5 6-5s5.1 1.6 6 5"/><path d="M15.5 4.8a3.2 3.2 0 0 1 0 6.4M17.5 14.6c1.8.7 2.9 2.3 3.4 4.9"/></svg></span>
+      Staffora
+    </a>
+    <nav class="mainnav" aria-label="Primary">
+      <a href="index.html">Dashboard</a>
+      <a href="employees.html">Employees</a>
+      <a href="recruitment.html">Recruitment</a>
+      <a href="payroll.html" aria-current="page">Payroll</a>
+      <a href="attendance.html">Attendance</a>
+    </nav>
+    <div class="top-actions">
+      <button type="button" class="circle-btn" aria-label="Search people" id="focusSearch"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" aria-hidden="true"><circle cx="11" cy="11" r="7"/><path d="M20 20l-3.5-3.5"/></svg></button>
+      <button type="button" class="circle-btn" aria-label="Notifications"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M6 16v-5a6 6 0 1 1 12 0v5l1.5 2h-15z"/><path d="M10 20.5a2 2 0 0 0 4 0"/></svg></button>
+      <button type="button" class="me" aria-label="Account menu"><img src="assets/avatars/kavinda-weerasekara.svg" alt="" width="44" height="44"></button>
+    </div>
+  </header>
+  <div class="body">
+    <aside class="rail enter" aria-label="Sections">
+      <div class="rail-group">
+        <a href="index.html" aria-label="Overview"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" aria-hidden="true"><rect x="3.5" y="3.5" width="7" height="7" rx="2"/><rect x="13.5" y="3.5" width="7" height="7" rx="2"/><rect x="3.5" y="13.5" width="7" height="7" rx="2"/><rect x="13.5" y="13.5" width="7" height="7" rx="2"/></svg></a>
+        <a href="employees.html" aria-label="Employees"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" aria-hidden="true"><circle cx="9" cy="8" r="3.5"/><path d="M2.5 20c.8-3.6 3.4-5.5 6.5-5.5s5.7 1.9 6.5 5.5"/><path d="M16 4.6a3.5 3.5 0 0 1 0 6.8M18 14.8c1.9.7 3.1 2.5 3.5 5.2"/></svg></a>
+        <a href="recruitment.html" aria-label="Recruitment"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="3" y="7" width="18" height="13" rx="3"/><path d="M8 7V5a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2M3 12.5h18"/></svg></a>
+        <a href="attendance.html" aria-label="Time off"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" aria-hidden="true"><rect x="3" y="5" width="18" height="16" rx="3"/><path d="M8 3v4M16 3v4M3 10h18M9 15l2 2 4-4"/></svg></a>
+        <a href="payroll.html" aria-label="Payroll" aria-current="page"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" aria-hidden="true"><rect x="3" y="6" width="18" height="14" rx="3"/><path d="M3 10.5h18M15.5 15h2.5"/></svg></a>
+        <a href="#" aria-label="Reports"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" aria-hidden="true"><path d="M5 20V11M11 20V5M17 20v-7M3 20h18"/></svg></a>
+      </div>
+      <div class="rail-group">
+        <a href="#" aria-label="Settings"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" aria-hidden="true"><path d="M4 6h9M19 6h1M4 12h3M13 12h7M4 18h11M21 18h-1"/><circle cx="16" cy="6" r="2.2"/><circle cx="10" cy="12" r="2.2"/><circle cx="18" cy="18" r="2.2"/></svg></a>
+        <a href="login.html" aria-label="Sign out"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M15 4h3a2 2 0 0 1 2 2v12a2 2 0 0 1-2 2h-3M10 8l-4 4 4 4M6 12h10"/></svg></a>
+      </div>
+    </aside>
+    <main class="content">
+      <div class="head enter" style="animation-delay: 60ms;">
+        <div>
+          <p class="crumbs"><a href="index.html">Dashboard</a><span aria-hidden="true">/</span><span>Payroll</span></p>
+          <h1>Payroll</h1>
+          <p class="sub" id="subline">Pay runs, payslips and history.</p>
+        </div>
+        <div class="head-actions">
+          <button type="button" class="btn btn-outline" id="exportBtn">
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 4v11M7 10l5 5 5-5M5 20h14"/></svg>
+            Export
+          </button>
+          <button type="button" class="btn btn-dark" id="runBtnTop">Run payroll</button>
+        </div>
+      </div>
+
+      <section class="run enter" style="animation-delay: 120ms;" aria-label="Current pay run">
+        <div class="run-card">
+          <div class="run-top"><h2 id="runTitle">Pay run</h2><span class="run-status" id="runStatus">Draft</span></div>
+          <div class="run-total"><span>Estimated gross pay</span><strong id="runGross">$0</strong></div>
+          <div class="run-meta">
+            <div><span>Pay date</span><strong id="runDate">—</strong></div>
+            <div><span>Employees</span><strong>248</strong></div>
+            <div><span>Est. net pay</span><strong id="runNet">—</strong></div>
+            <div><span>Cycle</span><strong>Monthly</strong></div>
+          </div>
+          <div class="run-actions">
+            <button type="button" class="btn btn-accent" id="runBtn">Run payroll</button>
+            <button type="button" class="btn btn-ghost-dark" id="previewBtn">Preview payslips</button>
+          </div>
+        </div>
+        <div class="checklist">
+          <h2>Before you run</h2>
+          <ul class="checks" id="checks"></ul>
+        </div>
+      </section>
+
+      <section class="panel enter" style="animation-delay: 180ms;" aria-labelledby="pay-title" id="paySection">
+        <div class="panel-head">
+          <div><h2 id="pay-title">This month’s pay</h2><p id="payNote"></p></div>
+          <label class="search" style="flex: 0 1 280px;">
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true"><circle cx="11" cy="11" r="7"/><path d="M20 20l-3.5-3.5"/></svg>
+            <span class="sr-only">Search people</span>
+            <input type="search" id="q" placeholder="Search people">
+          </label>
+        </div>
+        <div class="table-wrap">
+          <table class="pay">
+            <thead><tr><th scope="col">Name</th><th scope="col" class="num">Base</th><th scope="col" class="num">Overtime</th><th scope="col" class="num">Bonus</th><th scope="col" class="num">Gross</th><th scope="col" class="num">Deductions</th><th scope="col" class="num">Net</th><th scope="col">Status</th></tr></thead>
+            <tbody id="payRows"></tbody>
+            <tfoot id="payFoot"></tfoot>
+          </table>
+        </div>
+      </section>
+
+      <section class="panel enter" style="animation-delay: 240ms;" aria-labelledby="hist-title">
+        <div class="panel-head"><div><h2 id="hist-title">Pay run history</h2><p>Every run for all 248 employees.</p></div></div>
+        <ul class="history" id="history"></ul>
+      </section>
+    </main>
+  </div>
+</div>
+</div>
+
+<!-- Payslip drawer -->
+<div class="scrim" id="scrim" hidden></div>
+<aside class="drawer" id="drawer" role="dialog" aria-modal="true" aria-labelledby="sName" hidden>
+  <div class="drawer-head">
+    <p id="slipPeriod">Payslip</p>
+    <button type="button" class="circle-btn" data-close aria-label="Close payslip"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" aria-hidden="true"><path d="M6 6l12 12M18 6L6 18"/></svg></button>
+  </div>
+  <div class="drawer-scroll" id="slipBody"></div>
+  <div class="drawer-foot">
+    <button type="button" class="btn btn-outline" id="emailSlip">Email payslip</button>
+    <button type="button" class="btn btn-dark" id="downloadSlip">Download</button>
+  </div>
+</aside>
+
+<!-- Run payroll -->
+<div class="modal wide" id="runModal" role="dialog" aria-modal="true" aria-labelledby="wizTitle" hidden>
+  <div class="modal-head">
+    <div><h2 id="wizTitle">Run payroll</h2><p id="wizSub">Step 1 of 3 · Review pay</p></div>
+    <button type="button" class="circle-btn" data-close aria-label="Close"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" aria-hidden="true"><path d="M6 6l12 12M18 6L6 18"/></svg></button>
+  </div>
+  <div class="stepper" aria-hidden="true" id="wizSteps">
+    <div class="on" data-dot="1"><i></i>Review pay</div>
+    <div data-dot="2"><i></i>Fix issues</div>
+    <div data-dot="3"><i></i>Approve</div>
+  </div>
+  <div class="modal-body">
+    <div class="fstep active" data-fstep="1">
+      <p style="color: var(--muted); margin-bottom: 14px;">Add overtime hours or a one-off bonus. Totals update as you type. The other 236 people have no changes this month.</p>
+      <div class="table-wrap">
+        <table class="pay" style="min-width: 640px;">
+          <thead><tr><th scope="col">Name</th><th scope="col" class="num">Base</th><th scope="col" class="num">Overtime (h)</th><th scope="col" class="num">Bonus ($)</th><th scope="col" class="num">Gross</th></tr></thead>
+          <tbody id="editRows"></tbody>
+        </table>
+      </div>
+    </div>
+    <div class="fstep" data-fstep="2">
+      <p style="color: var(--muted); margin-bottom: 14px;" id="issueNote"></p>
+      <ul class="issues" id="issues"></ul>
+    </div>
+    <div class="fstep" data-fstep="3">
+      <div class="sum" id="summary"></div>
+      <label class="check" style="margin-top: 16px;"><input type="checkbox" id="confirmRun"> <span>I’ve checked the totals and approve this pay run</span></label>
+      <label class="check" style="margin-top: 10px;"><input type="checkbox" id="emailSlips" checked> <span>Email payslips to everyone on the pay date</span></label>
+      <p class="error" id="confirm-err" style="margin-top: 8px;"></p>
+    </div>
+    <div class="fstep" data-fstep="4">
+      <div class="done-screen">
+        <div class="done-badge"><svg width="40" height="40" viewBox="0 0 24 24" fill="none" stroke="#2B2725" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12.5l4.5 4.5L19 7.5"/></svg></div>
+        <h3 id="doneTitle" tabindex="-1">Payroll submitted</h3>
+        <p id="doneText"></p>
+      </div>
+    </div>
+  </div>
+  <div class="modal-foot">
+    <button type="button" class="btn btn-outline" id="wizBack">Cancel</button>
+    <button type="button" class="btn btn-dark" id="wizNext">Continue</button>
+  </div>
+</div>
+
+<div id="toastHost" aria-live="polite"></div>
+
+<script>
+(function () {
+  var reduced = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+  var esc = function (s) { return String(s).replace(/[&<>"]/g, function (c) { return { '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;' }[c]; }); };
+  var money = function (n, cents) { return '$' + Number(n).toLocaleString('en-US', { minimumFractionDigits: cents ? 2 : 0, maximumFractionDigits: cents ? 2 : 0 }); };
+  var TINT = { Design: '#FDE1D0', Engineering: '#DCE8FF', Finance: '#EDE3FF', Marketing: '#FFE6CC', People: '#D9F3EA', Sales: '#FCE4EE' };
+  var ICON_CHECK = '<svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12.5l4.5 4.5L19 7.5"/></svg>';
+  var ICON_WARN = '<svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" aria-hidden="true"><path d="M12 8v5M12 16.5h.01"/><circle cx="12" cy="12" r="9"/></svg>';
+
+  // The 12 sample employees, as on the employees page, with monthly base pay
+  var staff = [
+    [1, 'Amaya', 'Silva', 'Product Designer', 'Design', 5200, 0, 0],
+    [2, 'Daniel', 'Okafor', 'Backend Engineer', 'Engineering', 6400, 32, 0],
+    [3, 'Priya', 'Nair', 'Growth Lead', 'Marketing', 6800, 0, 0],
+    [4, 'Lucas', 'Martin', 'Payroll Specialist', 'Finance', 4300, 4, 0],
+    [5, 'Hana', 'Kim', 'QA Engineer', 'Engineering', 4600, 6, 0],
+    [6, 'Ravi', 'Jayasuriya', 'Head of Design', 'Design', 9200, 0, 0],
+    [7, 'Nadia', 'Perera', 'HR Manager', 'People', 7400, 0, 0],
+    [8, 'Marcus', 'Lee', 'Account Executive', 'Sales', 4800, 0, 1200],
+    [9, 'Ishan', 'Fernando', 'Frontend Engineer', 'Engineering', 5600, 0, 0],
+    [10, 'Sofia', 'Rossi', 'Content Strategist', 'Marketing', 2600, 0, 0],
+    [11, 'Tomás', 'García', 'Sales Manager', 'Sales', 7800, 0, 900],
+    [12, 'Aisha', 'Rahman', 'Engineering Manager', 'Engineering', 9600, 0, 0]
+  ].map(function (r) { return { id: r[0], first: r[1], last: r[2], role: r[3], dept: r[4], base: r[5], ot: r[6], bonus: r[7], bank: r[0] !== 10 }; });
+
+  var seedGross = 0; // filled in once calc() is defined
+  var seedStaff = JSON.parse(JSON.stringify(staff));
+  var KEY = 'staffora:payroll';
+  var runs = [
+    { month: 'October 2026', paid: '2026-10-30', gross: 409120, people: 246 },
+    { month: 'September 2026', paid: '2026-09-30', gross: 405770, people: 244 },
+    { month: 'August 2026', paid: '2026-08-31', gross: 401240, people: 243 },
+    { month: 'July 2026', paid: '2026-07-31', gross: 398900, people: 241 }
+  ];
+  var run = { status: 'Draft', otApproved: false, submittedAt: null };
+  try {
+    var saved = JSON.parse(sessionStorage.getItem(KEY) || 'null');
+    if (saved && saved.staff && saved.run) { staff = saved.staff; run = saved.run; runs = saved.runs || runs; }
+  } catch (e) {}
+  function save() { try { sessionStorage.setItem(KEY, JSON.stringify({ staff: staff, run: run, runs: runs })); } catch (e) {} }
+
+  // Pay period: this month, paid on its last working day
+  var now = new Date();
+  var periodName = now.toLocaleDateString('en-GB', { month: 'long', year: 'numeric' });
+  var payDate = new Date(now.getFullYear(), now.getMonth() + 1, 0);
+  while (payDate.getDay() === 0 || payDate.getDay() === 6) payDate.setDate(payDate.getDate() - 1);
+  var payDateLabel = payDate.toLocaleDateString('en-GB', { weekday: 'short', day: 'numeric', month: 'short' });
+
+  function full(p) { return p.first + ' ' + p.last; }
+  function slug(p) { return full(p).toLowerCase().normalize('NFD').replace(/[̀-ͯ]/g, '').replace(/[^a-z]+/g, '-'); }
+  function face(p) { return '<img src="assets/avatars/' + slug(p) + '.svg" alt="" width="36" height="36" loading="lazy">'; }
+  function rate(p) { return p.base / 160 * 1.5; }
+  // Simple progressive tax plus an 8% pension contribution
+  function calc(p) {
+    var overtime = Math.round(rate(p) * p.ot);
+    var gross = p.base + overtime + p.bonus;
+    var tax = Math.round(Math.max(0, Math.min(gross, 5000) - 1000) * 0.12 + Math.max(0, gross - 5000) * 0.18);
+    var pension = Math.round(gross * 0.08);
+    return { overtime: overtime, gross: gross, tax: tax, pension: pension, deductions: tax + pension, net: gross - tax - pension };
+  }
+  // Everyone else in the company, so the starting total matches the dashboard's $412,860
+  var OTHERS_GROSS = 412860 - seedGross;
+  function totals() {
+    var t = { gross: OTHERS_GROSS, net: 0, tax: 0, pension: 0, employer: 0, overtime: 0, bonus: 0 };
+    staff.forEach(function (p) { var c = calc(p); t.gross += c.gross; t.overtime += c.overtime; t.bonus += p.bonus; });
+    t.tax = Math.round(t.gross * 0.142); t.pension = Math.round(t.gross * 0.08); t.employer = Math.round(t.gross * 0.12);
+    t.net = t.gross - t.tax - t.pension;
+    return t;
+  }
+  seedGross = seedStaff.reduce(function (n, p) { return n + calc(p).gross; }, 0);
+  OTHERS_GROSS = 412860 - seedGross;
+  function issues() {
+    var list = [];
+    staff.forEach(function (p) {
+      if (!p.bank) list.push({ id: 'bank-' + p.id, p: p, kind: 'bank', title: 'No bank account for ' + full(p), text: 'Add one so ' + p.first + ' can be paid on ' + payDateLabel + '.' });
+      if (p.ot > 20 && !run.otApproved) list.push({ id: 'ot-' + p.id, p: p, kind: 'ot', title: p.ot + ' hours of overtime for ' + full(p), text: 'Anything over 20 hours needs a manager’s approval.' });
+    });
+    return list;
+  }
+
+  // ---------- Page ----------
+  var q = '';
+  function render() {
+    var t = totals(), open = issues();
+    document.getElementById('runTitle').textContent = periodName + ' pay run';
+    document.getElementById('runGross').innerHTML = money(t.gross) + '<small>.00</small>';
+    document.getElementById('runDate').textContent = payDateLabel;
+    document.getElementById('runNet').textContent = money(t.net);
+    var st = document.getElementById('runStatus');
+    st.textContent = run.status === 'Scheduled' ? 'Scheduled' : open.length ? open.length + (open.length === 1 ? ' issue' : ' issues') : 'Ready to run';
+    st.className = 'run-status' + (run.status === 'Scheduled' ? ' done' : open.length ? '' : ' ready');
+    document.getElementById('runBtn').textContent = run.status === 'Scheduled' ? 'View summary' : 'Run payroll';
+    document.getElementById('runBtnTop').textContent = run.status === 'Scheduled' ? 'View summary' : 'Run payroll';
+    document.getElementById('subline').textContent = run.status === 'Scheduled'
+      ? periodName + ' is scheduled to pay on ' + payDateLabel + '.'
+      : periodName + ' pays on ' + payDateLabel + '. Review, fix issues and approve before then.';
+
+    var checks = [
+      { ok: true, t: 'Hours imported from attendance', s: 'Updated today' },
+      { ok: !open.some(function (i) { return i.kind === 'ot'; }), t: 'Overtime approved', s: run.otApproved ? 'Approved' : 'Daniel Okafor needs approval' },
+      { ok: !open.some(function (i) { return i.kind === 'bank'; }), t: 'Bank details complete', s: staff.every(function (p) { return p.bank; }) ? 'Everyone can be paid' : 'Sofia Rossi is missing an account' },
+      { ok: run.status === 'Scheduled', t: 'Approved and submitted', s: run.status === 'Scheduled' ? 'Submitted ' + run.submittedAt : 'Waiting for you' }
+    ];
+    document.getElementById('checks').innerHTML = checks.map(function (c) {
+      return '<li class="' + (c.ok ? 'ok' : 'warn') + '"><span class="dot">' + (c.ok ? ICON_CHECK : ICON_WARN) + '</span><div>' + c.t + '<small>' + c.s + '</small></div></li>';
+    }).join('');
+
+    var rows = staff.filter(function (p) { return !q || (full(p) + ' ' + p.role + ' ' + p.dept).toLowerCase().indexOf(q) !== -1; });
+    document.getElementById('payNote').textContent = 'Showing ' + rows.length + ' of 248 people. Click someone to see their payslip.';
+    document.getElementById('payRows').innerHTML = rows.length ? rows.map(function (p) {
+      var c = calc(p), flagged = open.some(function (i) { return i.p.id === p.id; });
+      return '<tr data-slip="' + p.id + '"><td><div class="who"><span class="avatar" style="background:' + TINT[p.dept] + '" aria-hidden="true">' + face(p) + '</span><div><button type="button" data-slip="' + p.id + '">' + esc(full(p)) + '</button><span>' + esc(p.role) + '</span></div></div></td>' +
+        '<td class="num">' + money(p.base) + '</td><td class="num">' + (c.overtime ? money(c.overtime) : '—') + '</td><td class="num">' + (p.bonus ? money(p.bonus) : '—') + '</td>' +
+        '<td class="num"><strong>' + money(c.gross) + '</strong></td><td class="num">−' + money(c.deductions) + '</td><td class="num">' + money(c.net) + '</td>' +
+        '<td><span class="status" style="' + (flagged ? 'background:#FDEBD3;color:#9A4A00' : run.status === 'Scheduled' ? 'background:#E3F5E8;color:#1C6B37' : 'background:#F4F1EE;color:#4B4541') + '">' + (flagged ? 'Needs attention' : run.status === 'Scheduled' ? 'Scheduled' : 'Ready') + '</span></td></tr>';
+    }).join('') : '<tr><td colspan="8" style="color:var(--muted)">No one matches “' + esc(q) + '”.</td></tr>';
+    var sum = rows.reduce(function (a, p) { var c = calc(p); a.base += p.base; a.ot += c.overtime; a.bonus += p.bonus; a.gross += c.gross; a.ded += c.deductions; a.net += c.net; return a; }, { base: 0, ot: 0, bonus: 0, gross: 0, ded: 0, net: 0 });
+    document.getElementById('payFoot').innerHTML = rows.length ? '<tr><td>Total for these ' + rows.length + '</td><td class="num">' + money(sum.base) + '</td><td class="num">' + money(sum.ot) + '</td><td class="num">' + money(sum.bonus) + '</td><td class="num">' + money(sum.gross) + '</td><td class="num">−' + money(sum.ded) + '</td><td class="num">' + money(sum.net) + '</td><td></td></tr>' : '';
+
+    var hist = (run.status === 'Scheduled' ? [{ month: periodName, paid: null, gross: t.gross, people: 248, scheduled: true }] : []).concat(runs);
+    document.getElementById('history').innerHTML = hist.map(function (h) {
+      return '<li class="' + (h.scheduled && justSubmitted ? 'new' : '') + '"><div class="month"><strong>' + h.month + '</strong><span>' + (h.scheduled ? 'Pays ' + payDateLabel : 'Paid ' + new Date(h.paid + 'T00:00:00').toLocaleDateString('en-GB', { day: 'numeric', month: 'short' })) + ' · ' + h.people + ' people</span></div>' +
+        '<span class="amt">' + money(h.gross) + '</span><span class="status" style="' + (h.scheduled ? 'background:#FDE1D0;color:#B4501A' : 'background:#E3F5E8;color:#1C6B37') + '">' + (h.scheduled ? 'Scheduled' : 'Paid') + '</span></li>';
+    }).join('');
+  }
+  var justSubmitted = false;
+  document.getElementById('q').addEventListener('input', function (ev) { q = ev.target.value.trim().toLowerCase(); render(); });
+  document.getElementById('exportBtn').addEventListener('click', function () {
+    var csv = ['Name,Role,Department,Base,Overtime,Bonus,Gross,Tax,Pension,Net'].concat(staff.map(function (p) {
+      var c = calc(p); return ['"' + full(p) + '"', '"' + p.role + '"', p.dept, p.base, c.overtime, p.bonus, c.gross, c.tax, c.pension, c.net].join(',');
+    })).join('\n');
+    download('staffora-payroll-' + periodName.toLowerCase().replace(/\s+/g, '-') + '.csv', csv);
+    toast('Exported ' + periodName + ' pay for ' + staff.length + ' people');
+  });
+  function download(name, text) {
+    var a = document.createElement('a');
+    a.href = URL.createObjectURL(new Blob([text], { type: 'text/csv' }));
+    a.download = name; document.body.appendChild(a); a.click(); a.remove();
+  }
+
+  // ---------- Overlays (shared focus handling) ----------
+  var scrim = document.getElementById('scrim'), openStack = [];
+  function openLayer(el, focusEl) {
+    var prev = document.activeElement;
+    clearTimeout(toastTimer); document.getElementById('toastHost').innerHTML = '';
+    el.hidden = false; scrim.hidden = false; document.body.classList.add('locked');
+    openStack.push({ el: el, prev: prev });
+    setTimeout(function () { (focusEl || el.querySelector('button, input, select, a')).focus(); }, reduced ? 0 : 60);
+  }
+  function closeTop() {
+    var top = openStack.pop(); if (!top) return;
+    top.el.hidden = true;
+    if (!openStack.length) { scrim.hidden = true; document.body.classList.remove('locked'); }
+    if (location.hash) history.replaceState(null, '', location.pathname + location.search);
+    if (top.prev && document.contains(top.prev)) top.prev.focus();
+  }
+  scrim.addEventListener('click', closeTop);
+  document.addEventListener('click', function (ev) { if (ev.target.closest('[data-close]')) closeTop(); });
+  document.addEventListener('keydown', function (ev) {
+    if (!openStack.length) return;
+    var el = openStack[openStack.length - 1].el;
+    if (ev.key === 'Escape') { ev.preventDefault(); closeTop(); return; }
+    if (ev.key !== 'Tab') return;
+    var f = Array.prototype.filter.call(el.querySelectorAll('a[href], button:not([disabled]), input, select'), function (n) { return n.offsetParent !== null; });
+    if (!f.length) return;
+    if (ev.shiftKey && document.activeElement === f[0]) { ev.preventDefault(); f[f.length - 1].focus(); }
+    else if (!ev.shiftKey && document.activeElement === f[f.length - 1]) { ev.preventDefault(); f[0].focus(); }
+  });
+
+  // ---------- Payslip ----------
+  var drawer = document.getElementById('drawer'), slipId = null;
+  function byId(id) { for (var i = 0; i < staff.length; i++) if (staff[i].id === id) return staff[i]; return null; }
+  function openSlip(id) {
+    var p = byId(id); if (!p) return;
+    slipId = id;
+    var c = calc(p);
+    var row = function (k, v, neg) { return '<div class="row"><dt>' + k + '</dt><dd' + (neg ? ' class="neg"' : '') + '>' + v + '</dd></div>'; };
+    document.getElementById('slipPeriod').textContent = 'Payslip · ' + periodName;
+    document.getElementById('slipBody').innerHTML =
+      '<div class="profile-hero"><span class="avatar" style="background:' + TINT[p.dept] + '" aria-hidden="true">' + face(p) + '</span><h2 id="sName">' + esc(full(p)) + '</h2><p>' + esc(p.role) + ' · ' + p.dept + '</p>' +
+      '<span class="status" style="background:#FDE1D0;color:#B4501A">Pays ' + payDateLabel + '</span></div>' +
+      '<div class="slip-total"><span>Take-home pay</span><strong>' + money(c.net, true) + '</strong></div>' +
+      '<div class="block"><h3>Earnings</h3><dl>' + row('Base salary', money(p.base, true)) +
+        row('Overtime' + (p.ot ? ' · ' + p.ot + ' h at ' + money(rate(p), true) : ''), c.overtime ? money(c.overtime, true) : '—') +
+        row('Bonus', p.bonus ? money(p.bonus, true) : '—') + row('<strong>Gross pay</strong>', '<strong>' + money(c.gross, true) + '</strong>') + '</dl></div>' +
+      '<div class="block"><h3>Deductions</h3><dl>' + row('Income tax', '−' + money(c.tax, true), true) + row('Pension (8%)', '−' + money(c.pension, true), true) +
+        row('<strong>Total deductions</strong>', '<strong>−' + money(c.deductions, true) + '</strong>', true) + '</dl></div>' +
+      '<div class="block"><h3>Paid into</h3><dl>' + row('Bank account', p.bank ? (p.account ? '•••• ' + esc(String(p.account).slice(-4)) : '•••• ' + String(1000 + p.id * 173).slice(-4)) : '<span style="color:#9A4A00">Missing</span>') + '</dl></div>';
+    if (drawer.hidden) openLayer(drawer, drawer.querySelector('[data-close]'));
+  }
+  document.addEventListener('click', function (ev) {
+    var t = ev.target.closest('[data-slip]'); if (!t || ev.target.closest('.modal')) return;
+    history.replaceState(null, '', '#slip-' + t.dataset.slip);
+    openSlip(+t.dataset.slip);
+  });
+  document.getElementById('previewBtn').addEventListener('click', function () { openSlip(staff[0].id); });
+  document.getElementById('downloadSlip').addEventListener('click', function () {
+    var p = byId(slipId), c = calc(p);
+    download('payslip-' + slug(p) + '.csv', ['Item,Amount', 'Base salary,' + p.base, 'Overtime,' + c.overtime, 'Bonus,' + p.bonus, 'Gross pay,' + c.gross, 'Income tax,-' + c.tax, 'Pension,-' + c.pension, 'Take-home pay,' + c.net].join('\n'));
+    toast('Payslip downloaded');
+  });
+  document.getElementById('emailSlip').addEventListener('click', function () { toast('Payslip emailed to ' + byId(slipId).first); });
+
+  // ---------- Run payroll ----------
+  var modal = document.getElementById('runModal'), wstep = 1;
+  var names = ['Review pay', 'Fix issues', 'Approve'];
+  function goWiz(n) {
+    wstep = n;
+    modal.querySelectorAll('.fstep').forEach(function (s) { s.classList.toggle('active', +s.dataset.fstep === n); });
+    modal.querySelectorAll('.stepper div').forEach(function (d) { d.classList.toggle('on', +d.dataset.dot <= n); });
+    document.getElementById('wizSteps').hidden = n === 4;
+    document.getElementById('wizSub').textContent = n === 4 ? periodName : 'Step ' + n + ' of 3 · ' + names[n - 1];
+    var back = document.getElementById('wizBack'), next = document.getElementById('wizNext');
+    back.hidden = n === 4;
+    back.textContent = n === 1 ? 'Cancel' : 'Back';
+    next.textContent = n === 3 ? 'Submit payroll' : n === 4 ? 'Done' : 'Continue';
+    if (n === 1) buildEdit();
+    if (n === 2) buildIssues();
+    if (n === 3) buildSummary();
+    var first = n === 4 ? document.getElementById('doneTitle') : modal.querySelector('.fstep.active input, .fstep.active button');
+    setTimeout(function () { (first || next).focus(); }, reduced ? 0 : 50);
+  }
+  function buildEdit() {
+    document.getElementById('editRows').innerHTML = staff.map(function (p) {
+      return '<tr><td><div class="who"><span class="avatar" style="background:' + TINT[p.dept] + '" aria-hidden="true">' + face(p) + '</span><div><strong>' + esc(full(p)) + '</strong><span>' + esc(p.role) + '</span></div></div></td>' +
+        '<td class="num">' + money(p.base) + '</td>' +
+        '<td class="num"><input class="mini" type="number" min="0" max="80" step="1" value="' + p.ot + '" data-ot="' + p.id + '" aria-label="Overtime hours for ' + esc(full(p)) + '"></td>' +
+        '<td class="num"><input class="mini" type="number" min="0" step="50" value="' + p.bonus + '" data-bonus="' + p.id + '" aria-label="Bonus for ' + esc(full(p)) + '"></td>' +
+        '<td class="num"><strong data-gross="' + p.id + '">' + money(calc(p).gross) + '</strong></td></tr>';
+    }).join('');
+  }
+  document.getElementById('editRows').addEventListener('input', function (ev) {
+    var el = ev.target, p = byId(+(el.dataset.ot || el.dataset.bonus)); if (!p) return;
+    var v = Math.max(0, Math.round(+el.value || 0));
+    if (el.dataset.ot) { p.ot = Math.min(v, 80); if (p.ot <= 20) run.otApproved = run.otApproved && true; }
+    else p.bonus = v;
+    document.querySelector('[data-gross="' + p.id + '"]').textContent = money(calc(p).gross);
+    save(); render();
+  });
+  function buildIssues() {
+    var list = issues();
+    document.getElementById('issueNote').textContent = list.length ? 'Fix these before submitting. Everything else looks good.' : 'Nothing to fix. Everyone can be paid on ' + payDateLabel + '.';
+    document.getElementById('issues').innerHTML = list.length ? list.map(function (i) {
+      var actions = i.kind === 'bank'
+        ? '<label class="sr-only" for="acct">Account number for ' + esc(full(i.p)) + '</label><input class="input" id="acct" inputmode="numeric" placeholder="Account number, 8–12 digits"><button type="button" class="small-btn" data-fix="bank" data-id="' + i.p.id + '" style="height:40px">Save account</button><p class="error" id="acct-err"></p>'
+        : '<button type="button" class="small-btn" data-fix="approve" style="height:40px">Approve ' + i.p.ot + ' hours</button><button type="button" class="small-btn light" data-fix="cap" data-id="' + i.p.id + '" style="height:40px;border:1px solid var(--line)">Pay 20 hours</button>';
+      return '<li class="issue"><span class="dot">' + ICON_WARN + '</span><div class="issue-body"><strong>' + esc(i.title) + '</strong><p>' + esc(i.text) + '</p><div class="issue-actions">' + actions + '</div></div></li>';
+    }).join('') : '<li class="issue fixed"><span class="dot">' + ICON_CHECK + '</span><div class="issue-body"><strong>All clear</strong><p>No missing details and no overtime waiting for approval.</p></div></li>';
+    document.getElementById('wizNext').disabled = list.length > 0;
+  }
+  document.getElementById('issues').addEventListener('click', function (ev) {
+    var b = ev.target.closest('[data-fix]'); if (!b) return;
+    if (b.dataset.fix === 'bank') {
+      var v = document.getElementById('acct').value.replace(/\s/g, '');
+      if (!/^\d{8,12}$/.test(v)) { document.getElementById('acct-err').textContent = 'Enter 8 to 12 digits.'; document.getElementById('acct').focus(); return; }
+      var p = byId(+b.dataset.id); p.bank = true; p.account = v;
+      toast('Bank account saved for ' + p.first);
+    } else if (b.dataset.fix === 'approve') { run.otApproved = true; toast('Overtime approved'); }
+    else { var q2 = byId(+b.dataset.id); q2.ot = 20; toast(q2.first + '’s overtime set to 20 hours'); }
+    save(); render(); buildIssues();
+    var next = modal.querySelector('[data-fix], #wizNext'); if (next) next.focus();
+  });
+  function buildSummary() {
+    var t = totals();
+    var row = function (k, v, big) { return '<div class="row' + (big ? ' big' : '') + '"><span>' + k + '</span><strong>' + v + '</strong></div>'; };
+    document.getElementById('summary').innerHTML = row('Pay period', periodName) + row('Pay date', payDateLabel) + row('Employees', '248') +
+      row('Gross pay', money(t.gross)) + row('Overtime and bonuses in this run', money(t.overtime + t.bonus)) + row('Income tax withheld', '−' + money(t.tax)) +
+      row('Employee pension (8%)', '−' + money(t.pension)) + row('Net pay to employees', money(t.net), true) + row('Employer pension (12%)', money(t.employer)) +
+      row('Total cost to the company', money(t.gross + t.employer), true);
+    document.getElementById('confirmRun').checked = false; document.getElementById('confirm-err').textContent = '';
+  }
+  function openRun() {
+    if (run.status === 'Scheduled') { goWiz(3); document.getElementById('wizBack').hidden = true; document.getElementById('wizNext').textContent = 'Close'; document.getElementById('wizSub').textContent = 'Submitted ' + run.submittedAt; document.getElementById('confirmRun').closest('label').hidden = true; document.getElementById('emailSlips').closest('label').hidden = true; }
+    else { document.getElementById('confirmRun').closest('label').hidden = false; document.getElementById('emailSlips').closest('label').hidden = false; goWiz(1); }
+    openLayer(modal, document.getElementById('wizNext'));
+  }
+  ['runBtn', 'runBtnTop'].forEach(function (id) { document.getElementById(id).addEventListener('click', openRun); });
+  document.getElementById('wizBack').addEventListener('click', function () { if (wstep === 1) closeTop(); else goWiz(wstep - 1); });
+  document.getElementById('wizNext').addEventListener('click', function () {
+    if (run.status === 'Scheduled' && wstep === 3) return closeTop();
+    if (wstep === 4) return closeTop();
+    if (wstep < 3) return goWiz(wstep + 1);
+    if (!document.getElementById('confirmRun').checked) {
+      document.getElementById('confirm-err').textContent = 'Tick the box to approve the run.';
+      document.getElementById('confirmRun').focus(); return;
+    }
+    var btn = this;
+    btn.disabled = true; btn.innerHTML = '<span class="spinner" aria-hidden="true" style="border-color:rgba(255,255,255,.3);border-top-color:#fff"></span>Submitting…';
+    setTimeout(function () {
+      btn.disabled = false;
+      run.status = 'Scheduled';
+      run.submittedAt = new Date().toLocaleDateString('en-GB', { day: 'numeric', month: 'short' }) + ' at ' + new Date().toLocaleTimeString('en-GB', { hour: '2-digit', minute: '2-digit' });
+      justSubmitted = true; save(); render();
+      document.getElementById('doneText').textContent = money(totals().net) + ' will reach 248 people on ' + payDateLabel + '.' + (document.getElementById('emailSlips').checked ? ' Payslips will be emailed the same day.' : '');
+      goWiz(4);
+    }, reduced ? 0 : 1100);
+  });
+
+  // ---------- Toast ----------
+  var toastTimer = null;
+  function toast(msg) {
+    var host = document.getElementById('toastHost');
+    clearTimeout(toastTimer);
+    host.innerHTML = '<div class="toast"><span class="ok">' + ICON_CHECK + '</span><p>' + esc(msg) + '</p></div>';
+    toastTimer = setTimeout(function () { host.innerHTML = ''; }, 4000);
+  }
+
+  render();
+  function fromHash() {
+    if (location.hash === '#run') { if (modal.hidden) openRun(); }
+    else if (location.hash.indexOf('#slip-') === 0) openSlip(+location.hash.slice(6));
+  }
+  fromHash();
+  window.addEventListener('hashchange', fromHash);
+})();
+</script>
+</body>
+</html>
