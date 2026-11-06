@@ -10,6 +10,7 @@
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&amp;display=swap">
 <link rel="stylesheet" href="app.css">
   <script src="../assets/js/analytics.js" defer></script>
+<script src="assets/people.js" defer></script>
 </head>
 <body>
 <div class="page">
@@ -243,7 +244,7 @@
   function slug(p) { return full(p).toLowerCase().normalize('NFD').replace(/[\u0300-\u036f]/g, '').replace(/[^a-z]+/g, '-'); }
   function face(p) {
     if (p.photo === false) return initials(p);
-    return '<img src="assets/avatars/' + slug(p) + '.svg" alt="" width="84" height="84" loading="lazy" data-i="' + initials(p) + '" onerror="this.replaceWith(document.createTextNode(this.dataset.i))">';
+    return '<img src="assets/avatars/' + slug(p) + '.svg" alt="" width="84" height="84" loading="lazy" data-i="' + initials(p) + '" onerror="if (this.dataset.photo && !this.src.endsWith(\'.svg\')) return; this.replaceWith(document.createTextNode(this.dataset.i))">';
   }
   function fmtDate(iso) {
     var d = new Date(iso + 'T00:00:00');

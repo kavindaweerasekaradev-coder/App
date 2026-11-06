@@ -112,6 +112,7 @@ textarea.input { height: auto; min-height: 110px; padding: 12px 14px; resize: ve
 @media (hover: none) { .cand:hover, .role:hover { transform: none; box-shadow: none; } }
 </style>
 <script src="../assets/js/analytics.js" defer></script>
+<script src="assets/people.js" defer></script>
 </head>
 <body>
 <div class="page">
@@ -393,7 +394,7 @@ textarea.input { height: auto; min-height: 110px; padding: 12px 14px; resize: ve
   function slug(c) { return full(c).toLowerCase().normalize('NFD').replace(/[̀-ͯ]/g, '').replace(/[^a-z]+/g, '-'); }
   function face(c) {
     if (c.photo === false) return initials(c);
-    return '<img src="assets/avatars/' + slug(c) + '.svg" alt="" width="84" height="84" loading="lazy" data-i="' + initials(c) + '" onerror="this.replaceWith(document.createTextNode(this.dataset.i))">';
+    return '<img src="assets/avatars/' + slug(c) + '.svg" alt="" width="84" height="84" loading="lazy" data-i="' + initials(c) + '" onerror="if (this.dataset.photo && !this.src.endsWith(\'.svg\')) return; this.replaceWith(document.createTextNode(this.dataset.i))">';
   }
   function stars(n) {
     var s = '<span class="stars" role="img" aria-label="' + (n ? 'Rated ' + n + ' out of 5' : 'Not rated yet') + '">';
