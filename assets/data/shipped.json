@@ -39,7 +39,8 @@
         "Reduced decision fatigue with simplified navigation",
         "Clear entry points (Explore, Continue Learning, Recommended)",
         "Highlighted personalized content."
-      ]
+      ],
+      "case_study_2": "authoring-tool.html"
     },
     {
       "slug": "healthsync",
@@ -557,6 +558,190 @@
       [
         "Paid conversion",
         "Subscriptions started from the contextual paywall, after students have tried content."
+      ]
+    ]
+  },
+  "authoring": {
+    "title": "ReadyMe Authoring Tool",
+    "subtitle": "A calmer workspace for tutors",
+    "lead": "The authoring tool is where tutors build everything students see in ReadyMe: learning paths, question sets, notes, videos and study decks. I led its redesign alongside the student app, turning a metrics-heavy dashboard into a content-first workspace with guided creation flows.",
+    "facts": [
+      [
+        "Role",
+        "Led the redesign"
+      ],
+      [
+        "Users",
+        "Tutors"
+      ],
+      [
+        "Platform",
+        "Web app, responsive"
+      ],
+      [
+        "Type",
+        "Redesign of a live product"
+      ]
+    ],
+    "glance": [
+      [
+        "The problem",
+        "Tutors opened the tool to a wall of metrics and an unlabeled icon sidebar. Creating content, their main job, had no clear starting point, and long forms asked for everything at once."
+      ],
+      [
+        "My approach",
+        "I reorganised the tool around the tutor's real work: one hub for every content type, guided step-by-step creation, and a review step before anything is published."
+      ],
+      [
+        "What changed",
+        "A labelled side menu, a teaching resources hub, a 3-step learning path flow, faster question creation from PDFs and images, and a review & publish step."
+      ]
+    ],
+    "stats": [
+      [
+        164,
+        "desktop screens in the original tool, reviewed flow by flow"
+      ],
+      [
+        241,
+        "desktop screens designed for the new tool"
+      ],
+      [
+        4,
+        "content types in one resources hub"
+      ],
+      [
+        3,
+        "guided steps to create a learning path"
+      ]
+    ],
+    "audit": [
+      [
+        3,
+        18,
+        "Icon-only navigation",
+        "The sidebar had three unlabeled icons, so tutors had to guess where paths, content and settings lived."
+      ],
+      [
+        54,
+        19,
+        "Banner competing with the work",
+        "A large decorative verification banner was the most prominent element on the home screen."
+      ],
+      [
+        19,
+        38,
+        "The same numbers twice",
+        "Account-wide stats and the path-level stats below repeated learners, question sets and earnings."
+      ],
+      [
+        83,
+        38,
+        "Unclear number formatting",
+        "Values such as “.50,000” had no currency and were hard to read at a glance."
+      ],
+      [
+        50,
+        92,
+        "Metrics first, content second",
+        "Home was all reporting; there was no clear starting point for creating paths, questions or notes."
+      ]
+    ],
+    "pairs": [
+      {
+        "key": "home",
+        "title": "Home",
+        "soft": "from metrics wall to teaching hub",
+        "points": [
+          "Stats-heavy dashboard replaced by “Your teaching resources”: Question sets, Notes, Videos and Study decks in one place",
+          "Icon-only sidebar replaced by a labelled menu: Path, Dashboard, Material, Subscribers, Notifications, Content support, License and Settings",
+          "Top navigation for Home, Learning paths, User management and Settings, with the tutor's profile always visible"
+        ]
+      },
+      {
+        "key": "login",
+        "title": "Login",
+        "soft": "",
+        "points": [
+          "Half-screen illustration panel replaced by a focused, centred card",
+          "Warmer “Hey there, Welcome back” greeting and a clear “Create an account” path",
+          "Shares the student app's welcome language, so both products feel like one brand"
+        ]
+      }
+    ],
+    "path_before": "One long form with a slideshow taking half the screen, asking for access, name, country, language and translation all at once.",
+    "path_steps": [
+      [
+        "Create your learning path",
+        "Name, access and basics, one decision at a time"
+      ],
+      [
+        "Set the details",
+        "Subject, levels, topics and language, with validation as you go"
+      ],
+      [
+        "Review your learning path",
+        "Check everything before it goes live"
+      ]
+    ],
+    "features": [
+      [
+        "upload",
+        "PDF question extraction",
+        "Upload a PDF, extract its text and turn it into questions instead of typing each one."
+      ],
+      [
+        "image",
+        "Image upload",
+        "Add questions from images, with a dedicated upload and setup flow."
+      ],
+      [
+        "check",
+        "Review & publish",
+        "Every question set gets a review step, with clear delete and publish confirmations."
+      ],
+      [
+        "chart",
+        "Topic distribution",
+        "An overview chart shows how questions are spread across topics."
+      ],
+      [
+        "cards",
+        "Study decks",
+        "A new content type: flashcard decks with card and list views, explanations and review."
+      ],
+      [
+        "shield",
+        "Identity & payouts",
+        "Guided identity verification (NIC, driving licence or passport) and bank details for earnings."
+      ],
+      [
+        "user",
+        "Public tutor profile",
+        "Qualifications and professional experience build a public profile students can trust."
+      ],
+      [
+        "phone",
+        "Responsive",
+        "Key flows designed for smaller screens, not just desktop."
+      ]
+    ],
+    "metrics": [
+      [
+        "Time to first path",
+        "How long a new tutor takes to publish their first learning path."
+      ],
+      [
+        "Paths completed",
+        "Share of started learning paths that reach Review and get published."
+      ],
+      [
+        "Questions from uploads",
+        "Questions created through PDF and image upload instead of manual entry."
+      ],
+      [
+        "Verified tutors",
+        "Tutors who complete identity verification and add payout details."
       ]
     ]
   }
