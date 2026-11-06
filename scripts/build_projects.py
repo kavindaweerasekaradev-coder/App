@@ -341,10 +341,10 @@ def render(p, prev_p, next_p, version):
   <meta name="twitter:image" content="{SITE}{cover['src']}" />
   <script type="application/ld+json">{ld_json(p, cover)}</script>
 
-  <link rel="icon" href="../assets/img/favicon-32.png?v=2" sizes="32x32" type="image/png" />
-  <link rel="icon" href="../assets/img/favicon-48.png?v=2" sizes="48x48" type="image/png" />
-  <link rel="icon" href="../assets/img/favicon-192.png?v=2" sizes="192x192" type="image/png" />
-  <link rel="apple-touch-icon" href="../assets/img/apple-touch-icon.png?v=2" />
+  <link rel="icon" href="../assets/img/favicon-32.png?v=3" sizes="32x32" type="image/png" />
+  <link rel="icon" href="../assets/img/favicon-48.png?v=3" sizes="48x48" type="image/png" />
+  <link rel="icon" href="../assets/img/favicon-192.png?v=3" sizes="192x192" type="image/png" />
+  <link rel="apple-touch-icon" href="../assets/img/apple-touch-icon.png?v=3" />
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600{extra_fonts}&display=swap" rel="stylesheet" />
@@ -567,9 +567,9 @@ def write_explorations(version):
   <meta property="og:description" content="A wall of web and mobile UI explorations." />
   <meta property="og:url" content="{SITE}explorations/" />
   <meta property="og:image" content="{SITE}{items[0]["src"]}" />
-  <link rel="icon" href="../assets/img/favicon-32.png?v=2" sizes="32x32" type="image/png" />
-  <link rel="icon" href="../assets/img/favicon-192.png?v=2" sizes="192x192" type="image/png" />
-  <link rel="apple-touch-icon" href="../assets/img/apple-touch-icon.png?v=2" />
+  <link rel="icon" href="../assets/img/favicon-32.png?v=3" sizes="32x32" type="image/png" />
+  <link rel="icon" href="../assets/img/favicon-192.png?v=3" sizes="192x192" type="image/png" />
+  <link rel="apple-touch-icon" href="../assets/img/apple-touch-icon.png?v=3" />
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet" />
