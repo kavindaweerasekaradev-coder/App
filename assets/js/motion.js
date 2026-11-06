@@ -169,7 +169,7 @@
     gsap.from('.nav', { y: -24, autoAlpha: 0, duration: 0.8, ease: 'power4.out' });
 
     // Section headings: words mask up on scroll
-    document.querySelectorAll('main h2:not(.contact__title):not(.beyond__title)').forEach(function (h) {
+    document.querySelectorAll('main h2:not(.contact__title):not(.beyond__title):not(.statement)').forEach(function (h) {
       h.classList.remove('reveal');
       var w = splitWords(h);
       gsap.from(w, {
@@ -177,6 +177,67 @@
         scrollTrigger: { trigger: h, start: 'top 88%', once: true }
       });
     });
+
+    // About statement: words rise and ink in, the icons spin in, "complex problems" starts as a tangle of
+    // letters that snap into order, a lime marker sweeps under "simple" and the key skills underline.
+    // Plays once when it comes into view; hovering the phrase tangles and untangles it again.
+    var stmt = document.querySelector('.statement');
+    if (stmt) {
+      stmt.classList.remove('reveal');
+      stmt.setAttribute('aria-label', stmt.textContent.replace(/\s+/g, ' ').trim());
+      var tangle = stmt.querySelector('.st-tangle'), chars = [];
+      if (tangle) {
+        var txt = tangle.textContent; tangle.textContent = '';
+        txt.split('').forEach(function (c) {
+          if (c === ' ') { tangle.appendChild(document.createTextNode(' ')); return; }
+          var sp = document.createElement('span'); sp.className = 'ch'; sp.textContent = c; tangle.appendChild(sp); chars.push(sp);
+        });
+      }
+      var sWords = Array.prototype.slice.call(splitWords(stmt));
+      sWords.forEach(function (w) { w._c = getComputedStyle(w).color; });
+      var icons = stmt.querySelectorAll('.inline-icon'), markEl = stmt.querySelector('.st-mark');
+      var kws = gsap.utils.toArray('.about__text mark.kw');
+      var rnd = function (a) { return function () { return gsap.utils.random(-a, a); }; };
+      gsap.set(sWords, { yPercent: 115 });
+      gsap.set(chars, { x: rnd(46), y: rnd(38), rotation: rnd(70), autoAlpha: 0 });
+      gsap.set(icons, { scale: 0, rotation: -180 });
+      if (markEl) gsap.set(markEl, { '--mark': 0 });
+      gsap.set(kws, { '--kw': '0%' });
+      var stl = gsap.timeline({ paused: true });
+      stl.to(sWords, { yPercent: 0, duration: 0.9, ease: 'power4.out', stagger: 0.045 }, 0)
+        .fromTo(sWords, { color: '#d4d4d0' }, { color: function (i, el) { return el._c; }, duration: 0.7, stagger: 0.045, clearProps: 'color' }, 0.1)
+        .to(icons[0] || {}, { scale: 1, rotation: 0, duration: 0.8, ease: 'back.out(2.2)' }, 0.3)
+        .to(chars, { x: 0, y: 0, rotation: 0, autoAlpha: 1, duration: 1.1, ease: 'elastic.out(1, 0.55)', stagger: { each: 0.025, from: 'random' } }, 0.35)
+        .to(icons[1] || {}, { scale: 1, rotation: 0, duration: 0.8, ease: 'back.out(2.2)' }, 0.8)
+        .to(markEl || {}, { '--mark': 1, duration: 0.8, ease: 'power3.inOut' }, 1.25)
+        .to(kws, { '--kw': '100%', duration: 0.6, ease: 'power2.out', stagger: 0.15 }, 1.5);
+      ScrollTrigger.create({ trigger: stmt, start: 'top 82%', once: true, onEnter: function () { stl.play(); } });
+      if (tangle) tangle.addEventListener('mouseenter', function () {
+        if (stl.progress() < 1 || gsap.isTweening(chars)) return;
+        gsap.timeline()
+          .to(chars, { x: rnd(30), y: rnd(26), rotation: rnd(55), duration: 0.3, ease: 'power2.out', stagger: { each: 0.01, from: 'random' } })
+          .to(chars, { x: 0, y: 0, rotation: 0, duration: 1, ease: 'elastic.out(1, 0.5)', stagger: { each: 0.02, from: 'random' } });
+      });
+      // the clock and bulb icons lean gently toward the cursor
+      stmt.addEventListener('mousemove', function (e) {
+        if (stl.progress() < 1) return;
+        icons.forEach(function (ic) {
+          var r = ic.getBoundingClientRect(), dx = e.clientX - (r.left + r.width / 2), dy = e.clientY - (r.top + r.height / 2);
+          gsap.to(ic, { x: gsap.utils.clamp(-10, 10, dx * 0.06), y: gsap.utils.clamp(-8, 8, dy * 0.06), duration: 0.6, ease: 'power3.out', overwrite: 'auto' });
+        });
+      });
+      stmt.addEventListener('mouseleave', function () { gsap.to(icons, { x: 0, y: 0, duration: 0.8, ease: 'elastic.out(1, 0.5)', overwrite: 'auto' }); });
+    }
+
+    // About badge: spins slowly, speeds up on hover, springs in on first view
+    var badge = document.querySelector('.about-badge');
+    if (badge) {
+      var spin = gsap.to(badge.querySelector('.about-badge__ring'), { rotation: 360, transformOrigin: '50% 50%', duration: 22, ease: 'none', repeat: -1 });
+      badge.addEventListener('mouseenter', function () { gsap.to(spin, { timeScale: 6, duration: 0.6, ease: 'power2.out' }); });
+      badge.addEventListener('mouseleave', function () { gsap.to(spin, { timeScale: 1, duration: 1.2, ease: 'power2.out' }); });
+      gsap.from(badge, { scale: 0.5, rotation: -120, autoAlpha: 0, duration: 1.2, ease: 'back.out(1.6)',
+        scrollTrigger: { trigger: badge, start: 'top 85%', once: true } });
+    }
 
     // Everything else marked .reveal fades up in staggered batches
     var reveals = gsap.utils.toArray('.reveal');
