@@ -32,6 +32,26 @@
   window.addEventListener('load', placeLine);
   window.addEventListener('resize', placeLine);
 
+  // Key flows tabs (authoring tool)
+  var ajTabs = document.querySelectorAll('.aj-tab');
+  function showFlow(i, animate) {
+    ajTabs.forEach(function (t, k) { t.setAttribute('aria-selected', String(k === i)); t.tabIndex = k === i ? 0 : -1; });
+    document.querySelectorAll('.aj-flow').forEach(function (f, k) {
+      f.hidden = k !== i;
+      if (k === i && animate && window.gsap && !window.matchMedia('(prefers-reduced-motion: reduce)').matches)
+        gsap.fromTo(f.querySelectorAll('.aj-node'), { autoAlpha: 0, x: -24, scale: 0.94 }, { autoAlpha: 1, x: 0, scale: 1, duration: 0.5, ease: 'back.out(1.6)', stagger: 0.08 });
+    });
+  }
+  ajTabs.forEach(function (t, i) {
+    t.addEventListener('click', function () { showFlow(i, true); });
+    t.addEventListener('keydown', function (e) {
+      if (e.key !== 'ArrowRight' && e.key !== 'ArrowLeft') return;
+      var n = (i + (e.key === 'ArrowRight' ? 1 : -1) + ajTabs.length) % ajTabs.length;
+      showFlow(n, true); ajTabs[n].focus();
+    });
+  });
+  if (ajTabs.length) showFlow(0, false);
+
   if (!window.gsap || !window.ScrollTrigger) return;
   gsap.registerPlugin(ScrollTrigger);
   var mm = gsap.matchMedia();
@@ -74,7 +94,7 @@
       gsap.set(s, { autoAlpha: 0, y: 30 });
       once(s, function () {
         gsap.to(s, { autoAlpha: 1, y: 0, duration: 0.7, ease: 'power3.out', delay: i * 0.08 });
-        gsap.to(o, { v: to, duration: 1.4, ease: 'power2.out', delay: i * 0.08, onUpdate: function () { n.textContent = Math.round(o.v); } });
+        gsap.to(o, { v: to, duration: 1.4, ease: 'power2.out', delay: i * 0.08, onUpdate: function () { n.textContent = Math.round(o.v) + (n.dataset.suffix || ''); } });
       }, 'top 85%');
     });
 
@@ -148,7 +168,7 @@
     });
 
     // Authoring tool: browser windows slide in from opposite sides, chips pop and float, cursor parallax
-    var ats = document.querySelector('.at-stage');
+    var ats = document.querySelector('.at-stage:not(.aj-stage)');
     if (ats) {
       var wOld = ats.querySelector('.at-win--old'), wNew = ats.querySelector('.at-win--new'), aChips = ats.querySelectorAll('.rm-chip');
       var atl = gsap.timeline({ paused: true })
@@ -192,5 +212,83 @@
         gsap.from(document.querySelectorAll('.at-feat__i'), { rotation: -120, scale: 0, duration: 0.7, ease: 'back.out(2.5)', stagger: 0.08, delay: 0.2 });
       });
     }
+
+    // Authoring journey: hero window rises with the menu floating in
+    var ajs = document.querySelector('.aj-stage');
+    if (ajs) {
+      var mw = ajs.querySelector('.aj-win--main'), fm = ajs.querySelector('.aj-float--menu'), ch = ajs.querySelectorAll('.rm-chip');
+      var jtl = gsap.timeline({ paused: true })
+        .from(ajs, { autoAlpha: 0, y: 40, duration: 0.8, ease: 'power3.out' })
+        .from(mw, { y: 160, autoAlpha: 0, scale: 0.94, duration: 1.1, ease: 'expo.out' }, 0.2)
+        .from(fm, { x: -120, rotation: -20, autoAlpha: 0, duration: 0.9, ease: 'back.out(1.4)' }, 0.7)
+        .from(ch, { scale: 0, autoAlpha: 0, duration: 0.6, ease: 'back.out(2.2)', stagger: 0.12 }, 1)
+        .add(function () {
+          ch.forEach(function (c, i) { gsap.to(c, { y: i % 2 ? 8 : -8, duration: 2.4 + i * 0.3, ease: 'sine.inOut', yoyo: true, repeat: -1 }); });
+          gsap.to(fm, { y: -10, duration: 3, ease: 'sine.inOut', yoyo: true, repeat: -1 });
+        });
+      once(ajs, function () { jtl.play(); }, 'top 88%');
+    }
+
+    // Ecosystem: lines draw, content chips flow from tutors into the tool, nodes pop
+    var eco = document.querySelector('.aj-eco');
+    if (eco) {
+      var lines = eco.querySelectorAll('.aj-eco__line i'), nodes = eco.querySelectorAll('.aj-eco__node'), eChips = eco.querySelectorAll('.aj-eco__chip');
+      gsap.set(lines, { scaleX: 0 }); gsap.set(nodes, { autoAlpha: 0, scale: 0.8 }); gsap.set(eChips, { autoAlpha: 0, x: -30 });
+      once(eco, function () {
+        gsap.timeline()
+          .to(nodes[0], { autoAlpha: 1, scale: 1, duration: 0.5, ease: 'back.out(2)' })
+          .to(lines[0], { scaleX: 1, duration: 0.7, ease: 'power2.inOut' })
+          .to(eChips, { autoAlpha: 1, x: 0, duration: 0.45, ease: 'power3.out', stagger: 0.08 }, '<0.1')
+          .to(nodes[1], { autoAlpha: 1, scale: 1, duration: 0.6, ease: 'back.out(2)' }, '-=0.2')
+          .to(lines[1], { scaleX: 1, duration: 0.5, ease: 'power2.inOut' })
+          .to(nodes[2], { autoAlpha: 1, scale: 1, duration: 0.5, ease: 'back.out(2)' })
+          .add(function () { gsap.to(eco.querySelector('.aj-eco__node--tool .aj-eco__i'), { scale: 1.08, duration: 1.2, ease: 'sine.inOut', yoyo: true, repeat: -1 }); });
+      });
+    }
+
+    // Process: the line draws and each phase lands in turn
+    var proc = document.querySelector('.aj-process');
+    if (proc) {
+      var pl = proc.querySelector('.aj-process__line i'), ph = proc.querySelectorAll('.aj-phase');
+      gsap.set(pl, { scaleX: 0 }); gsap.set(ph, { autoAlpha: 0, y: 40 });
+      once(proc, function () {
+        var tl = gsap.timeline();
+        tl.to(pl, { scaleX: 1, duration: 2, ease: 'none' }, 0);
+        ph.forEach(function (x, i) {
+          tl.to(x, { autoAlpha: 1, y: 0, duration: 0.6, ease: 'power3.out' }, i * 0.32)
+            .from(x.querySelector('.aj-phase__n'), { scale: 0, rotation: -90, duration: 0.5, ease: 'back.out(3)' }, i * 0.32 + 0.05);
+        });
+      });
+    }
+
+    // IA: each level drops in under the root, items stagger
+    var ia2 = document.querySelector('.aj-ia');
+    if (ia2) {
+      var lv = ia2.querySelectorAll('.aj-ia__level'), root = ia2.querySelector('.aj-ia__root span');
+      gsap.set(lv, { autoAlpha: 0, y: -20 });
+      once(ia2, function () {
+        var tl = gsap.timeline();
+        tl.from(root, { scale: 0.6, autoAlpha: 0, duration: 0.6, ease: 'back.out(2)' });
+        lv.forEach(function (l) {
+          tl.to(l, { autoAlpha: 1, y: 0, duration: 0.4, ease: 'power3.out' })
+            .from(l.querySelectorAll('li'), { autoAlpha: 0, y: 16, scale: 0.9, duration: 0.4, ease: 'back.out(2)', stagger: 0.05 }, '<');
+        });
+      });
+    }
+
+    // Flows: the first tab's nodes build in on view
+    var fl = document.querySelector('.aj-flows');
+    if (fl) once(fl, function () { var f = fl.querySelector('.aj-flow:not([hidden])'); if (f) gsap.fromTo(f.querySelectorAll('.aj-node'), { autoAlpha: 0, x: -24, scale: 0.94 }, { autoAlpha: 1, x: 0, scale: 1, duration: 0.5, ease: 'back.out(1.6)', stagger: 0.1, delay: 0.2 }); });
+
+    // Decisions and states
+    gsap.utils.toArray('.aj-dec').forEach(function (d) {
+      gsap.set(d, { autoAlpha: 0, y: 60 });
+      once(d, function () {
+        gsap.to(d, { autoAlpha: 1, y: 0, duration: 0.9, ease: 'power3.out' });
+        var ic = d.querySelector('.aj-dec__i'); if (ic) gsap.from(ic, { rotation: -90, scale: 0, duration: 0.7, ease: 'back.out(2.5)', delay: 0.2 });
+      }, 'top 85%');
+    });
+    var st = document.querySelectorAll('.aj-state');
+    if (st.length) { gsap.set(st, { autoAlpha: 0, scale: 0.6 }); once('.aj-states', function () { gsap.to(st, { autoAlpha: 1, scale: 1, duration: 0.4, ease: 'back.out(2.5)', stagger: 0.05 }); }, 'top 88%'); }
   });
 })();

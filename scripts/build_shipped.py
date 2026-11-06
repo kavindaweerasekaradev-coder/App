@@ -411,7 +411,7 @@ def readyme_page(data, version, h):
           <div>
             <p class="label label--light">Live product</p>
             <h2 class="pj-cta__title">ReadyMe is live <span class="soft">on the App Store.</span></h2>
-            <p class="pj-cta__text">Try the student app, or read how I redesigned the authoring tool tutors use to build learning paths.</p>
+            <p class="pj-cta__text">Try the student app, or read how I designed the authoring tool tutors use to build learning paths.</p>
           </div>
           <div class="pj-cta__btns"><a class="btn btn--lime btn--arrow" href="{e(app)}" target="_blank" rel="noopener">App Store<span class="btn__circle">{ARROW}</span></a><a class="btn btn--glass" href="authoring-tool.html">Authoring tool case study</a></div>
         </div>
@@ -450,37 +450,52 @@ def authoring_page(data, version, h):
         return (f'<div class="rm-head reveal"><p class="label">{e(label)}</p>'
                 f'<h2 class="rm-h2">{e(title)}{" <span class=\"soft\">" + e(soft) + "</span>" if soft else ""}</h2></div>')
 
-    def browser(src, alt, cls, cap, eager=False):
+    def icon(k, size=22):
+        return f'<svg viewBox="0 0 24 24" width="{size}" height="{size}" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">{FEATURE_ICONS[k]}</svg>'
+
+    def browser(src, alt, cls="", cap="", eager=False):
+        capt = f"<figcaption>{e(cap)}</figcaption>" if cap else ""
         return (f'<figure class="at-win {cls}"><span class="at-win__bar" aria-hidden="true"><i></i><i></i><i></i><b>authoring.readyme.co</b></span>'
                 f'<img src="{IMG}{src}.webp" srcset="{IMG}{src}-760.webp 756w, {IMG}{src}.webp 1512w" sizes="(max-width: 900px) 90vw, 760px" alt="{e(alt)}" width="1512" height="982" '
-                f'{"fetchpriority=\"high\" " if eager else "loading=\"lazy\" "}decoding="async" /><figcaption>{e(cap)}</figcaption></figure>')
+                f'{"fetchpriority=\"high\" " if eager else "loading=\"lazy\" "}decoding="async" />{capt}</figure>')
 
     facts = "\n".join(f"          <div><dt>{e(k)}</dt><dd>{e(v)}</dd></div>" for k, v in a["facts"])
-    glance = "".join(f'<div class="rm-glance__item"><h3>{e(t)}</h3><p>{e(x)}</p></div>' for t, x in a["glance"])
-    stats = "".join(f'<div class="rm-stat"><span class="rm-stat__n" data-count="{n}">{n}</span><p>{e(t)}</p></div>' for n, t in a["stats"])
-    pins = "".join(f'<button type="button" class="rm-pin" style="--x:{x}%;--y:{y}%" data-i="{i}" aria-label="Issue {i + 1}: {e(t)}">{i + 1}</button>'
-                   for i, (x, y, t, _) in enumerate(a["audit"]))
-    issues = "".join(f'<li class="rm-issue" data-i="{i}"><span class="rm-issue__n">{i + 1}</span><div><h3>{e(t)}</h3><p>{e(x)}</p></div></li>'
-                     for i, (_, _, t, x) in enumerate(a["audit"]))
-    pairs = "\n".join(compare(x, i, h, base="authoring", w=1512, hh=982, product="ReadyMe authoring tool", desk=True) for i, x in enumerate(a["pairs"]))
-    steps = "".join(f'<li class="at-step"><span class="at-step__n">{i}</span><h3>{e(t)}</h3><p>{e(x)}</p></li>' for i, (t, x) in enumerate(a["path_steps"], 1))
-    feats = "".join(f'<div class="at-feat"><span class="at-feat__i" aria-hidden="true"><svg viewBox="0 0 24 24" width="22" height="22" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">{FEATURE_ICONS[k]}</svg></span><h3>{e(t)}</h3><p>{e(x)}</p></div>'
-                    for k, t, x in a["features"])
+    stats = "".join(f'<div class="rm-stat"><span class="rm-stat__n" data-count="{n}" data-suffix="{e(sfx)}">{n}{e(sfx)}</span><p>{e(t)}</p></div>' for n, sfx, t in a["stats"])
+    phases = "".join(f'<li class="aj-phase"><span class="aj-phase__n">{i:02d}</span><h3>{e(t)}</h3><p>{e(x)}</p></li>' for i, (t, x) in enumerate(a["phases"], 1))
+    goals = "".join(f"<li>{e(x)}</li>" for x in a["tutor"]["goals"])
+    pains = "".join(f"<li>{e(x)}</li>" for x in a["tutor"]["pains"])
+    principles = "".join(f'<div class="rm-goal reveal"><span class="rm-goal__n">{i:02d}</span><h3>{e(t)}</h3><p>{e(x)}</p></div>' for i, (t, x) in enumerate(a["principles"], 1))
+    ia_top = "".join(f"<li>{e(x)}</li>" for x in a["ia_top"])
+    ia_side = "".join(f'<li{" class=\"is-on\"" if x == "Material" else ""}>{e(x)}</li>' for x in a["ia_side"])
+    ia_mat = "".join(f"<li>{e(x)}</li>" for x in a["ia_material"])
+    tabs = "".join(f'<button type="button" class="aj-tab" role="tab" aria-selected="{"true" if i == 0 else "false"}" aria-controls="aj-flow-{i}" id="aj-tab-{i}">{e(n)}</button>' for i, (n, _) in enumerate(a["flows"]))
+    flows = "".join(
+        f'<ol class="aj-flow" role="tabpanel" id="aj-flow-{i}" aria-labelledby="aj-tab-{i}"{"" if i == 0 else " hidden"}>' + "".join(
+            f'<li class="aj-node"><span class="aj-node__n">{j}</span><strong>{e(st[0])}</strong>{"<small>" + e(st[1]) + "</small>" if len(st) > 1 else ""}</li>'
+            for j, st in enumerate(steps, 1)) + "</ol>" for i, (_, steps) in enumerate(a["flows"]))
+    decisions = ""
+    for i, d in enumerate(a["decisions"]):
+        media = browser(d["img"], d["title"], "at-win--inline") if d.get("img") else f'<span class="aj-dec__i">{icon(d["icon"], 30)}</span>'
+        decisions += (f'<article class="aj-dec{" aj-dec--wide" if d.get("img") else ""}"><div class="aj-dec__media">{media}</div>'
+                      f'<div class="aj-dec__text"><span class="rm-pair__num">{i + 1:02d}</span><h3>{e(d["title"])}</h3><p>{e(d["text"])}</p></div></article>')
+    states = "".join(f'<li class="aj-state">{e(x)}</li>' for x in a["states"])
     metrics = "".join(f'<div class="rm-metric reveal"><span class="rm-metric__i" aria-hidden="true"><svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M5 20v-6M12 20V9M19 20V4"/></svg></span><h3>{e(t)}</h3><p>{e(x)}</p></div>' for t, x in a["metrics"])
-    toc = [("glance", "At a glance"), ("audit", "UX audit"), ("before-after", "Before → after"), ("creation", "Path creation"), ("features", "What's new"), ("system", "Design system"), ("success", "Success")]
+    toc = [("ecosystem", "Overview"), ("process", "Process"), ("tutor", "The tutor"), ("ia", "Architecture"), ("flows", "Key flows"), ("decisions", "Design decisions"), ("system", "System"), ("success", "Success")]
     toc_html = "".join(f'<a href="#{i}">{e(t)}</a>' for i, t in toc)
+    content = ["Learning paths", "Question sets", "Notes", "Videos", "Study decks"]
+    chips = "".join(f'<span class="aj-eco__chip" style="--i:{i}">{e(c)}</span>' for i, c in enumerate(content))
 
     body = f"""    <section class="cs-page-hero rm-top">
       <div class="container">
         <a class="pill cs-back hero-in hero-in--1" href="./">{BACK} Shipped products</a>
         <div class="cs-page-hero__grid">
           <div>
-            <p class="label hero-in hero-in--1">Shipped product · EdTech · Tutor dashboard</p>
+            <p class="label hero-in hero-in--1">Shipped product · EdTech · Tutor platform</p>
             <h1 class="cs-page-hero__title hero-in" aria-label="{e(a['title'])} — {e(a['subtitle'])}">{sw(e(a['title']))}<br /><span class="soft">{sw(e(a['subtitle']), 3)}</span></h1>
           </div>
           <div class="cs-page-hero__side hero-in hero-in--2">
             <p class="cs-page-hero__lead">{e(a['lead'])}</p>
-            <ul class="pj-tags"><li>Web app</li><li>Tutors</li><li>Content creation</li><li>Design system</li></ul>
+            <ul class="pj-tags"><li>Web app</li><li>Tutors</li><li>0 → 1 design</li><li>Design system</li></ul>
             <div class="cs-page-hero__ctas">
               <a class="btn btn--lime btn--arrow" href="{e(tool)}" target="_blank" rel="noopener">Open the authoring tool<span class="btn__circle">{ARROW}</span></a>
               <a class="btn btn--outline" href="readyme.html">Student app case study</a>
@@ -494,79 +509,98 @@ def authoring_page(data, version, h):
     </section>
 
     <section class="container">
-      <div class="at-stage" aria-label="The authoring tool home before and after the redesign">
+      <div class="at-stage aj-stage" aria-label="The ReadyMe authoring tool">
         <span class="rm-stage__glow" aria-hidden="true"></span>
-        {browser("old-home", "Old authoring tool home: a dashboard of stats with a large verification banner", "at-win--old", "Before", True)}
-        {browser("new-home", "New authoring tool home: a teaching resources hub with a labelled side menu", "at-win--new", "After", True)}
+        {browser("new-home", "Authoring tool home: the teaching resources hub with a labelled side menu", "aj-win--main", "", True)}
+        <figure class="aj-float aj-float--menu"><img src="{IMG}c-menu.webp" alt="" width="308" height="468" decoding="async" /></figure>
         <span class="rm-chip at-chip--1" aria-hidden="true"><i></i>Content-first home</span>
-        <span class="rm-chip at-chip--2" aria-hidden="true"><i></i>Labelled navigation</span>
-        <span class="rm-chip at-chip--3" aria-hidden="true"><i></i>Guided creation</span>
+        <span class="rm-chip at-chip--2" aria-hidden="true"><i></i>Guided creation</span>
+        <span class="rm-chip at-chip--3" aria-hidden="true"><i></i>PDF → questions</span>
       </div>
       <nav class="rm-toc" aria-label="On this page">{toc_html}</nav>
     </section>
 
-    <section class="section" id="glance">
+    <section class="section" id="ecosystem">
       <div class="container">
-        {head("At a glance", "Built for the tutor's real job:", "creating great content.")}
-        <div class="rm-glance reveal">{glance}</div>
+        {head("Overview", "One side of a two-sided product.", "Tutors create, students learn.")}
+        <div class="aj-eco reveal" aria-label="Tutors create content in the authoring tool, which students use in the ReadyMe app">
+          <div class="aj-eco__node"><span class="aj-eco__i">{icon("user", 26)}</span><strong>Tutors</strong><small>Subject experts</small></div>
+          <div class="aj-eco__track"><span class="aj-eco__line"><i></i></span><div class="aj-eco__chips">{chips}</div></div>
+          <div class="aj-eco__node aj-eco__node--tool"><span class="aj-eco__i">{icon("cards", 26)}</span><strong>Authoring tool</strong><small>Create · review · publish</small></div>
+          <div class="aj-eco__track aj-eco__track--short"><span class="aj-eco__line"><i></i></span></div>
+          <div class="aj-eco__node"><span class="aj-eco__i">{icon("phone", 26)}</span><strong>Students</strong><small>ReadyMe app</small></div>
+        </div>
+        <div class="rm-intro aj-challenge">
+          <div class="reveal"><p class="label">The challenge</p><h2 class="rm-h2">Make expert tutors <span class="soft">fast and confident creators.</span></h2></div>
+          <div class="rm-intro__text reveal">{''.join(f'<p>{e(x)}</p>' for x in a['challenge'])}</div>
+        </div>
         <div class="rm-stats">{stats}</div>
       </div>
     </section>
 
-    <section class="section section--flush-top" id="audit">
+    <section class="section section--flush-top" id="process">
       <div class="container">
-        {head("UX audit", "What got in the tutor's way.", "Hover a number to see the issue.")}
-        <div class="rm-audit rm-audit--desk">
-          <div class="rm-audit__shot reveal">
-            <img src="{IMG}old-home.webp" alt="The old authoring tool home screen, annotated with numbered issues" width="1512" height="982" loading="lazy" decoding="async" />
-            {pins}
-          </div>
-          <ol class="rm-issues">{issues}</ol>
+        {head("Design process", "From the tutor's job", "to a shipped system.")}
+        <div class="aj-process"><span class="aj-process__line" aria-hidden="true"><i></i></span><ol class="aj-phases">{phases}</ol></div>
+      </div>
+    </section>
+
+    <section class="section section--flush-top" id="tutor">
+      <div class="container">
+        {head("Who we designed for", "The tutor:", "an expert short on time.")}
+        <div class="aj-tutor">
+          <div class="aj-tutor__card reveal"><span class="aj-tutor__avatar">{icon("user", 34)}</span><h3>Tutors on ReadyMe</h3><p>Subject experts who create learning paths, question sets, notes, videos and study decks for students preparing for their exams, and earn from subscriptions.</p></div>
+          <div class="aj-tutor__col reveal"><p class="aj-tutor__label">Goals</p><ul class="aj-list aj-list--good">{goals}</ul></div>
+          <div class="aj-tutor__col reveal"><p class="aj-tutor__label">Frustrations to design out</p><ul class="aj-list aj-list--bad">{pains}</ul></div>
         </div>
       </div>
     </section>
 
-    <section class="section section--flush-top" id="before-after">
+    <section class="section section--flush-top">
       <div class="container">
-        {head("Before → after", "Same tool, rebuilt.", "Drag to compare.")}
-        <div class="rm-pairs rm-pairs--desk">
-{pairs}
+        {head("Design principles", "Four rules", "behind every screen.")}
+        <div class="rm-goals aj-principles">{principles}</div>
+      </div>
+    </section>
+
+    <section class="section section--flush-top" id="ia">
+      <div class="container">
+        {head("Information architecture", "A structure", "built around content.")}
+        <div class="aj-ia reveal">
+          <div class="aj-ia__root"><span>ReadyMe Authoring</span></div>
+          <div class="aj-ia__level"><p class="aj-ia__label">Top navigation</p><ul class="aj-ia__row">{ia_top}</ul></div>
+          <div class="aj-ia__level"><p class="aj-ia__label">Workspace menu</p><ul class="aj-ia__row aj-ia__row--side">{ia_side}</ul></div>
+          <div class="aj-ia__level"><p class="aj-ia__label">Material · content types</p><ul class="aj-ia__row aj-ia__row--mat">{ia_mat}</ul></div>
         </div>
       </div>
     </section>
 
-    <section class="section section--flush-top" id="creation">
+    <section class="section section--flush-top" id="flows">
       <div class="container">
-        {head("Learning path creation", "From one long form", "to three guided steps.")}
-        <div class="at-create">
-          <div class="at-create__before reveal">
-            <span class="ba__tag ba__tag--old">Before</span>
-            <img src="{IMG}old-path-create.webp" srcset="{IMG}old-path-create-760.webp 756w, {IMG}old-path-create.webp 1512w" sizes="(max-width: 900px) 90vw, 560px" alt="Old learning path setup: one long form beside a slideshow" width="1512" height="982" loading="lazy" decoding="async" />
-            <p>{e(a['path_before'])}</p>
-          </div>
-          <div class="at-create__after">
-            <span class="ba__tag ba__tag--new">After</span>
-            <div class="at-steps-wrap"><span class="at-steps__line" aria-hidden="true"><i></i></span><ol class="at-steps">{steps}</ol></div>
-          </div>
+        {head("Key flows", "Five journeys,", "designed end to end.")}
+        <div class="aj-flows reveal">
+          <div class="aj-tabs" role="tablist" aria-label="Key flows">{tabs}</div>
+          <div class="aj-flows__stage">{flows}</div>
         </div>
       </div>
     </section>
 
-    <section class="section section--flush-top" id="features">
+    <section class="section section--flush-top" id="decisions">
       <div class="container">
-        {head("What's new for tutors", "New flows", "designed from scratch.")}
-        <div class="at-feats">{feats}</div>
+        {head("Design decisions", "The choices", "that shaped the tool.")}
+        <div class="aj-decs">{decisions}</div>
       </div>
     </section>
 
     <section class="section section--flush-top" id="system">
       <div class="container">
-        {head("Design system", "One system", "for students and tutors.")}
-        <p class="rm-ia__note at-sys__note reveal">The authoring tool uses the same tokens and component patterns as the student app, starting with the same primary colour, so content looks consistent from the moment a tutor creates it to the moment a student sees it.</p>
+        {head("Design system & states", "One system", "for students and tutors.")}
+        <p class="at-sys__note reveal">The authoring tool shares its tokens and component patterns with the student app, starting with the same primary colour, so content looks consistent from the moment a tutor creates it to the moment a student sees it. Every flow was designed with its edge cases, not just the happy path.</p>
         <div class="rm-comps at-comps">
-          <figure class="rm-comp"><img src="{IMG}c-menu.webp" alt="Labelled side menu component" width="308" height="468" loading="lazy" decoding="async" /><figcaption>Labelled side menu</figcaption></figure>
+          <figure class="rm-comp"><img src="{IMG}c-menu.webp" alt="Labelled side menu component" width="308" height="468" loading="lazy" decoding="async" /><figcaption>Workspace menu</figcaption></figure>
           <figure class="rm-comp"><img src="{IMG}c-resources.webp" alt="Teaching resources hub component" width="976" height="438" loading="lazy" decoding="async" /><figcaption>Teaching resources hub</figcaption></figure>
         </div>
+        <ul class="aj-states" aria-label="States designed">{states}</ul>
       </div>
     </section>
 
@@ -591,8 +625,7 @@ def authoring_page(data, version, h):
       </div>
     </section>
 """
-    scripts = (f'  <script src="../assets/js/compare.js?v={version}" defer></script>\n'
-               f'  <script src="../assets/js/readyme.js?v={version}" defer></script>\n')
-    return shell(h, version, title="ReadyMe Authoring Tool redesign — case study by Kavinda Weerasekara",
+    scripts = f'  <script src="../assets/js/readyme.js?v={version}" defer></script>\n'
+    return shell(h, version, title="ReadyMe Authoring Tool — case study by Kavinda Weerasekara",
                  desc=a["lead"], path="shipped/authoring-tool.html", og_image="assets/img/shipped/authoring/new-home.webp",
                  body=body, scripts=scripts)

@@ -563,12 +563,12 @@
   },
   "authoring": {
     "title": "ReadyMe Authoring Tool",
-    "subtitle": "A calmer workspace for tutors",
-    "lead": "The authoring tool is where tutors build everything students see in ReadyMe: learning paths, question sets, notes, videos and study decks. I led its redesign alongside the student app, turning a metrics-heavy dashboard into a content-first workspace with guided creation flows.",
+    "subtitle": "Designing where tutors build learning",
+    "lead": "Every learning path, question set, note, video and study deck in ReadyMe starts here. I designed the authoring tool end to end: the tutor's journey from sign-up and verification to creating, reviewing and publishing content, and getting paid.",
     "facts": [
       [
         "Role",
-        "Led the redesign"
+        "Lead product designer"
       ],
       [
         "Users",
@@ -579,152 +579,280 @@
         "Web app, responsive"
       ],
       [
-        "Type",
-        "Redesign of a live product"
-      ]
-    ],
-    "glance": [
-      [
-        "The problem",
-        "Tutors opened the tool to a wall of metrics and an unlabeled icon sidebar. Creating content, their main job, had no clear starting point, and long forms asked for everything at once."
-      ],
-      [
-        "My approach",
-        "I reorganised the tool around the tutor's real work: one hub for every content type, guided step-by-step creation, and a review step before anything is published."
-      ],
-      [
-        "What changed",
-        "A labelled side menu, a teaching resources hub, a 3-step learning path flow, faster question creation from PDFs and images, and a review & publish step."
+        "Scope",
+        "Research → IA → flows → UI → system"
       ]
     ],
     "stats": [
       [
-        164,
-        "desktop screens in the original tool, reviewed flow by flow"
-      ],
-      [
-        241,
-        "desktop screens designed for the new tool"
-      ],
-      [
-        4,
-        "content types in one resources hub"
-      ],
-      [
-        3,
-        "guided steps to create a learning path"
-      ]
-    ],
-    "audit": [
-      [
-        3,
-        18,
-        "Icon-only navigation",
-        "The sidebar had three unlabeled icons, so tutors had to guess where paths, content and settings lived."
-      ],
-      [
-        54,
-        19,
-        "Banner competing with the work",
-        "A large decorative verification banner was the most prominent element on the home screen."
-      ],
-      [
-        19,
-        38,
-        "The same numbers twice",
-        "Account-wide stats and the path-level stats below repeated learners, question sets and earnings."
-      ],
-      [
-        83,
-        38,
-        "Unclear number formatting",
-        "Values such as “.50,000” had no currency and were hard to read at a glance."
+        240,
+        "+",
+        "desktop screens designed across the tutor journey"
       ],
       [
         50,
-        92,
-        "Metrics first, content second",
-        "Home was all reporting; there was no clear starting point for creating paths, questions or notes."
+        "+",
+        "flows and states, from onboarding to payouts"
+      ],
+      [
+        5,
+        "",
+        "content types tutors can create"
+      ],
+      [
+        3,
+        "",
+        "ways to add questions: type, PDF or image"
       ]
     ],
-    "pairs": [
-      {
-        "key": "home",
-        "title": "Home",
-        "soft": "from metrics wall to teaching hub",
-        "points": [
-          "Stats-heavy dashboard replaced by “Your teaching resources”: Question sets, Notes, Videos and Study decks in one place",
-          "Icon-only sidebar replaced by a labelled menu: Path, Dashboard, Material, Subscribers, Notifications, Content support, License and Settings",
-          "Top navigation for Home, Learning paths, User management and Settings, with the tutor's profile always visible"
+    "challenge": [
+      "Tutors are experts in their subject, not in software. To teach on ReadyMe they need to turn existing material such as papers, notes, videos and slides into structured, exam-ready content that students can trust.",
+      "The tool had to make that fast and calm, from verifying who they are and building a credible profile to creating content in several formats, checking it before students see it, and getting paid."
+    ],
+    "phases": [
+      [
+        "Discover",
+        "Mapped the tutor's end-to-end job, from first sign-up to first payout, and every content type ReadyMe supports."
+      ],
+      [
+        "Define",
+        "Turned that into principles, an information architecture and the core flows to design first."
+      ],
+      [
+        "Ideate",
+        "Explored flows and layouts for creation, review and verification, including variants for key screens."
+      ],
+      [
+        "Design",
+        "High-fidelity UI for every flow and state on desktop, with responsive layouts for smaller screens."
+      ],
+      [
+        "Validate",
+        "Reviewed flows with the team, iterated on V1/V2 versions of key screens and refined edge cases."
+      ],
+      [
+        "Deliver",
+        "Handed off a component-based system with every state documented for engineering."
+      ]
+    ],
+    "tutor": {
+      "goals": [
+        "Publish a complete learning path quickly",
+        "Reuse existing material instead of retyping it",
+        "Look credible so students choose their content",
+        "Get paid reliably for their work"
+      ],
+      "pains": [
+        "Typing hundreds of exam questions by hand",
+        "Content spread across many formats",
+        "Not knowing what students will actually see",
+        "Unclear verification and payout status"
+      ]
+    },
+    "principles": [
+      [
+        "Content first",
+        "Home is a teaching workspace, not a wall of reports. Creating is always one click away."
+      ],
+      [
+        "One step at a time",
+        "Long tasks are split into guided steps with validation as you go and a review before anything goes live."
+      ],
+      [
+        "Bring your own material",
+        "Tutors can type questions, or extract them from a PDF or an image."
+      ],
+      [
+        "Trust by design",
+        "Identity, qualifications and experience build a public profile, with status always visible."
+      ]
+    ],
+    "ia_top": [
+      "Home",
+      "Learning paths",
+      "User management",
+      "Settings"
+    ],
+    "ia_side": [
+      "Path",
+      "Dashboard",
+      "Material",
+      "Subscribers",
+      "Notifications",
+      "Content support",
+      "License",
+      "Settings"
+    ],
+    "ia_material": [
+      "Question sets",
+      "Notes",
+      "Videos",
+      "Study decks"
+    ],
+    "flows": [
+      [
+        "Onboarding",
+        [
+          [
+            "Create account"
+          ],
+          [
+            "Verify phone & email"
+          ],
+          [
+            "Account verification"
+          ],
+          [
+            "How should we address you?"
+          ],
+          [
+            "Personalise your profile"
+          ],
+          [
+            "Your address"
+          ]
         ]
+      ],
+      [
+        "Learning path",
+        [
+          [
+            "Create your learning path"
+          ],
+          [
+            "Set the details"
+          ],
+          [
+            "Levels & topics"
+          ],
+          [
+            "Review your learning path"
+          ],
+          [
+            "Path management"
+          ]
+        ]
+      ],
+      [
+        "Question sets",
+        [
+          [
+            "Set the details"
+          ],
+          [
+            "Topic selection"
+          ],
+          [
+            "Add questions",
+            "Type · PDF · Image"
+          ],
+          [
+            "Review"
+          ],
+          [
+            "Publish"
+          ]
+        ]
+      ],
+      [
+        "Study decks",
+        [
+          [
+            "Set the details"
+          ],
+          [
+            "Add explanations"
+          ],
+          [
+            "Set up your deck"
+          ],
+          [
+            "Finalise"
+          ],
+          [
+            "Cards & list view"
+          ],
+          [
+            "Review"
+          ]
+        ]
+      ],
+      [
+        "Trust & payouts",
+        [
+          [
+            "Qualifications"
+          ],
+          [
+            "Professional experience"
+          ],
+          [
+            "Identity verification",
+            "NIC · Licence · Passport"
+          ],
+          [
+            "Status",
+            "Pending · Approved · Rejected"
+          ],
+          [
+            "Bank information"
+          ],
+          [
+            "Public profile"
+          ]
+        ]
+      ]
+    ],
+    "decisions": [
+      {
+        "title": "A teaching hub, not a dashboard",
+        "text": "Home opens on “Your teaching resources”: question sets, notes, videos and study decks in one place, with a labelled side menu for paths, subscribers, notifications and settings.",
+        "img": "new-home",
+        "w": 1512,
+        "h": 982
       },
       {
-        "key": "login",
-        "title": "Login",
-        "soft": "",
-        "points": [
-          "Half-screen illustration panel replaced by a focused, centred card",
-          "Warmer “Hey there, Welcome back” greeting and a clear “Create an account” path",
-          "Shares the student app's welcome language, so both products feel like one brand"
-        ]
+        "title": "Guided creation with a review step",
+        "text": "Learning paths and question sets are built step by step, Set the details, then topics, then content, and always end in a review before publishing, with clear delete and publish confirmations.",
+        "icon": "check"
+      },
+      {
+        "title": "Questions from PDFs and images",
+        "text": "Instead of typing every question, tutors upload a PDF, run text extraction and turn it into a question set, or start from an image, with upload progress and file-type choices along the way.",
+        "icon": "upload"
+      },
+      {
+        "title": "Insight where it helps",
+        "text": "A topic-distribution overview shows how a set's questions spread across topics, so gaps are visible before students find them.",
+        "icon": "chart"
+      },
+      {
+        "title": "Trust and payouts built in",
+        "text": "Qualifications, professional experience and identity verification (NIC, driving licence or passport) feed a public tutor profile. Pending, approved and rejected states are designed for each step, and bank details unlock earnings.",
+        "icon": "shield"
+      },
+      {
+        "title": "A familiar welcome",
+        "text": "Sign-in uses the same warm language and patterns as the student app, so tutors and students meet one ReadyMe brand.",
+        "img": "new-login",
+        "w": 1512,
+        "h": 982
       }
     ],
-    "path_before": "One long form with a slideshow taking half the screen, asking for access, name, country, language and translation all at once.",
-    "path_steps": [
-      [
-        "Create your learning path",
-        "Name, access and basics, one decision at a time"
-      ],
-      [
-        "Set the details",
-        "Subject, levels, topics and language, with validation as you go"
-      ],
-      [
-        "Review your learning path",
-        "Check everything before it goes live"
-      ]
-    ],
-    "features": [
-      [
-        "upload",
-        "PDF question extraction",
-        "Upload a PDF, extract its text and turn it into questions instead of typing each one."
-      ],
-      [
-        "image",
-        "Image upload",
-        "Add questions from images, with a dedicated upload and setup flow."
-      ],
-      [
-        "check",
-        "Review & publish",
-        "Every question set gets a review step, with clear delete and publish confirmations."
-      ],
-      [
-        "chart",
-        "Topic distribution",
-        "An overview chart shows how questions are spread across topics."
-      ],
-      [
-        "cards",
-        "Study decks",
-        "A new content type: flashcard decks with card and list views, explanations and review."
-      ],
-      [
-        "shield",
-        "Identity & payouts",
-        "Guided identity verification (NIC, driving licence or passport) and bank details for earnings."
-      ],
-      [
-        "user",
-        "Public tutor profile",
-        "Qualifications and professional experience build a public profile students can trust."
-      ],
-      [
-        "phone",
-        "Responsive",
-        "Key flows designed for smaller screens, not just desktop."
-      ]
+    "states": [
+      "Empty states",
+      "Validation",
+      "Error states",
+      "Upload progress",
+      "Pending",
+      "Approved",
+      "Rejected",
+      "Delete confirmations",
+      "Reconfirmation modals",
+      "Publish confirmations",
+      "Edit & save",
+      "App update",
+      "Responsive layouts"
     ],
     "metrics": [
       [
@@ -732,12 +860,12 @@
         "How long a new tutor takes to publish their first learning path."
       ],
       [
-        "Paths completed",
-        "Share of started learning paths that reach Review and get published."
+        "Creation completion",
+        "Share of learning paths and question sets that reach Review and get published."
       ],
       [
         "Questions from uploads",
-        "Questions created through PDF and image upload instead of manual entry."
+        "Questions created through PDF and image extraction instead of typing."
       ],
       [
         "Verified tutors",
