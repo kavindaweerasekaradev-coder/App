@@ -371,6 +371,7 @@ def render(p, prev_p, next_p, version):
 
       <nav class="nav__links" id="nav-links" aria-label="Primary">
         <a href="../index.html#work" class="is-active">Work</a>
+        <a href="../shipped/">Shipped</a>
         <a href="../index.html#about">About</a>
         <a href="../index.html#services">Services</a>
         <a href="../index.html#experience">Experience</a>
@@ -540,6 +541,10 @@ def main():
             f.write(render(p, prev_p, next_p, version))
         print("wrote", os.path.relpath(path, ROOT))
     write_explorations(version)
+    import importlib.util as _u
+    _spec = _u.spec_from_file_location("build_shipped", os.path.join(ROOT, "scripts", "build_shipped.py"))
+    _bs = _u.module_from_spec(_spec); _spec.loader.exec_module(_bs)
+    _bs.write_all(version, {"e": e, "SITE": SITE, "ARROW": ARROW, "BACK": BACK, "block": block, "split_words": split_words})
     write_sitemap(projects)
 
 
@@ -618,7 +623,7 @@ def write_sitemap(projects):
     """sitemap.xml for search engines: the home page and every case study."""
     import datetime
     today = datetime.date.today().isoformat()
-    urls = [(SITE, "1.0"), (SITE + "explorations/", "0.7")] + [(f"{SITE}case-studies/{p['slug']}.html", "0.8") for p in projects]
+    urls = [(SITE, "1.0"), (SITE + "shipped/", "0.8"), (SITE + "shipped/readyme.html", "0.8"), (SITE + "explorations/", "0.7")] + [(f"{SITE}case-studies/{p['slug']}.html", "0.8") for p in projects]
     body = "".join(f"  <url><loc>{u}</loc><lastmod>{today}</lastmod><priority>{pr}</priority></url>\n" for u, pr in urls)
     with open(os.path.join(ROOT, "sitemap.xml"), "w", encoding="utf-8") as f:
         f.write('<?xml version="1.0" encoding="UTF-8"?>\n<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">\n' + body + "</urlset>\n")

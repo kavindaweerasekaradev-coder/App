@@ -1,0 +1,144 @@
+{
+  "note": "Certain projects are subject to NDA constraints. While I’ve included selected UI work, core UX deliverables such as research, user flows, information architecture, and user interviews are confidential and not publicly shareable.",
+  "products": [
+    {
+      "slug": "readyme",
+      "name": "ReadyMe",
+      "category": "EdTech · Learning platform",
+      "logo": "assets/img/logos/products/readyme.webp",
+      "logo_fill": true,
+      "text": "ReadyMe is a modern learning platform designed to help users study smarter through clear, structured learning paths. Instead of jumping between scattered resources, ReadyMe organizes knowledge into guided journeys—making it easier to stay focused, track progress, and truly understand each subject.",
+      "chips": ["iPad app", "Web app", "Authoring tool", "Marketing site"],
+      "links": [
+        ["App Store", "https://apps.apple.com/lk/app/readyme/id1637112313", "Open ReadyMe (App Store, opens in a new tab)"],
+        ["Authoring tool", "https://authoring.readyme.co/auth/login?redirect=%2Flearning-paths", "Open the ReadyMe authoring tool for teachers (opens in a new tab)"]
+      ],
+      "case_study": "readyme.html",
+      "role": "I led a complete redesign of the application, transforming it into a cohesive, user-centered experience with improved visual consistency, stronger hierarchy, and enhanced user engagement.",
+      "role_points": [
+        "Defined color tokens, typography scale, spacing system, and grid structure",
+        "Created reusable components (cards, buttons, inputs, progress indicators)",
+        "Standardized interaction states (hover, active, disabled)",
+        "Clear distinction between primary, secondary, and tertiary actions",
+        "Improved typography hierarchy (headlines, subheadings, body text)",
+        "Strategic use of whitespace and contrast to highlight key elements",
+        "Content grouped into meaningful sections (Learning Paths, Progress, Recommendations)",
+        "Reduced decision fatigue with simplified navigation",
+        "Clear entry points (Explore, Continue Learning, Recommended)",
+        "Highlighted personalized content."
+      ]
+    },
+    {
+      "slug": "healthsync",
+      "name": "HealthSync",
+      "category": "Healthcare · EHR platform",
+      "logo": "assets/img/logos/products/healthsync.webp",
+      "text": "HealthSync, is a modern, cloud-based Electronic Health Records (EHR) platform designed to streamline medical workflows, engage patients, and ensure data privacy, all while staying compliant with local and global healthcare standards.",
+      "chips": ["Web app", "Mobile responsive"],
+      "links": [["healthsync.lk", "https://www.healthsync.lk/", "Open HealthSync (healthsync.lk, opens in a new tab)"]],
+      "role": "Led end-to-end UI/UX design of a cloud-based EHR web application (HealthSync), from concept and wireframes to high-fidelity UI, improving usability, visual consistency, and user engagement.",
+      "role_points": [
+        "Designed and delivered a cloud-based EHR web application (HealthSync) from initial concept to live product",
+        "Led the full product design lifecycle, including ideation, user research, wireframing, prototyping, and high-fidelity UI design",
+        "Built a comprehensive design system (colors, typography, components) to ensure consistency and scalability",
+        "Ensured responsive design across desktop and tablet devices",
+        "Established the end-to-end user experience, aligning user needs with business and healthcare requirements"
+      ]
+    },
+    {
+      "slug": "cubis",
+      "name": "Cubis",
+      "category": "Fintech · Investment dashboard",
+      "logo": "assets/img/logos/products/cubis.svg",
+      "text": "Cubis is your all-in-one investment portfolio manager, designed to simplify your financial journey. Seamlessly track your investments, analyze performance, and make informed decisions, all within one intuitive platform. Discover the ease of smart investing with Cubis.",
+      "chips": ["Web app", "Dashboard"],
+      "links": [["cubis.io", "https://www.cubis.io/", "Open Cubis (cubis.io, opens in a new tab)"]],
+      "role": "Improved the overall user experience by restructuring critical flows and refining design system components to achieve greater consistency, usability, and visual clarity.",
+      "role_points": [
+        "Refined the overall user experience by optimizing key user flows for smoother navigation and task completion",
+        "Improved information architecture and interaction patterns to reduce friction and enhance usability",
+        "Strengthened visual hierarchy and layout structure to guide user attention effectively",
+        "Contributed to a more polished, modern, and seamless product experience",
+        "Enhanced the design system by updating components, spacing, typography, and visual consistency"
+      ]
+    },
+    {
+      "slug": "gigz",
+      "name": "Gigz",
+      "category": "Music · Event discovery",
+      "logo": "assets/img/logos/products/gigz.webp",
+      "text": "Gigz App is designed specifically for individuals like you who want to stay updated on the vibrant music scene happening right in your area.",
+      "chips": ["Mobile app", "Web app", "Dashboard"],
+      "links": [["gigz.app", "https://gigz.app/", "Open Gigz (gigz.app, opens in a new tab)"]],
+      "role": "As part of a collaborative design effort, I contributed to shaping Gigz into a seamless cross-platform experience designing key user flows, refining the interface, and ensuring consistency across mobile and web to enhance event discovery and user engagement.",
+      "role_points": [
+        "Contributed to the end-to-end design of Gigz, a mobile and web platform for discovering live music events, venues, and artists",
+        "Collaborated with a UI designer to create a cohesive cross-platform experience across mobile and web",
+        "Defined and refined information architecture to support seamless navigation and content discovery",
+        "Designed high-fidelity UI screens aligned with modern design standards and user expectations",
+        "Contributed to the design system, ensuring consistency in components, typography, and visual patterns",
+        "Ensured responsive and scalable design across different devices and screen sizes"
+      ]
+    },
+    {
+      "slug": "peoples-pay",
+      "name": "Peoples Pay",
+      "category": "Fintech · Mobile banking",
+      "logo": "assets/img/logos/products/peoplespay.webp",
+      "text": "Peoples Pay is a modern mobile banking and payments app designed to make managing your finances effortless and intuitive. Built with a human-centered approach, the app simplifies everyday financial tasks, so users can handle payments, transfers, and account management with ease and confidence.",
+      "chips": ["Mobile app"],
+      "links": [["App Store", "https://apps.apple.com/lk/app/peoples-pay/id1557298582", "Open Peoples Pay (App Store, opens in a new tab)"]],
+      "role": "I led the creation of Peoples Pay from concept to launch—designing a seamless, user centered mobile banking experience that simplifies everyday financial tasks and empowers users with full control over their finances.",
+      "role_points": []
+    },
+    {
+      "slug": "daily-dogfights",
+      "name": "Daily DogFights",
+      "category": "Sports · Golf",
+      "logo": "assets/img/logos/products/dailydogfights.webp",
+      "text": "Daily DogFights is a golf-focused mobile application designed to help golfers organize games, track scores, manage side bets, and calculate payouts during and after a round of golf.",
+      "chips": ["Mobile app"],
+      "links": [["dailydogfights.com", "https://www.dailydogfights.com/", "Open Daily DogFights (dailydogfights.com, opens in a new tab)"]],
+      "role": "",
+      "role_points": [
+        "Redesigned the overall user interface to create a more modern, engaging, and user-friendly experience.",
+        "Improved the user experience by simplifying navigation and reducing friction throughout the app flow.",
+        "Conducted UX research and analyzed user behavior to identify usability issues and improvement opportunities.",
+        "Enhanced the score tracking and betting experience with cleaner layouts and more intuitive interactions.",
+        "Designed responsive and scalable UI components for a seamless mobile experience.",
+        "Contributed to improving the app’s overall branding and visual identity.",
+        "Maintained consistency across screens by building and refining reusable design components and patterns.",
+        "Helped increase user engagement by introducing smoother onboarding and more intuitive game management experiences."
+      ]
+    }
+  ],
+  "readyme": {
+    "title": "ReadyMe",
+    "subtitle": "Redesigning a learning app end to end",
+    "lead": "ReadyMe helps students study smarter through structured learning paths. I led a complete redesign of the live app, its flows, navigation, screens and design system, to turn a dense, subject-first app into a focused, discovery-led learning experience.",
+    "facts": [["Role", "Led the full redesign"], ["Scope", "UX flows, UI & design system"], ["Platforms", "iOS, iPad & web"], ["Type", "Redesign of a live product"]],
+    "challenge": [
+      "The original app worked, but it was built around a list of exam subjects. Students landed on a wall of similar cards, with a large subscribe banner competing for attention and no sense of what to study next.",
+      "Screens were dense: stats tiles, long topic tables, boxed answer options and several competing primary actions. Each flow looked slightly different, which made the product feel heavier than it needed to."
+    ],
+    "goals": [
+      ["Discovery first", "Help students find the right learning path, tutor and content, instead of starting from a list of subjects."],
+      ["Calmer screens", "Clear hierarchy, more whitespace and one obvious primary action per screen."],
+      ["One system", "A design system of tokens and reusable components so every flow feels like the same product."]
+    ],
+    "pairs": [
+      {"key": "home", "title": "Home", "soft": "from subject list to discovery", "points": ["“My Subjects” list replaced by a Discover feed: latest learning paths, featured tutors and exam-prep rows", "Rich path cards with tutor, rating, language and subject tags", "Subscribe banner removed from the main view; a four-tab bar (Discover, Activity, My paths, Account) gives clear entry points"]},
+      {"key": "paths", "title": "Choosing what to learn", "soft": "", "points": ["Checkbox list of exam subjects became browsable learning-path cards", "Each path shows its tutor, rating and tags, so students can compare at a glance", "Search and “See all” lists use the same card, keeping the system consistent"]},
+      {"key": "course", "title": "Course page", "soft": "a clear hub", "points": ["Stats tiles and a long topics table replaced by a focused hub", "Four clear destinations: Learning materials, Analytics, Chat with tutor and Leaderboard", "“New content” badge highlights what changed since the last visit"]},
+      {"key": "question", "title": "Answering questions", "soft": "", "points": ["Timer and number strip replaced by a calm progress bar and “Question 5/10”", "Image-led questions get room to breathe, with Quick ref one tap away", "Answers move to their own view, toggled from a single bottom control"]},
+      {"key": "answer", "title": "Choosing an answer", "soft": "", "points": ["Boxed A/B/C/D options became full-sentence choices that are easier to read", "One clear primary action, Submit, instead of a dark Next bar", "Previous / next and Question toggle stay in the same place on every question"]},
+      {"key": "login", "title": "Login", "soft": "", "points": ["Warmer welcome and a simpler, left-aligned form", "Google, Facebook and Apple sign-in as a compact row instead of full-width buttons", "Clear “Create an account” path at the bottom"]},
+      {"key": "plans", "title": "Plans & paywall", "soft": "", "points": ["Four stacked price boxes replaced by a single, focused “Unlock full access” card", "The plan choice is the only decision on the screen", "Copy speaks to the learning path the student is already on"]}
+    ],
+    "system": [
+      ["Foundations", ["Color tokens, typography scale, spacing system and grid", "Improved type hierarchy for headlines, subheadings and body text", "Whitespace and contrast used to highlight what matters"]],
+      ["Components", ["Reusable cards, buttons, inputs and progress indicators", "Standardized hover, active and disabled states", "Clear primary, secondary and tertiary actions"]],
+      ["Navigation & content", ["Content grouped into Learning paths, Progress and Recommendations", "Simplified navigation to reduce decision fatigue", "Clear entry points and personalized content"]]
+    ]
+  }
+}
