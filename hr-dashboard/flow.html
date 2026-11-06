@@ -3,9 +3,9 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>App flow — Staffora</title>
-<meta name="description" content="The complete user flow of the Staffora HR prototype: every page, step and decision, from sign up and log in to the dashboard and employees.">
-<link rel="icon" href="../favicon.ico">
+<title>App flow — nestwork</title>
+<meta name="description" content="The complete user flow of the nestwork HR prototype: every page, step and decision, from sign up and log in to the dashboard and employees.">
+<link rel="icon" href="favicon.svg" type="image/svg+xml">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&amp;display=swap">
 <style>
@@ -23,7 +23,9 @@ a:focus-visible, button:focus-visible { outline: 2px solid var(--ink); outline-o
 /* Header */
 .top { display: flex; align-items: center; justify-content: space-between; gap: 12px; flex-wrap: wrap; background: #FFFFFF; border-radius: 999px; padding: 10px 10px 10px 16px; }
 .brand { display: flex; align-items: center; gap: 10px; font-size: 19px; font-weight: 800; letter-spacing: -0.02em; text-decoration: none; }
-.brand-mark { width: 38px; height: 38px; border-radius: 12px; background: var(--accent); display: grid; place-items: center; }
+.brand-mark { display: flex; }
+.brand-mark svg { display: block; }
+.wm { color: var(--accent-dark); }
 .top-links { display: flex; align-items: center; gap: 6px; flex-wrap: wrap; }
 .pill { display: inline-flex; align-items: center; gap: 8px; height: 44px; padding: 0 18px; border-radius: 999px; font-weight: 600; font-size: 14px; text-decoration: none; transition: background-color .2s ease, transform .15s ease, box-shadow .2s ease; }
 .pill:active { transform: scale(.96); }
@@ -129,8 +131,8 @@ a.node:hover, .node.hot { transform: translateY(-2px); box-shadow: 0 10px 24px r
 
   <header class="top">
     <a href="overview.html" class="brand">
-      <span class="brand-mark"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#1F2933" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M18 21a8 8 0 0 0-16 0"/><circle cx="10" cy="8" r="5"/><path d="M22 20c0-3.37-2-6.5-4-8a5 5 0 0 0-.45-8.3"/></svg></span>
-      Staffora
+      <span class="brand-mark"><svg class="logo-mark" width="38" height="38" viewBox="0 0 48 48" aria-hidden="true"><rect width="48" height="48" rx="14" fill="#EAF3F7"/><path d="M8 25h32a16 13 0 0 1-32 0z" fill="#3E6B88"/><circle cx="16" cy="19" r="4.5" fill="#86CD96"/><circle cx="24" cy="16" r="4.5" fill="#5FB574"/><circle cx="32" cy="19" r="4.5" fill="#86CD96"/><path d="M14 31h20" stroke="#C4EDCD" stroke-width="2.4" stroke-linecap="round"/></svg></span>
+      <span class="wordmark">nest<span class="wm">work</span></span>
     </a>
     <nav class="top-links" aria-label="Project">
       <a href="overview.html" class="pill pill-ghost">Overview</a>
@@ -145,7 +147,7 @@ a.node:hover, .node.hot { transform: translateY(-2px); box-shadow: 0 10px 24px r
     <div>
       <p class="eyebrow">App flow</p>
       <h1>Every page, step and decision</h1>
-      <p>How people move through Staffora, from their first visit to managing the team. Every box is a real screen: click one to open it. Hover a box to trace where it leads.</p>
+      <p>How people move through nestwork, from their first visit to managing the team. Every box is a real screen: click one to open it. Hover a box to trace where it leads.</p>
     </div>
     <ul class="legend" aria-label="Legend">
       <li><i style="background: var(--dark);"></i>Start</li>
@@ -236,7 +238,7 @@ a.node:hover, .node.hot { transform: translateY(-2px); box-shadow: 0 10px 24px r
     <div class="pages">
       <article class="page">
         <div class="page-top"><div><h3>Project overview</h3><code>overview.html</code></div><a class="open" href="overview.html" aria-label="Open the project overview"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M7 7h10v10"/><path d="M7 17 17 7"/></svg></a></div>
-        <ol><li>Read what Staffora is and who designed it</li><li>See the four flows and every screen</li><li>Pick where to start</li></ol>
+        <ol><li>Read what nestwork is and who designed it</li><li>See the four flows and every screen</li><li>Pick where to start</li></ol>
         <div class="goes">Leads to <a href="login.html">Log in</a><a href="signup.html">Sign up</a><a href="index.html">Dashboard</a><a href="employees.html">Employees</a><a href="flow.html">App flow</a></div>
       </article>
       <article class="page">
@@ -278,7 +280,7 @@ a.node:hover, .node.hot { transform: translateY(-2px); box-shadow: 0 10px 24px r
   </section>
 
   <footer class="foot">
-    <span>Staffora is a design concept. Names and numbers are sample data.</span>
+    <span>nestwork is a design concept. Names and numbers are sample data.</span>
     <a href="overview.html">Back to the project overview</a>
   </footer>
 </div>

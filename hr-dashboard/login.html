@@ -3,9 +3,9 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>Log in — Staffora</title>
-<meta name="description" content="Login page for the Staffora HR dashboard concept by Kavinda Weerasekara.">
-<link rel="icon" href="../favicon.ico">
+<title>Log in — nestwork</title>
+<meta name="description" content="Login page for the nestwork HR dashboard concept by Kavinda Weerasekara.">
+<link rel="icon" href="favicon.svg" type="image/svg+xml">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&amp;display=swap">
 <link rel="stylesheet" href="auth.css">
@@ -42,10 +42,8 @@
 
   <aside class="panel">
     <a href="overview.html" class="brand">
-      <span class="brand-mark">
-        <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="#1F2933" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M18 21a8 8 0 0 0-16 0"/><circle cx="10" cy="8" r="5"/><path d="M22 20c0-3.37-2-6.5-4-8a5 5 0 0 0-.45-8.3"/></svg>
-      </span>
-      Staffora
+      <span class="brand-mark"><svg class="logo-mark" width="40" height="40" viewBox="0 0 48 48" aria-hidden="true"><rect width="48" height="48" rx="14" fill="#FFFFFF"/><path d="M8 25h32a16 13 0 0 1-32 0z" fill="#3E6B88"/><circle cx="16" cy="19" r="4.5" fill="#86CD96"/><circle cx="24" cy="16" r="4.5" fill="#5FB574"/><circle cx="32" cy="19" r="4.5" fill="#86CD96"/><path d="M14 31h20" stroke="#C4EDCD" stroke-width="2.4" stroke-linecap="round"/></svg></span>
+      <span class="wordmark">nest<span class="wm">work</span></span>
     </a>
     <div class="intro">
       <h1>Welcome back. Your <span>team</span> is waiting.</h1>
@@ -76,7 +74,7 @@
         <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="m15 18-6-6 6-6"/></svg>
         Back to log in
       </button>
-      <p class="login" id="signupLine">New to Staffora? <a href="signup.html">Create an account</a></p>
+      <p class="login" id="signupLine">New to nestwork? <a href="signup.html">Create an account</a></p>
     </div>
 
     <div class="stage">
@@ -85,7 +83,7 @@
       <form class="screen active" data-screen="login" novalidate>
         <p class="eyebrow">Log in</p>
         <h2>Welcome back</h2>
-        <p class="sub">Log in to your Staffora workspace.</p>
+        <p class="sub">Log in to your nestwork workspace.</p>
         <p class="notice" id="notice" role="alert" hidden>
           <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true" style="flex: none; margin-top: 1px;"><circle cx="12" cy="12" r="10"/><line x1="12" x2="12" y1="8" y2="12"/><line x1="12" x2="12.01" y1="16" y2="16"/></svg>
           <span id="noticeText"></span>
@@ -206,7 +204,7 @@
 
   // Prefill the email from a sign-up in this session
   try {
-    var saved = sessionStorage.getItem('staffora:email');
+    var saved = sessionStorage.getItem('nestwork:email');
     if (saved) emailEl.value = saved;
   } catch (e) {}
 
@@ -231,13 +229,13 @@
         return;
       }
       try {
-        var name = sessionStorage.getItem('staffora:email') === email ? sessionStorage.getItem('staffora:name') : '';
+        var name = sessionStorage.getItem('nestwork:email') === email ? sessionStorage.getItem('nestwork:name') : '';
         if (!name) {
           var local = email.split('@')[0].split(/[._-]/)[0];
           name = local.charAt(0).toUpperCase() + local.slice(1);
         }
-        sessionStorage.setItem('staffora:name', name);
-        sessionStorage.setItem('staffora:email', email);
+        sessionStorage.setItem('nestwork:name', name);
+        sessionStorage.setItem('nestwork:email', email);
       } catch (e) {}
       window.location.href = 'index.html';
     });
