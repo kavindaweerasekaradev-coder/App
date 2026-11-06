@@ -49,12 +49,16 @@ hr-dashboard/login.html      # Log in and reset password (login.html#forgot open
 hr-dashboard/signup.html     # Five-step sign-up: account, email code, company, invites, done
 hr-dashboard/index.html      # Dashboard
 hr-dashboard/employees.html  # Directory, profile panel (#emp-<id>) and add-employee form (#add)
+hr-dashboard/recruitment.html # Open roles, candidate pipeline (#cand-<id>, #job-<id>) and post-a-job form (#post)
+hr-dashboard/app.css         # Styles shared by the employees and recruitment pages
 hr-dashboard/auth.css        # Styles shared by the log-in and sign-up pages
 hr-dashboard/assets/avatars/ # Portraits of the sample people (DiceBear Notionists, CC0 1.0)
 ```
 
 Log in and sign-up both lead to the dashboard, and the dashboard's Sign out icon returns to log in.
-The dashboard's Employees links, Add employee button and team-table names open `employees.html`.
+The dashboard's Employees links, Add employee button and team-table names open `employees.html`,
+and its Recruitment links and Open positions card open `recruitment.html`. Hiring a candidate opens
+the add-employee form with their details filled in.
 The name from sign-up (or the email used to log in) is kept in `sessionStorage` so the dashboard
 can greet the visitor; nothing is sent anywhere.
 
