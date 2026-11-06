@@ -33,14 +33,6 @@
     if (c && /^M12 5v14/.test(c.getAttribute('d') || '')) c.closest('.btn__circle').classList.add('is-down');
   });
 
-  // About: live local time in Colombo
-  var aboutTime = document.getElementById('about-time');
-  if (aboutTime && window.Intl) {
-    var fmt = new Intl.DateTimeFormat('en-GB', { hour: '2-digit', minute: '2-digit', hour12: false, timeZone: 'Asia/Colombo' });
-    var tick = function () { try { aboutTime.textContent = fmt.format(new Date()); } catch (e) {} };
-    tick(); setInterval(tick, 20000);
-  }
-
   // Mobile menu
   var burger = document.getElementById('nav-burger');
   var links = document.getElementById('nav-links');
