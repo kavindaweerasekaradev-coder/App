@@ -146,5 +146,51 @@
         if (num) gsap.from(num, { scale: 0.4, autoAlpha: 0, duration: 0.6, ease: 'back.out(2.5)', delay: 0.2 });
       }, 'top 75%');
     });
+
+    // Authoring tool: browser windows slide in from opposite sides, chips pop and float, cursor parallax
+    var ats = document.querySelector('.at-stage');
+    if (ats) {
+      var wOld = ats.querySelector('.at-win--old'), wNew = ats.querySelector('.at-win--new'), aChips = ats.querySelectorAll('.rm-chip');
+      var atl = gsap.timeline({ paused: true })
+        .from(ats, { autoAlpha: 0, y: 40, duration: 0.8, ease: 'power3.out' })
+        .from(wOld, { x: -160, autoAlpha: 0, duration: 1, ease: 'power3.out' }, 0.15)
+        .from(wNew, { x: 200, y: 60, autoAlpha: 0, scale: 0.92, duration: 1.2, ease: 'expo.out' }, 0.45)
+        .from(aChips, { scale: 0, autoAlpha: 0, duration: 0.6, ease: 'back.out(2.2)', stagger: 0.12 }, 1)
+        .add(function () { aChips.forEach(function (c, i) { gsap.to(c, { y: i % 2 ? 8 : -8, duration: 2.4 + i * 0.3, ease: 'sine.inOut', yoyo: true, repeat: -1 }); }); });
+      once(ats, function () { atl.play(); }, 'top 88%');
+      var px = [[wOld, 10], [wNew, 22]].map(function (w) { return { x: gsap.quickTo(w[0], 'x', { duration: 0.8, ease: 'power3.out' }), y: gsap.quickTo(w[0], 'y', { duration: 0.8, ease: 'power3.out' }), z: w[1] }; });
+      ats.addEventListener('mousemove', function (e) {
+        var r = ats.getBoundingClientRect(), dx = (e.clientX - r.left) / r.width - 0.5, dy = (e.clientY - r.top) / r.height - 0.5;
+        if (atl.progress() < 1) return;
+        px.forEach(function (m) { m.x(dx * m.z); m.y(dy * m.z * 0.6); });
+      });
+      ats.addEventListener('mouseleave', function () { px.forEach(function (m) { m.x(0); m.y(0); }); });
+    }
+
+    // Path creation: the old form fades to the side, then the three steps build up along a line
+    var steps3 = document.querySelector('.at-steps-wrap');
+    if (steps3) {
+      var sItems = steps3.querySelectorAll('.at-step'), sLine = steps3.querySelector('.at-steps__line i');
+      gsap.set(sLine, { scaleY: 0 });
+      gsap.set(sItems, { autoAlpha: 0, x: 40 });
+      once(steps3, function () {
+        var tl = gsap.timeline();
+        tl.to(sLine, { scaleY: 1, duration: 1.4, ease: 'power1.inOut' }, 0.2);
+        sItems.forEach(function (it, i) {
+          tl.to(it, { autoAlpha: 1, x: 0, duration: 0.6, ease: 'back.out(1.6)' }, 0.2 + i * 0.4)
+            .from(it.querySelector('.at-step__n'), { scale: 0, rotation: -90, duration: 0.5, ease: 'back.out(3)' }, 0.3 + i * 0.4);
+        });
+      }, 'top 75%');
+    }
+
+    // What's new: cards rise in a wave, icons spin into place
+    var feats = gsap.utils.toArray('.at-feat');
+    if (feats.length) {
+      gsap.set(feats, { autoAlpha: 0, y: 50 });
+      once('.at-feats', function () {
+        gsap.to(feats, { autoAlpha: 1, y: 0, duration: 0.8, ease: 'power3.out', stagger: { each: 0.08, grid: 'auto', from: 'start' } });
+        gsap.from(document.querySelectorAll('.at-feat__i'), { rotation: -120, scale: 0, duration: 0.7, ease: 'back.out(2.5)', stagger: 0.08, delay: 0.2 });
+      });
+    }
   });
 })();
