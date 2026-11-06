@@ -1,5 +1,9 @@
 # Avatars
 
+The prototype shows real photos from [Unsplash](https://unsplash.com/license) (free to use, no
+attribution required), loaded by `../people.js`. The illustrations below are the fallback used if
+a photo can't load.
+
 These portraits were generated with [DiceBear](https://www.dicebear.com/) using the
 [Notionists](https://www.dicebear.com/styles/notionists/) style by Zoish.
 

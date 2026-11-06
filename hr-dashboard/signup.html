@@ -17,7 +17,7 @@
   <aside class="panel">
     <a href="overview.html" class="brand">
       <span class="brand-mark">
-        <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="#1F2933" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="9" cy="8" r="3.2"/><path d="M3 19.5c.9-3.4 3.2-5 6-5s5.1 1.6 6 5"/><path d="M15.5 4.8a3.2 3.2 0 0 1 0 6.4M17.5 14.6c1.8.7 2.9 2.3 3.4 4.9"/></svg>
+        <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="#1F2933" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M18 21a8 8 0 0 0-16 0"/><circle cx="10" cy="8" r="5"/><path d="M22 20c0-3.37-2-6.5-4-8a5 5 0 0 0-.45-8.3"/></svg>
       </span>
       Staffora
     </a>
@@ -42,7 +42,7 @@
 
     <div class="topline">
       <button type="button" class="back" id="back" hidden>
-        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M15 6l-6 6 6 6"/></svg>
+        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="m15 18-6-6 6-6"/></svg>
         Back
       </button>
       <p class="login" id="loginLine">Already have an account? <a href="login.html">Log in</a></p>
@@ -83,7 +83,7 @@
         </div>
         <div class="actions">
           <button type="submit" class="btn btn-primary">Continue
-            <svg class="arrow" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6"/></svg>
+            <svg class="arrow" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12h14"/><path d="m12 5 7 7-7 7"/></svg>
           </button>
           <div class="divider">or</div>
           <button type="button" class="btn btn-outline" id="sso">Continue with work SSO</button>
@@ -149,7 +149,7 @@
         </div>
         <div class="actions">
           <button type="submit" class="btn btn-primary">Continue
-            <svg class="arrow" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6"/></svg>
+            <svg class="arrow" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12h14"/><path d="m12 5 7 7-7 7"/></svg>
           </button>
         </div>
       </form>
@@ -165,7 +165,7 @@
             <div class="invite-row">
               <input class="input" id="invite" type="email" placeholder="teammate@company.com" aria-describedby="invite-err">
               <button type="button" class="add-btn" id="addInvite" aria-label="Add teammate">
-                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" aria-hidden="true"><path d="M12 5v14M5 12h14"/></svg>
+                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" aria-hidden="true"><path d="M5 12h14"/><path d="M12 5v14"/></svg>
               </button>
             </div>
             <p class="error" id="invite-err"></p>
@@ -181,7 +181,7 @@
       <!-- Done -->
       <section class="screen success" data-step="5" aria-labelledby="done-title">
         <div class="badge">
-          <svg width="44" height="44" viewBox="0 0 24 24" fill="none" stroke="#1F2933" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12.5l4.5 4.5L19 7.5"/></svg>
+          <svg width="44" height="44" viewBox="0 0 24 24" fill="none" stroke="#1F2933" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M20 6 9 17l-5-5"/></svg>
         </div>
         <h2 id="done-title" tabindex="-1">You’re all set, <span id="firstName">there</span></h2>
         <p class="sub">Your workspace is ready. Here’s what we set up.</p>
@@ -193,7 +193,7 @@
         </ul>
         <div class="actions">
           <a href="index.html" class="btn btn-accent" style="text-decoration: none;">Go to dashboard
-            <svg class="arrow" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6"/></svg>
+            <svg class="arrow" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12h14"/><path d="m12 5 7 7-7 7"/></svg>
           </a>
         </div>
       </section>
@@ -225,7 +225,7 @@
       li.classList.toggle('current', n === step);
       li.classList.toggle('done', n < step);
       li.querySelector('.step-dot').innerHTML = n < step
-        ? '<svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12.5l4.5 4.5L19 7.5"/></svg>'
+        ? '<svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M20 6 9 17l-5-5"/></svg>'
         : n;
       if (n === step) li.setAttribute('aria-current', 'step'); else li.removeAttribute('aria-current');
     });
@@ -370,7 +370,7 @@
   // Step 4
   var invites = [];
   var inviteEl = document.getElementById('invite'), inviteErr = document.getElementById('invite-err'), list = document.getElementById('invites');
-  var cross = '<svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" aria-hidden="true"><path d="M6 6l12 12M18 6L6 18"/></svg>';
+  var cross = '<svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" aria-hidden="true"><path d="M18 6 6 18"/><path d="m6 6 12 12"/></svg>';
   function esc(s) { return s.replace(/[&<>"]/g, function (c) { return { '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;' }[c]; }); }
   function renderInvites() {
     list.innerHTML = invites.length

@@ -54,7 +54,8 @@ hr-dashboard/payroll.html     # Pay run with review, issue checks and approval (
 hr-dashboard/attendance.html  # Check in/out, team today (#emp-<id>), week view, time off (#leave, #request)
 hr-dashboard/app.css         # Styles shared by the employees, recruitment, payroll and attendance pages
 hr-dashboard/auth.css        # Styles shared by the log-in and sign-up pages
-hr-dashboard/assets/avatars/ # Portraits of the sample people (DiceBear Notionists, CC0 1.0)
+hr-dashboard/assets/people.js # Swaps each portrait for a real Unsplash photo; falls back to assets/avatars/
+hr-dashboard/assets/avatars/ # Illustrated fallback portraits (DiceBear Notionists, CC0 1.0)
 ```
 
 Log in and sign-up both lead to the dashboard, and the dashboard's Sign out icon returns to log in.
@@ -62,7 +63,7 @@ The dashboard's Employees links, Add employee button and team-table names open `
 and its Recruitment links and Open positions card open `recruitment.html`. Hiring a candidate opens
 the add-employee form with their details filled in.
 The name from sign-up (or the email used to log in) is kept in `sessionStorage` so the dashboard
-can greet the visitor; nothing is sent anywhere.
+can greet the visitor; nothing is sent anywhere. Icons are [Lucide](https://lucide.dev) (ISC licence), inlined as SVG.
 
 ## Project detail pages
 

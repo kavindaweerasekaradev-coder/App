@@ -35,6 +35,7 @@
 @media (prefers-reduced-motion: reduce) { .preview-bars i, .preview-card { animation: none; } }
 </style>
   <script src="../assets/js/analytics.js" defer></script>
+<script src="assets/people.js" defer></script>
 </head>
 <body>
 <div class="shell">
@@ -42,7 +43,7 @@
   <aside class="panel">
     <a href="overview.html" class="brand">
       <span class="brand-mark">
-        <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="#1F2933" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="9" cy="8" r="3.2"/><path d="M3 19.5c.9-3.4 3.2-5 6-5s5.1 1.6 6 5"/><path d="M15.5 4.8a3.2 3.2 0 0 1 0 6.4M17.5 14.6c1.8.7 2.9 2.3 3.4 4.9"/></svg>
+        <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="#1F2933" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M18 21a8 8 0 0 0-16 0"/><circle cx="10" cy="8" r="5"/><path d="M22 20c0-3.37-2-6.5-4-8a5 5 0 0 0-.45-8.3"/></svg>
       </span>
       Staffora
     </a>
@@ -52,17 +53,17 @@
     </div>
     <div class="preview" aria-hidden="true">
       <div class="preview-card">
-        <span class="preview-icon"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><circle cx="9" cy="8" r="3.5"/><path d="M2.5 20c.8-3.6 3.4-5.5 6.5-5.5s5.7 1.9 6.5 5.5"/><path d="M16 4.6a3.5 3.5 0 0 1 0 6.8"/></svg></span>
+        <span class="preview-icon"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M16 21v-2a4 4 0 0 0-4-4H6a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M22 21v-2a4 4 0 0 0-3-3.87"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/></svg></span>
         <div><strong>228</strong><small>Checked in today</small></div>
         <div class="preview-bars"><i style="height: 60%; animation-delay: 300ms"></i><i style="height: 80%; animation-delay: 360ms"></i><i style="height: 55%; animation-delay: 420ms"></i><i style="height: 100%; animation-delay: 480ms"></i></div>
       </div>
       <div class="preview-card">
-        <span class="preview-icon soft"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><rect x="3" y="5" width="18" height="16" rx="3"/><path d="M8 3v4M16 3v4M3 10h18M9 15l2 2 4-4"/></svg></span>
+        <span class="preview-icon soft"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M8 2v4"/><path d="M16 2v4"/><rect width="18" height="18" x="3" y="4" rx="2"/><path d="M3 10h18"/><path d="m9 16 2 2 4-4"/></svg></span>
         <div><strong>3</strong><small>Leave requests to review</small></div>
         <div class="stack"><img src="assets/avatars/nadia-perera.svg" alt="" width="34" height="34"><img src="assets/avatars/marcus-lee.svg" alt="" width="34" height="34"><img src="assets/avatars/ishan-fernando.svg" alt="" width="34" height="34"></div>
       </div>
       <div class="preview-card">
-        <span class="preview-icon soft"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><rect x="3" y="6" width="18" height="14" rx="3"/><path d="M3 10.5h18M15.5 15h2.5"/></svg></span>
+        <span class="preview-icon soft"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M19 7V4a1 1 0 0 0-1-1H5a2 2 0 0 0 0 4h15a1 1 0 0 1 1 1v4h-3a2 2 0 0 0 0 4h3a1 1 0 0 0 1-1v-2a1 1 0 0 0-1-1"/><path d="M3 5v14a2 2 0 0 0 2 2h15a1 1 0 0 0 1-1v-4"/></svg></span>
         <div><strong>31 Oct</strong><small>Next payroll run</small></div>
       </div>
     </div>
@@ -72,7 +73,7 @@
   <main class="form-side">
     <div class="topline">
       <button type="button" class="back" id="back" hidden>
-        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M15 6l-6 6 6 6"/></svg>
+        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="m15 18-6-6 6-6"/></svg>
         Back to log in
       </button>
       <p class="login" id="signupLine">New to Staffora? <a href="signup.html">Create an account</a></p>
@@ -86,7 +87,7 @@
         <h2>Welcome back</h2>
         <p class="sub">Log in to your Staffora workspace.</p>
         <p class="notice" id="notice" role="alert" hidden>
-          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true" style="flex: none; margin-top: 1px;"><circle cx="12" cy="12" r="9"/><path d="M12 8v5M12 16h.01"/></svg>
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true" style="flex: none; margin-top: 1px;"><circle cx="12" cy="12" r="10"/><line x1="12" x2="12" y1="8" y2="12"/><line x1="12" x2="12.01" y1="16" y2="16"/></svg>
           <span id="noticeText"></span>
         </p>
         <div class="fields">
@@ -110,7 +111,7 @@
         </div>
         <div class="actions">
           <button type="submit" class="btn btn-primary" id="loginBtn">Log in
-            <svg class="arrow" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6"/></svg>
+            <svg class="arrow" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12h14"/><path d="m12 5 7 7-7 7"/></svg>
           </button>
           <div class="divider">or</div>
           <button type="button" class="btn btn-outline" id="sso">Continue with work SSO</button>
@@ -138,7 +139,7 @@
       <!-- Link sent -->
       <section class="screen" data-screen="sent" aria-labelledby="sent-title">
         <div class="mail-badge" aria-hidden="true">
-          <svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="5" width="18" height="14" rx="3"/><path d="M4 7l8 6 8-6"/></svg>
+          <svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect width="20" height="16" x="2" y="4" rx="2"/><path d="m22 7-8.97 5.7a1.94 1.94 0 0 1-2.06 0L2 7"/></svg>
         </div>
         <p class="eyebrow">Check your inbox</p>
         <h2 id="sent-title" tabindex="-1">Reset link sent</h2>
