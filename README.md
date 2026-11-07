@@ -38,7 +38,7 @@ scripts/sync_behance.py        # Behance import, run by .github/workflows/behanc
 - **Caching:** the pages load `style.css?v=…` and `main.js?v=…`. After changing either file, bump the
   `v=` value in `index.html` and `case-studies/*.html` so browsers fetch the new version straight away.
 
-## Staffora HR prototype
+## nestwork HR prototype
 
 `hr-dashboard/` is a standalone, clickable HR management web app concept (no build step):
 
@@ -54,6 +54,7 @@ hr-dashboard/payroll.html     # Pay run with review, issue checks and approval (
 hr-dashboard/attendance.html  # Check in/out, team today (#emp-<id>), week view, time off (#leave, #request)
 hr-dashboard/app.css         # Styles shared by the employees, recruitment, payroll and attendance pages
 hr-dashboard/auth.css        # Styles shared by the log-in and sign-up pages
+hr-dashboard/favicon.svg     # The nestwork logo mark, used as the favicon
 hr-dashboard/assets/people.js # Swaps each portrait for a real Unsplash photo; falls back to assets/avatars/
 hr-dashboard/assets/avatars/ # Illustrated fallback portraits (DiceBear Notionists, CC0 1.0)
 ```

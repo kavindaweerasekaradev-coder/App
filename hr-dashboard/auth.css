@@ -1,4 +1,4 @@
-/* Shared styles for the Staffora sign-up and login pages */
+/* Shared styles for the nestwork sign-up and login pages */
 :root {
   --accent: #86CD96;
   --accent-dark: #2D6B43;
@@ -27,7 +27,9 @@ h1, h2, p { margin: 0; }
 
 /* Brand panel */
 .brand { display: flex; align-items: center; gap: 10px; color: #FFFFFF; text-decoration: none; font-size: 20px; font-weight: 800; letter-spacing: -0.02em; }
-.brand-mark { width: 40px; height: 40px; border-radius: 12px; background: var(--accent); display: grid; place-items: center; }
+.brand-mark { display: flex; }
+.brand-mark svg { display: block; }
+.wm { color: #C4EDCD; }
 .panel h1 { font-size: 34px; line-height: 1.15; font-weight: 700; letter-spacing: -0.02em; }
 .panel h1 span { color: #C4EDCD; }
 .panel .lead { color: #E1ECF3; margin-top: 12px; font-size: 15px; }

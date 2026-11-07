@@ -3,9 +3,9 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>Create your account — Staffora</title>
-<meta name="description" content="Sign-up flow for the Staffora HR dashboard concept by Kavinda Weerasekara.">
-<link rel="icon" href="../favicon.ico">
+<title>Create your account — nestwork</title>
+<meta name="description" content="Sign-up flow for the nestwork HR dashboard concept by Kavinda Weerasekara.">
+<link rel="icon" href="favicon.svg" type="image/svg+xml">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&amp;display=swap">
 <link rel="stylesheet" href="auth.css">
@@ -16,10 +16,8 @@
 
   <aside class="panel">
     <a href="overview.html" class="brand">
-      <span class="brand-mark">
-        <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="#1F2933" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M18 21a8 8 0 0 0-16 0"/><circle cx="10" cy="8" r="5"/><path d="M22 20c0-3.37-2-6.5-4-8a5 5 0 0 0-.45-8.3"/></svg>
-      </span>
-      Staffora
+      <span class="brand-mark"><svg class="logo-mark" width="40" height="40" viewBox="0 0 48 48" aria-hidden="true"><rect width="48" height="48" rx="14" fill="#FFFFFF"/><path d="M8 25h32a16 13 0 0 1-32 0z" fill="#3E6B88"/><circle cx="16" cy="19" r="4.5" fill="#86CD96"/><circle cx="24" cy="16" r="4.5" fill="#5FB574"/><circle cx="32" cy="19" r="4.5" fill="#86CD96"/><path d="M14 31h20" stroke="#C4EDCD" stroke-width="2.4" stroke-linecap="round"/></svg></span>
+      <span class="wordmark">nest<span class="wm">work</span></span>
     </a>
     <div class="intro">
       <h1>Set up your <span>HR workspace</span> in a few minutes.</h1>
@@ -121,7 +119,7 @@
         <div class="fields">
           <div class="field">
             <label for="company">Company name</label>
-            <input class="input" id="company" autocomplete="organization" placeholder="e.g. Staffora Ltd" aria-describedby="company-err">
+            <input class="input" id="company" autocomplete="organization" placeholder="e.g. Nestwork Ltd" aria-describedby="company-err">
             <p class="error" id="company-err"></p>
           </div>
           <div class="field">
@@ -294,7 +292,7 @@
     ok = setError(null, document.getElementById('terms-err'), !termsEl.checked ? 'Please accept the terms to continue.' : '') && ok;
     if (!ok) { var first = this.querySelector('[aria-invalid="true"]'); if (first) first.focus(); return; }
     document.getElementById('sentTo').textContent = emailEl.value.trim();
-    try { sessionStorage.setItem('staffora:email', emailEl.value.trim()); } catch (e) {}
+    try { sessionStorage.setItem('nestwork:email', emailEl.value.trim()); } catch (e) {}
     busy(this.querySelector('[type="submit"]'), 'Creating account…', function () { show(2); });
   });
   document.getElementById('sso').addEventListener('click', function () {
@@ -410,7 +408,7 @@
   function finish(sent) {
     var first = nameEl.value.trim().split(/\s+/)[0] || 'there';
     document.getElementById('firstName').textContent = first;
-    try { sessionStorage.setItem('staffora:name', first); } catch (e) {}
+    try { sessionStorage.setItem('nestwork:name', first); } catch (e) {}
     document.getElementById('sumCompany').textContent = companyEl.value.trim();
     document.getElementById('sumSize').textContent = document.querySelector('input[name="size"]:checked').value + ' people';
     document.getElementById('sumIndustry').textContent = document.getElementById('industry').value;

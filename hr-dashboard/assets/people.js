@@ -1,5 +1,5 @@
 /*
- * Real portrait photos for the Staffora sample people.
+ * Real portrait photos for the nestwork sample people.
  *
  * Photos come from Unsplash (https://unsplash.com/license: free to use, no
  * attribution required) and load straight from its image CDN, cropped to the

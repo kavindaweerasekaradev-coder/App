@@ -3,9 +3,9 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>Employees — Staffora</title>
-<meta name="description" content="Employee directory, profiles and add-employee flow for the Staffora HR dashboard concept by Kavinda Weerasekara.">
-<link rel="icon" href="../favicon.ico">
+<title>Employees — nestwork</title>
+<meta name="description" content="Employee directory, profiles and add-employee flow for the nestwork HR dashboard concept by Kavinda Weerasekara.">
+<link rel="icon" href="favicon.svg" type="image/svg+xml">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&amp;display=swap">
 <link rel="stylesheet" href="app.css">
@@ -17,9 +17,9 @@
 <div class="wrap">
 
   <header class="topbar enter">
-    <a href="overview.html" class="brand" aria-label="Staffora project overview">
-      <span class="brand-mark"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="#1F2933" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M18 21a8 8 0 0 0-16 0"/><circle cx="10" cy="8" r="5"/><path d="M22 20c0-3.37-2-6.5-4-8a5 5 0 0 0-.45-8.3"/></svg></span>
-      Staffora
+    <a href="overview.html" class="brand" aria-label="nestwork project overview">
+      <span class="brand-mark"><svg class="logo-mark" width="40" height="40" viewBox="0 0 48 48" aria-hidden="true"><rect width="48" height="48" rx="14" fill="#EAF3F7"/><path d="M8 25h32a16 13 0 0 1-32 0z" fill="#3E6B88"/><circle cx="16" cy="19" r="4.5" fill="#86CD96"/><circle cx="24" cy="16" r="4.5" fill="#5FB574"/><circle cx="32" cy="19" r="4.5" fill="#86CD96"/><path d="M14 31h20" stroke="#C4EDCD" stroke-width="2.4" stroke-linecap="round"/></svg></span>
+      <span class="wordmark">nest<span class="wm">work</span></span>
     </a>
     <nav class="mainnav" aria-label="Primary">
       <a href="index.html">Dashboard</a>
@@ -141,7 +141,7 @@
         <div class="grid2">
           <div class="field"><label for="fFirst">First name</label><input class="input" id="fFirst" autocomplete="off" aria-describedby="fFirst-err"><p class="error" id="fFirst-err"></p></div>
           <div class="field"><label for="fLast">Last name</label><input class="input" id="fLast" autocomplete="off" aria-describedby="fLast-err"><p class="error" id="fLast-err"></p></div>
-          <div class="field full"><label for="fEmail">Work email</label><input class="input" id="fEmail" type="email" autocomplete="off" placeholder="name@staffora.co" aria-describedby="fEmail-err"><p class="error" id="fEmail-err"></p></div>
+          <div class="field full"><label for="fEmail">Work email</label><input class="input" id="fEmail" type="email" autocomplete="off" placeholder="name@nestwork.co" aria-describedby="fEmail-err"><p class="error" id="fEmail-err"></p></div>
           <div class="field"><label for="fPhone">Phone <span class="opt">(optional)</span></label><input class="input" id="fPhone" type="tel" autocomplete="off" placeholder="+94 77 000 0000"></div>
           <div class="field"><label for="fLocation">Location</label><select class="input" id="fLocation"><option>Colombo</option><option>Kandy</option><option>Remote</option><option>Singapore</option><option>London</option></select></div>
         </div>
@@ -228,11 +228,11 @@
   ].map(function (r) {
     return { id: r[0], first: r[1], last: r[2], role: r[3], dept: r[4], status: r[5], location: r[6], joined: r[7],
       manager: r[8], type: r[9], leaveUsed: r[10], leaveTotal: 20,
-      email: (r[1] + '.' + r[2]).toLowerCase().normalize('NFD').replace(/[̀-ͯ]/g, '') + '@staffora.co',
+      email: (r[1] + '.' + r[2]).toLowerCase().normalize('NFD').replace(/[̀-ͯ]/g, '') + '@nestwork.co',
       phone: '+94 77 ' + String(100 + r[0] * 37).slice(-3) + ' ' + String(4000 + r[0] * 613).slice(-4) };
   });
 
-  var KEY = 'staffora:employees';
+  var KEY = 'nestwork:employees';
   var people = seed;
   try { var saved = JSON.parse(sessionStorage.getItem(KEY) || 'null'); if (Array.isArray(saved) && saved.length) people = saved; } catch (e) {}
   function save() { try { sessionStorage.setItem(KEY, JSON.stringify(people)); } catch (e) {} }
@@ -349,7 +349,7 @@
     })).join('\n');
     var a = document.createElement('a');
     a.href = URL.createObjectURL(new Blob([csv], { type: 'text/csv' }));
-    a.download = 'staffora-employees.csv';
+    a.download = 'nestwork-employees.csv';
     document.body.appendChild(a); a.click(); a.remove();
     toast('Exported ' + rows.length + (rows.length === 1 ? ' person' : ' people') + ' to CSV');
   });
@@ -441,7 +441,7 @@
   var confirmEl = document.getElementById('confirm');
   document.getElementById('removeBtn').addEventListener('click', function () {
     var p = byId(currentId); if (!p) return;
-    document.getElementById('confirmText').textContent = full(p) + ' will be removed from the directory and lose access to Staffora.';
+    document.getElementById('confirmText').textContent = full(p) + ' will be removed from the directory and lose access to nestwork.';
     openLayer(confirmEl, document.getElementById('confirmRemove'));
   });
   document.getElementById('confirmRemove').addEventListener('click', function () {
@@ -486,7 +486,7 @@
   function suggestEmail() {
     if (emailTouched) return;
     var a = f('fFirst').value.trim(), b = f('fLast').value.trim();
-    f('fEmail').value = a && b ? (a + '.' + b).toLowerCase().normalize('NFD').replace(/[̀-ͯ]/g, '').replace(/[^a-z.]/g, '') + '@staffora.co' : '';
+    f('fEmail').value = a && b ? (a + '.' + b).toLowerCase().normalize('NFD').replace(/[̀-ͯ]/g, '').replace(/[^a-z.]/g, '') + '@nestwork.co' : '';
     if (f('fEmail').value) { f('fEmail').setAttribute('aria-invalid', 'false'); f('fEmail-err').textContent = ''; }
   }
 
@@ -528,8 +528,8 @@
     f('fManager').value = '7';
     // A candidate hired on the recruitment page arrives with their details filled in
     try {
-      var pre = JSON.parse(sessionStorage.getItem('staffora:prefill') || 'null');
-      sessionStorage.removeItem('staffora:prefill');
+      var pre = JSON.parse(sessionStorage.getItem('nestwork:prefill') || 'null');
+      sessionStorage.removeItem('nestwork:prefill');
       if (pre) {
         ['first:fFirst', 'last:fLast', 'email:fEmail', 'phone:fPhone', 'role:fRole', 'dept:fDept', 'location:fLocation'].forEach(function (pair) {
           var k = pair.split(':');
