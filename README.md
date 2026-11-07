@@ -105,7 +105,7 @@ commits any changes. Behance's feed only lists recent projects, so older ones ar
 
 ## Deploy
 
-**Vercel (main site):** https://kavinda-portfolio-two.vercel.app/ — the project imports this repo with the
+**Vercel (main site):** https://kavinda-design.vercel.app/ — the project imports this repo with the
 "Other" preset and no build step. Every pull request gets a preview deployment; merging to `main` updates the
 live site. `vercel.json` sets caching and security headers, `.vercelignore` keeps `scripts/` out of the deploy.
 The canonical address used for SEO lives in `SITE` in `scripts/build_projects.py` (and in `index.html`).
