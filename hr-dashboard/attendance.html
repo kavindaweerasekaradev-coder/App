@@ -63,23 +63,56 @@
 .trow:hover .go { background: var(--accent); border-color: var(--accent); transform: rotate(45deg); }
 
 /* Week grid */
-.week { display: grid; grid-template-columns: minmax(150px, 1.4fr) repeat(5, minmax(56px, 1fr)); gap: 6px; align-items: center; min-width: 560px; }
-.week .dayhead { font-size: 12px; font-weight: 700; color: var(--muted); text-align: center; padding-bottom: 4px; }
-.week .dayhead.today { color: var(--accent-dark); }
-.week .name { font-size: 13px; font-weight: 600; display: flex; align-items: center; gap: 8px; min-width: 0; }
-.week .name .avatar { width: 28px; height: 28px; }
-.week .name span { white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
-.cell { position: relative; height: 34px; border-radius: 10px; display: grid; place-items: center; font-size: 11px; font-weight: 700; animation: pop-in .35s cubic-bezier(.2,.8,.2,1) backwards; }
+.week-tools { display: flex; align-items: center; gap: 8px; flex-wrap: wrap; }
+.wk-nav { display: flex; align-items: center; gap: 4px; padding: 4px; border-radius: 999px; background: var(--soft); }
+.wk-nav button { height: 34px; min-width: 34px; padding: 0 10px; border: none; border-radius: 999px; background: transparent; color: var(--ink); font-size: 13px; font-weight: 700; display: inline-flex; align-items: center; justify-content: center; gap: 6px; transition: background-color .2s ease, transform .15s ease; }
+.wk-nav button:hover:not(:disabled) { background: #FFFFFF; }
+.wk-nav button:active:not(:disabled) { transform: scale(.94); }
+.wk-nav button:disabled { opacity: .4; cursor: default; }
+.wk-nav .wk-now[aria-pressed="true"] { background: #FFFFFF; box-shadow: 0 1px 3px rgba(31,41,51,.1); }
+.legend { display: flex; gap: 6px; flex-wrap: wrap; margin: 4px 0 2px; }
+.legend button { display: inline-flex; align-items: center; gap: 6px; height: 32px; padding: 0 12px 0 6px; border-radius: 999px; border: 1px solid var(--line); background: #FFFFFF; font-size: 12px; font-weight: 600; color: var(--ink); transition: border-color .2s ease, background-color .2s ease; }
+.legend button:hover { border-color: #CCD5DC; }
+.legend button[aria-pressed="true"] { border-color: var(--ink); background: var(--soft-2); }
+.legend .lg { width: 22px; height: 22px; border-radius: 999px; display: grid; place-items: center; }
+.legend .n { font-size: 11px; color: var(--muted); font-weight: 700; }
+
+.week { min-width: 780px; display: flex; flex-direction: column; gap: 4px; }
+.wrow { display: grid; grid-template-columns: minmax(190px, 1.6fr) repeat(5, minmax(0, 1fr)) 92px; gap: 6px; align-items: center; padding: 4px; border-radius: 16px; transition: background-color .2s ease; }
+.wrow.person:hover { background: var(--soft-2); }
+.dayhead { text-align: center; padding: 8px 4px; border-radius: 14px; font-size: 12px; color: var(--muted); }
+.dayhead b { display: block; font-size: 13px; color: var(--ink); font-weight: 700; }
+.dayhead.today { background: var(--dark); color: #E1ECF3; }
+.dayhead.today b { color: #FFFFFF; }
+.dayhead .tpill { display: inline-block; margin-left: 5px; font-size: 10px; font-weight: 800; padding: 1px 6px; border-radius: 999px; background: var(--accent); color: var(--ink); vertical-align: 1px; }
+.wname { display: flex; align-items: center; gap: 10px; min-width: 0; }
+.wname .avatar { width: 34px; height: 34px; }
+.wname strong { display: block; font-size: 13.5px; font-weight: 700; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+.wname span.r { display: block; font-size: 11.5px; color: var(--muted); white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+.cell { position: relative; height: 38px; border-radius: 12px; display: flex; align-items: center; justify-content: center; gap: 6px; font-size: 12px; font-weight: 700; animation: pop-in .35s cubic-bezier(.2,.8,.2,1) backwards; transition: transform .15s ease, box-shadow .2s ease, opacity .25s ease, filter .25s ease; }
+.cell:hover { transform: translateY(-1px); box-shadow: 0 6px 14px rgba(31,41,51,.1); z-index: 2; }
+.cell .ci { width: 22px; height: 22px; flex: none; border-radius: 999px; display: grid; place-items: center; background: rgba(255,255,255,.75); }
 .cell.ontime { background: #E3F5E8; color: #1C6B37; }
 .cell.late { background: #FDEBD3; color: #9A4A00; }
 .cell.absent { background: #FDE4E4; color: #A3262A; }
-.cell.leave { background: #EDE3FF; color: #5B3BA8; }
+.cell.leave { background: linear-gradient(90deg, #EDE3FF, #E4D8FF); color: #5B3BA8; justify-content: flex-start; padding: 0 10px; }
 .cell.remote { background: #E1ECFF; color: #1D4ED8; }
-.cell.future { background: repeating-linear-gradient(135deg, #F1F5F8 0 4px, #F7FAFC 4px 8px); color: #8C99A4; }
-.legend { display: flex; gap: 12px; flex-wrap: wrap; font-size: 12px; color: var(--muted); }
-.legend span { display: inline-flex; align-items: center; gap: 6px; }
-.legend i { width: 12px; height: 12px; border-radius: 4px; display: inline-block; }
-.scroll-x { overflow-x: auto; position: relative; }
+.cell.future { background: repeating-linear-gradient(135deg, #F1F5F8 0 5px, #F7FAFC 5px 10px); color: #8C99A4; font-weight: 600; }
+.cell.is-today { box-shadow: 0 0 0 2px var(--dark); }
+.cell .lbl { white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+.cell .tip { position: absolute; bottom: calc(100% + 8px); left: 50%; transform: translate(-50%, 4px); background: var(--ink); color: #FFFFFF; font-size: 12px; font-weight: 600; white-space: nowrap; padding: 6px 10px; border-radius: 10px; opacity: 0; pointer-events: none; transition: opacity .15s ease, transform .15s ease; z-index: 5; }
+.cell:hover .tip, .cell:focus-visible .tip { opacity: 1; transform: translate(-50%, 0); }
+.cell:focus-visible { outline: 2px solid var(--ink); outline-offset: 2px; }
+.week.focus .cell:not(.match) { opacity: .22; filter: grayscale(.7); }
+.wsum { display: flex; flex-direction: column; align-items: flex-end; gap: 3px; font-size: 11.5px; color: var(--muted); padding-right: 6px; }
+.wsum b { font-size: 14px; color: var(--ink); }
+.wbar { display: block; width: 64px; height: 5px; border-radius: 999px; background: #E4E9EE; overflow: hidden; }
+.wbar i { display: block; height: 100%; border-radius: 999px; background: var(--accent); transform-origin: left; animation: grow-x .8s cubic-bezier(.2,.8,.2,1) backwards; }
+.wfoot { border-top: 1px dashed var(--line); padding-top: 10px; margin-top: 6px; border-radius: 0; }
+.dtot { text-align: center; font-size: 12px; color: var(--muted); }
+.dtot b { display: block; font-size: 14px; color: var(--ink); }
+.dtot .wbar { width: 70%; margin: 6px auto 0; }
+.scroll-x { overflow-x: auto; position: relative; padding-top: 34px; margin-top: -30px; }
 @keyframes pop-in { 0% { opacity: 0; transform: scale(.8); } 100% { opacity: 1; transform: none; } }
 
 /* Time off */
@@ -206,8 +239,15 @@ textarea.input { height: auto; min-height: 90px; padding: 12px 14px; resize: ver
       <section class="panel enter" style="animation-delay: 240ms;" aria-labelledby="week-title">
         <div class="panel-head">
           <div><h2 id="week-title">This week</h2><p id="weekRange"></p></div>
-          <div class="legend" aria-hidden="true"><span><i style="background:#E3F5E8"></i>On time</span><span><i style="background:#FDEBD3"></i>Late</span><span><i style="background:#E1ECFF"></i>Remote</span><span><i style="background:#EDE3FF"></i>On leave</span><span><i style="background:#FDE4E4"></i>Absent</span></div>
+          <div class="week-tools">
+            <div class="wk-nav" role="group" aria-label="Choose week">
+              <button type="button" id="wkPrev" aria-label="Previous week"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="m15 18-6-6 6-6"/></svg></button>
+              <button type="button" class="wk-now" id="wkNow" aria-pressed="true">This week</button>
+              <button type="button" id="wkNext" aria-label="Next week"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="m9 18 6-6-6-6"/></svg></button>
+            </div>
+          </div>
         </div>
+        <div class="legend" id="legend" role="group" aria-label="Highlight a status"></div>
         <div class="scroll-x"><div class="week" id="week"></div></div>
       </section>
 
@@ -404,24 +444,85 @@ textarea.input { height: auto; min-height: 90px; padding: 12px 14px; resize: ver
     if (usual === 'Remote' && (p.id + i) % 3) return 'Remote';
     return pattern[(p.id * 3 + i * 5) % pattern.length];
   }
-  function renderWeek() {
-    document.getElementById('weekRange').textContent = fmt(iso(days[0])) + ' – ' + fmt(iso(days[4]), { day: 'numeric', month: 'short', year: 'numeric' });
-    var html = '<span></span>' + days.map(function (d) {
-      var isToday = iso(d) === iso(today);
-      return '<span class="dayhead' + (isToday ? ' today' : '') + '">' + d.toLocaleDateString('en-GB', { weekday: 'short' }) + '<span class="week-head-day">' + d.getDate() + (isToday ? ' · Today' : '') + '</span></span>';
-    }).join('');
-    team.forEach(function (p, r) {
-      html += '<span class="name"><span class="avatar" style="background:' + TINT[p.dept] + '" aria-hidden="true">' + face(p, 28) + '</span><span>' + esc(full(p)) + '</span></span>';
-      days.forEach(function (d, i) {
-        var key = iso(d), s, label;
-        if (key > iso(today)) { s = 'future'; label = 'Upcoming'; }
-        else { var st = key === iso(today) ? p.status : pastStatus(p, i); s = CELL[st]; label = st; }
-        var short = s === 'future' ? '' : s === 'ontime' ? '✓' : s === 'late' ? 'Late' : s === 'remote' ? 'WFH' : s === 'leave' ? 'Leave' : 'Off';
-        html += '<span class="cell ' + s + '" style="animation-delay:' + (r * 25 + i * 20) + 'ms" title="' + esc(full(p)) + ', ' + d.toLocaleDateString('en-GB', { weekday: 'long' }) + ': ' + label + '"><span aria-hidden="true">' + short + '</span><span class="sr-only">' + esc(full(p)) + ', ' + d.toLocaleDateString('en-GB', { weekday: 'long' }) + ': ' + label + '</span></span>';
-      });
-    });
-    document.getElementById('week').innerHTML = html;
+  var WK = { ontime: { label: 'On time', icon: '<path d="M20 6 9 17l-5-5"/>' }, late: { label: 'Late', icon: '<circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/>' }, remote: { label: 'Remote', icon: '<path d="M15 21v-8a1 1 0 0 0-1-1h-4a1 1 0 0 0-1 1v8"/><path d="M3 10a2 2 0 0 1 .709-1.528l7-5.999a2 2 0 0 1 2.582 0l7 5.999A2 2 0 0 1 21 10v9a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/>' }, leave: { label: 'On leave', icon: '<path d="M17.8 19.2 16 11l3.5-3.5C21 6 21.5 4 21 3c-1-.5-3 0-4.5 1.5L13 8 4.8 6.2c-.5-.1-.9.1-1.1.5l-.3.5c-.2.5-.1 1 .3 1.3L9 12l-2 3H4l-1 1 3 2 2 3 1-1v-3l3-2 3.5 5.3c.3.4.8.5 1.3.3l.5-.2c.4-.3.6-.7.5-1.2z"/>' }, absent: { label: 'Absent', icon: '<path d="M18 6 6 18"/><path d="m6 6 12 12"/>' } };
+  var LG = { ontime: '#E3F5E8;color:#1C6B37', late: '#FDEBD3;color:#9A4A00', remote: '#E1ECFF;color:#1D4ED8', leave: '#EDE3FF;color:#5B3BA8', absent: '#FDE4E4;color:#A3262A' };
+  var weekOffset = 0, focus = null;
+  function wsvg(inner, size) { return '<svg width="' + (size || 14) + '" height="' + (size || 14) + '" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">' + inner + '</svg>'; }
+  // Sample check-in times for earlier days, stable per person and day
+  function sampleIn(p, k, late) { var m = late ? 16 + (p.id * 7 + k * 3) % 40 : 30 + (p.id * 5 + k * 7) % 29; return (late ? '09:' : '08:') + pad(m); }
+  function dayInfo(p, d, k) {
+    var key = iso(d);
+    if (key > iso(today)) return { s: 'future' };
+    var st = key === iso(today) ? p.status : pastStatus(p, k), s = CELL[st];
+    var t = key === iso(today) ? p.in : (s === 'ontime' || s === 'remote' || s === 'late') ? sampleIn(p, k, s === 'late') : null;
+    return { s: s, st: st, time: t };
   }
+  function renderWeek() {
+    var base = new Date(monday); base.setDate(monday.getDate() + weekOffset * 7);
+    var wdays = [0, 1, 2, 3, 4].map(function (i) { var d = new Date(base); d.setDate(base.getDate() + i); return d; });
+    document.getElementById('week-title').textContent = weekOffset === 0 ? 'This week' : weekOffset === -1 ? 'Last week' : weekOffset === 1 ? 'Next week' : (weekOffset < 0 ? -weekOffset + ' weeks ago' : 'In ' + weekOffset + ' weeks');
+    document.getElementById('weekRange').textContent = fmt(iso(wdays[0])) + ' – ' + fmt(iso(wdays[4]), { day: 'numeric', month: 'short', year: 'numeric' });
+    document.getElementById('wkNow').setAttribute('aria-pressed', String(weekOffset === 0));
+    document.getElementById('wkPrev').disabled = weekOffset <= -8;
+    document.getElementById('wkNext').disabled = weekOffset >= 2;
+    var counts = { ontime: 0, late: 0, remote: 0, leave: 0, absent: 0 }, perDay = [0, 0, 0, 0, 0], dayHas = [false, false, false, false, false];
+    var rows = team.map(function (p, r) {
+      var info = wdays.map(function (d, i) { return dayInfo(p, d, i + weekOffset * 5 + 50); });
+      var cells = '', i = 0, inDays = 0, workDays = 0;
+      info.forEach(function (c, k) {
+        if (c.s !== 'future') { counts[c.s]++; dayHas[k] = true; }
+        if (c.s === 'ontime' || c.s === 'late' || c.s === 'remote') { perDay[k]++; inDays++; }
+        if (c.s !== 'future' && c.s !== 'leave') workDays++;
+      });
+      while (i < 5) {
+        var c = info[i], d = wdays[i];
+        // Merge consecutive leave days into one bar
+        if (c.s === 'leave') {
+          var j = i; while (j + 1 < 5 && info[j + 1].s === 'leave') j++;
+          var n = j - i + 1;
+          var span = n > 1 ? wdays[i].toLocaleDateString('en-GB', { weekday: 'short' }) + '–' + wdays[j].toLocaleDateString('en-GB', { weekday: 'short' }) : wdays[i].toLocaleDateString('en-GB', { weekday: 'long' });
+          cells += '<span class="cell leave' + (focus === 'leave' ? ' match' : '') + '" tabindex="0" style="grid-column:span ' + n + ';animation-delay:' + (r * 30 + i * 25) + 'ms"><span class="ci">' + wsvg(WK.leave.icon) + '</span><span class="lbl">On leave' + (n > 1 ? ' · ' + n + ' days' : '') + '</span>' +
+            '<span class="tip">' + esc(p.first) + ' is on leave ' + span + '</span><span class="sr-only">' + esc(full(p)) + ', on leave ' + span + '</span></span>';
+          i = j + 1; continue;
+        }
+        var isToday = iso(d) === iso(today), dayName = d.toLocaleDateString('en-GB', { weekday: 'short', day: 'numeric', month: 'short' });
+        var tip = c.s === 'future' ? dayName + ' · upcoming' : dayName + ' · ' + WK[c.s].label + (c.time ? ', in at ' + c.time : '');
+        var label = c.s === 'future' ? '' : c.s === 'late' && c.time ? c.time.replace(/^0/, '') : c.s === 'ontime' ? '' : WK[c.s].label;
+        cells += '<span class="cell ' + c.s + (isToday ? ' is-today' : '') + (focus === c.s ? ' match' : '') + '" tabindex="0" style="animation-delay:' + (r * 30 + i * 25) + 'ms">' +
+          (c.s === 'future' ? '' : '<span class="ci">' + wsvg(WK[c.s].icon) + '</span>') + (label ? '<span class="lbl">' + label + '</span>' : '') +
+          '<span class="tip">' + esc(tip) + '</span><span class="sr-only">' + esc(full(p)) + ', ' + esc(tip) + '</span></span>';
+        i++;
+      }
+      var sum = workDays ? '<b>' + inDays + '/' + workDays + '</b><span>days in</span><span class="wbar"><i style="width:' + Math.round(inDays / workDays * 100) + '%;animation-delay:' + (300 + r * 30) + 'ms"></i></span>'
+        : (info.every(function (x) { return x.s === 'future'; }) ? '<span>Upcoming</span>' : '<b>Leave</b><span>all week</span>');
+      return '<div class="wrow person"><div class="wname"><span class="avatar" style="background:' + TINT[p.dept] + '" aria-hidden="true">' + face(p, 34) + '</span><span style="min-width:0"><strong>' + esc(full(p)) + '</strong><span class="r">' + esc(p.role) + '</span></span></div>' + cells + '<div class="wsum">' + sum + '</div></div>';
+    }).join('');
+    var head = '<div class="wrow whead"><span></span>' + wdays.map(function (d) {
+      var isToday = iso(d) === iso(today);
+      return '<span class="dayhead' + (isToday ? ' today' : '') + '"><b>' + d.toLocaleDateString('en-GB', { weekday: 'short' }) + (isToday ? '<span class="tpill">Today</span>' : '') + '</b>' + d.getDate() + ' ' + d.toLocaleDateString('en-GB', { month: 'short' }) + '</span>';
+    }).join('') + '<span class="dayhead" style="text-align:right">Week</span></div>';
+    var foot = '<div class="wrow wfoot"><span class="dtot" style="text-align:left;padding-left:8px">In each day</span>' + perDay.map(function (n, i) {
+      return '<span class="dtot">' + (dayHas[i] ? '<b>' + n + '/' + team.length + '</b><span class="wbar"><i style="width:' + Math.round(n / team.length * 100) + '%"></i></span>' : '—') + '</span>';
+    }).join('') + '<span></span></div>';
+    var wk = document.getElementById('week');
+    wk.className = 'week' + (focus ? ' focus' : '');
+    wk.innerHTML = head + rows + foot;
+    document.getElementById('legend').innerHTML = Object.keys(WK).map(function (k) {
+      return '<button type="button" data-focus="' + k + '" aria-pressed="' + (focus === k) + '"><span class="lg" style="background:' + LG[k] + '">' + wsvg(WK[k].icon, 12) + '</span>' + WK[k].label + '<span class="n">' + counts[k] + '</span></button>';
+    }).join('');
+  }
+  document.getElementById('legend').addEventListener('click', function (ev) {
+    var b = ev.target.closest('[data-focus]'); if (!b) return;
+    // Highlight in place, so the cells fade instead of replaying their entrance
+    focus = focus === b.dataset.focus ? null : b.dataset.focus;
+    var wk = document.getElementById('week');
+    wk.classList.toggle('focus', !!focus);
+    wk.querySelectorAll('.cell').forEach(function (c) { c.classList.toggle('match', !!focus && c.classList.contains(focus)); });
+    document.querySelectorAll('#legend [data-focus]').forEach(function (x) { x.setAttribute('aria-pressed', String(x.dataset.focus === focus)); });
+  });
+  document.getElementById('wkPrev').addEventListener('click', function () { weekOffset--; renderWeek(); });
+  document.getElementById('wkNext').addEventListener('click', function () { weekOffset++; renderWeek(); });
+  document.getElementById('wkNow').addEventListener('click', function () { weekOffset = 0; renderWeek(); });
 
   // ---------- Time off ----------
   var ICON_X = '<svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" aria-hidden="true"><path d="M18 6 6 18"/><path d="m6 6 12 12"/></svg>';
