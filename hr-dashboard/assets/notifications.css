@@ -1,0 +1,104 @@
+/* Notifications panel for the nestwork app pages (see notifications.js) */
+.nw-bell { position: relative; }
+.nw-bell[aria-expanded="true"] { background: #F1F5F8; border-color: #CCD5DC; }
+.nw-bell svg { transition: transform .2s ease; }
+.nw-bell.ring svg { animation: nw-ring .8s ease; transform-origin: 50% 10%; }
+.nw-badge { position: absolute; top: -4px; right: -4px; min-width: 20px; height: 20px; padding: 0 5px; border-radius: 999px; background: #E5484D; color: #FFFFFF; font-size: 11px; font-weight: 800; line-height: 20px; text-align: center; box-shadow: 0 0 0 2.5px #FFFFFF; font-family: inherit; animation: nw-pop .35s cubic-bezier(.2,.8,.2,1); pointer-events: none; }
+.nw-badge[hidden] { display: none; }
+@keyframes nw-ring { 0%, 100% { transform: rotate(0); } 20% { transform: rotate(16deg); } 40% { transform: rotate(-14deg); } 60% { transform: rotate(8deg); } 80% { transform: rotate(-4deg); } }
+@keyframes nw-pop { 0% { transform: scale(.4); opacity: 0; } 70% { transform: scale(1.15); opacity: 1; } 100% { transform: scale(1); } }
+@keyframes nw-in { from { opacity: 0; transform: translateY(-8px) scale(.98); } to { opacity: 1; transform: none; } }
+@keyframes nw-sheet { from { transform: translateY(40px); opacity: 0; } to { transform: none; opacity: 1; } }
+@keyframes nw-fade { from { opacity: 0; } to { opacity: 1; } }
+@keyframes nw-row { from { opacity: 0; transform: translateY(6px); } to { opacity: 1; transform: none; } }
+
+.nw-scrim { position: fixed; inset: 0; z-index: 70; background: transparent; }
+.nw-panel { position: fixed; z-index: 71; width: 420px; max-height: min(640px, calc(100vh - 100px)); display: flex; flex-direction: column; background: #FFFFFF; color: #1F2933; border-radius: 24px; border: 1px solid #E1E7EC; box-shadow: 0 24px 60px rgba(31,41,51,.18), 0 4px 12px rgba(31,41,51,.06); font-family: 'Plus Jakarta Sans', system-ui, sans-serif; font-size: 14px; line-height: 1.45; overflow: hidden; animation: nw-in .25s cubic-bezier(.2,.8,.2,1); transform-origin: top right; }
+.nw-panel[hidden], .nw-scrim[hidden] { display: none; }
+.nw-panel button { font: inherit; color: inherit; cursor: pointer; }
+.nw-panel :focus-visible { outline: 2px solid #1F2933; outline-offset: 2px; }
+
+.nw-head { display: flex; align-items: center; justify-content: space-between; gap: 10px; padding: 18px 18px 10px 20px; }
+.nw-head h2 { margin: 0; font-size: 18px; font-weight: 800; letter-spacing: -0.02em; display: flex; align-items: center; gap: 8px; }
+.nw-head h2 .nw-count { font-size: 12px; font-weight: 800; padding: 2px 8px; border-radius: 999px; background: #E5484D; color: #FFFFFF; }
+.nw-head-actions { display: flex; gap: 4px; }
+.nw-icon-btn { width: 36px; height: 36px; border-radius: 999px; border: none; background: transparent; display: grid; place-items: center; color: #4A5863; transition: background-color .2s ease, color .2s ease; }
+.nw-icon-btn:hover { background: #F1F5F8; color: #1F2933; }
+.nw-text-btn { white-space: nowrap; border: none; background: transparent; padding: 6px 10px; border-radius: 999px; font-size: 13px !important; font-weight: 700; color: #2D6B43 !important; display: inline-flex; align-items: center; gap: 6px; transition: background-color .2s ease; }
+.nw-text-btn:hover { background: #EEF8F0; }
+.nw-text-btn:disabled { color: #A9B6C0 !important; background: transparent; cursor: default; }
+
+.nw-tabs { display: flex; gap: 4px; padding: 4px; margin: 0 18px 8px 20px; background: #F1F5F8; border-radius: 999px; }
+.nw-tabs button { flex: 1; height: 34px; border: none; border-radius: 999px; background: transparent; font-size: 13px !important; font-weight: 700; color: #67737E !important; display: inline-flex; align-items: center; justify-content: center; gap: 6px; transition: background-color .2s ease, color .2s ease, box-shadow .2s ease; }
+.nw-tabs button[aria-selected="true"] { background: #FFFFFF; color: #1F2933 !important; box-shadow: 0 1px 3px rgba(31,41,51,.1); }
+.nw-tabs .nw-pill { font-size: 11px; font-weight: 800; padding: 1px 7px; border-radius: 999px; background: #86CD96; color: #1F2933; }
+
+.nw-body { overflow-y: auto; padding: 0 10px 10px; overscroll-behavior: contain; }
+.nw-group { font-size: 11px; font-weight: 800; letter-spacing: .08em; text-transform: uppercase; color: #8C99A4; padding: 12px 12px 6px; }
+.nw-list { list-style: none; margin: 0; padding: 0; display: flex; flex-direction: column; gap: 2px; }
+.nw-item { position: relative; display: flex; gap: 12px; padding: 12px; border-radius: 16px; transition: background-color .2s ease; animation: nw-row .3s cubic-bezier(.2,.7,.2,1) backwards; }
+.nw-item:hover { background: #F6F9FB; }
+.nw-item.unread { background: #F2F8F4; }
+.nw-item.unread:hover { background: #EAF5ED; }
+.nw-item.gone { transition: opacity .25s ease, transform .25s ease; opacity: 0; transform: translateX(16px); }
+.nw-open { position: absolute; inset: 0; border: none; background: transparent; border-radius: 16px; z-index: 0; }
+.nw-ava { position: relative; width: 42px; height: 42px; flex: none; z-index: 1; pointer-events: none; }
+.nw-ava img, .nw-ava .nw-sys { width: 42px; height: 42px; border-radius: 999px; display: grid; place-items: center; object-fit: cover; background: #DDF1E2; }
+.nw-ava .nw-sys { border-radius: 14px; }
+.nw-type { position: absolute; right: -4px; bottom: -4px; width: 20px; height: 20px; border-radius: 999px; display: grid; place-items: center; box-shadow: 0 0 0 2px #FFFFFF; }
+.nw-text { flex: 1; min-width: 0; position: relative; z-index: 1; pointer-events: none; }
+.nw-text p { margin: 0; font-size: 13.5px; color: #3A4651; }
+.nw-text p b { color: #1F2933; font-weight: 700; }
+.nw-quote { margin: 6px 0 0 !important; padding: 8px 10px; border-radius: 12px; background: #F1F5F8; font-size: 13px !important; color: #4A5863 !important; }
+.nw-meta { display: flex; flex-wrap: wrap; align-items: center; gap: 4px 6px; margin-top: 4px; font-size: 12px; color: #8C99A4; }
+.nw-meta span { white-space: nowrap; }
+.nw-meta .nw-note { white-space: normal; flex-basis: 100%; }
+.nw-meta .nw-note + i, .nw-meta i:has(+ .nw-note) { display: none; }
+.nw-meta i { width: 3px; height: 3px; border-radius: 999px; background: currentColor; }
+.nw-acts { display: flex; gap: 8px; margin-top: 10px; pointer-events: auto; flex-wrap: wrap; }
+.nw-btn { height: 34px; padding: 0 14px; border-radius: 999px; border: 1px solid #E1E7EC; background: #FFFFFF; font-size: 12.5px !important; font-weight: 700; display: inline-flex; align-items: center; gap: 6px; transition: transform .15s ease, background-color .2s ease, border-color .2s ease; }
+.nw-btn:hover { border-color: #1F2933; }
+.nw-btn:active { transform: scale(.95); }
+.nw-btn.dark { background: #3E6B88; border-color: #3E6B88; color: #FFFFFF !important; }
+.nw-btn.dark:hover { background: #355E79; }
+.nw-done { display: inline-flex; align-items: center; gap: 6px; margin-top: 10px; font-size: 12px; font-weight: 700; padding: 5px 10px; border-radius: 999px; animation: nw-pop .35s cubic-bezier(.2,.8,.2,1); }
+.nw-done.ok { background: #E3F5E8; color: #1C6B37; }
+.nw-done.no { background: #FDE4E4; color: #A3262A; }
+.nw-side { position: relative; z-index: 1; display: flex; flex-direction: column; align-items: flex-end; gap: 6px; flex: none; }
+.nw-dot { width: 9px; height: 9px; border-radius: 999px; background: #3FA46A; margin-top: 6px; box-shadow: 0 0 0 3px rgba(63,164,106,.18); }
+.nw-mark { width: 30px; height: 30px; border-radius: 999px; border: none; background: #FFFFFF; display: grid; place-items: center; color: #4A5863; opacity: 0; transition: opacity .2s ease, background-color .2s ease; box-shadow: 0 0 0 1px #E1E7EC; }
+.nw-item:hover .nw-mark, .nw-mark:focus-visible { opacity: 1; }
+.nw-mark:hover { background: #F1F5F8; }
+
+.nw-empty { text-align: center; padding: 40px 24px 48px; animation: nw-fade .3s ease; }
+.nw-empty-ic { width: 72px; height: 72px; margin: 0 auto 14px; border-radius: 24px; background: linear-gradient(145deg, #DDF1E2, #EEF8F0); color: #2D6B43; display: grid; place-items: center; }
+.nw-empty strong { display: block; font-size: 16px; }
+.nw-empty span { font-size: 13px; color: #67737E; }
+
+.nw-foot { display: flex; justify-content: space-between; align-items: center; gap: 8px; padding: 10px 14px 12px 20px; border-top: 1px solid #E8EDF1; font-size: 12px; color: #8C99A4; }
+
+/* Settings view */
+.nw-settings { padding: 4px 20px 16px; animation: nw-fade .25s ease; }
+.nw-settings h3 { margin: 14px 0 6px; font-size: 11px; font-weight: 800; letter-spacing: .08em; text-transform: uppercase; color: #8C99A4; }
+.nw-toggle { display: flex; align-items: center; gap: 12px; padding: 10px 0; border-top: 1px solid #EEF2F5; cursor: pointer; }
+.nw-toggle:first-of-type { border-top: none; }
+.nw-toggle .nw-tic { width: 32px; height: 32px; flex: none; border-radius: 10px; display: grid; place-items: center; }
+.nw-toggle span.nw-tl { flex: 1; font-size: 14px; font-weight: 600; }
+.nw-toggle small { display: block; font-size: 12px; font-weight: 500; color: #8C99A4; }
+.nw-switch { position: relative; width: 42px; height: 24px; flex: none; }
+.nw-switch input { position: absolute; inset: 0; opacity: 0; margin: 0; cursor: pointer; z-index: 1; }
+.nw-switch i { position: absolute; inset: 0; border-radius: 999px; background: #CCD5DC; transition: background-color .2s ease; }
+.nw-switch i::after { content: ''; position: absolute; top: 3px; left: 3px; width: 18px; height: 18px; border-radius: 999px; background: #FFFFFF; box-shadow: 0 1px 3px rgba(31,41,51,.25); transition: transform .25s cubic-bezier(.2,.8,.2,1); }
+.nw-switch input:checked + i { background: #3E6B88; }
+.nw-switch input:checked + i::after { transform: translateX(18px); }
+.nw-switch input:focus-visible + i { outline: 2px solid #1F2933; outline-offset: 2px; }
+
+@media (max-width: 640px) {
+  .nw-scrim { background: rgba(31,41,51,.35); animation: nw-fade .25s ease; }
+  .nw-panel { left: 0 !important; right: 0 !important; top: auto !important; bottom: 0; width: 100%; max-height: 88vh; border-radius: 28px 28px 0 0; animation-name: nw-sheet; }
+  .nw-mark { opacity: 1; }
+  .nw-hide-sm { display: none; }
+}
+@media (prefers-reduced-motion: reduce) {
+  .nw-panel, .nw-item, .nw-badge, .nw-done, .nw-bell.ring svg, .nw-empty, .nw-settings { animation: none !important; }
+}
