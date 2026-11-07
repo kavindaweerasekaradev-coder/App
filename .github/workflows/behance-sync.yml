@@ -21,6 +21,11 @@ jobs:
       - name: Import projects from Behance
         run: python3 scripts/sync_behance.py
 
+      - name: Make WebP covers
+        run: |
+          pip install --quiet pillow
+          python3 scripts/optimize_images.py
+
       - name: Commit changes
         run: |
           if [ -z "$(git status --porcelain assets/data assets/img/behance)" ]; then
