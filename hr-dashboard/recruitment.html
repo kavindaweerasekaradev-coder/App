@@ -16,21 +16,78 @@
 /* Roles strip */
 .roles-head { display: flex; justify-content: space-between; align-items: center; gap: 12px; flex-wrap: wrap; }
 .roles-head h2, .board-title h2 { font-size: 18px; font-weight: 700; }
-.roles { display: grid; grid-auto-flow: column; grid-auto-columns: minmax(230px, 1fr); gap: 10px; overflow-x: auto; padding: 2px 2px 6px; scroll-snap-type: x proximity; scrollbar-width: thin; }
-.role { position: relative; text-align: left; border: 1.5px solid transparent; background: var(--soft-2); border-radius: 20px; padding: 16px; display: flex; flex-direction: column; gap: 10px; scroll-snap-align: start; transition: border-color .2s ease, background-color .2s ease, transform .2s ease, box-shadow .2s ease; animation: rise .5s cubic-bezier(.2,.7,.2,1) backwards; }
-.role:hover { background: #FFFFFF; border-color: var(--line); transform: translateY(-2px); box-shadow: 0 10px 24px rgba(31,41,51,.08); }
-.role[aria-pressed="true"] { background: var(--dark); border-color: var(--dark); color: #FFFFFF; }
-.role[aria-pressed="true"] .role-meta, .role[aria-pressed="true"] .role-foot { color: #E1ECF3; }
-.role[aria-pressed="true"] .bar { background: #4A5863; }
-.role.all { justify-content: center; align-items: flex-start; }
+.roles-head h2 .n { font-size: 12px; font-weight: 700; padding: 3px 9px; border-radius: 999px; background: var(--peach); color: var(--accent-dark); margin-left: 8px; vertical-align: 3px; }
+.roles-tools { display: flex; align-items: center; gap: 10px; }
+.scroll-btn { width: 40px; height: 40px; border-radius: 999px; border: 1px solid var(--line); background: #FFFFFF; display: grid; place-items: center; color: var(--ink); transition: background-color .2s ease, opacity .2s ease, transform .15s ease; }
+.scroll-btn:hover:not(:disabled) { background: var(--soft); }
+.scroll-btn:active:not(:disabled) { transform: scale(.92); }
+.scroll-btn:disabled { opacity: .35; cursor: default; }
+.roles-wrap { position: relative; margin: 0 -6px; }
+.roles { display: grid; grid-auto-flow: column; grid-auto-columns: minmax(262px, 1fr); gap: 12px; overflow-x: auto; padding: 8px 6px 12px; scroll-snap-type: x mandatory; scroll-padding: 6px; scrollbar-width: none; scroll-behavior: smooth; }
+.roles::-webkit-scrollbar { display: none; }
+.roles-wrap.fade-r .roles { -webkit-mask-image: linear-gradient(90deg, #000 85%, transparent); mask-image: linear-gradient(90deg, #000 85%, transparent); }
+.roles-wrap.fade-l .roles { -webkit-mask-image: linear-gradient(90deg, transparent, #000 15%); mask-image: linear-gradient(90deg, transparent, #000 15%); }
+.roles-wrap.fade-l.fade-r .roles { -webkit-mask-image: linear-gradient(90deg, transparent, #000 12%, #000 88%, transparent); mask-image: linear-gradient(90deg, transparent, #000 12%, #000 88%, transparent); }
+
+.role { position: relative; text-align: left; border: 1.5px solid var(--line); background: #FFFFFF; border-radius: 22px; padding: 16px; display: flex; flex-direction: column; gap: 12px; scroll-snap-align: start; overflow: hidden; transition: border-color .25s ease, background-color .25s ease, transform .25s cubic-bezier(.2,.7,.2,1), box-shadow .25s ease; animation: rise .5s cubic-bezier(.2,.7,.2,1) backwards; }
+.role::before { content: ''; position: absolute; inset: 0 0 auto 0; height: 4px; background: var(--tint, var(--accent)); opacity: 0; transition: opacity .25s ease; }
+.role:hover { transform: translateY(-4px); border-color: var(--accent); box-shadow: 0 16px 32px rgba(62,107,136,.14); }
+.role:hover::before { opacity: 1; }
+.role:active { transform: translateY(-1px) scale(.99); }
+.role-top { display: flex; justify-content: space-between; align-items: center; gap: 8px; min-height: 40px; }
+.dept-ic { width: 40px; height: 40px; border-radius: 13px; display: grid; place-items: center; flex: none; transition: transform .3s cubic-bezier(.2,.7,.2,1); }
+.role:hover .dept-ic { transform: rotate(-8deg) scale(1.06); }
+.role-title { font-size: 15.5px; font-weight: 700; line-height: 1.3; letter-spacing: -0.01em; }
+.role-meta { display: flex; flex-wrap: wrap; gap: 6px; font-size: 12px; color: var(--muted); }
+.role-meta span { display: inline-flex; align-items: center; gap: 5px; padding: 4px 9px; border-radius: 999px; background: var(--soft); }
+.bar { display: flex; height: 8px; border-radius: 999px; overflow: hidden; background: #E4E9EE; gap: 2px; }
+.bar i { display: block; height: 100%; transform-origin: left; animation: grow-x .8s cubic-bezier(.2,.8,.2,1) backwards; }
+.pipe-wrap { display: flex; flex-direction: column; gap: 8px; }
+.pipe { font-size: 12px; color: var(--muted); }
+.role[aria-pressed="true"] .pipe { color: #E1ECF3; }
+.role-foot { display: flex; justify-content: space-between; align-items: center; gap: 8px; font-size: 12px; color: var(--muted); margin-top: auto; }
+.role-foot b { color: var(--ink); font-weight: 700; }
+.faces { display: flex; align-items: center; }
+.faces span { width: 28px; height: 28px; border-radius: 999px; margin-left: -8px; box-shadow: 0 0 0 2px #FFFFFF; overflow: hidden; display: grid; place-items: center; font-size: 10px; font-weight: 700; background: var(--peach); color: var(--ink); transition: margin .25s ease; }
+.faces span:first-child { margin-left: 0; }
+.faces img { width: 100%; height: 100%; display: block; object-fit: cover; }
+.faces .more { background: var(--soft); color: var(--muted); }
+.role:hover .faces span { margin-left: -4px; }
+.role:hover .faces span:first-child { margin-left: 0; }
+.ago { display: inline-flex; align-items: center; gap: 4px; }
+.pill-new { display: inline-flex; align-items: center; gap: 5px; font-size: 11px; font-weight: 700; padding: 4px 9px; border-radius: 999px; background: var(--accent); color: var(--ink); }
+.pill-new::before { content: ''; width: 6px; height: 6px; border-radius: 999px; background: var(--ink); animation: blink 1.6s ease-in-out infinite; }
+@keyframes blink { 50% { opacity: .25; } }
+.tick { width: 26px; height: 26px; border-radius: 999px; background: var(--accent); color: var(--ink); display: grid; place-items: center; animation: pop-in .35s cubic-bezier(.2,.8,.2,1); }
+
+/* Selected role */
+.role[aria-pressed="true"] { background: var(--dark); border-color: var(--dark); color: #FFFFFF; box-shadow: 0 16px 32px rgba(62,107,136,.3); }
+.role[aria-pressed="true"]::before { opacity: 0; }
+.role[aria-pressed="true"] .role-meta { color: #E1ECF3; }
+.role[aria-pressed="true"] .role-meta span { background: rgba(255,255,255,.12); }
+.role[aria-pressed="true"] .role-foot { color: #E1ECF3; }
+.role[aria-pressed="true"] .role-foot b { color: #FFFFFF; }
+.role[aria-pressed="true"] .bar { background: rgba(255,255,255,.18); }
+.role[aria-pressed="true"] .faces span { box-shadow: 0 0 0 2px var(--dark); }
+.role[aria-pressed="true"] .dept-ic { background: rgba(255,255,255,.14) !important; color: #FFFFFF !important; }
+
+/* The "All roles" card */
+.role.all { background: linear-gradient(150deg, #3E6B88 0%, #2E5470 100%); border-color: transparent; color: #FFFFFF; }
+.role.all[aria-pressed="false"] { background: linear-gradient(150deg, #F6F9FB 0%, #EAF3F7 100%); color: var(--ink); border-color: var(--line); }
+.role.all .big { font-size: 34px; font-weight: 800; letter-spacing: -0.03em; line-height: 1; }
+.role.all .big small { font-size: 13px; font-weight: 600; letter-spacing: 0; opacity: .8; margin-left: 4px; }
+.ring { width: 64px; height: 64px; border-radius: 999px; display: grid; place-items: center; flex: none; background: conic-gradient(var(--accent) calc(var(--p) * 1%), rgba(255,255,255,.18) 0); position: relative; }
+.role.all[aria-pressed="false"] .ring { background: conic-gradient(var(--accent) calc(var(--p) * 1%), #DCE6ED 0); }
+.ring::after { content: ''; position: absolute; inset: 7px; border-radius: 999px; background: #34607D; }
+.role.all[aria-pressed="false"] .ring::after { background: #FFFFFF; }
+.ring b { position: relative; z-index: 1; font-size: 13px; font-weight: 800; }
+.role.all .role-meta { color: inherit; opacity: .85; }
+.role.all .role-meta span { background: rgba(255,255,255,.14); }
+.role.all[aria-pressed="false"] .role-meta span { background: #FFFFFF; }
 .role.new { animation: rise .5s cubic-bezier(.2,.7,.2,1) backwards, flash 2s ease; }
-.role strong { font-size: 15px; font-weight: 700; line-height: 1.3; }
-.role-meta { font-size: 12px; color: var(--muted); }
-.role-foot { display: flex; justify-content: space-between; align-items: center; gap: 8px; font-size: 12px; color: var(--muted); }
-.role-foot b { color: inherit; font-weight: 700; }
-.bar { display: flex; height: 6px; border-radius: 999px; overflow: hidden; background: #E4E9EE; gap: 2px; }
-.bar i { display: block; height: 100%; }
-.pill-new { font-size: 11px; font-weight: 700; padding: 2px 8px; border-radius: 999px; background: var(--accent); color: var(--ink); }
+@keyframes grow-x { from { transform: scaleX(0); } to { transform: scaleX(1); } }
+@media (max-width: 760px) { .roles { grid-auto-columns: minmax(240px, 80%); } .scroll-btn { display: none; } }
+@media (hover: none) { .role:hover { transform: none; box-shadow: none; border-color: var(--line); } .role[aria-pressed="true"]:hover { border-color: var(--dark); } }
 
 /* Board */
 .board-title { display: flex; justify-content: space-between; align-items: center; gap: 12px; flex-wrap: wrap; }
@@ -106,7 +163,6 @@ textarea.input { height: auto; min-height: 110px; padding: 12px 14px; resize: ve
   .board-tools { width: 100%; flex-wrap: wrap; }
   .board-tools .search { width: auto; }
   .board-tools .search { flex: 1 1 100%; }
-  .roles { grid-auto-columns: minmax(220px, 78%); }
   .drag-hint { display: none; }
 }
 @media (hover: none) { .cand:hover, .role:hover { transform: none; box-shadow: none; } }
@@ -172,10 +228,13 @@ textarea.input { height: auto; min-height: 110px; padding: 12px 14px; resize: ve
 
       <section class="panel enter" style="animation-delay: 180ms;" aria-labelledby="roles-title">
         <div class="roles-head">
-          <h2 id="roles-title">Open roles</h2>
-          <span class="count" id="rolesCount"></span>
+          <div><h2 id="roles-title">Open roles<span class="n" id="rolesN"></span></h2><span class="count" id="rolesCount"></span></div>
+          <div class="roles-tools">
+            <button type="button" class="scroll-btn" id="rolesPrev" aria-label="Scroll roles left"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="m15 18-6-6 6-6"/></svg></button>
+            <button type="button" class="scroll-btn" id="rolesNext" aria-label="Scroll roles right"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="m9 18 6-6-6-6"/></svg></button>
+          </div>
         </div>
-        <div class="roles" id="roles" role="group" aria-label="Filter the pipeline by role"></div>
+        <div class="roles-wrap" id="rolesWrap"><div class="roles" id="roles" role="group" aria-label="Filter the pipeline by role"></div></div>
       </section>
 
       <section class="panel enter" style="animation-delay: 240ms;" aria-labelledby="board-title">
@@ -426,24 +485,75 @@ textarea.input { height: auto; min-height: 110px; padding: 12px 14px; resize: ve
     }).join('');
   }
 
+  // Department icons (Lucide) and colours for the role cards
+  var DEPT_ICON = {Design: '<circle cx="13.5" cy="6.5" r=".5" fill="currentColor"/><circle cx="17.5" cy="10.5" r=".5" fill="currentColor"/><circle cx="8.5" cy="7.5" r=".5" fill="currentColor"/><circle cx="6.5" cy="12.5" r=".5" fill="currentColor"/><path d="M12 2C6.5 2 2 6.5 2 12s4.5 10 10 10c.926 0 1.648-.746 1.648-1.688 0-.437-.18-.835-.437-1.125-.29-.289-.438-.652-.438-1.125a1.64 1.64 0 0 1 1.668-1.668h1.996c3.051 0 5.555-2.503 5.555-5.554C21.965 6.012 17.461 2 12 2z"/>', Engineering: '<path d="m18 16 4-4-4-4"/><path d="m6 8-4 4 4 4"/><path d="m14.5 4-5 16"/>', Finance: '<path d="M21 12c.552 0 1.005-.449.95-.998a10 10 0 0 0-8.953-8.951c-.55-.055-.998.398-.998.95v8a1 1 0 0 0 1 1z"/><path d="M21.21 15.89A10 10 0 1 1 8 2.83"/>', Marketing: '<path d="m3 11 18-5v12L3 14v-3z"/><path d="M11.6 16.8a3 3 0 1 1-5.8-1.6"/>', People: '<path d="M19 14c1.49-1.46 3-3.21 3-5.5A5.5 5.5 0 0 0 16.5 3c-1.76 0-3 .5-4.5 2-1.5-1.5-2.74-2-4.5-2A5.5 5.5 0 0 0 2 8.5c0 2.3 1.5 4.05 3 5.5l7 7Z"/><path d="M12 5 9.04 7.96a2.17 2.17 0 0 0 0 3.08c.82.82 2.13.85 3 .07l2.07-1.9a2.82 2.82 0 0 1 3.79 0l2.96 2.66"/><path d="m18 15-2-2"/><path d="m15 18-2-2"/>', Sales: '<path d="m11 17 2 2a1 1 0 1 0 3-3"/><path d="m14 14 2.5 2.5a1 1 0 1 0 3-3l-3.88-3.88a3 3 0 0 0-4.24 0l-.88.88a1 1 0 1 1-3-3l2.81-2.81a5.79 5.79 0 0 1 7.06-.87l.47.28a2 2 0 0 0 1.42.25L21 4"/><path d="m21 3 1 11h-2"/><path d="M3 3 2 14l6.5 6.5a1 1 0 1 0 3-3"/><path d="M3 4h8"/>'};
+  var DEPT_INK = { Design: '#2D6B43', Engineering: '#1D4ED8', Finance: '#5B3BA8', Marketing: '#9A4A00', People: '#1C6B37', Sales: '#A3265C' };
+  function svg(inner, size) { return '<svg width="' + size + '" height="' + size + '" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">' + inner + '</svg>'; }
+  var I_PIN = '<path d="M20 10c0 4.993-5.539 10.193-7.399 11.799a1 1 0 0 1-1.202 0C9.539 20.193 4 14.993 4 10a8 8 0 0 1 16 0"/><circle cx="12" cy="10" r="3"/>', I_SEAT = '<path d="M19 9V6a2 2 0 0 0-2-2H7a2 2 0 0 0-2 2v3"/><path d="M3 16a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-5a2 2 0 0 0-4 0v1.5a.5.5 0 0 1-.5.5h-9a.5.5 0 0 1-.5-.5V11a2 2 0 0 0-4 0z"/><path d="M5 18v2"/><path d="M19 18v2"/>', I_CLOCK = '<circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/>', I_CHECK = '<path d="M20 6 9 17l-5-5"/>', I_LAYERS = '<path d="M12.83 2.18a2 2 0 0 0-1.66 0L2.6 6.08a1 1 0 0 0 0 1.83l8.58 3.91a2 2 0 0 0 1.66 0l8.58-3.9a1 1 0 0 0 0-1.83z"/><path d="M2 12a1 1 0 0 0 .58.91l8.6 3.91a2 2 0 0 0 1.65 0l8.58-3.9A1 1 0 0 0 22 12"/><path d="M2 17a1 1 0 0 0 .58.91l8.6 3.91a2 2 0 0 0 1.65 0l8.58-3.9A1 1 0 0 0 22 17"/>';
+  function ago(isoDate) {
+    var n = Math.max(0, Math.round((Date.now() - new Date(isoDate + 'T00:00:00')) / DAY));
+    return n === 0 ? 'Today' : n === 1 ? 'Yesterday' : n < 7 ? n + ' days ago' : n < 14 ? '1 week ago' : Math.floor(n / 7) + ' weeks ago';
+  }
+  function faces(list, max) {
+    var order = STAGES.slice().reverse();
+    var sorted = list.slice().sort(function (a, b) { return order.indexOf(a.stage) - order.indexOf(b.stage); });
+    var html = sorted.slice(0, max).map(function (c) { return '<span>' + face(c) + '</span>'; }).join('');
+    if (sorted.length > max) html += '<span class="more">+' + (sorted.length - max) + '</span>';
+    return '<span class="faces" aria-hidden="true">' + html + '</span>';
+  }
   function renderRoles() {
-    var html = '<button type="button" class="role all" data-job="" aria-pressed="' + (state.jobId === null) + '"><strong>All roles</strong><span class="role-meta">' + jobs.length + ' roles, every candidate</span></button>';
+    var active = cands.filter(function (c) { return c.stage !== 'Rejected'; });
+    var late = active.filter(function (c) { return c.stage === 'Interview' || c.stage === 'Offer' || c.stage === 'Hired'; }).length;
+    var pct = active.length ? Math.round(late / active.length * 100) : 0;
+    var openings = jobs.reduce(function (n, j) { return n + (+j.openings || 0); }, 0);
+    var html = '<button type="button" class="role all" data-job="" aria-pressed="' + (state.jobId === null) + '">' +
+      '<span class="role-top"><span class="dept-ic" style="background:rgba(255,255,255,.14);color:inherit">' + svg(I_LAYERS, 20) + '</span>' + (state.jobId === null ? '<span class="tick">' + svg(I_CHECK, 14) + '</span>' : '') + '</span>' +
+      '<span style="display:flex;justify-content:space-between;align-items:center;gap:12px"><span><span class="big">' + active.length + '<small>candidates</small></span><span class="role-title" style="display:block;margin-top:6px">All roles</span></span>' +
+      '<span class="ring" style="--p:' + pct + '" role="img" aria-label="' + pct + '% at interview or later"><b>' + pct + '%</b></span></span>' +
+      '<span class="role-meta"><span>' + jobs.length + ' roles</span><span>' + openings + ' openings</span><span>' + pct + '% interviewing or later</span></span>' +
+      '<span class="role-foot">' + faces(active, 4) + '<span>Show everyone</span></span></button>';
     html += jobs.map(function (j, i) {
       var mine = cands.filter(function (c) { return c.jobId === j.id && c.stage !== 'Rejected'; });
       var fresh = mine.filter(function (c) { return c.stage === 'Applied' && (Date.now() - new Date(c.applied + 'T00:00:00')) < 4 * DAY; }).length;
-      var bar = STAGES.map(function (s) {
+      var selected = state.jobId === j.id;
+      var parts = [];
+      var bar = STAGES.map(function (s, k) {
         var n = mine.filter(function (c) { return c.stage === s; }).length;
-        return n ? '<i style="flex:' + n + ';background:' + STAGE_COLOR[s] + '"></i>' : '';
+        if (n) parts.push(n + ' ' + s.toLowerCase());
+        return n ? '<i style="flex:' + n + ';background:' + STAGE_COLOR[s] + ';animation-delay:' + (200 + i * 40 + k * 60) + 'ms" title="' + s + ': ' + n + '"></i>' : '';
       }).join('');
-      return '<button type="button" class="role' + (j.id === state.newJobId ? ' new' : '') + '" data-job="' + j.id + '" aria-pressed="' + (state.jobId === j.id) + '" style="animation-delay:' + (i * 40) + 'ms">' +
-        '<div style="display:flex;justify-content:space-between;gap:8px;align-items:flex-start"><strong>' + esc(j.title) + '</strong>' + (fresh ? '<span class="pill-new">' + fresh + ' new</span>' : '') + '</div>' +
-        '<span class="role-meta">' + j.dept + ' · ' + esc(j.location) + ' · ' + j.openings + (+j.openings === 1 ? ' opening' : ' openings') + '</span>' +
-        '<span class="bar" aria-hidden="true">' + (bar || '') + '</span>' +
-        '<span class="role-foot"><span><b>' + mine.length + '</b> ' + (mine.length === 1 ? 'candidate' : 'candidates') + '</span><span>Posted ' + fmt(j.posted) + '</span></span></button>';
+      return '<button type="button" class="role' + (j.id === state.newJobId ? ' new' : '') + '" data-job="' + j.id + '" aria-pressed="' + selected + '" style="--tint:' + (DEPT_INK[j.dept] || 'var(--accent)') + ';animation-delay:' + ((i + 1) * 50) + 'ms">' +
+        '<span class="role-top"><span class="dept-ic" style="background:' + (TINT[j.dept] || '#DDF1E2') + ';color:' + (DEPT_INK[j.dept] || 'var(--ink)') + '">' + svg(DEPT_ICON[j.dept] || I_LAYERS, 20) + '</span>' +
+          (selected ? '<span class="tick">' + svg(I_CHECK, 14) + '</span>' : fresh ? '<span class="pill-new">' + fresh + ' new</span>' : '') + '</span>' +
+        '<span class="role-title">' + esc(j.title) + '</span>' +
+        '<span class="role-meta"><span>' + svg(I_PIN, 12) + esc(j.location) + '</span><span>' + svg(I_SEAT, 12) + j.openings + (+j.openings === 1 ? ' opening' : ' openings') + '</span></span>' +
+        '<span class="pipe-wrap"><span class="bar">' + (bar || '') + '</span><span class="pipe">' + (parts.join(' · ') || 'No candidates yet') + '</span></span>' +
+        '<span class="role-foot">' + (mine.length ? faces(mine, 3) : '<span>No applicants yet</span>') + '<span class="ago">' + svg(I_CLOCK, 12) + ago(j.posted) + '</span></span></button>';
     }).join('');
     document.getElementById('roles').innerHTML = html;
-    document.getElementById('rolesCount').textContent = state.jobId ? 'Showing ' + job(state.jobId).title : 'Pick a role to filter the pipeline';
+    document.getElementById('rolesN').textContent = jobs.length;
+    document.getElementById('rolesCount').textContent = state.jobId ? 'Showing candidates for ' + job(state.jobId).title : 'Pick a role to filter the pipeline';
+    updateRoleScroll();
   }
+
+  // Scroll buttons and faded edges for the roles strip
+  var rolesEl = document.getElementById('roles'), rolesWrap = document.getElementById('rolesWrap');
+  function updateRoleScroll() {
+    var max = rolesEl.scrollWidth - rolesEl.clientWidth;
+    var atStart = rolesEl.scrollLeft <= 4, atEnd = rolesEl.scrollLeft >= max - 4;
+    rolesWrap.classList.toggle('fade-l', !atStart);
+    rolesWrap.classList.toggle('fade-r', !atEnd && max > 4);
+    document.getElementById('rolesPrev').disabled = atStart;
+    document.getElementById('rolesNext').disabled = atEnd || max <= 4;
+  }
+  function scrollRoles(dir) {
+    var card = rolesEl.querySelector('.role');
+    rolesEl.scrollBy({ left: dir * ((card ? card.offsetWidth : 260) + 12) * 2, behavior: reduced ? 'auto' : 'smooth' });
+  }
+  document.getElementById('rolesPrev').addEventListener('click', function () { scrollRoles(-1); });
+  document.getElementById('rolesNext').addEventListener('click', function () { scrollRoles(1); });
+  rolesEl.addEventListener('scroll', function () { requestAnimationFrame(updateRoleScroll); }, { passive: true });
+  window.addEventListener('resize', updateRoleScroll);
 
   function visible() {
     var q = state.q.trim().toLowerCase();
