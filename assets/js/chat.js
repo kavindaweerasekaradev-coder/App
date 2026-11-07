@@ -67,12 +67,12 @@
     experience: { q: 'Experience', say: [
       '• Senior UI/UX Designer, Axis Tech Lanka (2025–2026)\n• UI/UX Designer, Nimi Tech (2023–2025)\n• UI/UX Designer, Empite Solutions (2021–2023)\n• Intern UI/UX Designer, Arimac (2021)',
       'He holds a BSc (Hons) in ICT from Rajarata University of Sri Lanka.'],
-      links: [{ href: u('assets/docs/Kavinda-Weerasekara-CV.pdf?v=3'), label: 'Download CV', note: 'PDF', download: true }],
+      links: [{ href: u('assets/docs/Kavinda-Weerasekara-CV.pdf?v=4'), label: 'Download CV', note: 'PDF', download: true }],
       next: ['about', 'work', 'hire'] },
     hire: { q: 'Is he available?', say: ['Yes! Kavinda is open to full-time roles and freelance projects. The quickest way to reach him is email.'],
       links: [{ href: 'mailto:' + EMAIL, label: EMAIL, note: 'Send an email' },
         { href: 'https://www.linkedin.com/in/kavindaweerasekara/', label: 'LinkedIn', note: 'Opens in a new tab', ext: true },
-        { href: u('assets/docs/Kavinda-Weerasekara-CV.pdf?v=3'), label: 'Download CV', note: 'PDF', download: true }],
+        { href: u('assets/docs/Kavinda-Weerasekara-CV.pdf?v=4'), label: 'Download CV', note: 'PDF', download: true }],
       next: ['work', 'experience', 'restart'] },
     restart: { q: 'Start over', say: ['Sure, what else would you like to know?'], next: ['about', 'work', 'skills', 'experience', 'hire'] }
   };

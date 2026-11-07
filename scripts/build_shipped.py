@@ -78,7 +78,7 @@ def shell(h, version, *, title, desc, path, og_image, body, scripts=""):
         <a href="../index.html#about">About</a>
         <a href="../index.html#experience">Experience</a>
         <a href="../explorations/">Explorations</a>
-        <a href="../assets/docs/Kavinda-Weerasekara-CV.pdf?v=3" download>Download CV</a>
+        <a href="../assets/docs/Kavinda-Weerasekara-CV.pdf?v=4" download>Download CV</a>
       </nav>
 
       <div class="nav__actions">
