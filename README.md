@@ -56,6 +56,7 @@ hr-dashboard/app.css         # Styles shared by the employees, recruitment, payr
 hr-dashboard/auth.css        # Styles shared by the log-in and sign-up pages
 hr-dashboard/favicon.svg     # The nestwork logo mark, used as the favicon
 hr-dashboard/assets/people.js # Swaps each portrait for a real Unsplash photo; falls back to assets/avatars/
+hr-dashboard/assets/notifications.js # Bell badge and notifications panel on the app pages (+ notifications.css)
 hr-dashboard/assets/avatars/ # Illustrated fallback portraits (DiceBear Notionists, CC0 1.0)
 ```
 
