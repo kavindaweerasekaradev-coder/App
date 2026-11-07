@@ -1,0 +1,4 @@
+User-agent: *
+Allow: /
+
+Sitemap: https://kavinda-portfolio-two.vercel.app/sitemap.xml

@@ -103,7 +103,12 @@ The **Sync Behance projects** GitHub Action reads the public RSS feed of
 `assets/data/behance-projects.json`. It runs daily, or on demand from the repo's **Actions** tab, and
 commits any changes. Behance's feed only lists recent projects, so older ones are kept from earlier runs.
 
-## Deploy to GitHub Pages
+## Deploy
 
-Repo **Settings → Pages → Build and deployment → Deploy from a branch**, pick the branch and `/ (root)`.
-The site will be live at `https://<username>.github.io/<repo>/`.
+**Vercel (main site):** https://kavinda-portfolio-two.vercel.app/ — the project imports this repo with the
+"Other" preset and no build step. Every pull request gets a preview deployment; merging to `main` updates the
+live site. `vercel.json` sets caching and security headers, `.vercelignore` keeps `scripts/` out of the deploy.
+The canonical address used for SEO lives in `SITE` in `scripts/build_projects.py` (and in `index.html`).
+
+**GitHub Pages (mirror):** Settings → Pages → Deploy from a branch → `main`, `/ (root)`. Its pages declare the
+Vercel address as canonical, so search engines index the Vercel site.
