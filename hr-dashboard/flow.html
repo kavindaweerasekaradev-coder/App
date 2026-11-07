@@ -50,8 +50,8 @@ a:focus-visible, button:focus-visible { outline: 2px solid var(--ink); outline-o
 .swipe { display: none; font-size: 12px; color: var(--muted); align-items: center; gap: 6px; }
 .scroller { overflow-x: auto; border-radius: 22px; background: var(--soft); background-image: radial-gradient(#D9E1E7 1px, transparent 1px); background-size: 18px 18px; }
 .canvas { position: relative; min-width: 1360px; padding: 40px 36px 72px 64px; }
-.grid { display: grid; grid-template-columns: repeat(9, minmax(0, 1fr)); grid-template-rows: repeat(8, auto); column-gap: 30px; row-gap: 70px; position: relative; z-index: 1; }
-.lanes { position: absolute; left: 10px; top: 40px; bottom: 72px; display: grid; grid-template-rows: repeat(8, auto); row-gap: 70px; z-index: 1; pointer-events: none; }
+.grid { display: grid; grid-template-columns: repeat(9, minmax(0, 1fr)); grid-template-rows: repeat(10, auto); column-gap: 30px; row-gap: 70px; position: relative; z-index: 1; }
+.lanes { position: absolute; left: 10px; top: 40px; bottom: 72px; display: grid; grid-template-rows: repeat(10, auto); row-gap: 70px; z-index: 1; pointer-events: none; }
 .edges { position: absolute; inset: 0; width: 100%; height: 100%; z-index: 0; overflow: visible; }
 .edges path { fill: none; stroke: var(--edge); stroke-width: 2; stroke-linecap: round; stroke-linejoin: round; transition: stroke .2s ease, stroke-width .2s ease, opacity .2s ease; }
 .edges path.dashed { stroke-dasharray: 5 6; }
@@ -182,6 +182,8 @@ a.node:hover, .node.hot { transform: translateY(-2px); box-shadow: 0 10px 24px r
           <div class="lane"><span>&nbsp;</span></div>
           <div class="lane"><span>Pay</span></div>
           <div class="lane"><span>Time</span></div>
+          <div class="lane"><span>Alerts</span></div>
+          <div class="lane"><span>&nbsp;</span></div>
         </div>
         <div class="grid" id="grid">
           <a class="node start page" data-id="overview" href="overview.html" style="grid-area: 1 / 1;"><span class="num">0</span><span class="file">overview.html</span><strong>Project overview</strong><small>Where the visit starts</small></a>
@@ -224,6 +226,13 @@ a.node:hover, .node.hot { transform: translateY(-2px); box-shadow: 0 10px 24px r
           <a class="node" data-id="attIn" href="attendance.html" style="grid-area: 8 / 3;"><span class="file">Attendance</span><strong>Check in / out</strong><small>Live clock, hours</small></a>
           <a class="node" data-id="attReq" href="attendance.html#request" style="grid-area: 8 / 4;"><span class="file">Attendance</span><strong>Request time off</strong><small>Dates, balance check</small></a>
           <a class="node decision" data-id="attOk" href="attendance.html#leave" style="grid-area: 8 / 5;"><span class="file">Decision</span><strong>Manager approves?</strong><small>Approve or decline</small></a>
+
+          <a class="node" data-id="bell" href="index.html" style="grid-area: 9 / 2;"><span class="file">Every app page</span><strong>Notification bell</strong><small>Unread count, rings once</small></a>
+          <a class="node" data-id="panel" href="index.html" style="grid-area: 9 / 3;"><span class="num">1</span><span class="file">Notifications</span><strong>Panel</strong><small>All or unread, by day</small></a>
+          <div class="node decision" data-id="actHere" style="grid-area: 9 / 4;"><span class="num">2</span><span class="file">Decision</span><strong>Act here?</strong><small>Or open the screen</small></div>
+          <a class="node end" data-id="actDone" href="attendance.html#leave" style="grid-area: 9 / 5;"><span class="num">3</span><span class="file">Notifications</span><strong>Approve or decline</strong><small>Leave, in place</small></a>
+          <a class="node" data-id="nwSettings" href="index.html" style="grid-area: 10 / 3;"><span class="file">Notifications</span><strong>Settings</strong><small>Categories, email, push</small></a>
+          <a class="node end" data-id="openScreen" href="recruitment.html#cand-4" style="grid-area: 10 / 4;"><span class="file">Any page</span><strong>Opens the screen</strong><small>Candidate, payroll run…</small></a>
           <a class="node decision" data-id="offer" href="recruitment.html#cand-5" style="grid-area: 6 / 9;"><span class="num">3</span><span class="file">Decision</span><strong>Make an offer?</strong><small>Or reject, with undo</small></a>
         </div>
       </div>
@@ -233,7 +242,7 @@ a.node:hover, .node.hot { transform: translateY(-2px); box-shadow: 0 10px 24px r
   <section class="section" aria-labelledby="pages-title">
     <div class="section-head">
       <div><p class="eyebrow">Page by page</p><h2 id="pages-title">What each page does and where it leads</h2></div>
-      <p>The same flow as the map, written out for each of the eight pages.</p>
+      <p>The same flow as the map, written out for each of the eight pages, plus notifications.</p>
     </div>
     <div class="pages">
       <article class="page">
@@ -275,6 +284,11 @@ a.node:hover, .node.hot { transform: translateY(-2px); box-shadow: 0 10px 24px r
         <div class="page-top"><div><h3>Attendance</h3><code>attendance.html</code></div><a class="open" href="attendance.html" aria-label="Open attendance"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M7 7h10v10"/><path d="M7 17 17 7"/></svg></a></div>
         <ol><li>Check in and out with a live clock and hours worked</li><li>See who’s in today, filter by status and fix someone’s times</li><li>Scan the week at a glance, person by person</li><li>Approve requests, or request time off with a balance check</li></ol>
         <div class="goes">Leads to <a href="attendance.html#request">Request time off</a><a href="employees.html#emp-1">A profile</a><a href="payroll.html">Payroll</a></div>
+      </article>
+      <article class="page">
+        <div class="page-top"><div><h3>Notifications</h3><code>On every app page</code></div><a class="open" href="index.html" aria-label="Open the dashboard to try notifications"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M7 7h10v10"/><path d="M7 17 17 7"/></svg></a></div>
+        <ol><li>The bell shows how many are unread and rings once</li><li>Open the panel: All or Unread, grouped by Today, Yesterday and Earlier</li><li>Approve or decline leave right there, or open the related screen</li><li>Mark one or all as read; choose categories, email and push in settings</li></ol>
+        <div class="goes">Leads to <a href="attendance.html#leave">Leave requests</a><a href="recruitment.html#cand-2">A candidate</a><a href="payroll.html#run">Run payroll</a></div>
       </article>
     </div>
   </section>
@@ -335,7 +349,13 @@ a.node:hover, .node.hot { transform: translateY(-2px); box-shadow: 0 10px 24px r
     { from: 'payFix', to: 'payDone', route: 'h' },
     { from: 'att', to: 'attIn', route: 'h' },
     { from: 'attIn', to: 'attReq', route: 'h' },
-    { from: 'attReq', to: 'attOk', route: 'h' }
+    { from: 'attReq', to: 'attOk', route: 'h' },
+    { from: 'dash', to: 'bell', route: function (a, b, g) { var x = a.left - 15, y = b.top - g.row / 2; return [L(a, 28), [x, a.cy + 28], [x, y], [b.cx, y], T(b)]; } },
+    { from: 'bell', to: 'panel', route: 'h' },
+    { from: 'panel', to: 'actHere', route: 'h' },
+    { from: 'actHere', to: 'actDone', route: 'h', label: 'Yes', kind: 'yes' },
+    { from: 'actHere', to: 'openScreen', route: 'v', label: 'No' },
+    { from: 'panel', to: 'nwSettings', route: 'v' }
   ];
 
   function box(id) {

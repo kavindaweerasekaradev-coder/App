@@ -182,7 +182,7 @@ a:focus-visible { outline: 2px solid var(--ink); outline-offset: 3px; }
 
   <section class="section reveal" id="flow" aria-labelledby="flow-title">
     <div class="section-head">
-      <div><p class="eyebrow">User flow</p><h2 id="flow-title">Seven flows through the product</h2></div>
+      <div><p class="eyebrow">User flow</p><h2 id="flow-title">Eight flows through the product</h2></div>
       <div style="display: flex; flex-direction: column; align-items: flex-start; gap: 12px;"><p>Every step below is a working screen. Click one to jump straight to it.</p><a href="flow.html" class="pill pill-dark">See the full app flow map <svg class="arrow" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12h14"/><path d="m12 5 7 7-7 7"/></svg></a></div>
     </div>
     <div class="flows">
@@ -258,6 +258,18 @@ a:focus-visible { outline: 2px solid var(--ink); outline-offset: 3px; }
           <a class="node" href="attendance.html#request"><span class="num">3</span>Request time off</a>
           <span class="to" aria-hidden="true"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14"/><path d="m12 5 7 7-7 7"/></svg></span>
           <a class="node end" href="attendance.html#leave"><span class="num">4</span>Approved</a>
+        </div>
+      </div>
+      <div class="flow">
+        <p class="flow-name">Stay informed<small>Notifications</small></p>
+        <div class="nodes">
+          <a class="node start" href="index.html"><span class="num">1</span>Bell</a>
+          <span class="to" aria-hidden="true"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14"/><path d="m12 5 7 7-7 7"/></svg></span>
+          <a class="node" href="index.html"><span class="num">2</span>Panel</a>
+          <span class="to" aria-hidden="true"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14"/><path d="m12 5 7 7-7 7"/></svg></span>
+          <a class="node" href="attendance.html#leave"><span class="num">3</span>Approve in place</a>
+          <span class="to" aria-hidden="true"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14"/><path d="m12 5 7 7-7 7"/></svg></span>
+          <a class="node end" href="recruitment.html#cand-4"><span class="num">4</span>Open the screen</a>
         </div>
       </div>
       <div class="flow">
@@ -376,6 +388,18 @@ a:focus-visible { outline: 2px solid var(--ink); outline-offset: 3px; }
           </div>
         </div>
         <div class="screen-body"><h3>Attendance</h3><p>Check in and out, the team today, a week at a glance and time-off requests with balances.</p>
+          <span class="open">Open <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12h14"/><path d="m12 5 7 7-7 7"/></svg></span></div>
+      </a>
+      <a class="screen-card" href="index.html">
+        <div class="thumb" aria-hidden="true" style="justify-content: flex-end; background: var(--bg);">
+          <div class="box col" style="width: 74%; background: #FFFFFF; padding: 10px; border-radius: 14px; box-shadow: 0 8px 20px rgba(31,41,51,.1);">
+            <div style="display: flex; justify-content: space-between; align-items: center;"><div class="bar" style="width: 46%; height: 10px; background: var(--ink);"></div><i style="width: 16px; height: 16px; border-radius: 999px; background: #E5484D;"></i></div>
+            <div style="display: flex; gap: 6px; align-items: center; padding: 6px; border-radius: 8px; background: #F2F8F4;"><i style="width: 18px; height: 18px; border-radius: 999px; background: #EDE3FF;"></i><div class="bar" style="flex: 1;"></div><i style="width: 6px; height: 6px; border-radius: 999px; background: #3FA46A;"></i></div>
+            <div style="display: flex; gap: 6px; align-items: center; padding: 6px; border-radius: 8px; background: #F2F8F4;"><i style="width: 18px; height: 18px; border-radius: 999px; background: #DCE8FF;"></i><div class="bar" style="flex: 1;"></div><i style="width: 6px; height: 6px; border-radius: 999px; background: #3FA46A;"></i></div>
+            <div style="display: flex; gap: 6px; align-items: center; padding: 6px;"><i style="width: 18px; height: 18px; border-radius: 6px; background: #DDF1E2;"></i><div class="bar" style="flex: 1;"></div></div>
+          </div>
+        </div>
+        <div class="screen-body"><h3>Notifications</h3><p>A bell with unread count and a panel: approve leave in place, jump to any screen, and settings.</p>
           <span class="open">Open <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12h14"/><path d="m12 5 7 7-7 7"/></svg></span></div>
       </a>
     </div>
