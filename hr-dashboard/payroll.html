@@ -12,25 +12,58 @@
 <style>
 /* Payroll-only styles; shared pieces live in app.css */
 .run { display: grid; grid-template-columns: minmax(0, 1.5fr) minmax(0, 1fr); gap: 20px; }
-.run-card { background: var(--dark); color: #FFFFFF; border-radius: var(--radius); padding: 26px; position: relative; overflow: hidden; display: flex; flex-direction: column; gap: 20px; }
-.run-card::after { content: ''; position: absolute; right: -60px; top: -60px; width: 200px; height: 200px; border-radius: 999px; border: 34px solid #4A7592; }
-.run-card > * { position: relative; z-index: 1; }
+.run-card { color: #FFFFFF; border-radius: var(--radius); padding: 26px; position: relative; overflow: hidden; display: flex; flex-direction: column; gap: 22px; isolation: isolate;
+  background: radial-gradient(120% 90% at 100% 0%, rgba(134,205,150,.32) 0%, rgba(134,205,150,0) 55%), linear-gradient(150deg, #4A7FA1 0%, #3E6B88 45%, #2C516B 100%); box-shadow: 0 24px 48px rgba(46,84,112,.25); }
+.run-card::before, .run-card::after { content: ''; position: absolute; border-radius: 999px; border: 1px solid rgba(255,255,255,.12); z-index: -1; pointer-events: none; }
+.run-card::before { width: 340px; height: 340px; right: -110px; top: -150px; }
+.run-card::after { width: 220px; height: 220px; right: -50px; top: -90px; border-color: rgba(255,255,255,.18); animation: spin-slow 40s linear infinite; border-style: dashed; }
+@keyframes spin-slow { to { transform: rotate(360deg); } }
 .run-top { display: flex; justify-content: space-between; align-items: center; gap: 12px; flex-wrap: wrap; }
-.run-top h2 { font-size: 17px; font-weight: 600; }
-.run-status { font-size: 12px; font-weight: 700; padding: 5px 12px; border-radius: 999px; background: #4A5863; color: #FFFFFF; }
+.run-period { display: flex; align-items: center; gap: 12px; }
+.run-ic { width: 44px; height: 44px; border-radius: 14px; display: grid; place-items: center; background: rgba(255,255,255,.14); border: 1px solid rgba(255,255,255,.18); }
+.run-kicker { display: block; font-size: 11px; font-weight: 700; letter-spacing: .08em; text-transform: uppercase; color: #C4EDCD; }
+.run-top h2 { font-size: 18px; font-weight: 700; letter-spacing: -0.01em; }
+.run-status { display: inline-flex; align-items: center; gap: 7px; height: 36px; padding: 0 14px 0 10px; border-radius: 999px; border: none; font-size: 13px; font-weight: 700; cursor: pointer; transition: transform .15s ease, box-shadow .2s ease; }
+.run-status:hover { transform: translateY(-1px); box-shadow: 0 8px 18px rgba(0,0,0,.18); }
+.run-status:active { transform: scale(.96); }
+.run-status.warn { background: #FDEBD3; color: #9A4A00; }
 .run-status.ready { background: var(--accent); color: var(--ink); }
-.run-status.done { background: #3FA46A; color: #FFFFFF; }
-.run-total span { display: block; font-size: 13px; color: #E1ECF3; }
-.run-total strong { font-size: 44px; font-weight: 700; letter-spacing: -0.03em; line-height: 1.05; }
-.run-total strong small { font-size: 26px; color: #A7C0D0; }
+.run-status.done { background: #E3F5E8; color: #1C6B37; }
+.run-status.warn svg { animation: nudge 2.4s ease-in-out infinite; }
+@keyframes nudge { 0%, 80%, 100% { transform: rotate(0); } 85% { transform: rotate(-14deg); } 90% { transform: rotate(12deg); } 95% { transform: rotate(-6deg); } }
+.run-main { display: grid; grid-template-columns: minmax(0, 1.25fr) minmax(0, 1fr); gap: 18px; align-items: end; }
+.run-total > span { display: block; font-size: 13px; color: #E1ECF3; }
+.run-total strong { display: block; font-size: 48px; font-weight: 800; letter-spacing: -0.035em; line-height: 1.05; font-variant-numeric: tabular-nums; margin: 4px 0 8px; }
+.run-total strong small { font-size: 26px; font-weight: 700; color: #A7C0D0; }
+.run-total > .trend { display: inline-flex; }
+.trend { display: inline-flex; align-items: center; gap: 6px; font-size: 12px; font-weight: 700; padding: 5px 10px; border-radius: 999px; background: rgba(196,237,205,.16); color: #C4EDCD; }
+.trend.down { background: rgba(253,228,228,.16); color: #FDE4E4; }
+.countdown { padding: 14px 16px; border-radius: 18px; background: rgba(255,255,255,.1); border: 1px solid rgba(255,255,255,.14); backdrop-filter: blur(6px); }
+.cd-top { display: flex; justify-content: space-between; align-items: baseline; gap: 8px; font-size: 13px; }
+.cd-top strong { font-size: 15px; font-weight: 700; }
+.cd-top span { color: #E1ECF3; font-variant-numeric: tabular-nums; }
+.cd-bar { height: 8px; border-radius: 999px; background: rgba(255,255,255,.16); overflow: hidden; margin: 10px 0 8px; }
+.cd-bar i { display: block; height: 100%; width: var(--w, 0%); border-radius: 999px; background: linear-gradient(90deg, #C4EDCD, var(--accent)); transition: width 1.2s cubic-bezier(.2,.8,.2,1); }
+.countdown small { display: flex; justify-content: space-between; font-size: 11px; color: #C8D9E4; }
+.split-bar { display: flex; gap: 3px; height: 12px; border-radius: 999px; overflow: hidden; }
+.split-bar i { display: block; height: 100%; transform-origin: left; animation: grow-x .9s cubic-bezier(.2,.8,.2,1) backwards; }
+.split-legend { list-style: none; margin: 10px 0 0; padding: 0; display: flex; flex-wrap: wrap; gap: 6px 18px; font-size: 12px; color: #E1ECF3; }
+.split-legend li { display: inline-flex; align-items: center; gap: 7px; }
+.split-legend i { width: 9px; height: 9px; border-radius: 3px; display: inline-block; }
+.split-legend b { color: #FFFFFF; font-weight: 700; font-variant-numeric: tabular-nums; }
+@keyframes grow-x { from { transform: scaleX(0); } to { transform: scaleX(1); } }
 .run-meta { display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: 10px; }
-.run-meta div { background: #4E7A96; border-radius: 16px; padding: 12px 14px; }
-.run-meta span { display: block; font-size: 12px; color: #E1ECF3; }
-.run-meta strong { font-size: 15px; font-weight: 700; }
+.run-meta div { display: flex; align-items: center; gap: 10px; background: rgba(255,255,255,.1); border: 1px solid rgba(255,255,255,.12); border-radius: 16px; padding: 12px; min-width: 0; transition: background-color .2s ease, transform .2s ease; }
+.run-meta div:hover { background: rgba(255,255,255,.16); transform: translateY(-2px); }
+.run-meta .mi { width: 34px; height: 34px; flex: none; border-radius: 11px; display: grid; place-items: center; background: rgba(255,255,255,.14); color: #C4EDCD; }
+.run-meta span { display: block; font-size: 11.5px; color: #E1ECF3; }
+.run-meta strong { display: block; font-size: 15px; font-weight: 700; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
 .run-actions { display: flex; gap: 10px; flex-wrap: wrap; }
-.run-actions .btn { flex: 1 1 160px; height: 50px; }
-.btn-ghost-dark { background: transparent; color: #FFFFFF; border: 1px solid #4A5863; }
-.btn-ghost-dark:hover { background: #4E7A96; }
+.run-actions .btn { flex: 1 1 180px; height: 52px; gap: 10px; }
+.run-actions .btn .go { transition: transform .2s ease; }
+.run-actions .btn:hover .go { transform: translateX(4px); }
+.btn-ghost-dark { background: rgba(255,255,255,.06); color: #FFFFFF; border: 1px solid rgba(255,255,255,.35); }
+.btn-ghost-dark:hover { background: rgba(255,255,255,.14); }
 .checklist { background: #FFFFFF; border-radius: var(--radius); padding: 22px; display: flex; flex-direction: column; gap: 12px; }
 .checklist h2 { font-size: 16px; font-weight: 700; }
 .checks { list-style: none; margin: 0; padding: 0; display: flex; flex-direction: column; gap: 8px; }
@@ -103,7 +136,8 @@ table.pay tfoot td { font-weight: 700; border-top: 2px solid var(--ink); }
 @media (max-width: 1100px) { .run { grid-template-columns: minmax(0, 1fr); } }
 @media (max-width: 760px) {
   .run-meta { grid-template-columns: repeat(2, minmax(0, 1fr)); }
-  .run-total strong { font-size: 36px; }
+  .run-main { grid-template-columns: minmax(0, 1fr); }
+  .run-total strong { font-size: 38px; }
   .run-card { padding: 20px; border-radius: 20px; }
   .checklist { border-radius: 20px; padding: 18px; }
   .modal.wide { width: 100%; }
@@ -166,17 +200,31 @@ table.pay tfoot td { font-weight: 700; border-top: 2px solid var(--ink); }
 
       <section class="run enter" style="animation-delay: 120ms;" aria-label="Current pay run">
         <div class="run-card">
-          <div class="run-top"><h2 id="runTitle">Pay run</h2><span class="run-status" id="runStatus">Draft</span></div>
-          <div class="run-total"><span>Estimated gross pay</span><strong id="runGross">$0</strong></div>
+          <div class="run-top">
+            <div class="run-period"><span class="run-ic"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect width="18" height="18" x="3" y="4" rx="2"/><path d="M16 2v4"/><path d="M3 10h18"/><path d="M8 2v4"/><path d="M17 14h-6"/><path d="M13 18H7"/><path d="M7 14h.01"/><path d="M17 18h.01"/></svg></span><div><span class="run-kicker">Pay run</span><h2 id="runTitle">—</h2></div></div>
+            <button type="button" class="run-status" id="runStatus">Draft</button>
+          </div>
+          <div class="run-main">
+            <div class="run-total"><span>Estimated gross pay</span><strong id="runGross">$0</strong><span class="trend" id="runTrend"></span></div>
+            <div class="countdown" aria-live="polite">
+              <div class="cd-top"><strong id="cdText">—</strong><span id="cdPct"></span></div>
+              <div class="cd-bar" role="img" id="cdBarWrap"><i id="cdBar"></i></div>
+              <small><span id="cdStart"></span><span id="cdEnd"></span></small>
+            </div>
+          </div>
+          <div>
+            <div class="split-bar" id="splitBar" role="img"></div>
+            <ul class="split-legend" id="splitLegend"></ul>
+          </div>
           <div class="run-meta">
-            <div><span>Pay date</span><strong id="runDate">—</strong></div>
-            <div><span>Employees</span><strong>248</strong></div>
-            <div><span>Est. net pay</span><strong id="runNet">—</strong></div>
-            <div><span>Cycle</span><strong>Monthly</strong></div>
+            <div><span class="mi"><svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M8 2v4"/><path d="M16 2v4"/><rect width="18" height="18" x="3" y="4" rx="2"/><path d="M3 10h18"/><path d="m9 16 2 2 4-4"/></svg></span><span><span>Pay date</span><strong id="runDate">—</strong></span></div>
+            <div><span class="mi"><svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M16 21v-2a4 4 0 0 0-4-4H6a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M22 21v-2a4 4 0 0 0-3-3.87"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/></svg></span><span><span>Employees</span><strong>248</strong></span></div>
+            <div><span class="mi"><svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M19 7V4a1 1 0 0 0-1-1H5a2 2 0 0 0 0 4h15a1 1 0 0 1 1 1v4h-3a2 2 0 0 0 0 4h3a1 1 0 0 0 1-1v-2a1 1 0 0 0-1-1"/><path d="M3 5v14a2 2 0 0 0 2 2h15a1 1 0 0 0 1-1v-4"/></svg></span><span><span>Est. net pay</span><strong id="runNet">—</strong></span></div>
+            <div><span class="mi"><svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="m17 2 4 4-4 4"/><path d="M3 11v-1a4 4 0 0 1 4-4h14"/><path d="m7 22-4-4 4-4"/><path d="M21 13v1a4 4 0 0 1-4 4H3"/></svg></span><span><span>Cycle</span><strong>Monthly</strong></span></div>
           </div>
           <div class="run-actions">
-            <button type="button" class="btn btn-accent" id="runBtn">Run payroll</button>
-            <button type="button" class="btn btn-ghost-dark" id="previewBtn">Preview payslips</button>
+            <button type="button" class="btn btn-accent" id="runBtn"><span id="runBtnIcon"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><polygon points="6 3 20 12 6 21 6 3"/></svg></span><span id="runBtnLabel">Run payroll</span><span class="go"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12h14"/><path d="m12 5 7 7-7 7"/></svg></span></button>
+            <button type="button" class="btn btn-ghost-dark" id="previewBtn"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M15 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V7Z"/><path d="M14 2v4a2 2 0 0 0 2 2h4"/><path d="M10 9H8"/><path d="M16 13H8"/><path d="M16 17H8"/></svg>Preview payslips</button>
           </div>
         </div>
         <div class="checklist">
@@ -355,16 +403,50 @@ table.pay tfoot td { font-weight: 700; border-top: 2px solid var(--ink); }
 
   // ---------- Page ----------
   var q = '';
+  var I = {
+    warn: '<svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="10"/><line x1="12" x2="12" y1="8" y2="12"/><line x1="12" x2="12.01" y1="16" y2="16"/></svg>', ok: '<svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="10"/><path d="m9 12 2 2 4-4"/></svg>', done: '<svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M8 2v4"/><path d="M16 2v4"/><rect width="18" height="18" x="3" y="4" rx="2"/><path d="M3 10h18"/><path d="m9 16 2 2 4-4"/></svg>',
+    up: '<svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><polyline points="22 7 13.5 15.5 8.5 10.5 2 17"/><polyline points="16 7 22 7 22 13"/></svg>', down: '<svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><polyline points="22 17 13.5 8.5 8.5 13.5 2 7"/><polyline points="16 17 22 17 22 11"/></svg>',
+    play: '<svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><polygon points="6 3 20 12 6 21 6 3"/></svg>', summary: '<svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M15 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V7Z"/><path d="M14 2v4a2 2 0 0 0 2 2h4"/><path d="m9 15 2 2 4-4"/></svg>'
+  };
+  // Count a money figure up to its new value
+  function countTo(el, to) {
+    var from = +(el.dataset.value || 0); el.dataset.value = to;
+    var paint = function (v) { el.innerHTML = money(Math.round(v)) + '<small>.00</small>'; };
+    if (reduced || from === to) return paint(to);
+    var t0 = null, dur = from ? 600 : 1100;
+    (function step(t) { if (t0 === null) t0 = t; var k = Math.min(1, (t - t0) / dur), e = 1 - Math.pow(1 - k, 3); paint(from + (to - from) * e); if (k < 1) requestAnimationFrame(step); })(performance.now());
+  }
   function render() {
     var t = totals(), open = issues();
-    document.getElementById('runTitle').textContent = periodName + ' pay run';
-    document.getElementById('runGross').innerHTML = money(t.gross) + '<small>.00</small>';
+    document.getElementById('runTitle').textContent = periodName;
+    countTo(document.getElementById('runGross'), t.gross);
+    var last = runs[0] && runs[0].gross, change = last ? (t.gross - last) / last * 100 : 0;
+    var trend = document.getElementById('runTrend');
+    trend.className = 'trend' + (change < 0 ? ' down' : '');
+    trend.innerHTML = (change < 0 ? I.down : I.up) + (change >= 0 ? '+' : '') + change.toFixed(1) + '% vs ' + (runs[0] ? runs[0].month.split(' ')[0] : 'last month');
     document.getElementById('runDate').textContent = payDateLabel;
     document.getElementById('runNet').textContent = money(t.net);
     var st = document.getElementById('runStatus');
-    st.textContent = run.status === 'Scheduled' ? 'Scheduled' : open.length ? open.length + (open.length === 1 ? ' issue' : ' issues') : 'Ready to run';
-    st.className = 'run-status' + (run.status === 'Scheduled' ? ' done' : open.length ? '' : ' ready');
-    document.getElementById('runBtn').textContent = run.status === 'Scheduled' ? 'View summary' : 'Run payroll';
+    st.innerHTML = run.status === 'Scheduled' ? I.done + 'Scheduled' : open.length ? I.warn + open.length + (open.length === 1 ? ' issue to fix' : ' issues to fix') : I.ok + 'Ready to run';
+    st.className = 'run-status' + (run.status === 'Scheduled' ? ' done' : open.length ? ' warn' : ' ready');
+    st.setAttribute('aria-label', run.status === 'Scheduled' ? 'Scheduled. View summary' : open.length ? open.length + ' issues. Fix them now' : 'Ready to run. Run payroll');
+    // Countdown through the pay period
+    var start = new Date(payDate.getFullYear(), payDate.getMonth(), 1), today0 = new Date(); today0.setHours(0, 0, 0, 0);
+    var left = Math.max(0, Math.round((payDate - today0) / 86400000));
+    var pct = Math.min(100, Math.max(0, Math.round((today0 - start) / (payDate - start) * 100)));
+    document.getElementById('cdText').textContent = run.status === 'Scheduled' ? (left ? 'Paying in ' + left + (left === 1 ? ' day' : ' days') : 'Paying today') : left ? 'Pays in ' + left + (left === 1 ? ' day' : ' days') : 'Pay day is today';
+    document.getElementById('cdPct').textContent = pct + '% of the period';
+    document.getElementById('cdBarWrap').setAttribute('aria-label', pct + '% through the pay period');
+    requestAnimationFrame(function () { document.getElementById('cdBar').style.setProperty('--w', pct + '%'); });
+    document.getElementById('cdStart').textContent = start.toLocaleDateString('en-GB', { day: 'numeric', month: 'short' });
+    document.getElementById('cdEnd').textContent = payDateLabel;
+    // Where the gross pay goes
+    var parts = [['Take-home pay', t.net, 'var(--accent)'], ['Income tax', t.tax, '#E1ECF3'], ['Pension', t.pension, '#A7C0D0']];
+    document.getElementById('splitBar').innerHTML = parts.map(function (x, i) { return '<i style="flex:' + x[1] + ';background:' + x[2] + ';animation-delay:' + (200 + i * 120) + 'ms"></i>'; }).join('');
+    document.getElementById('splitBar').setAttribute('aria-label', parts.map(function (x) { return x[0] + ' ' + Math.round(x[1] / t.gross * 100) + '%'; }).join(', '));
+    document.getElementById('splitLegend').innerHTML = parts.map(function (x) { return '<li><i style="background:' + x[2] + '"></i>' + x[0] + ' <b>' + money(x[1]) + '</b> · ' + Math.round(x[1] / t.gross * 100) + '%</li>'; }).join('');
+    document.getElementById('runBtnLabel').textContent = run.status === 'Scheduled' ? 'View summary' : 'Run payroll';
+    document.getElementById('runBtnIcon').innerHTML = run.status === 'Scheduled' ? I.summary : I.play;
     document.getElementById('runBtnTop').textContent = run.status === 'Scheduled' ? 'View summary' : 'Run payroll';
     document.getElementById('subline').textContent = run.status === 'Scheduled'
       ? periodName + ' is scheduled to pay on ' + payDateLabel + '.'
@@ -550,6 +632,7 @@ table.pay tfoot td { font-weight: 700; border-top: 2px solid var(--ink); }
     openLayer(modal, document.getElementById('wizNext'));
   }
   ['runBtn', 'runBtnTop'].forEach(function (id) { document.getElementById(id).addEventListener('click', openRun); });
+  document.getElementById('runStatus').addEventListener('click', function () { openRun(); if (run.status !== 'Scheduled' && issues().length) goWiz(2); });
   document.getElementById('wizBack').addEventListener('click', function () { if (wstep === 1) closeTop(); else goWiz(wstep - 1); });
   document.getElementById('wizNext').addEventListener('click', function () {
     if (run.status === 'Scheduled' && wstep === 3) return closeTop();
