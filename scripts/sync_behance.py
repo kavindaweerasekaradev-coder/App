@@ -154,8 +154,10 @@ def save_cover(project):
     data = data or fetch(src, binary=True)
     if not data:
         return
+    # Replace older downloads of this cover, but keep the .webp the site serves (made by optimize_images.py)
     for old in os.listdir(COVER_DIR):
-        if os.path.splitext(old)[0] == project["id"]:
+        stem, oext = os.path.splitext(old)
+        if stem == project["id"] and oext.lower() != ".webp" and oext.lower() != ext:
             os.remove(os.path.join(COVER_DIR, old))
     path = os.path.join(COVER_DIR, project["id"] + ext)
     with open(path, "wb") as f:
