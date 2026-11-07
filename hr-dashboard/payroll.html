@@ -109,16 +109,72 @@ table.pay tfoot td { font-weight: 700; border-top: 2px solid var(--ink); }
 .modal.wide { width: min(880px, calc(100vw - 24px)); }
 .mini { width: 92px; height: 38px; padding: 0 10px; border-radius: 10px; border: 1.5px solid var(--line); text-align: right; font: inherit; font-size: 14px; outline: none; transition: border-color .2s ease, box-shadow .2s ease; }
 .mini:focus { border-color: var(--accent); box-shadow: 0 0 0 3px rgba(134,205,150,.15); }
-.issues { list-style: none; margin: 0; padding: 0; display: flex; flex-direction: column; gap: 10px; }
-.issue { display: flex; gap: 14px; align-items: flex-start; padding: 16px; border-radius: 18px; background: #FEF3E6; flex-wrap: wrap; transition: background-color .3s ease; }
-.issue.fixed { background: #EAF7EE; }
-.issue .dot { width: 34px; height: 34px; flex: none; border-radius: 12px; display: grid; place-items: center; background: #FDEBD3; color: #9A4A00; }
-.issue.fixed .dot { background: #D2F0DC; color: #1C6B37; }
-.issue-body { flex: 1 1 260px; min-width: 0; }
-.issue-body strong { display: block; font-size: 14px; }
-.issue-body p { font-size: 13px; color: var(--muted); margin-top: 2px; }
-.issue-actions { display: flex; gap: 8px; flex-wrap: wrap; align-items: center; margin-top: 10px; }
-.issue-actions .input { height: 40px; width: 220px; font-size: 14px; }
+.fix-head { display: flex; align-items: center; gap: 14px; padding: 14px 16px; border-radius: 18px; background: var(--soft-2); margin-bottom: 14px; transition: background-color .4s ease; }
+.fix-head.done { background: #E3F5E8; }
+.fix-ring { width: 46px; height: 46px; flex: none; border-radius: 999px; display: grid; place-items: center; background: conic-gradient(var(--accent) calc(var(--p) * 1%), #E1E7EC 0); position: relative; transition: background .6s ease; }
+.fix-ring::after { content: ''; position: absolute; inset: 5px; border-radius: 999px; background: var(--soft-2); }
+.fix-head.done .fix-ring::after { background: #E3F5E8; }
+.fix-ring b { position: relative; z-index: 1; font-size: 12px; font-weight: 800; }
+.fix-ring svg { position: relative; z-index: 1; color: #1C6B37; animation: pop-in .45s cubic-bezier(.2,.8,.2,1); }
+.fix-head strong { display: block; font-size: 15px; }
+.fix-head span { font-size: 13px; color: var(--muted); }
+.issues { list-style: none; margin: 0; padding: 0; display: flex; flex-direction: column; gap: 12px; }
+.issue { background: #FFFFFF; border: 1.5px solid var(--line); border-radius: 22px; padding: 18px; display: flex; flex-direction: column; gap: 14px; position: relative; overflow: hidden; animation: rise .4s cubic-bezier(.2,.7,.2,1) backwards; transition: border-color .2s ease, box-shadow .2s ease; }
+.issue::before { content: ''; position: absolute; left: 0; top: 0; bottom: 0; width: 4px; background: var(--sev, #E0A43C); }
+.issue:hover { border-color: #CCD5DC; box-shadow: 0 10px 24px rgba(31,41,51,.06); }
+.issue.bank { --sev: #C2283A; }
+.issue-top { display: flex; align-items: center; gap: 12px; flex-wrap: wrap; }
+.issue-ic { width: 40px; height: 40px; flex: none; border-radius: 13px; display: grid; place-items: center; background: #FDEBD3; color: #9A4A00; }
+.issue.bank .issue-ic { background: #FDE4E4; color: #A3262A; }
+.issue-who { display: flex; align-items: center; gap: 10px; flex: 1 1 200px; min-width: 0; }
+.issue-who .avatar { width: 36px; height: 36px; }
+.issue-who strong { display: block; font-size: 14px; }
+.issue-who span { display: block; font-size: 12px; color: var(--muted); }
+.sev { display: inline-flex; align-items: center; gap: 6px; font-size: 12px; font-weight: 700; padding: 5px 10px; border-radius: 999px; background: #FDEBD3; color: #9A4A00; }
+.sev::before { content: ''; width: 7px; height: 7px; border-radius: 999px; background: currentColor; animation: blink 1.6s ease-in-out infinite; }
+.issue.bank .sev { background: #FDE4E4; color: #A3262A; }
+@keyframes blink { 50% { opacity: .3; } }
+.issue h4 { margin: 0; font-size: 16px; font-weight: 700; letter-spacing: -0.01em; }
+.issue p { margin: 2px 0 0; font-size: 13px; color: var(--muted); }
+.ot-gauge { padding: 4px 0 2px; }
+.ot-track { position: relative; height: 12px; border-radius: 999px; background: #EEF2F5; }
+.ot-fill { position: absolute; left: 0; top: 0; bottom: 0; border-radius: 999px; background: linear-gradient(90deg, var(--accent) 0, var(--accent) var(--limit), #E0A43C var(--limit), #E0A43C 100%); background-size: var(--bg-w) 100%; transform-origin: left; animation: grow-x 1s cubic-bezier(.2,.8,.2,1) backwards; }
+.ot-limit { position: absolute; top: -8px; bottom: -8px; width: 2px; background: var(--ink); border-radius: 2px; }
+.ot-limit em { position: absolute; bottom: calc(100% + 4px); left: 50%; transform: translateX(-50%); font-style: normal; font-size: 11px; font-weight: 700; white-space: nowrap; color: var(--ink); background: #FFFFFF; padding: 1px 6px; border-radius: 6px; box-shadow: 0 0 0 1px var(--line); }
+.ot-scale { display: flex; justify-content: space-between; font-size: 11px; color: var(--muted); margin-top: 8px; }
+.ot-scale b { color: #9A4A00; }
+.choices { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 10px; }
+.choice { display: flex; align-items: center; gap: 12px; text-align: left; padding: 12px 14px; border-radius: 16px; border: 1.5px solid var(--line); background: #FFFFFF; color: var(--ink); font-size: 14px; font-weight: 700; transition: transform .15s ease, border-color .2s ease, box-shadow .2s ease, background-color .2s ease; }
+.choice:hover { border-color: var(--dark); box-shadow: 0 8px 18px rgba(31,41,51,.08); transform: translateY(-1px); }
+.choice:active { transform: scale(.98); }
+.choice .ci { width: 34px; height: 34px; flex: none; border-radius: 11px; display: grid; place-items: center; background: var(--soft); }
+.choice small { display: block; font-size: 12px; font-weight: 500; color: var(--muted); margin-top: 1px; }
+.choice.primary { background: var(--dark); border-color: var(--dark); color: #FFFFFF; }
+.choice.primary .ci { background: rgba(255,255,255,.14); color: #C4EDCD; }
+.choice.primary small { color: #E1ECF3; }
+.choice.primary:hover { box-shadow: 0 10px 22px rgba(62,107,136,.3); }
+.acct-row { display: flex; gap: 10px; flex-wrap: wrap; }
+.acct-field { flex: 1 1 240px; display: flex; align-items: center; gap: 10px; height: 52px; padding: 0 14px; border-radius: 16px; border: 1.5px solid var(--line); background: #FFFFFF; color: var(--muted); transition: border-color .2s ease, box-shadow .2s ease; }
+.acct-field:focus-within { border-color: var(--accent); box-shadow: 0 0 0 4px rgba(134,205,150,.18); color: var(--dark); }
+.acct-field.bad { border-color: var(--error); }
+.acct-field input { flex: 1; min-width: 0; border: none; outline: none; background: transparent; font-size: 16px; font-weight: 600; letter-spacing: .06em; color: var(--ink); font-variant-numeric: tabular-nums; }
+.acct-field input::placeholder { letter-spacing: 0; font-weight: 500; color: #8C99A4; }
+.acct-count { font-size: 11px; font-weight: 700; color: var(--muted); }
+.acct-row .choice { flex: 0 0 auto; }
+.resolved { display: flex; align-items: center; gap: 12px; padding: 12px 14px; border-radius: 18px; background: #EAF7EE; animation: pop-in .4s cubic-bezier(.2,.8,.2,1); }
+.resolved .ok { width: 30px; height: 30px; flex: none; border-radius: 999px; background: #3FA46A; color: #FFFFFF; display: grid; place-items: center; }
+.resolved .avatar { width: 32px; height: 32px; }
+.resolved div { flex: 1; min-width: 0; }
+.resolved strong { display: block; font-size: 14px; color: #1C5631; }
+.resolved span { font-size: 12px; color: #3B6B4C; }
+.resolved .undo { display: inline-flex; align-items: center; gap: 6px; height: 34px; padding: 0 12px; border-radius: 999px; border: 1px solid #BFE3CB; background: #FFFFFF; color: #1C6B37; font-size: 12px; font-weight: 700; }
+.resolved .undo:hover { background: #F3FBF5; }
+.all-clear { display: flex; align-items: center; gap: 14px; padding: 18px; border-radius: 20px; background: linear-gradient(135deg, #E3F5E8, #EEF8F0); animation: pop-in .45s cubic-bezier(.2,.8,.2,1); }
+.all-clear .big-ok { width: 46px; height: 46px; flex: none; border-radius: 999px; background: var(--accent); color: var(--ink); display: grid; place-items: center; }
+.all-clear strong { display: block; font-size: 16px; }
+.all-clear span { font-size: 13px; color: #3B6B4C; }
+@keyframes grow-x { from { transform: scaleX(0); } to { transform: scaleX(1); } }
+@media (max-width: 640px) { .choices { grid-template-columns: minmax(0, 1fr); } .acct-row .choice { flex: 1 1 100%; justify-content: center; } }
 .sum { border-radius: 20px; background: var(--soft-2); padding: 6px 18px; }
 .sum .row { display: flex; justify-content: space-between; gap: 16px; padding: 12px 0; border-top: 1px solid #E8EDF1; font-variant-numeric: tabular-nums; }
 .sum .row:first-child { border-top: none; }
@@ -296,7 +352,7 @@ table.pay tfoot td { font-weight: 700; border-top: 2px solid var(--ink); }
       </div>
     </div>
     <div class="fstep" data-fstep="2">
-      <p style="color: var(--muted); margin-bottom: 14px;" id="issueNote"></p>
+      <div id="issueNote"></div>
       <ul class="issues" id="issues"></ul>
     </div>
     <div class="fstep" data-fstep="3">
@@ -594,28 +650,81 @@ table.pay tfoot td { font-weight: 700; border-top: 2px solid var(--ink); }
     document.querySelector('[data-gross="' + p.id + '"]').textContent = money(calc(p).gross);
     save(); render();
   });
+  var IC = { ot: '<svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 6v6l4 2"/><path d="M16 21.16a10 10 0 1 1 5-13.516"/><path d="M20 11.5v6"/><path d="M20 21.5h.01"/></svg>', bank: '<svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><line x1="3" x2="21" y1="22" y2="22"/><line x1="6" x2="6" y1="18" y2="11"/><line x1="10" x2="10" y1="18" y2="11"/><line x1="14" x2="14" y1="18" y2="11"/><line x1="18" x2="18" y1="18" y2="11"/><polygon points="12 2 20 7 4 7"/></svg>', check: '<svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M20 6 9 17l-5-5"/></svg>', cut: '<svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12.338 21.994A10 10 0 1 1 21.925 13.227"/><path d="M12 6v6l2 1"/><path d="m14 18 4 4 4-4"/><path d="M18 14v8"/></svg>', save: '<svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M15.2 3a2 2 0 0 1 1.4.6l3.8 3.8a2 2 0 0 1 .6 1.4V19a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2z"/><path d="M17 21v-7a1 1 0 0 0-1-1H8a1 1 0 0 0-1 1v7"/><path d="M7 3v4a1 1 0 0 0 1 1h7"/></svg>', undo: '<svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M9 14 4 9l5-5"/><path d="M4 9h10.5a5.5 5.5 0 0 1 5.5 5.5a5.5 5.5 0 0 1-5.5 5.5H11"/></svg>', bankSmall: '<svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><line x1="3" x2="21" y1="22" y2="22"/><line x1="6" x2="6" y1="18" y2="11"/><line x1="10" x2="10" y1="18" y2="11"/><line x1="14" x2="14" y1="18" y2="11"/><line x1="18" x2="18" y1="18" y2="11"/><polygon points="12 2 20 7 4 7"/></svg>', party: '<svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M9.937 15.5A2 2 0 0 0 8.5 14.063l-6.135-1.582a.5.5 0 0 1 0-.962L8.5 9.936A2 2 0 0 0 9.937 8.5l1.582-6.135a.5.5 0 0 1 .963 0L14.063 8.5A2 2 0 0 0 15.5 9.937l6.135 1.581a.5.5 0 0 1 0 .964L15.5 14.063a2 2 0 0 0-1.437 1.437l-1.582 6.135a.5.5 0 0 1-.963 0z"/><path d="M20 3v4"/><path d="M22 5h-4"/><path d="M4 17v2"/><path d="M5 18H3"/></svg>' };
+  // What was done for each fixed issue, so it can be shown and undone
+  function fixLine(f) {
+    var p = byId(f.id);
+    if (f.kind === 'approve') return { title: 'Overtime approved for ' + p.first, text: f.hours + ' hours paid · ' + money(Math.round(rate(p) * f.hours)) };
+    if (f.kind === 'cap') return { title: p.first + '’s overtime capped at 20 hours', text: 'Pays ' + money(Math.round(rate(p) * 20)) + ' · ' + (f.prev - 20) + ' hours left unpaid' };
+    return { title: 'Bank account saved for ' + p.first, text: 'Account •••• ' + String(p.account || '').slice(-4) + ' · paid on ' + payDateLabel };
+  }
   function buildIssues() {
-    var list = issues();
-    document.getElementById('issueNote').textContent = list.length ? 'Fix these before submitting. Everything else looks good.' : 'Nothing to fix. Everyone can be paid on ' + payDateLabel + '.';
-    document.getElementById('issues').innerHTML = list.length ? list.map(function (i) {
-      var actions = i.kind === 'bank'
-        ? '<label class="sr-only" for="acct">Account number for ' + esc(full(i.p)) + '</label><input class="input" id="acct" inputmode="numeric" placeholder="Account number, 8–12 digits"><button type="button" class="small-btn" data-fix="bank" data-id="' + i.p.id + '" style="height:40px">Save account</button><p class="error" id="acct-err"></p>'
-        : '<button type="button" class="small-btn" data-fix="approve" style="height:40px">Approve ' + i.p.ot + ' hours</button><button type="button" class="small-btn light" data-fix="cap" data-id="' + i.p.id + '" style="height:40px;border:1px solid var(--line)">Pay 20 hours</button>';
-      return '<li class="issue"><span class="dot">' + ICON_WARN + '</span><div class="issue-body"><strong>' + esc(i.title) + '</strong><p>' + esc(i.text) + '</p><div class="issue-actions">' + actions + '</div></div></li>';
-    }).join('') : '<li class="issue fixed"><span class="dot">' + ICON_CHECK + '</span><div class="issue-body"><strong>All clear</strong><p>No missing details and no overtime waiting for approval.</p></div></li>';
+    var list = issues(), fixes = run.fixes || (run.fixes = []);
+    var total = list.length + fixes.length, done = fixes.length, pct = total ? Math.round(done / total * 100) : 100;
+    var head = '<div class="fix-head' + (list.length ? '' : ' done') + '"><span class="fix-ring" style="--p:' + pct + '">' + (list.length ? '<b>' + done + '/' + total + '</b>' : IC.check) + '</span>' +
+      '<div><strong>' + (list.length ? done + ' of ' + total + ' fixed' : 'Everything’s fixed') + '</strong><span>' + (list.length ? 'Sort these out and the run can be approved.' : 'Everyone can be paid on ' + payDateLabel + '.') + '</span></div></div>';
+    document.getElementById('issueNote').innerHTML = total ? head : '';
+    var cards = list.map(function (i, k) {
+      var p = i.p, who = '<div class="issue-who"><span class="avatar" style="background:' + TINT[p.dept] + '" aria-hidden="true">' + face(p) + '</span><div><strong>' + esc(full(p)) + '</strong><span>' + esc(p.role) + ' · ' + p.dept + '</span></div></div>';
+      if (i.kind === 'ot') {
+        var max = Math.max(40, p.ot), payAll = Math.round(rate(p) * p.ot), pay20 = Math.round(rate(p) * 20);
+        return '<li class="issue ot" style="animation-delay:' + k * 70 + 'ms"><div class="issue-top"><span class="issue-ic">' + IC.ot + '</span>' + who + '<span class="sev">Needs approval</span></div>' +
+          '<div><h4>' + p.ot + ' hours of overtime this month</h4><p>Anything over 20 hours needs a manager’s approval.</p></div>' +
+          '<div class="ot-gauge" role="img" aria-label="' + p.ot + ' hours logged against a 20 hour limit"><div class="ot-track"><i class="ot-fill" style="width:' + (p.ot / max * 100) + '%;--limit:' + (20 / p.ot * 100) + '%;--bg-w:100%"></i><span class="ot-limit" style="left:' + (20 / max * 100) + '%"><em>20 h limit</em></span></div>' +
+            '<div class="ot-scale"><span>0 h</span><span><b>' + p.ot + ' h logged</b> · ' + max + ' h</span></div></div>' +
+          '<div class="choices"><button type="button" class="choice primary" data-fix="approve" data-id="' + p.id + '"><span class="ci">' + IC.check + '</span><span>Approve ' + p.ot + ' hours<small>Pays ' + money(payAll) + ' overtime</small></span></button>' +
+            '<button type="button" class="choice" data-fix="cap" data-id="' + p.id + '"><span class="ci">' + IC.cut + '</span><span>Pay 20 hours<small>Pays ' + money(pay20) + ' · saves ' + money(payAll - pay20) + '</small></span></button></div></li>';
+      }
+      return '<li class="issue bank" style="animation-delay:' + k * 70 + 'ms"><div class="issue-top"><span class="issue-ic">' + IC.bank + '</span>' + who + '<span class="sev">Blocks payment</span></div>' +
+        '<div><h4>No bank account on file</h4><p>Add one so ' + esc(p.first) + ' can be paid on ' + payDateLabel + '.</p></div>' +
+        '<div class="acct-row"><label class="acct-field" id="acctField">' + IC.bankSmall + '<span class="sr-only">Account number for ' + esc(full(p)) + '</span><input id="acct" inputmode="numeric" autocomplete="off" placeholder="Account number, 8–12 digits" aria-describedby="acct-err"><span class="acct-count" id="acctCount">0/12</span></label>' +
+          '<button type="button" class="choice primary" data-fix="bank" data-id="' + p.id + '"><span class="ci">' + IC.save + '</span><span>Save account</span></button></div><p class="error" id="acct-err"></p></li>';
+    }).join('');
+    var resolved = fixes.map(function (f, k) {
+      var line = fixLine(f), p = byId(f.id);
+      return '<li class="resolved"><span class="ok">' + IC.check + '</span><span class="avatar" style="background:' + TINT[p.dept] + '" aria-hidden="true">' + face(p) + '</span><div><strong>' + esc(line.title) + '</strong><span>' + esc(line.text) + '</span></div><button type="button" class="undo" data-undo="' + k + '">' + IC.undo + 'Undo</button></li>';
+    }).join('');
+    var clear = total ? '' : '<li class="all-clear"><span class="big-ok">' + IC.party + '</span><div><strong>All clear, ready to approve</strong><span>No missing details and no overtime waiting for approval.</span></div></li>';
+    document.getElementById('issues').innerHTML = clear + cards + resolved;
     document.getElementById('wizNext').disabled = list.length > 0;
   }
+  // Group account digits in fours as they're typed
+  document.getElementById('issues').addEventListener('input', function (ev) {
+    if (ev.target.id !== 'acct') return;
+    var digits = ev.target.value.replace(/\D/g, '').slice(0, 12);
+    ev.target.value = digits.replace(/(\d{4})(?=\d)/g, '$1 ');
+    document.getElementById('acctCount').textContent = digits.length + '/12';
+    document.getElementById('acctField').classList.remove('bad'); document.getElementById('acct-err').textContent = '';
+  });
+  document.getElementById('issues').addEventListener('keydown', function (ev) {
+    if (ev.target.id === 'acct' && ev.key === 'Enter') { ev.preventDefault(); document.querySelector('[data-fix="bank"]').click(); }
+  });
   document.getElementById('issues').addEventListener('click', function (ev) {
+    var u = ev.target.closest('[data-undo]');
+    if (u) {
+      var f = run.fixes.splice(+u.dataset.undo, 1)[0], up = byId(f.id);
+      if (f.kind === 'approve') run.otApproved = false;
+      else if (f.kind === 'cap') up.ot = f.prev;
+      else { up.bank = false; delete up.account; }
+      save(); render(); buildIssues(); toast('Undone');
+      var first = modal.querySelector('.issue button, .issue input'); if (first) first.focus();
+      return;
+    }
     var b = ev.target.closest('[data-fix]'); if (!b) return;
+    var p = byId(+b.dataset.id);
+    run.fixes = run.fixes || [];
     if (b.dataset.fix === 'bank') {
       var v = document.getElementById('acct').value.replace(/\s/g, '');
-      if (!/^\d{8,12}$/.test(v)) { document.getElementById('acct-err').textContent = 'Enter 8 to 12 digits.'; document.getElementById('acct').focus(); return; }
-      var p = byId(+b.dataset.id); p.bank = true; p.account = v;
-      toast('Bank account saved for ' + p.first);
-    } else if (b.dataset.fix === 'approve') { run.otApproved = true; toast('Overtime approved'); }
-    else { var q2 = byId(+b.dataset.id); q2.ot = 20; toast(q2.first + '’s overtime set to 20 hours'); }
+      if (!/^\d{8,12}$/.test(v)) {
+        document.getElementById('acct-err').textContent = 'Enter 8 to 12 digits.';
+        var fld = document.getElementById('acctField'); fld.classList.remove('bad', 'shake'); void fld.offsetWidth; fld.classList.add('bad', 'shake');
+        document.getElementById('acct').focus(); return;
+      }
+      p.bank = true; p.account = v; run.fixes.push({ kind: 'bank', id: p.id });
+    } else if (b.dataset.fix === 'approve') { run.otApproved = true; run.fixes.push({ kind: 'approve', id: p.id, hours: p.ot }); }
+    else { run.fixes.push({ kind: 'cap', id: p.id, prev: p.ot }); p.ot = 20; }
     save(); render(); buildIssues();
-    var next = modal.querySelector('[data-fix], #wizNext'); if (next) next.focus();
+    var next = modal.querySelector('.issue button, .issue input') || document.getElementById('wizNext'); next.focus();
   });
   function buildSummary() {
     var t = totals();
