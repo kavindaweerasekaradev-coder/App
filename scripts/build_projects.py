@@ -271,7 +271,7 @@ def chapters(cs):
 """
 
 
-SITE = "https://kavindaweerasekaradev-coder.github.io/App/"
+SITE = "https://kavinda-design.vercel.app/"
 
 
 def ld_json(p, cover):
