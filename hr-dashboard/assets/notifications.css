@@ -2,8 +2,8 @@
 .nw-bell { position: relative; }
 .nw-bell[aria-expanded="true"] { background: #F1F5F8; border-color: #CCD5DC; }
 .nw-bell svg { transition: transform .2s ease; }
-.nw-bell.ring svg { animation: nw-ring .8s ease; transform-origin: 50% 10%; }
-.nw-badge { position: absolute; top: -4px; right: -4px; min-width: 20px; height: 20px; padding: 0 5px; border-radius: 999px; background: #E5484D; color: #FFFFFF; font-size: 11px; font-weight: 800; line-height: 20px; text-align: center; box-shadow: 0 0 0 2.5px #FFFFFF; font-family: inherit; animation: nw-pop .35s cubic-bezier(.2,.8,.2,1); pointer-events: none; }
+.nw-bell.nw-ringing svg { animation: nw-ring .8s ease; transform-origin: 50% 10%; }
+.nw-badge { box-sizing: border-box; position: absolute; top: -4px; right: -4px; min-width: 20px; height: 20px; padding: 0 5px; border-radius: 999px; background: #E5484D; color: #FFFFFF; font-size: 11px; font-weight: 800; line-height: 20px; text-align: center; box-shadow: 0 0 0 2.5px #FFFFFF; font-family: inherit; animation: nw-pop .35s cubic-bezier(.2,.8,.2,1); pointer-events: none; }
 .nw-badge[hidden] { display: none; }
 @keyframes nw-ring { 0%, 100% { transform: rotate(0); } 20% { transform: rotate(16deg); } 40% { transform: rotate(-14deg); } 60% { transform: rotate(8deg); } 80% { transform: rotate(-4deg); } }
 @keyframes nw-pop { 0% { transform: scale(.4); opacity: 0; } 70% { transform: scale(1.15); opacity: 1; } 100% { transform: scale(1); } }
@@ -13,6 +13,7 @@
 @keyframes nw-row { from { opacity: 0; transform: translateY(6px); } to { opacity: 1; transform: none; } }
 
 .nw-scrim { position: fixed; inset: 0; z-index: 70; background: transparent; }
+.nw-panel, .nw-panel * { box-sizing: border-box; }
 .nw-panel { position: fixed; z-index: 71; width: 420px; max-height: min(640px, calc(100vh - 100px)); display: flex; flex-direction: column; background: #FFFFFF; color: #1F2933; border-radius: 24px; border: 1px solid #E1E7EC; box-shadow: 0 24px 60px rgba(31,41,51,.18), 0 4px 12px rgba(31,41,51,.06); font-family: 'Plus Jakarta Sans', system-ui, sans-serif; font-size: 14px; line-height: 1.45; overflow: hidden; animation: nw-in .25s cubic-bezier(.2,.8,.2,1); transform-origin: top right; }
 .nw-panel[hidden], .nw-scrim[hidden] { display: none; }
 .nw-panel button { font: inherit; color: inherit; cursor: pointer; }
@@ -100,5 +101,5 @@
   .nw-hide-sm { display: none; }
 }
 @media (prefers-reduced-motion: reduce) {
-  .nw-panel, .nw-item, .nw-badge, .nw-done, .nw-bell.ring svg, .nw-empty, .nw-settings { animation: none !important; }
+  .nw-panel, .nw-item, .nw-badge, .nw-done, .nw-bell.nw-ringing svg, .nw-empty, .nw-settings { animation: none !important; }
 }

@@ -224,7 +224,7 @@
 
   function ring() {
     if (reduced) return;
-    bell.classList.remove('ring'); void bell.offsetWidth; bell.classList.add('ring');
+    bell.classList.remove('nw-ringing'); void bell.offsetWidth; bell.classList.add('nw-ringing');
   }
 
   updateBadge();

@@ -1,0 +1,24 @@
+/* Account menu for the nestwork app pages (see account.js) */
+.me.ac-btn[aria-expanded="true"] { box-shadow: 0 0 0 2px #1F2933, 0 0 0 6px rgba(134,205,150,.45) !important; }
+.ac-btn .chev { transition: transform .25s ease; }
+.ac-btn[aria-expanded="true"] .chev { transform: rotate(180deg); }
+.ac-menu { position: fixed; z-index: 72; width: 290px; background: #FFFFFF; color: #1F2933; border: 1px solid #E1E7EC; border-radius: 22px; padding: 8px; box-shadow: 0 24px 60px rgba(31,41,51,.18), 0 4px 12px rgba(31,41,51,.06); font-family: 'Plus Jakarta Sans', system-ui, sans-serif; font-size: 14px; animation: ac-in .22s cubic-bezier(.2,.8,.2,1); transform-origin: top right; }
+.ac-menu, .ac-menu * { box-sizing: border-box; }
+.ac-menu[hidden] { display: none; }
+@keyframes ac-in { from { opacity: 0; transform: translateY(-6px) scale(.98); } to { opacity: 1; transform: none; } }
+.ac-who { display: flex; align-items: center; gap: 12px; padding: 12px 12px 14px; border-bottom: 1px solid #EEF2F5; margin-bottom: 6px; }
+.ac-who img { width: 44px; height: 44px; border-radius: 999px; background: #DDF1E2; object-fit: cover; flex: none; }
+.ac-who strong { display: block; font-size: 15px; font-weight: 700; }
+.ac-who span { display: block; font-size: 12px; color: #67737E; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+.ac-who .ac-role { display: inline-block; margin-top: 4px; font-size: 11px; font-weight: 700; padding: 2px 8px; border-radius: 999px; background: #DDF1E2; color: #2D6B43; }
+.ac-menu a { display: flex; align-items: center; gap: 12px; padding: 10px 12px; border-radius: 14px; color: #1F2933; text-decoration: none; font-weight: 600; transition: background-color .2s ease; }
+.ac-menu a:hover, .ac-menu a:focus-visible { background: #F1F5F8; outline: none; }
+.ac-menu a:focus-visible { box-shadow: inset 0 0 0 2px #1F2933; }
+.ac-menu a .ac-ic { width: 32px; height: 32px; border-radius: 10px; display: grid; place-items: center; background: #F1F5F8; color: #4A5863; flex: none; }
+.ac-menu a small { display: block; font-size: 12px; font-weight: 500; color: #8C99A4; }
+.ac-sep { height: 1px; background: #EEF2F5; margin: 6px 4px; }
+.ac-menu a.ac-out { color: #A3262A; }
+.ac-menu a.ac-out .ac-ic { background: #FDE4E4; color: #A3262A; }
+.ac-menu a.ac-out:hover { background: #FEF1F1; }
+@media (max-width: 640px) { .ac-menu { left: 12px !important; right: 12px !important; width: auto; } }
+@media (prefers-reduced-motion: reduce) { .ac-menu { animation: none; } }
