@@ -25,7 +25,7 @@
     leave: { label: 'Leave requests', bg: '#EDE3FF', fg: '#5B3BA8', icon: I.leave },
     recruit: { label: 'Recruitment', bg: '#DCE8FF', fg: '#1D4ED8', icon: I.recruit },
     payroll: { label: 'Payroll', bg: '#DDF1E2', fg: '#2D6B43', icon: I.payroll },
-    time: { label: 'Attendance', bg: '#FDEBD3', fg: '#9A4A00', icon: I.time },
+    time: { label: 'Attendance', bg: '#FCF4CF', fg: '#705A00', icon: I.time },
     mention: { label: 'Mentions', bg: '#FCE4EE', fg: '#A3265C', icon: I.mention }
   };
 

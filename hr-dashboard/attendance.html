@@ -93,7 +93,7 @@
 .cell:hover { transform: translateY(-1px); box-shadow: 0 6px 14px rgba(31,41,51,.1); z-index: 2; }
 .cell .ci { width: 22px; height: 22px; flex: none; border-radius: 999px; display: grid; place-items: center; background: rgba(255,255,255,.75); }
 .cell.ontime { background: #E3F5E8; color: #1C6B37; }
-.cell.late { background: #FDEBD3; color: #9A4A00; }
+.cell.late { background: #FCF4CF; color: #705A00; }
 .cell.absent { background: #FDE4E4; color: #A3262A; }
 .cell.leave { background: linear-gradient(90deg, #EDE3FF, #E4D8FF); color: #5B3BA8; justify-content: flex-start; padding: 0 10px; }
 .cell.remote { background: #E1ECFF; color: #1D4ED8; }
@@ -318,7 +318,7 @@ textarea.input { height: auto; min-height: 90px; padding: 12px 14px; resize: ver
   var reduced = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
   var esc = function (s) { return String(s).replace(/[&<>"]/g, function (c) { return { '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;' }[c]; }); };
   var DAY = 86400000;
-  var TINT = { Design: '#DDF1E2', Engineering: '#DCE8FF', Finance: '#EDE3FF', Marketing: '#FFE6CC', People: '#D9F3EA', Sales: '#FCE4EE' };
+  var TINT = { Design: '#DDF1E2', Engineering: '#DCE8FF', Finance: '#EDE3FF', Marketing: '#DDF4F7', People: '#D9F3EA', Sales: '#FCE4EE' };
   var ICON_CHECK = '<svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M20 6 9 17l-5-5"/></svg>';
   var ARROW = '<svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M7 7h10v10"/><path d="M7 17 17 7"/></svg>';
   function iso(d) { return new Date(d.getTime() - d.getTimezoneOffset() * 60000).toISOString().slice(0, 10); }
@@ -343,7 +343,7 @@ textarea.input { height: auto; min-height: 90px; padding: 12px 14px; resize: ver
     [12, 'Aisha', 'Rahman', 'Engineering Manager', 'Engineering', 'Remote', '08:38', null]
   ].map(function (r) { return { id: r[0], first: r[1], last: r[2], role: r[3], dept: r[4], status: r[5], usual: r[5], in: r[6], out: r[7] }; });
   var STATUS = {
-    'On time': 'background:#E3F5E8;color:#1C6B37', 'Late': 'background:#FDEBD3;color:#9A4A00', 'Remote': 'background:#E1ECFF;color:#1D4ED8',
+    'On time': 'background:#E3F5E8;color:#1C6B37', 'Late': 'background:#FCF4CF;color:#705A00', 'Remote': 'background:#E1ECFF;color:#1D4ED8',
     'On leave': 'background:#EDE3FF;color:#5B3BA8', 'Absent': 'background:#FDE4E4;color:#A3262A'
   };
   var CELL = { 'On time': 'ontime', 'Late': 'late', 'Remote': 'remote', 'On leave': 'leave', 'Absent': 'absent' };
@@ -401,7 +401,7 @@ textarea.input { height: auto; min-height: 90px; padding: 12px 14px; resize: ver
     var tiles = [
       ['Checked in', '228 / 248', 'var(--accent)', 'var(--ink)', '<path d="M20 6 9 17l-5-5"/>'],
       ['On time', '212', '#E3F5E8', '#1C6B37', '<circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/>'],
-      ['Late', '16', '#FDEBD3', '#9A4A00', '<circle cx="12" cy="12" r="10"/><line x1="12" x2="12" y1="8" y2="12"/><line x1="12" x2="12.01" y1="16" y2="16"/>'],
+      ['Late', '16', '#FCF4CF', '#705A00', '<circle cx="12" cy="12" r="10"/><line x1="12" x2="12" y1="8" y2="12"/><line x1="12" x2="12.01" y1="16" y2="16"/>'],
       ['Absent or on leave', '20', '#FDE4E4', '#A3262A', '<circle cx="12" cy="12" r="10"/><path d="m4.9 4.9 14.2 14.2"/>']
     ];
     document.getElementById('stats').innerHTML = tiles.map(function (t) {
@@ -445,7 +445,7 @@ textarea.input { height: auto; min-height: 90px; padding: 12px 14px; resize: ver
     return pattern[(p.id * 3 + i * 5) % pattern.length];
   }
   var WK = { ontime: { label: 'On time', icon: '<path d="M20 6 9 17l-5-5"/>' }, late: { label: 'Late', icon: '<circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/>' }, remote: { label: 'Remote', icon: '<path d="M15 21v-8a1 1 0 0 0-1-1h-4a1 1 0 0 0-1 1v8"/><path d="M3 10a2 2 0 0 1 .709-1.528l7-5.999a2 2 0 0 1 2.582 0l7 5.999A2 2 0 0 1 21 10v9a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/>' }, leave: { label: 'On leave', icon: '<path d="M17.8 19.2 16 11l3.5-3.5C21 6 21.5 4 21 3c-1-.5-3 0-4.5 1.5L13 8 4.8 6.2c-.5-.1-.9.1-1.1.5l-.3.5c-.2.5-.1 1 .3 1.3L9 12l-2 3H4l-1 1 3 2 2 3 1-1v-3l3-2 3.5 5.3c.3.4.8.5 1.3.3l.5-.2c.4-.3.6-.7.5-1.2z"/>' }, absent: { label: 'Absent', icon: '<path d="M18 6 6 18"/><path d="m6 6 12 12"/>' } };
-  var LG = { ontime: '#E3F5E8;color:#1C6B37', late: '#FDEBD3;color:#9A4A00', remote: '#E1ECFF;color:#1D4ED8', leave: '#EDE3FF;color:#5B3BA8', absent: '#FDE4E4;color:#A3262A' };
+  var LG = { ontime: '#E3F5E8;color:#1C6B37', late: '#FCF4CF;color:#705A00', remote: '#E1ECFF;color:#1D4ED8', leave: '#EDE3FF;color:#5B3BA8', absent: '#FDE4E4;color:#A3262A' };
   var weekOffset = 0, focus = null;
   function wsvg(inner, size) { return '<svg width="' + (size || 14) + '" height="' + (size || 14) + '" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">' + inner + '</svg>'; }
   // Sample check-in times for earlier days, stable per person and day
