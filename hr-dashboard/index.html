@@ -129,7 +129,7 @@ button:focus-visible,a:focus-visible,input:focus-visible{outline:2px solid #1F29
 
 <!-- Top navigation -->
 <header class="enter topbar" style="display: flex; flex-wrap: wrap; align-items: center; justify-content: space-between; gap: 12px; background: #FFFFFF; border-radius: 999px; padding: 10px 12px 10px 14px;">
-<a href="overview.html" aria-label="nestwork project overview" style="display: flex; align-items: center; gap: 10px; text-decoration: none; color: #1F2933;">
+<a href="index.html" aria-label="nestwork dashboard" style="display: flex; align-items: center; gap: 10px; text-decoration: none; color: #1F2933;">
 <span style="display: flex;"><svg class="logo-mark" width="40" height="40" viewBox="0 0 48 48" aria-hidden="true"><rect width="48" height="48" rx="14" fill="#EAF3F7"/><path d="M8 25h32a16 13 0 0 1-32 0z" fill="#3E6B88"/><circle cx="16" cy="19" r="4.5" fill="#86CD96"/><circle cx="24" cy="16" r="4.5" fill="#5FB574"/><circle cx="32" cy="19" r="4.5" fill="#86CD96"/><path d="M14 31h20" stroke="#C4EDCD" stroke-width="2.4" stroke-linecap="round"/></svg></span>
 <span style="font-size: 21px; font-weight: 800; letter-spacing: -0.03em;">nest<span style="color: #2D6B43;">work</span></span>
 </a>
@@ -213,7 +213,7 @@ Add employee
 </div>
 <div class="card" style="background: #FFFFFF; border-radius: 24px; padding: 18px; display: flex; flex-direction: column; gap: 14px;">
 <div style="display: flex; align-items: center; justify-content: space-between;">
-<span style="width: 36px; height: 36px; border-radius: 12px; background: #FDEBD3; color: #9A4A00; display: flex; align-items: center; justify-content: center;">
+<span style="width: 36px; height: 36px; border-radius: 12px; background: #FCF4CF; color: #705A00; display: flex; align-items: center; justify-content: center;">
 <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true"><path d="M8 2v4"/><path d="M16 2v4"/><rect width="18" height="18" x="3" y="4" rx="2"/><path d="M3 10h18"/></svg>
 </span>
 <span style="font-size: 12px; font-weight: 600; color: #67737E; background: #F1F5F8; padding: 4px 8px; border-radius: 999px;">Today</span>
@@ -425,11 +425,11 @@ All departments
   });
   renderChart('weekly');
 
-  var statusChip = { 'Active': chip('#E3F5E8', '#1C6B37'), 'Remote': chip('#E1ECFF', '#1D4ED8'), 'On leave': chip('#FDEBD3', '#9A4A00') };
+  var statusChip = { 'Active': chip('#E3F5E8', '#1C6B37'), 'Remote': chip('#E1ECFF', '#1D4ED8'), 'On leave': chip('#FCF4CF', '#705A00') };
   var employees = [
     ['AS', '#DDF1E2', 'Amaya Silva', 'amaya.silva@nestwork.co', 'Design', 'Product Designer', 'Active', '12 Mar 2024'],
     ['DO', '#DCE8FF', 'Daniel Okafor', 'daniel.okafor@nestwork.co', 'Engineering', 'Backend Engineer', 'Remote', '04 Jan 2023'],
-    ['PN', '#FFE6CC', 'Priya Nair', 'priya.nair@nestwork.co', 'Marketing', 'Growth Lead', 'On leave', '21 Aug 2022'],
+    ['PN', '#DDF4F7', 'Priya Nair', 'priya.nair@nestwork.co', 'Marketing', 'Growth Lead', 'On leave', '21 Aug 2022'],
     ['LM', '#EDE3FF', 'Lucas Martin', 'lucas.martin@nestwork.co', 'Finance', 'Payroll Specialist', 'Active', '09 Sep 2025'],
     ['HK', '#D9F3EA', 'Hana Kim', 'hana.kim@nestwork.co', 'Engineering', 'QA Engineer', 'Active', '17 Jun 2024']
   ];
@@ -454,7 +454,7 @@ All departments
   var leaves = [
     { initials: 'NP', tint: '#DDF1E2', name: 'Nadia Perera', type: 'Annual leave', dates: '3–5 Nov · 3 days' },
     { initials: 'ML', tint: '#DCE8FF', name: 'Marcus Lee', type: 'Sick leave', dates: '30 Oct · 1 day' },
-    { initials: 'IF', tint: '#FFE6CC', name: 'Ishan Fernando', type: 'Parental leave', dates: '11 Nov – 6 Dec' }
+    { initials: 'IF', tint: '#DDF4F7', name: 'Ishan Fernando', type: 'Parental leave', dates: '11 Nov – 6 Dec' }
   ];
   var x = '<svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" aria-hidden="true"><path d="M18 6 6 18"/><path d="m6 6 12 12"/></svg>';
   var check = '<svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M20 6 9 17l-5-5"/></svg>';

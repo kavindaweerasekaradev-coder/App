@@ -130,12 +130,12 @@ a.node:hover, .node.hot { transform: translateY(-2px); box-shadow: 0 10px 24px r
 <div class="wrap">
 
   <header class="top">
-    <a href="overview.html" class="brand">
+    <a href="index.html" class="brand" aria-label="nestwork dashboard">
       <span class="brand-mark"><svg class="logo-mark" width="38" height="38" viewBox="0 0 48 48" aria-hidden="true"><rect width="48" height="48" rx="14" fill="#EAF3F7"/><path d="M8 25h32a16 13 0 0 1-32 0z" fill="#3E6B88"/><circle cx="16" cy="19" r="4.5" fill="#86CD96"/><circle cx="24" cy="16" r="4.5" fill="#5FB574"/><circle cx="32" cy="19" r="4.5" fill="#86CD96"/><path d="M14 31h20" stroke="#C4EDCD" stroke-width="2.4" stroke-linecap="round"/></svg></span>
       <span class="wordmark">nest<span class="wm">work</span></span>
     </a>
     <nav class="top-links" aria-label="Project">
-      <a href="overview.html" class="pill pill-ghost">Overview</a>
+      <a href="../case-studies/nestwork.html" class="pill pill-ghost">Case study</a>
       <a href="flow.html" class="pill pill-ghost" aria-current="page">App flow</a>
       <a href="login.html" class="pill pill-dark">Open prototype
         <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12h14"/><path d="m12 5 7 7-7 7"/></svg>
@@ -186,7 +186,7 @@ a.node:hover, .node.hot { transform: translateY(-2px); box-shadow: 0 10px 24px r
           <div class="lane"><span>&nbsp;</span></div>
         </div>
         <div class="grid" id="grid">
-          <a class="node start page" data-id="overview" href="overview.html" style="grid-area: 1 / 1;"><span class="num">0</span><span class="file">overview.html</span><strong>Project overview</strong><small>Where the visit starts</small></a>
+          <div class="node start" data-id="start" style="grid-area: 1 / 1;"><span class="num">0</span><span class="file">Start</span><strong>New visitor</strong><small>Signs up or logs in</small></div>
           <a class="node page" data-id="su1" href="signup.html" style="grid-area: 1 / 2;"><span class="num">1</span><span class="file">signup.html</span><strong>Create account</strong><small>Name, email, password</small></a>
           <a class="node" data-id="su2" href="signup.html" style="grid-area: 1 / 3;"><span class="num">2</span><span class="file">Sign up</span><strong>Verify email</strong><small>6-digit code, resend</small></a>
           <a class="node" data-id="su3" href="signup.html" style="grid-area: 1 / 4;"><span class="num">3</span><span class="file">Sign up</span><strong>Your company</strong><small>Name, size, industry</small></a>
@@ -242,14 +242,9 @@ a.node:hover, .node.hot { transform: translateY(-2px); box-shadow: 0 10px 24px r
   <section class="section" aria-labelledby="pages-title">
     <div class="section-head">
       <div><p class="eyebrow">Page by page</p><h2 id="pages-title">What each page does and where it leads</h2></div>
-      <p>The same flow as the map, written out for each of the eight pages, plus notifications.</p>
+      <p>The same flow as the map, written out for each of the seven pages, plus notifications.</p>
     </div>
     <div class="pages">
-      <article class="page">
-        <div class="page-top"><div><h3>Project overview</h3><code>overview.html</code></div><a class="open" href="overview.html" aria-label="Open the project overview"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M7 7h10v10"/><path d="M7 17 17 7"/></svg></a></div>
-        <ol><li>Read what nestwork is and who designed it</li><li>See the four flows and every screen</li><li>Pick where to start</li></ol>
-        <div class="goes">Leads to <a href="login.html">Log in</a><a href="signup.html">Sign up</a><a href="index.html">Dashboard</a><a href="employees.html">Employees</a><a href="flow.html">App flow</a></div>
-      </article>
       <article class="page">
         <div class="page-top"><div><h3>Log in</h3><code>login.html</code></div><a class="open" href="login.html" aria-label="Open log in"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M7 7h10v10"/><path d="M7 17 17 7"/></svg></a></div>
         <ol><li>Enter work email and password</li><li>Wrong details show an error and stay here</li><li>Correct details open the dashboard</li><li>Forgot password: enter email, then “Link sent”, then back to log in</li></ol>
@@ -295,7 +290,7 @@ a.node:hover, .node.hot { transform: translateY(-2px); box-shadow: 0 10px 24px r
 
   <footer class="foot">
     <span>nestwork is a design concept. Names and numbers are sample data.</span>
-    <a href="overview.html">Back to the project overview</a>
+    <a href="../case-studies/nestwork.html">Read the case study</a>
   </footer>
 </div>
 
@@ -310,8 +305,8 @@ a.node:hover, .node.hot { transform: translateY(-2px); box-shadow: 0 10px 24px r
   // Each edge returns its points from the node boxes: L/R/T/B give the middle of a side,
   // with an optional offset along that side.
   var edges = [
-    { from: 'overview', to: 'su1', route: 'h' },
-    { from: 'overview', to: 'login', route: function (a, b) { return [B(a), [a.cx, b.cy], L(b)]; } },
+    { from: 'start', to: 'su1', route: 'h' },
+    { from: 'start', to: 'login', route: function (a, b) { return [B(a), [a.cx, b.cy], L(b)]; } },
     { from: 'su1', to: 'su2', route: 'h' },
     { from: 'su2', to: 'su3', route: 'h' },
     { from: 'su3', to: 'su4', route: 'h' },

@@ -26,7 +26,7 @@
 .run-status { display: inline-flex; align-items: center; gap: 7px; height: 36px; padding: 0 14px 0 10px; border-radius: 999px; border: none; font-size: 13px; font-weight: 700; cursor: pointer; transition: transform .15s ease, box-shadow .2s ease; }
 .run-status:hover { transform: translateY(-1px); box-shadow: 0 8px 18px rgba(0,0,0,.18); }
 .run-status:active { transform: scale(.96); }
-.run-status.warn { background: #FDEBD3; color: #9A4A00; }
+.run-status.warn { background: #FCF4CF; color: #705A00; }
 .run-status.ready { background: var(--accent); color: var(--ink); }
 .run-status.done { background: #E3F5E8; color: #1C6B37; }
 .run-status.warn svg { animation: nudge 2.4s ease-in-out infinite; }
@@ -70,7 +70,7 @@
 .checks li { display: flex; align-items: center; gap: 12px; padding: 12px 14px; border-radius: 16px; background: var(--soft-2); font-size: 14px; }
 .checks .dot { width: 26px; height: 26px; flex: none; border-radius: 999px; display: grid; place-items: center; }
 .checks .ok .dot { background: #E3F5E8; color: #1C6B37; }
-.checks .warn .dot { background: #FDEBD3; color: #9A4A00; }
+.checks .warn .dot { background: #FCF4CF; color: #705A00; }
 .checks small { display: block; font-size: 12px; color: var(--muted); }
 
 .table-wrap { overflow-x: auto; }
@@ -120,17 +120,17 @@ table.pay tfoot td { font-weight: 700; border-top: 2px solid var(--ink); }
 .fix-head span { font-size: 13px; color: var(--muted); }
 .issues { list-style: none; margin: 0; padding: 0; display: flex; flex-direction: column; gap: 12px; }
 .issue { background: #FFFFFF; border: 1.5px solid var(--line); border-radius: 22px; padding: 18px; display: flex; flex-direction: column; gap: 14px; position: relative; overflow: hidden; animation: rise .4s cubic-bezier(.2,.7,.2,1) backwards; transition: border-color .2s ease, box-shadow .2s ease; }
-.issue::before { content: ''; position: absolute; left: 0; top: 0; bottom: 0; width: 4px; background: var(--sev, #E0A43C); }
+.issue::before { content: ''; position: absolute; left: 0; top: 0; bottom: 0; width: 4px; background: var(--sev, #E2BD2F); }
 .issue:hover { border-color: #CCD5DC; box-shadow: 0 10px 24px rgba(31,41,51,.06); }
 .issue.bank { --sev: #C2283A; }
 .issue-top { display: flex; align-items: center; gap: 12px; flex-wrap: wrap; }
-.issue-ic { width: 40px; height: 40px; flex: none; border-radius: 13px; display: grid; place-items: center; background: #FDEBD3; color: #9A4A00; }
+.issue-ic { width: 40px; height: 40px; flex: none; border-radius: 13px; display: grid; place-items: center; background: #FCF4CF; color: #705A00; }
 .issue.bank .issue-ic { background: #FDE4E4; color: #A3262A; }
 .issue-who { display: flex; align-items: center; gap: 10px; flex: 1 1 200px; min-width: 0; }
 .issue-who .avatar { width: 36px; height: 36px; }
 .issue-who strong { display: block; font-size: 14px; }
 .issue-who span { display: block; font-size: 12px; color: var(--muted); }
-.sev { display: inline-flex; align-items: center; gap: 6px; font-size: 12px; font-weight: 700; padding: 5px 10px; border-radius: 999px; background: #FDEBD3; color: #9A4A00; }
+.sev { display: inline-flex; align-items: center; gap: 6px; font-size: 12px; font-weight: 700; padding: 5px 10px; border-radius: 999px; background: #FCF4CF; color: #705A00; }
 .sev::before { content: ''; width: 7px; height: 7px; border-radius: 999px; background: currentColor; animation: blink 1.6s ease-in-out infinite; }
 .issue.bank .sev { background: #FDE4E4; color: #A3262A; }
 @keyframes blink { 50% { opacity: .3; } }
@@ -138,11 +138,11 @@ table.pay tfoot td { font-weight: 700; border-top: 2px solid var(--ink); }
 .issue p { margin: 2px 0 0; font-size: 13px; color: var(--muted); }
 .ot-gauge { padding: 4px 0 2px; }
 .ot-track { position: relative; height: 12px; border-radius: 999px; background: #EEF2F5; }
-.ot-fill { position: absolute; left: 0; top: 0; bottom: 0; border-radius: 999px; background: linear-gradient(90deg, var(--accent) 0, var(--accent) var(--limit), #E0A43C var(--limit), #E0A43C 100%); background-size: var(--bg-w) 100%; transform-origin: left; animation: grow-x 1s cubic-bezier(.2,.8,.2,1) backwards; }
+.ot-fill { position: absolute; left: 0; top: 0; bottom: 0; border-radius: 999px; background: linear-gradient(90deg, var(--accent) 0, var(--accent) var(--limit), #E2BD2F var(--limit), #E2BD2F 100%); background-size: var(--bg-w) 100%; transform-origin: left; animation: grow-x 1s cubic-bezier(.2,.8,.2,1) backwards; }
 .ot-limit { position: absolute; top: -8px; bottom: -8px; width: 2px; background: var(--ink); border-radius: 2px; }
 .ot-limit em { position: absolute; bottom: calc(100% + 4px); left: 50%; transform: translateX(-50%); font-style: normal; font-size: 11px; font-weight: 700; white-space: nowrap; color: var(--ink); background: #FFFFFF; padding: 1px 6px; border-radius: 6px; box-shadow: 0 0 0 1px var(--line); }
 .ot-scale { display: flex; justify-content: space-between; font-size: 11px; color: var(--muted); margin-top: 8px; }
-.ot-scale b { color: #9A4A00; }
+.ot-scale b { color: #705A00; }
 .choices { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 10px; }
 .choice { display: flex; align-items: center; gap: 12px; text-align: left; padding: 12px 14px; border-radius: 16px; border: 1.5px solid var(--line); background: #FFFFFF; color: var(--ink); font-size: 14px; font-weight: 700; transition: transform .15s ease, border-color .2s ease, box-shadow .2s ease, background-color .2s ease; }
 .choice:hover { border-color: var(--dark); box-shadow: 0 8px 18px rgba(31,41,51,.08); transform: translateY(-1px); }
@@ -210,7 +210,7 @@ table.pay tfoot td { font-weight: 700; border-top: 2px solid var(--ink); }
 <div class="page">
 <div class="wrap">
   <header class="topbar enter">
-    <a href="overview.html" class="brand" aria-label="nestwork project overview">
+    <a href="index.html" class="brand" aria-label="nestwork dashboard">
       <span class="brand-mark"><svg class="logo-mark" width="40" height="40" viewBox="0 0 48 48" aria-hidden="true"><rect width="48" height="48" rx="14" fill="#EAF3F7"/><path d="M8 25h32a16 13 0 0 1-32 0z" fill="#3E6B88"/><circle cx="16" cy="19" r="4.5" fill="#86CD96"/><circle cx="24" cy="16" r="4.5" fill="#5FB574"/><circle cx="32" cy="19" r="4.5" fill="#86CD96"/><path d="M14 31h20" stroke="#C4EDCD" stroke-width="2.4" stroke-linecap="round"/></svg></span>
       <span class="wordmark">nest<span class="wm">work</span></span>
     </a>
@@ -372,7 +372,7 @@ table.pay tfoot td { font-weight: 700; border-top: 2px solid var(--ink); }
   var reduced = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
   var esc = function (s) { return String(s).replace(/[&<>"]/g, function (c) { return { '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;' }[c]; }); };
   var money = function (n, cents) { return '$' + Number(n).toLocaleString('en-US', { minimumFractionDigits: cents ? 2 : 0, maximumFractionDigits: cents ? 2 : 0 }); };
-  var TINT = { Design: '#DDF1E2', Engineering: '#DCE8FF', Finance: '#EDE3FF', Marketing: '#FFE6CC', People: '#D9F3EA', Sales: '#FCE4EE' };
+  var TINT = { Design: '#DDF1E2', Engineering: '#DCE8FF', Finance: '#EDE3FF', Marketing: '#DDF4F7', People: '#D9F3EA', Sales: '#FCE4EE' };
   var ICON_CHECK = '<svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M20 6 9 17l-5-5"/></svg>';
   var ICON_WARN = '<svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" aria-hidden="true"><circle cx="12" cy="12" r="10"/><line x1="12" x2="12" y1="8" y2="12"/><line x1="12" x2="12.01" y1="16" y2="16"/></svg>';
 
@@ -515,7 +515,7 @@ table.pay tfoot td { font-weight: 700; border-top: 2px solid var(--ink); }
       return '<tr data-slip="' + p.id + '"><td><div class="who"><span class="avatar" style="background:' + TINT[p.dept] + '" aria-hidden="true">' + face(p) + '</span><div><button type="button" data-slip="' + p.id + '">' + esc(full(p)) + '</button><span>' + esc(p.role) + '</span></div></div></td>' +
         '<td class="num">' + money(p.base) + '</td><td class="num">' + (c.overtime ? money(c.overtime) : '—') + '</td><td class="num">' + (p.bonus ? money(p.bonus) : '—') + '</td>' +
         '<td class="num"><strong>' + money(c.gross) + '</strong></td><td class="num">−' + money(c.deductions) + '</td><td class="num">' + money(c.net) + '</td>' +
-        '<td><span class="status" style="' + (flagged ? 'background:#FDEBD3;color:#9A4A00' : run.status === 'Scheduled' ? 'background:#E3F5E8;color:#1C6B37' : 'background:#F1F5F8;color:#4A5863') + '">' + (flagged ? 'Needs attention' : run.status === 'Scheduled' ? 'Scheduled' : 'Ready') + '</span></td></tr>';
+        '<td><span class="status" style="' + (flagged ? 'background:#FCF4CF;color:#705A00' : run.status === 'Scheduled' ? 'background:#E3F5E8;color:#1C6B37' : 'background:#F1F5F8;color:#4A5863') + '">' + (flagged ? 'Needs attention' : run.status === 'Scheduled' ? 'Scheduled' : 'Ready') + '</span></td></tr>';
     }).join('') : '<tr><td colspan="8" style="color:var(--muted)">No one matches “' + esc(q) + '”.</td></tr>';
     var sum = rows.reduce(function (a, p) { var c = calc(p); a.base += p.base; a.ot += c.overtime; a.bonus += p.bonus; a.gross += c.gross; a.ded += c.deductions; a.net += c.net; return a; }, { base: 0, ot: 0, bonus: 0, gross: 0, ded: 0, net: 0 });
     document.getElementById('payFoot').innerHTML = rows.length ? '<tr><td>Total for these ' + rows.length + '</td><td class="num">' + money(sum.base) + '</td><td class="num">' + money(sum.ot) + '</td><td class="num">' + money(sum.bonus) + '</td><td class="num">' + money(sum.gross) + '</td><td class="num">−' + money(sum.ded) + '</td><td class="num">' + money(sum.net) + '</td><td></td></tr>' : '';
@@ -588,7 +588,7 @@ table.pay tfoot td { font-weight: 700; border-top: 2px solid var(--ink); }
         row('Bonus', p.bonus ? money(p.bonus, true) : '—') + row('<strong>Gross pay</strong>', '<strong>' + money(c.gross, true) + '</strong>') + '</dl></div>' +
       '<div class="block"><h3>Deductions</h3><dl>' + row('Income tax', '−' + money(c.tax, true), true) + row('Pension (8%)', '−' + money(c.pension, true), true) +
         row('<strong>Total deductions</strong>', '<strong>−' + money(c.deductions, true) + '</strong>', true) + '</dl></div>' +
-      '<div class="block"><h3>Paid into</h3><dl>' + row('Bank account', p.bank ? (p.account ? '•••• ' + esc(String(p.account).slice(-4)) : '•••• ' + String(1000 + p.id * 173).slice(-4)) : '<span style="color:#9A4A00">Missing</span>') + '</dl></div>';
+      '<div class="block"><h3>Paid into</h3><dl>' + row('Bank account', p.bank ? (p.account ? '•••• ' + esc(String(p.account).slice(-4)) : '•••• ' + String(1000 + p.id * 173).slice(-4)) : '<span style="color:#705A00">Missing</span>') + '</dl></div>';
     if (drawer.hidden) openLayer(drawer, drawer.querySelector('[data-close]'));
   }
   document.addEventListener('click', function (ev) {

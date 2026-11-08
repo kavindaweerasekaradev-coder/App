@@ -21,7 +21,7 @@
 <div class="wrap">
 
   <header class="topbar enter">
-    <a href="overview.html" class="brand" aria-label="nestwork project overview">
+    <a href="index.html" class="brand" aria-label="nestwork dashboard">
       <span class="brand-mark"><svg class="logo-mark" width="40" height="40" viewBox="0 0 48 48" aria-hidden="true"><rect width="48" height="48" rx="14" fill="#EAF3F7"/><path d="M8 25h32a16 13 0 0 1-32 0z" fill="#3E6B88"/><circle cx="16" cy="19" r="4.5" fill="#86CD96"/><circle cx="24" cy="16" r="4.5" fill="#5FB574"/><circle cx="32" cy="19" r="4.5" fill="#86CD96"/><path d="M14 31h20" stroke="#C4EDCD" stroke-width="2.4" stroke-linecap="round"/></svg></span>
       <span class="wordmark">nest<span class="wm">work</span></span>
     </a>
@@ -194,11 +194,11 @@
   var esc = function (s) { return String(s).replace(/[&<>"]/g, function (c) { return { '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;' }[c]; }); };
 
   var DEPTS = ['Design', 'Engineering', 'Finance', 'Marketing', 'People', 'Sales'];
-  var TINT = { Design: '#DDF1E2', Engineering: '#DCE8FF', Finance: '#EDE3FF', Marketing: '#FFE6CC', People: '#D9F3EA', Sales: '#FCE4EE' };
+  var TINT = { Design: '#DDF1E2', Engineering: '#DCE8FF', Finance: '#EDE3FF', Marketing: '#DDF4F7', People: '#D9F3EA', Sales: '#FCE4EE' };
   var STATUS = {
     'Active': 'background:#E3F5E8;color:#1C6B37;',
     'Remote': 'background:#E1ECFF;color:#1D4ED8;',
-    'On leave': 'background:#FDEBD3;color:#9A4A00;'
+    'On leave': 'background:#FCF4CF;color:#705A00;'
   };
 
   // Sample data. The first five match the dashboard's team table.
@@ -265,7 +265,7 @@
       ['Total people', people.length, 'var(--accent)', 'var(--ink)', '<path d="M16 21v-2a4 4 0 0 0-4-4H6a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M22 21v-2a4 4 0 0 0-3-3.87"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/>'],
       ['In the office', c.Active, '#E3F5E8', '#1C6B37', '<path d="M6 22V4a2 2 0 0 1 2-2h8a2 2 0 0 1 2 2v18Z"/><path d="M6 12H4a2 2 0 0 0-2 2v6a2 2 0 0 0 2 2h2"/><path d="M18 9h2a2 2 0 0 1 2 2v9a2 2 0 0 1-2 2h-2"/><path d="M10 6h4"/><path d="M10 10h4"/><path d="M10 14h4"/><path d="M10 18h4"/>'],
       ['Remote', c.Remote, '#E1ECFF', '#1D4ED8', '<circle cx="12" cy="12" r="10"/><path d="M12 2a14.5 14.5 0 0 0 0 20 14.5 14.5 0 0 0 0-20"/><path d="M2 12h20"/>'],
-      ['On leave', c['On leave'], '#FDEBD3', '#9A4A00', '<path d="M8 2v4"/><path d="M16 2v4"/><rect width="18" height="18" x="3" y="4" rx="2"/><path d="M3 10h18"/>']
+      ['On leave', c['On leave'], '#FCF4CF', '#705A00', '<path d="M8 2v4"/><path d="M16 2v4"/><rect width="18" height="18" x="3" y="4" rx="2"/><path d="M3 10h18"/>']
     ];
     document.getElementById('stats').innerHTML = tiles.map(function (t) {
       return '<div class="stat"><span class="stat-icon" style="background:' + t[2] + ';color:' + t[3] + '"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">' + t[4] + '</svg></span><div><strong>' + t[1] + '</strong><span>' + t[0] + '</span></div></div>';
