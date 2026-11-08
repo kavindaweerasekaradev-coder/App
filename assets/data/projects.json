@@ -246,17 +246,14 @@
       "label": "Try it",
       "title": "Click through",
       "title_soft": "the live prototype",
-      "text": "Every screen in this case study is a working page. Open the dashboard, or see every path on the flow map.",
+      "text": "Every screen in this case study is a working page. Open the dashboard and click through it.",
       "links": [
         {
-          "label": "Start at log in",
-          "href": "https://kavinda-design.vercel.app/hr-dashboard/login.html"
-        },
-        {
-          "label": "See the flow map",
-          "href": "https://kavinda-design.vercel.app/hr-dashboard/flow.html"
+          "label": "Open the dashboard",
+          "href": "https://kavinda-design.vercel.app/hr-dashboard/index.html"
         }
-      ]
+      ],
+      "only_links": true
     }
   },
   {
