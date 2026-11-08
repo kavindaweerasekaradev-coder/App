@@ -1097,6 +1097,7 @@ html:not(.has-drag) .beyond__hint { display: none; }
   .cs-blk-bp__grid, .cs-blk-bp__item--1 .cs-blk-bp__grid { height: 120px; }
   .cs-blk-rows li { grid-template-columns: 44px 1fr; }
   .cs-chapters { top: 76px; }
+  .pj-cta__btns { width: 100%; }
   .pj-cta .btn { width: 100%; justify-content: space-between; }
 
   .float-chip { font-size: 14px; gap: 9px; padding: 6px 16px 6px 6px; }

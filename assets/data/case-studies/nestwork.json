@@ -1,0 +1,559 @@
+[
+  {
+    "id": "overview",
+    "num": "01",
+    "label": "Overview",
+    "title": "nestwork is an HR workspace for growing teams that puts hiring, payroll, attendance and approvals in one calm place, so small HR teams catch problems before they cost anyone a payday.",
+    "blocks": [
+      {
+        "type": "facts",
+        "items": [
+          {
+            "label": "My role",
+            "title": "Solo product designer",
+            "text": "Research, UX strategy, information architecture, UI, design system, and a coded, clickable prototype."
+          },
+          {
+            "label": "Scope",
+            "title": "9 screens · 8 flows",
+            "text": "Sign-up, login, dashboard, employees, recruitment, payroll, attendance and notifications."
+          },
+          {
+            "label": "Platform",
+            "title": "Responsive web",
+            "text": "Designed for desktop first, then worked down to tablet and a 390px phone."
+          },
+          {
+            "label": "Type",
+            "title": "Self-initiated concept",
+            "text": "A portfolio project with no client, built as a live prototype you can click through end to end."
+          }
+        ]
+      },
+      {
+        "type": "duo",
+        "a": {
+          "label": "The challenge",
+          "text": "HR at a 50 to 300-person company is usually one or two people juggling spreadsheets, inboxes, chat and a payroll portal. Mistakes aren’t dramatic, they’re small and late: a missing bank account found after the run, or leave approved in a thread nobody else saw."
+        },
+        "b": {
+          "label": "The outcome",
+          "text": "One product with five focused spaces and a shared top bar. Every task starts, gets checked and finishes in the same place, and issues are fixed inline with the rule in view instead of being found after the fact."
+        }
+      }
+    ]
+  },
+  {
+    "id": "problem",
+    "num": "02",
+    "label": "The problem",
+    "title": "The work isn’t hard. It’s scattered.",
+    "lead": "Mapping a month of HR work showed the same pattern everywhere: the data exists, but it lives in six places, so every task starts with a hunt and ends with a hope.",
+    "blocks": [
+      {
+        "type": "image",
+        "src": "assets/img/case-studies/nestwork/01-problem.webp",
+        "alt": "Six disconnected tools (spreadsheets, email, chat, payroll portal, paper forms and a shared calendar) feeding into a single nestwork workspace with six modules",
+        "width": 1920,
+        "height": 1035
+      },
+      {
+        "type": "cards",
+        "items": [
+          {
+            "title": "Errors are found too late",
+            "text": "Payroll problems such as missing bank details or overtime over the limit surface after the run, when they are slow and costly to fix."
+          },
+          {
+            "title": "Approvals get lost",
+            "text": "Leave and overtime approvals happen in chat and email, with no record and no clear owner."
+          },
+          {
+            "title": "No single view of today",
+            "text": "Who’s in, who’s off and what needs a decision takes several tools to answer."
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "id": "research",
+    "num": "03",
+    "label": "Research",
+    "title": "Learning how small HR teams actually work.",
+    "lead": "With no client to interview, I grounded the work in desk research and a structured review of how existing HR tools handle the same jobs, then wrote proto-personas to keep decisions honest.",
+    "blocks": [
+      {
+        "type": "chips",
+        "label": "Methods",
+        "items": [
+          "Competitive review of 6 HR and payroll products",
+          "Heuristic evaluation (Nielsen’s 10)",
+          "Public reviews of HR software, read for recurring pains",
+          "Task analysis of a monthly pay run",
+          "Proto-personas",
+          "Journey mapping"
+        ]
+      },
+      {
+        "type": "persona",
+        "name": "Nadia Perera",
+        "initial": "N",
+        "meta": "HR Manager · 248-person company · proto-persona",
+        "bio": "Runs HR alone with one part-time assistant. Spends the last week of every month checking payroll by hand.",
+        "cols": [
+          {
+            "title": "Goals",
+            "items": [
+              "Pay everyone correctly and on time",
+              "Approve requests without chasing",
+              "Know who’s in today at a glance"
+            ]
+          },
+          {
+            "title": "Frustrations",
+            "items": [
+              "Finds payroll errors after the run",
+              "Approvals buried in chat",
+              "Five versions of the same spreadsheet"
+            ]
+          },
+          {
+            "title": "Needs",
+            "items": [
+              "Problems flagged before pay day",
+              "Decisions she can make in one tap",
+              "One record per person"
+            ]
+          }
+        ]
+      },
+      {
+        "type": "persona",
+        "name": "Daniel Okafor",
+        "initial": "D",
+        "meta": "Engineering lead · manager of 9 · proto-persona",
+        "bio": "Approves overtime and leave for his team between meetings, usually on his phone.",
+        "cols": [
+          {
+            "title": "Goals",
+            "items": [
+              "Approve fast without losing context",
+              "See his team’s week in one view"
+            ]
+          },
+          {
+            "title": "Frustrations",
+            "items": [
+              "Requests arrive with no details",
+              "Has to open a laptop to act"
+            ]
+          },
+          {
+            "title": "Needs",
+            "items": [
+              "Actions inside the notification",
+              "A mobile layout that isn’t an afterthought"
+            ]
+          }
+        ]
+      },
+      {
+        "type": "quote",
+        "label": "How might we",
+        "text": "How might we help a one-person HR team find and fix problems while there’s still time, without adding another tool to check?"
+      }
+    ]
+  },
+  {
+    "id": "journey",
+    "num": "04",
+    "label": "Journey",
+    "title": "The pay run is where stress peaks.",
+    "lead": "Of every HR task I mapped, the monthly pay run had the sharpest emotional dip: the moment issues are discovered and need someone else to act.",
+    "blocks": [
+      {
+        "type": "image",
+        "src": "assets/img/case-studies/nestwork/02-journey.webp",
+        "alt": "Journey map of a monthly pay run across five stages, Prepare, Review, Find issues, Approve and Pay, with a stress curve that dips at Find issues today and stays level with nestwork",
+        "width": 1920,
+        "height": 975
+      },
+      {
+        "type": "list",
+        "title": "Key insights",
+        "items": [
+          "The pain isn’t calculating pay; it’s discovering issues late and depending on others to fix them.",
+          "People trust a number more when they can see the rule behind it, like overtime drawn against the 20 hour limit.",
+          "Most approvals are simple yes or no decisions, so they shouldn’t need a page of their own.",
+          "Managers act from their phones; anything that needs a laptop waits until tomorrow."
+        ]
+      }
+    ]
+  },
+  {
+    "id": "principles",
+    "num": "05",
+    "label": "Principles",
+    "title": "Four rules I designed against.",
+    "blocks": [
+      {
+        "type": "cards",
+        "items": [
+          {
+            "title": "Fix it where you see it",
+            "text": "Every issue carries its own fix inline: a bank field, an approve button, a reschedule. No dead-end warnings."
+          },
+          {
+            "title": "Calm by default",
+            "text": "Neutral surfaces, one accent, and colour saved for status. When something is red, it matters."
+          },
+          {
+            "title": "One record, many views",
+            "text": "A person is the same record in Employees, Payroll, Attendance and Recruitment, so data is entered once."
+          },
+          {
+            "title": "Nothing is final by accident",
+            "text": "Moves, rejections and removals come with undo, and risky steps ask for a clear confirmation."
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "id": "architecture",
+    "num": "06",
+    "label": "Architecture",
+    "title": "Five spaces, one top bar, every path mapped.",
+    "lead": "I removed the side rail and moved navigation into a single top bar, which freed width for data. Search, notifications and the account menu live on every page.",
+    "blocks": [
+      {
+        "type": "image",
+        "src": "assets/img/case-studies/nestwork/03-ia.webp",
+        "alt": "Information architecture: the nestwork workspace branching into Dashboard, Employees, Recruitment, Payroll and Attendance, each with its sub-screens, plus global notifications, search and account menu",
+        "width": 1920,
+        "height": 1140
+      },
+      {
+        "type": "image",
+        "src": "assets/img/case-studies/nestwork/04-flow-map.webp",
+        "alt": "The nestwork flow map: every page, step and decision laid out in lanes for sign up, log in, people, hiring, pay, time and alerts",
+        "width": 1920,
+        "height": 1227
+      },
+      {
+        "type": "steps",
+        "label": "Core flow · run payroll",
+        "items": [
+          "Open the pay run from the dashboard card or an alert",
+          "Review pay: totals and what changed since last month",
+          "Fix issues inline until the counter reads 2 of 2",
+          "Approve with a clear confirmation",
+          "Done: a receipt with pay date and payslips"
+        ]
+      }
+    ]
+  },
+  {
+    "id": "system",
+    "num": "07",
+    "label": "Design system",
+    "title": "A small system that does a lot of quiet work.",
+    "lead": "Green and slate came from the brand: green for progress and success, slate for structure and primary actions. Status always pairs an icon and a label with its colour, so it never relies on colour alone.",
+    "blocks": [
+      {
+        "type": "image",
+        "src": "assets/img/case-studies/nestwork/05-system.webp",
+        "alt": "nestwork design system board: five colour tokens, five status styles, the Plus Jakarta Sans type scale, buttons, pills, KPI cards, avatars and Lucide icons",
+        "width": 1920,
+        "height": 1215
+      },
+      {
+        "type": "swatches",
+        "items": [
+          {
+            "name": "Leaf",
+            "hex": "#86CD96",
+            "token": "--accent"
+          },
+          {
+            "name": "Harbour",
+            "hex": "#3E6B88",
+            "token": "--primary"
+          },
+          {
+            "name": "Ink",
+            "hex": "#1F2933",
+            "token": "--ink"
+          },
+          {
+            "name": "Mist",
+            "hex": "#EEF2F5",
+            "token": "--canvas"
+          },
+          {
+            "name": "Sprout",
+            "hex": "#DDF1E2",
+            "token": "--accent-soft"
+          }
+        ]
+      },
+      {
+        "type": "typescale",
+        "items": [
+          {
+            "spec": "Display · 40 / 800",
+            "size": 40,
+            "weight": 800,
+            "track": -0.03,
+            "sample": "Good morning, Kavinda",
+            "use": "Page greeting"
+          },
+          {
+            "spec": "Heading · 24 / 800",
+            "size": 24,
+            "weight": 800,
+            "track": -0.02,
+            "sample": "Run payroll",
+            "use": "Cards and dialogs"
+          },
+          {
+            "spec": "Body · 15 / 500",
+            "size": 15,
+            "weight": 500,
+            "track": 0,
+            "sample": "Sort these out and the run can be approved.",
+            "use": "Copy and tables"
+          },
+          {
+            "spec": "Label · 12 / 700",
+            "size": 12,
+            "weight": 700,
+            "track": 0.06,
+            "sample": "STEP 2 OF 3 · FIX ISSUES",
+            "use": "Eyebrows and meta"
+          }
+        ]
+      },
+      {
+        "type": "chips",
+        "label": "Components",
+        "items": [
+          "KPI card",
+          "Status pill",
+          "Avatar stack",
+          "Stepper",
+          "Issue card",
+          "Drawer",
+          "Bottom sheet",
+          "Toast with undo",
+          "Week cell",
+          "Notification item",
+          "Segmented tabs",
+          "Empty state"
+        ]
+      }
+    ]
+  },
+  {
+    "id": "screens",
+    "num": "08",
+    "label": "Key screens",
+    "title": "Designed around the moments that matter.",
+    "blocks": [
+      {
+        "type": "image",
+        "src": "assets/img/case-studies/nestwork/06-dashboard.webp",
+        "alt": "Annotated dashboard: headcount KPIs, attendance chart, next payroll card, leave requests, notifications bell and the employees table",
+        "width": 1920,
+        "height": 1182
+      },
+      {
+        "type": "list",
+        "title": "Dashboard",
+        "items": [
+          "Opens on what needs a decision today, not on settings.",
+          "The next pay run is a card with its date and one primary action.",
+          "Leave requests are approved on the card, with an undo."
+        ]
+      },
+      {
+        "type": "image",
+        "src": "assets/img/case-studies/nestwork/07-payroll-fix.webp",
+        "alt": "Annotated Fix issues step of the pay run: a 0 of 2 fixed counter, an overtime bar against the 20 hour limit, two costed choices and an inline bank account field",
+        "width": 1920,
+        "height": 1322
+      },
+      {
+        "type": "list",
+        "title": "Run payroll · fix issues",
+        "items": [
+          "Issues are sorted by impact: what blocks payment comes with its fix inline.",
+          "Overtime is a bar against the limit, and each choice shows its cost.",
+          "Continue stays locked until every issue is resolved, so a bad run can’t be approved by accident."
+        ]
+      },
+      {
+        "type": "image",
+        "src": "assets/img/case-studies/nestwork/08-recruitment.webp",
+        "alt": "Annotated recruitment page: funnel stats, open roles strip used as filters, a drag-and-drop candidate pipeline and a post a job button",
+        "width": 1920,
+        "height": 1131
+      },
+      {
+        "type": "list",
+        "title": "Recruitment",
+        "items": [
+          "Role cards double as filters and show their own mini funnel.",
+          "Candidates move by drag on desktop or a stage picker on touch.",
+          "Scheduling an interview books the slot and updates the stage in one step."
+        ]
+      },
+      {
+        "type": "image",
+        "src": "assets/img/case-studies/nestwork/09-attendance.webp",
+        "alt": "Annotated attendance week grid: a filterable legend, today highlighted, multi-day leave merged into one bar, weekly totals per person and daily totals",
+        "width": 1920,
+        "height": 1131
+      },
+      {
+        "type": "list",
+        "title": "Attendance · this week",
+        "items": [
+          "A legend that filters: tap Late to see every late arrival at once.",
+          "Leave spans merge into one bar, so the grid reads as patterns, not noise.",
+          "Week and day totals answer “how was this week?” without a report."
+        ]
+      },
+      {
+        "type": "image",
+        "src": "assets/img/case-studies/nestwork/10-notifications.webp",
+        "alt": "Annotated notifications panel: All and Unread tabs, a leave request with approve and decline buttons, a deep link to fix payroll issues and a settings gear",
+        "width": 1920,
+        "height": 1150
+      },
+      {
+        "type": "list",
+        "title": "Notifications",
+        "items": [
+          "Each alert carries its action: approve, view candidate, fix issues.",
+          "Deep links land on the exact step, not the page’s top.",
+          "Settings let people mute each kind of alert."
+        ]
+      }
+    ]
+  },
+  {
+    "id": "details",
+    "num": "09",
+    "label": "Details",
+    "title": "Motion with a job, accessibility from the start.",
+    "blocks": [
+      {
+        "type": "columns",
+        "items": [
+          {
+            "title": "Micro-interactions",
+            "items": [
+              "The bell rings once when something new arrives",
+              "Counters animate as issues are fixed",
+              "Cards lift on hover so what’s clickable is obvious",
+              "Toasts confirm every change and offer undo",
+              "All motion respects reduced-motion settings"
+            ]
+          },
+          {
+            "title": "Accessibility",
+            "items": [
+              "Colour pairs checked against WCAG AA contrast",
+              "Status uses icon, label and colour, never colour alone",
+              "Full keyboard paths with visible focus rings",
+              "Dialogs trap focus and close with Escape",
+              "Screen reader labels on charts and grid cells"
+            ]
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "id": "responsive",
+    "num": "10",
+    "label": "Responsive",
+    "title": "The same product on a desk, a tablet or a phone.",
+    "lead": "Mobile is where managers approve things, so it got the same care as desktop: drawers become bottom sheets, tables become cards or scroll with a sticky name column, and primary actions sit within thumb reach.",
+    "blocks": [
+      {
+        "type": "image",
+        "src": "assets/img/case-studies/nestwork/11-responsive.webp",
+        "alt": "The nestwork dashboard shown on a desktop browser, a tablet and a phone",
+        "width": 1920,
+        "height": 1230
+      },
+      {
+        "type": "image",
+        "src": "assets/img/case-studies/nestwork/12-mobile.webp",
+        "alt": "Four phone screens: fixing payroll issues, the scrollable week grid, the notifications panel and a candidate profile",
+        "width": 1920,
+        "height": 1350
+      }
+    ]
+  },
+  {
+    "id": "outcome",
+    "num": "11",
+    "label": "Outcome",
+    "title": "A working prototype, and what I’d test next.",
+    "blocks": [
+      {
+        "type": "cards",
+        "items": [
+          {
+            "title": "9 screens, 8 flows",
+            "text": "From sign-up to a finished pay run, every flow is clickable in the live prototype."
+          },
+          {
+            "title": "45 mapped transitions",
+            "text": "A flow map documents every page, step and decision for handoff."
+          },
+          {
+            "title": "One shared system",
+            "text": "Tokens, components and Lucide icons used across every page."
+          },
+          {
+            "title": "3 breakpoints",
+            "text": "Desktop, tablet and phone, tested down to 360px wide."
+          }
+        ]
+      },
+      {
+        "type": "columns",
+        "items": [
+          {
+            "title": "What I’d test with real HR teams",
+            "items": [
+              "Time to complete a pay run, before and after",
+              "Issues caught before payment vs. after",
+              "Approval time from request to decision",
+              "Task success on mobile for managers"
+            ]
+          },
+          {
+            "title": "What I’d design next",
+            "items": [
+              "Roles and permissions for managers vs. HR",
+              "Payroll rules per country",
+              "Reports and exports",
+              "An onboarding checklist for new hires"
+            ]
+          }
+        ]
+      },
+      {
+        "type": "quote",
+        "label": "Reflection",
+        "text": "The biggest shift came from treating every warning as a task with its own fix. Once errors became things you could resolve on the spot, the whole product got calmer."
+      }
+    ]
+  }
+]
