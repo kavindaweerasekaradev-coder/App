@@ -1,5 +1,265 @@
 [
   {
+    "slug": "nestwork",
+    "name": "nestwork",
+    "subtitle": "HR platform",
+    "kind": "UX/UI case study",
+    "lead": "An end-to-end UX/UI case study for nestwork, an HR workspace for growing teams: hiring, payroll, attendance and approvals in one calm place, with issues fixed before pay day.",
+    "card_text": "An HR workspace for growing teams, where payroll issues are fixed before pay day.",
+    "tags": [
+      "UI/UX",
+      "Product Design",
+      "SaaS",
+      "HR tech",
+      "Design System",
+      "Responsive Design"
+    ],
+    "facts": [
+      [
+        "Year",
+        "2026"
+      ],
+      [
+        "Role",
+        "UX research, UX/UI design, design system, prototype"
+      ],
+      [
+        "Platform",
+        "Responsive web app"
+      ],
+      [
+        "Tools",
+        "Figma, HTML, CSS, JavaScript, Lucide"
+      ]
+    ],
+    "statement": "HR that feels calm, not chaotic.",
+    "overview": [
+      "An end-to-end UX/UI case study for an HR workspace."
+    ],
+    "highlights_title": "Calm by default.",
+    "highlights": [
+      {
+        "title": "Fix before you pay",
+        "text": "Payroll issues resolved inline."
+      }
+    ],
+    "accent": "#3E6B88",
+    "card_tags": [
+      [
+        "HR SaaS",
+        ""
+      ],
+      [
+        "Case study",
+        "dark"
+      ],
+      [
+        "New",
+        "lime"
+      ]
+    ],
+    "case_study": "assets/data/case-studies/nestwork.json",
+    "hero_title": "nestwork",
+    "cover_image": {
+      "src": "assets/img/case-studies/nestwork/00-cover.webp",
+      "width": 1920,
+      "height": 1200
+    },
+    "card_cover": "assets/img/case-studies/nestwork/00-card.webp",
+    "gallery": {
+      "label": "UI screens",
+      "title": "Every screen,",
+      "title_soft": "web and mobile.",
+      "lead": "The final interface, screen by screen. Switch between web and mobile, then drag, swipe or use the arrows.",
+      "sets": [
+        {
+          "label": "Web",
+          "kind": "web",
+          "items": [
+            {
+              "src": "assets/img/case-studies/nestwork/screens/w-dashboard.webp",
+              "caption": "Dashboard · today at a glance",
+              "alt": "nestwork dashboard with KPIs, attendance chart, next payroll and leave requests",
+              "width": 1600,
+              "height": 1022
+            },
+            {
+              "src": "assets/img/case-studies/nestwork/screens/w-employees.webp",
+              "caption": "Employees · directory",
+              "alt": "Employee directory with filters, search and status pills",
+              "width": 1600,
+              "height": 1022
+            },
+            {
+              "src": "assets/img/case-studies/nestwork/screens/w-profile.webp",
+              "caption": "Profile · one record per person",
+              "alt": "Employee profile drawer for Priya Nair",
+              "width": 1600,
+              "height": 1022
+            },
+            {
+              "src": "assets/img/case-studies/nestwork/screens/w-recruitment.webp",
+              "caption": "Recruitment · roles and pipeline",
+              "alt": "Recruitment page with funnel stats and open roles",
+              "width": 1600,
+              "height": 1022
+            },
+            {
+              "src": "assets/img/case-studies/nestwork/screens/w-candidate.webp",
+              "caption": "Candidate · stage, rating, interview",
+              "alt": "Candidate drawer for Zara Ahmed",
+              "width": 1600,
+              "height": 1022
+            },
+            {
+              "src": "assets/img/case-studies/nestwork/screens/w-payroll.webp",
+              "caption": "Payroll · the next pay run",
+              "alt": "Payroll page with the November pay run card",
+              "width": 1600,
+              "height": 1022
+            },
+            {
+              "src": "assets/img/case-studies/nestwork/screens/w-fix.webp",
+              "caption": "Run payroll · fix issues",
+              "alt": "Run payroll dialog on the Fix issues step",
+              "width": 1600,
+              "height": 1022
+            },
+            {
+              "src": "assets/img/case-studies/nestwork/screens/w-attendance.webp",
+              "caption": "Attendance · my day and today",
+              "alt": "Attendance page with My day and company totals",
+              "width": 1600,
+              "height": 1022
+            },
+            {
+              "src": "assets/img/case-studies/nestwork/screens/w-notifications.webp",
+              "caption": "Notifications · act in place",
+              "alt": "Notifications panel open over the dashboard",
+              "width": 1600,
+              "height": 1022
+            },
+            {
+              "src": "assets/img/case-studies/nestwork/screens/w-login.webp",
+              "caption": "Log in",
+              "alt": "nestwork log in page",
+              "width": 1600,
+              "height": 1022
+            },
+            {
+              "src": "assets/img/case-studies/nestwork/screens/w-signup.webp",
+              "caption": "Sign up · five steps",
+              "alt": "nestwork sign-up first step",
+              "width": 1600,
+              "height": 1022
+            }
+          ]
+        },
+        {
+          "label": "Mobile",
+          "kind": "mobile",
+          "items": [
+            {
+              "src": "assets/img/case-studies/nestwork/screens/m-dashboard.webp",
+              "caption": "Dashboard · today at a glance",
+              "alt": "Mobile: nestwork dashboard with KPIs, attendance chart, next payroll and leave requests",
+              "width": 560,
+              "height": 1212
+            },
+            {
+              "src": "assets/img/case-studies/nestwork/screens/m-employees.webp",
+              "caption": "Employees · directory",
+              "alt": "Mobile: employee directory with filters, search and status pills",
+              "width": 560,
+              "height": 1212
+            },
+            {
+              "src": "assets/img/case-studies/nestwork/screens/m-profile.webp",
+              "caption": "Profile · one record per person",
+              "alt": "Mobile: employee profile drawer for Priya Nair",
+              "width": 560,
+              "height": 1212
+            },
+            {
+              "src": "assets/img/case-studies/nestwork/screens/m-recruitment.webp",
+              "caption": "Recruitment · roles and pipeline",
+              "alt": "Mobile: recruitment page with funnel stats and open roles",
+              "width": 560,
+              "height": 1212
+            },
+            {
+              "src": "assets/img/case-studies/nestwork/screens/m-candidate.webp",
+              "caption": "Candidate · stage, rating, interview",
+              "alt": "Mobile: candidate drawer for Zara Ahmed",
+              "width": 560,
+              "height": 1212
+            },
+            {
+              "src": "assets/img/case-studies/nestwork/screens/m-payroll.webp",
+              "caption": "Payroll · the next pay run",
+              "alt": "Mobile: payroll page with the November pay run card",
+              "width": 560,
+              "height": 1212
+            },
+            {
+              "src": "assets/img/case-studies/nestwork/screens/m-fix.webp",
+              "caption": "Run payroll · fix issues",
+              "alt": "Mobile: run payroll dialog on the Fix issues step",
+              "width": 560,
+              "height": 1212
+            },
+            {
+              "src": "assets/img/case-studies/nestwork/screens/m-attendance.webp",
+              "caption": "Attendance · my day and today",
+              "alt": "Mobile: attendance page with My day and company totals",
+              "width": 560,
+              "height": 1212
+            },
+            {
+              "src": "assets/img/case-studies/nestwork/screens/m-notifications.webp",
+              "caption": "Notifications · act in place",
+              "alt": "Mobile: notifications panel open over the dashboard",
+              "width": 560,
+              "height": 1212
+            },
+            {
+              "src": "assets/img/case-studies/nestwork/screens/m-login.webp",
+              "caption": "Log in",
+              "alt": "Mobile: nestwork log in page",
+              "width": 560,
+              "height": 1212
+            },
+            {
+              "src": "assets/img/case-studies/nestwork/screens/m-signup.webp",
+              "caption": "Sign up · five steps",
+              "alt": "Mobile: nestwork sign-up first step",
+              "width": 560,
+              "height": 1212
+            }
+          ]
+        }
+      ]
+    },
+    "live_url": "https://kavinda-design.vercel.app/hr-dashboard/overview.html",
+    "live_label": "View live prototype",
+    "cta": {
+      "label": "Try it",
+      "title": "Click through",
+      "title_soft": "the live prototype",
+      "text": "Every screen in this case study is a working page. Start from the project overview, or jump straight to the flow map.",
+      "links": [
+        {
+          "label": "Open the dashboard",
+          "href": "https://kavinda-design.vercel.app/hr-dashboard/index.html"
+        },
+        {
+          "label": "See the flow map",
+          "href": "https://kavinda-design.vercel.app/hr-dashboard/flow.html"
+        }
+      ]
+    }
+  },
+  {
     "slug": "dominos",
     "behance_id": "257665725",
     "name": "Domino’s Sri Lanka",

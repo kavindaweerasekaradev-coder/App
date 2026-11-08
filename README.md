@@ -91,6 +91,10 @@ including each card's `accent` colour and `card_tags`, so rebuilding also update
 To add a project, add an entry to `projects.json` with its Behance `behance_id`, rebuild, and add a card
 for it in the Recent work section of `index.html`.
 
+A project that isn't on Behance (like `nestwork`) leaves out `behance_id` and sets `cover_image`,
+`card_cover` (the 808×632 home card image) and a `Year` fact instead. Its closing section links to
+`live_url` and the optional `cta` links rather than Behance.
+
 ## Importing a full Behance project
 
 Behance blocks simple requests, so the **Import a Behance project** workflow (Actions tab → Run workflow, paste
