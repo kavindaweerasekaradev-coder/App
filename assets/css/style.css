@@ -1689,3 +1689,43 @@ html.lenis, html.lenis body { height: auto; }
   .aj-tabs { flex-wrap: nowrap; overflow-x: auto; scrollbar-width: none; }
   .aj-tab { flex: none; }
 }
+
+/* ===================== User flow (case study block) ===================== */
+.uf { padding: clamp(18px, 3vw, 28px); border-radius: var(--radius-lg); border: 1px solid var(--border); background: var(--surface); }
+.uf-tabs { display: flex; gap: 6px; margin-bottom: 22px; overflow-x: auto; scrollbar-width: none; padding-bottom: 2px; }
+.uf-tabs::-webkit-scrollbar { display: none; }
+.uf-tab { flex: none; height: 38px; padding: 0 15px; border-radius: 999px; border: 1px solid var(--border); background: var(--surface); color: var(--text-muted);
+  font: 500 14px var(--font-sans); cursor: pointer; transition: background-color .25s, color .25s, border-color .25s; }
+.uf-tab:hover { border-color: var(--ink); color: var(--text); }
+.uf-tab[aria-selected="true"] { background: var(--ink); border-color: var(--ink); color: #fff; }
+.uf-tab:focus-visible { outline: 2px solid var(--lime-dark); outline-offset: 2px; }
+.uf-panel[hidden] { display: none; }
+.uf-flow { display: flex; gap: 30px; overflow-x: auto; scrollbar-width: thin; padding: 4px 2px 8px; }
+.uf-flow > li { position: relative; flex: 1 0 140px; max-width: 200px; display: flex; }
+.uf-flow > li:not(:last-child)::after { content: ""; position: absolute; right: -23px; top: 50%; width: 16px; height: 2px; background: var(--ink); opacity: .35; }
+.uf-flow > li:not(:last-child)::before { content: ""; position: absolute; right: -25px; top: calc(50% - 4px); border: 5px solid transparent; border-left: 6px solid var(--ink); opacity: .35; }
+.uf-node { position: relative; display: block; width: 100%; padding: 14px 14px 13px; border-radius: 16px; background: var(--gray); color: var(--text);
+  transition: transform .4s var(--ease), box-shadow .4s var(--ease), background-color .3s; }
+a.uf-node:hover { transform: translateY(-3px); box-shadow: 0 14px 30px -18px rgba(14, 14, 14, .35); }
+.uf-node__n { display: grid; place-items: center; width: 26px; height: 26px; margin-bottom: 10px; border-radius: 50%; background: var(--surface); box-shadow: inset 0 0 0 1px var(--border); font-size: 12px; font-weight: 600; }
+.uf-node strong { display: block; font-size: 15px; letter-spacing: -0.01em; line-height: 1.3; }
+.uf-node small { display: block; margin-top: 4px; font-size: 12.5px; line-height: 1.45; color: var(--text-muted); }
+.uf-node__go { position: absolute; top: 12px; right: 12px; font-size: 13px; color: var(--text-subtle); transition: color .25s, transform .3s var(--ease); }
+a.uf-node:hover .uf-node__go { color: var(--text); transform: translate(2px, -2px); }
+.uf-node--decision { background: transparent; box-shadow: inset 0 0 0 1.5px var(--border); border: 1.5px dashed #b9b9b3; }
+.uf-node--decision .uf-node__n { background: #fff7d6; box-shadow: none; }
+.uf-flow > li:last-child .uf-node:not(.uf-node--decision) { background: var(--ink); color: #fff; }
+.uf-flow > li:last-child .uf-node:not(.uf-node--decision) small, .uf-flow > li:last-child .uf-node:not(.uf-node--decision) .uf-node__go { color: rgba(255, 255, 255, .65); }
+.uf-flow > li:last-child .uf-node:not(.uf-node--decision) .uf-node__n { background: var(--lime); box-shadow: none; color: var(--ink); }
+.uf-branch { display: flex; flex-wrap: wrap; align-items: baseline; gap: 8px; margin-top: 18px; font-size: 14px; color: var(--text-muted); }
+.uf-branch span { padding: 2px 9px; border-radius: 999px; background: var(--lime); color: var(--ink); font-size: 11.5px; font-weight: 600; letter-spacing: .04em; text-transform: uppercase; }
+.uf-legend { display: flex; flex-wrap: wrap; align-items: center; gap: 6px 14px; margin-top: 18px; padding-top: 14px; border-top: 1px solid var(--border); font-size: 12.5px; color: var(--text-subtle); }
+.uf-key { display: inline-block; width: 14px; height: 14px; margin-right: -8px; border-radius: 4px; background: var(--gray); box-shadow: inset 0 0 0 1px var(--border); vertical-align: -2px; }
+.uf-key--decision { background: transparent; border: 1.5px dashed #b9b9b3; box-shadow: none; }
+.uf-key--end { background: var(--ink); box-shadow: none; }
+@media (max-width: 640px) {
+  .uf-flow { flex-direction: column; gap: 18px; }
+  .uf-flow > li { max-width: none; flex: none; }
+  .uf-flow > li:not(:last-child)::after { right: auto; left: 26px; top: auto; bottom: -15px; width: 2px; height: 12px; }
+  .uf-flow > li:not(:last-child)::before { display: none; }
+}

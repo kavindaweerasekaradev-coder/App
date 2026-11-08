@@ -33,6 +33,28 @@
     if (c && /^M12 5v14/.test(c.getAttribute('d') || '')) c.closest('.btn__circle').classList.add('is-down');
   });
 
+  // User flow tabs (case studies)
+  var ufTabs = document.querySelectorAll('.uf-tab');
+  function ufShow(i, focus) {
+    ufTabs.forEach(function (t, k) {
+      var on = k === i;
+      t.setAttribute('aria-selected', String(on)); t.tabIndex = on ? 0 : -1;
+      var panel = document.getElementById(t.getAttribute('aria-controls'));
+      if (panel) panel.hidden = !on;
+      if (on && panel && window.gsap && !window.matchMedia('(prefers-reduced-motion: reduce)').matches)
+        gsap.fromTo(panel.querySelectorAll('.uf-node'), { autoAlpha: 0, y: 14 }, { autoAlpha: 1, y: 0, duration: 0.45, ease: 'power3.out', stagger: 0.06 });
+    });
+    if (focus) ufTabs[i].focus();
+  }
+  ufTabs.forEach(function (t, i) {
+    t.addEventListener('click', function () { ufShow(i); });
+    t.addEventListener('keydown', function (e) {
+      if (e.key !== 'ArrowRight' && e.key !== 'ArrowLeft') return;
+      e.preventDefault();
+      ufShow((i + (e.key === 'ArrowRight' ? 1 : -1) + ufTabs.length) % ufTabs.length, true);
+    });
+  });
+
   // Mobile menu
   var burger = document.getElementById('nav-burger');
   var links = document.getElementById('nav-links');
