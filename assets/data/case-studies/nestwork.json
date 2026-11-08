@@ -255,8 +255,221 @@
     ]
   },
   {
+    "id": "flow",
+    "label": "User flow",
+    "title": "Every path, from first click to done.",
+    "lead": "I mapped each task as a flow before designing a screen, including the decisions and the ways back. Pick an area to follow its path; every step opens the matching page in the live prototype.",
+    "blocks": [
+      {
+        "type": "userflow",
+        "base": "https://kavinda-design.vercel.app/hr-dashboard/",
+        "flows": [
+          {
+            "label": "Sign up",
+            "steps": [
+              {
+                "t": "Create account",
+                "s": "Name, email, password",
+                "href": "signup.html"
+              },
+              {
+                "t": "Verify email",
+                "s": "6-digit code, resend",
+                "href": "signup.html"
+              },
+              {
+                "t": "Your company",
+                "s": "Name, size, industry",
+                "href": "signup.html"
+              },
+              {
+                "t": "Invite team",
+                "s": "Add emails, optional",
+                "href": "signup.html"
+              },
+              {
+                "t": "All set",
+                "s": "Workspace summary",
+                "href": "signup.html"
+              }
+            ]
+          },
+          {
+            "label": "Log in",
+            "steps": [
+              {
+                "t": "Log in",
+                "s": "Email, password, SSO",
+                "href": "login.html"
+              },
+              {
+                "t": "Details match?",
+                "s": "Password of 8+ characters",
+                "decision": true
+              },
+              {
+                "t": "Dashboard",
+                "s": "Stats, attendance, leave, payroll",
+                "href": "index.html"
+              }
+            ],
+            "branch": "Forgot password → enter work email → link sent → back to log in"
+          },
+          {
+            "label": "Employees",
+            "steps": [
+              {
+                "t": "Employees",
+                "s": "Search, filter, export",
+                "href": "employees.html"
+              },
+              {
+                "t": "Personal",
+                "s": "Name, email, location",
+                "href": "employees.html#add"
+              },
+              {
+                "t": "Job",
+                "s": "Title, team, start date",
+                "href": "employees.html#add"
+              },
+              {
+                "t": "Review",
+                "s": "Edit any section",
+                "href": "employees.html#add"
+              },
+              {
+                "t": "Added",
+                "s": "Shown first, highlighted",
+                "href": "employees.html"
+              }
+            ],
+            "branch": "Open a profile → change status or remove, with undo"
+          },
+          {
+            "label": "Hiring",
+            "steps": [
+              {
+                "t": "Recruitment",
+                "s": "Open roles, pipeline",
+                "href": "recruitment.html"
+              },
+              {
+                "t": "Candidate",
+                "s": "Rate, notes, move stage",
+                "href": "recruitment.html#cand-3"
+              },
+              {
+                "t": "Interview",
+                "s": "Date, time, interviewer",
+                "href": "recruitment.html#cand-1"
+              },
+              {
+                "t": "Make an offer?",
+                "s": "Or reject, with undo",
+                "href": "recruitment.html#cand-5",
+                "decision": true
+              },
+              {
+                "t": "Hired",
+                "s": "Create their profile",
+                "href": "recruitment.html#cand-11"
+              },
+              {
+                "t": "Add employee",
+                "s": "Details filled in",
+                "href": "employees.html#add"
+              }
+            ],
+            "branch": "Post a job → role, details, review"
+          },
+          {
+            "label": "Payroll",
+            "steps": [
+              {
+                "t": "Payroll",
+                "s": "Pay table, payslips, history",
+                "href": "payroll.html"
+              },
+              {
+                "t": "Review pay",
+                "s": "Overtime and bonuses",
+                "href": "payroll.html#run"
+              },
+              {
+                "t": "Any issues?",
+                "s": "Bank details, overtime",
+                "href": "payroll.html#run",
+                "decision": true
+              },
+              {
+                "t": "Approved",
+                "s": "Paid on the last working day",
+                "href": "payroll.html"
+              }
+            ],
+            "branch": "Issues found → fix them in place before approving"
+          },
+          {
+            "label": "Attendance",
+            "steps": [
+              {
+                "t": "Attendance",
+                "s": "Team today, this week",
+                "href": "attendance.html"
+              },
+              {
+                "t": "Check in / out",
+                "s": "Live clock, hours",
+                "href": "attendance.html"
+              },
+              {
+                "t": "Request time off",
+                "s": "Dates, balance check",
+                "href": "attendance.html#request"
+              },
+              {
+                "t": "Manager approves?",
+                "s": "Approve or decline",
+                "href": "attendance.html#leave",
+                "decision": true
+              }
+            ]
+          },
+          {
+            "label": "Notifications",
+            "steps": [
+              {
+                "t": "Notification bell",
+                "s": "Unread count, rings once",
+                "href": "index.html"
+              },
+              {
+                "t": "Panel",
+                "s": "All or unread, by day",
+                "href": "index.html"
+              },
+              {
+                "t": "Act here?",
+                "s": "Or open the screen",
+                "decision": true
+              },
+              {
+                "t": "Approve or decline",
+                "s": "Leave, in place",
+                "href": "attendance.html#leave"
+              }
+            ],
+            "branch": "Or open the screen (candidate, payroll run…) · Settings: categories, email, push"
+          }
+        ]
+      }
+    ],
+    "num": "07"
+  },
+  {
     "id": "system",
-    "num": "07",
+    "num": "08",
     "label": "Design system",
     "title": "A small system that does a lot of quiet work.",
     "lead": "Green and slate came from the brand: green for progress and success, slate for structure and primary actions. Status always pairs an icon and a label with its colour, so it never relies on colour alone.",
@@ -357,7 +570,7 @@
   },
   {
     "id": "screens",
-    "num": "08",
+    "num": "09",
     "label": "Key screens",
     "title": "Designed around the moments that matter.",
     "blocks": [
@@ -445,7 +658,7 @@
   },
   {
     "id": "details",
-    "num": "09",
+    "num": "10",
     "label": "Details",
     "title": "Motion with a job, accessibility from the start.",
     "blocks": [
@@ -478,7 +691,7 @@
   },
   {
     "id": "responsive",
-    "num": "10",
+    "num": "11",
     "label": "Responsive",
     "title": "The same product on a desk, a tablet or a phone.",
     "lead": "Mobile is where managers approve things, so it got the same care as desktop: drawers become bottom sheets, tables become cards or scroll with a sticky name column, and primary actions sit within thumb reach.",
@@ -501,7 +714,7 @@
   },
   {
     "id": "outcome",
-    "num": "11",
+    "num": "12",
     "label": "Outcome",
     "title": "A working prototype, and what I’d test next.",
     "blocks": [

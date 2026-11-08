@@ -142,6 +142,23 @@ def block(b):
     if t == "chips":
         return (f'<div class="cs-blk-chips"><p class="cs-blk-label">{e(b["label"])}</p>'
                 f'<ul>{lis(b["items"])}</ul></div>')
+    if t == "userflow":
+        # Tabbed user flows: one tab per area, each a row of steps (decisions marked) linking into the prototype
+        tabs = "".join(f'<button type="button" class="uf-tab" role="tab" id="uf-tab-{i}" aria-controls="uf-flow-{i}" aria-selected="{"true" if i == 0 else "false"}"{"" if i == 0 else " tabindex=\"-1\""}>{e(f["label"])}</button>'
+                       for i, f in enumerate(b["flows"]))
+        def node(st, j):
+            cls = "uf-node" + (" uf-node--decision" if st.get("decision") else "")
+            inner = (f'<span class="uf-node__n">{"?" if st.get("decision") else j}</span><strong>{e(st["t"])}</strong><small>{e(st["s"])}</small>')
+            if st.get("href"):
+                return f'<li><a class="{cls}" href="{e(b["base"] + st["href"])}" target="_blank" rel="noopener">{inner}<span class="uf-node__go" aria-hidden="true">↗</span></a></li>'
+            return f'<li><div class="{cls}">{inner}</div></li>'
+        panels = "".join(
+            f'<div class="uf-panel" role="tabpanel" id="uf-flow-{i}" aria-labelledby="uf-tab-{i}"{"" if i == 0 else " hidden"}>'
+            f'<ol class="uf-flow">' + "".join(node(st, j) for j, st in enumerate(f["steps"], 1)) + '</ol>'
+            + (f'<p class="uf-branch"><span>Also</span>{e(f["branch"])}</p>' if f.get("branch") else "") + '</div>'
+            for i, f in enumerate(b["flows"]))
+        return (f'<div class="uf"><div class="uf-tabs" role="tablist" aria-label="User flows">{tabs}</div>{panels}'
+                f'<p class="uf-legend"><span class="uf-key"></span>Step <span class="uf-key uf-key--decision"></span>Decision <span class="uf-key uf-key--end"></span>End of the flow</p></div>')
     if t == "steps":
         label = f'<p class="cs-blk-label">{e(b["label"])}</p>' if b.get("label") else ""
         return (f'<div class="cs-blk-steps">{label}<ol>' + "".join(
@@ -331,8 +348,14 @@ def cta_section(p):
         cta = p.get("cta", {})
         label, title, soft = cta.get("label", "Try it"), cta.get("title", "Click through"), cta.get("title_soft", "the live prototype")
         text = cta.get("text", "Every screen in this case study is a working page you can try.")
-        btns = live_btn(p).rstrip() + "".join(
-            f'<a class="btn btn--glass" href="{e(l["href"])}" target="_blank" rel="noopener">{e(l["label"])}</a>' for l in cta.get("links", []))
+        if cta.get("only_links"):
+            # Just the listed links, the first as the primary button
+            btns = "".join(
+                (f'<a class="btn btn--lime btn--arrow" href="{e(l["href"])}" target="_blank" rel="noopener">{e(l["label"])}<span class="btn__circle">{ARROW}</span></a>' if i == 0
+                 else f'<a class="btn btn--glass" href="{e(l["href"])}" target="_blank" rel="noopener">{e(l["label"])}</a>') for i, l in enumerate(cta.get("links", [])))
+        else:
+            btns = live_btn(p).rstrip() + "".join(
+                f'<a class="btn btn--glass" href="{e(l["href"])}" target="_blank" rel="noopener">{e(l["label"])}</a>' for l in cta.get("links", []))
     return f"""    <!-- ===================== BEHANCE ===================== -->
     <section class="section section--flush-top">
       <div class="container">
