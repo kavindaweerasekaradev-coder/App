@@ -32,5 +32,12 @@
         }
       ]
     }
+  ],
+  "redirects": [
+    {
+      "source": "/hr-dashboard/overview.html",
+      "destination": "/case-studies/nestwork.html",
+      "permanent": true
+    }
   ]
 }

@@ -15,7 +15,7 @@
           },
           {
             "label": "Scope",
-            "title": "9 screens · 8 flows",
+            "title": "8 screens · 8 flows",
             "text": "Sign-up, login, dashboard, employees, recruitment, payroll, attendance and notifications."
           },
           {
@@ -509,7 +509,7 @@
         "type": "cards",
         "items": [
           {
-            "title": "9 screens, 8 flows",
+            "title": "8 screens, 8 flows",
             "text": "From sign-up to a finished pay run, every flow is clickable in the live prototype."
           },
           {

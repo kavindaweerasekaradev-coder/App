@@ -240,17 +240,17 @@
         }
       ]
     },
-    "live_url": "https://kavinda-design.vercel.app/hr-dashboard/overview.html",
+    "live_url": "https://kavinda-design.vercel.app/hr-dashboard/index.html",
     "live_label": "View live prototype",
     "cta": {
       "label": "Try it",
       "title": "Click through",
       "title_soft": "the live prototype",
-      "text": "Every screen in this case study is a working page. Start from the project overview, or jump straight to the flow map.",
+      "text": "Every screen in this case study is a working page. Open the dashboard, or see every path on the flow map.",
       "links": [
         {
-          "label": "Open the dashboard",
-          "href": "https://kavinda-design.vercel.app/hr-dashboard/index.html"
+          "label": "Start at log in",
+          "href": "https://kavinda-design.vercel.app/hr-dashboard/login.html"
         },
         {
           "label": "See the flow map",

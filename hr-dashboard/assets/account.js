@@ -1,7 +1,7 @@
 /*
  * Account menu for the nestwork app pages. Opens from the profile photo
  * button (aria-label "Account menu") with the signed-in name and email, links
- * to the project overview and flow map, and Sign out. Icons are Lucide.
+ * to the case study and flow map, and Sign out. Icons are Lucide.
  */
 (function () {
   var btn = document.querySelector('button[aria-label="Account menu"]');
@@ -24,7 +24,7 @@
   var esc = function (s) { return String(s).replace(/[&<>"]/g, function (c) { return { '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;' }[c]; }); };
   menu.innerHTML =
     '<div class="ac-who"><img src="assets/avatars/kavinda-weerasekara.svg" alt="" width="44" height="44"><div style="min-width:0"><strong>' + esc(name) + '</strong><span>' + esc(email) + '</span><span class="ac-role">HR admin</span></div></div>' +
-    '<a role="menuitem" href="overview.html"><span class="ac-ic">' + icon(I.overview) + '</span><span>Project overview<small>What nestwork is</small></span></a>' +
+    '<a role="menuitem" href="../case-studies/nestwork.html"><span class="ac-ic">' + icon(I.overview) + '</span><span>Case study<small>How nestwork was designed</small></span></a>' +
     '<a role="menuitem" href="flow.html"><span class="ac-ic">' + icon(I.flow) + '</span><span>App flow map<small>Every page and step</small></span></a>' +
     '<div class="ac-sep" role="separator"></div>' +
     '<a role="menuitem" href="login.html" class="ac-out"><span class="ac-ic">' + icon(I.out) + '</span><span>Sign out</span></a>';
