@@ -440,7 +440,7 @@ FEATURE_ICONS = {
 
 
 def authoring_page(data, version, h):
-    e, BACK, ARROW, sw = h["e"], h["BACK"], h["ARROW"], h["split_words"]
+    e, BACK, ARROW, sw, block = h["e"], h["BACK"], h["ARROW"], h["split_words"], h["block"]
     a = data["authoring"]
     p = next(x for x in data["products"] if x["slug"] == "readyme")
     tool = p["links"][1][1]
@@ -473,14 +473,40 @@ def authoring_page(data, version, h):
         f'<ol class="aj-flow" role="tabpanel" id="aj-flow-{i}" aria-labelledby="aj-tab-{i}"{"" if i == 0 else " hidden"}>' + "".join(
             f'<li class="aj-node"><span class="aj-node__n">{j}</span><strong>{e(st[0])}</strong>{"<small>" + e(st[1]) + "</small>" if len(st) > 1 else ""}</li>'
             for j, st in enumerate(steps, 1)) + "</ol>" for i, (_, steps) in enumerate(a["flows"]))
-    decisions = ""
-    for i, d in enumerate(a["decisions"]):
-        media = browser(d["img"], d["title"], "at-win--inline") if d.get("img") else f'<span class="aj-dec__i">{icon(d["icon"], 30)}</span>'
-        decisions += (f'<article class="aj-dec{" aj-dec--wide" if d.get("img") else ""}"><div class="aj-dec__media">{media}</div>'
-                      f'<div class="aj-dec__text"><span class="rm-pair__num">{i + 1:02d}</span><h3>{e(d["title"])}</h3><p>{e(d["text"])}</p></div></article>')
+    dims = {
+        "signup": 1289, "verify-progress": 982, "identity-review": 1320, "identity": 1320, "paths": 1320, "path-setup": 1320,
+        "q-overview": 1026, "q-answer": 1235, "q-explain": 1320, "q-distribution": 1026, "qset-list": 1320,
+        "extract-upload": 982, "extract-failed": 982, "card-statement": 1127, "card-responses": 1293, "playlist": 1320,
+        "plan-create": 1051, "pricing": 1220, "dashboard": 1320, "learners": 1165}
+    detail_dims = {"d-preview": (370, 750), "d-milestone": (926, 136), "d-distribution": (828, 418), "d-ai": (740, 214), "d-failed": (414, 154), "d-plan": (460, 322)}
+
+    def shot(k, cap, cls=""):
+        return (f'<figure class="am-shot {cls}"><a href="{IMG}{k}.webp" target="_blank" rel="noopener" aria-label="Open the {e(cap.lower())} screen full size">'
+                f'<span class="at-win__bar" aria-hidden="true"><i></i><i></i><i></i><b>authoring.readyme.co</b></span>'
+                f'<img src="{IMG}{k}-760.webp" srcset="{IMG}{k}-760.webp 760w, {IMG}{k}.webp 1512w" sizes="(max-width: 900px) 92vw, 720px" '
+                f'alt="{e(cap)}: ReadyMe authoring tool screen" width="1512" height="{dims[k]}" loading="lazy" decoding="async" /></a>'
+                f'<figcaption>{e(cap)}</figcaption></figure>')
+
+    moments = ""
+    for i, m in enumerate(a["moments"], 1):
+        scr = m["screens"]
+        stack = shot(scr[0], m["caps"][0], "am-shot--main") + "".join(shot(k, c, f"am-shot--sub am-shot--sub{j}") for j, (k, c) in enumerate(zip(scr[1:], m["caps"][1:]), 1))
+        det = ""
+        if m.get("detail"):
+            dw, dh = detail_dims[m["detail"]]
+            det = f'<figure class="am-detail am-detail--{m["detail"]}"><img src="{IMG}{m["detail"]}.webp" alt="" width="{dw}" height="{dh}" loading="lazy" decoding="async" /></figure>'
+        pts = "".join(f"<li>{e(x)}</li>" for x in m["points"])
+        moments += (f'<article class="am{" am--flip" if i % 2 == 0 else ""}{" am--multi" if len(scr) > 1 else ""}" id="moment-{i}">'
+                    f'<div class="am__text"><span class="am__num">{i:02d}</span><p class="am__eyebrow">{e(m["eyebrow"])}</p>'
+                    f'<h3 class="am__title">{e(m["title"])} <span class="soft">{e(m["soft"])}</span></h3>'
+                    f'<p class="am__need"><b>Tutor need</b>{e(m["need"])}</p><p class="am__label">Design decisions</p><ul class="am__points">{pts}</ul></div>'
+                    f'<div class="am__media">{stack}{det}</div></article>')
+    gallery = block({"type": "carousel", "label": "ReadyMe authoring tool screens", "clean": True, "sets": [{
+        "label": "Tutor web app", "kind": "web",
+        "items": [{"src": f"assets/img/shipped/authoring/{k}.webp", "caption": c, "alt": f"{c}: ReadyMe authoring tool screen", "width": 1512, "height": dims[k]} for k, c in a["gallery"]]}]})
     states = "".join(f'<li class="aj-state">{e(x)}</li>' for x in a["states"])
     metrics = "".join(f'<div class="rm-metric reveal"><span class="rm-metric__i" aria-hidden="true"><svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M5 20v-6M12 20V9M19 20V4"/></svg></span><h3>{e(t)}</h3><p>{e(x)}</p></div>' for t, x in a["metrics"])
-    toc = [("ecosystem", "Overview"), ("process", "Process"), ("tutor", "The tutor"), ("ia", "Architecture"), ("flows", "Key flows"), ("decisions", "Design decisions"), ("system", "System"), ("success", "Success")]
+    toc = [("ecosystem", "Overview"), ("process", "Process"), ("tutor", "The tutor"), ("ia", "Architecture"), ("flows", "Key flows"), ("moments", "Core moments"), ("ui-screens", "Screens"), ("system", "System"), ("success", "Success")]
     toc_html = "".join(f'<a href="#{i}">{e(t)}</a>' for i, t in toc)
     content = ["Learning paths", "Question sets", "Notes", "Videos", "Study decks"]
     chips = "".join(f'<span class="aj-eco__chip" style="--i:{i}">{e(c)}</span>' for i, c in enumerate(content))
@@ -511,10 +537,10 @@ def authoring_page(data, version, h):
     <section class="container">
       <div class="at-stage aj-stage" aria-label="The ReadyMe authoring tool">
         <span class="rm-stage__glow" aria-hidden="true"></span>
-        {browser("new-home", "Authoring tool home: the teaching resources hub with a labelled side menu", "aj-win--main", "", True)}
-        <figure class="aj-float aj-float--menu"><img src="{IMG}c-menu.webp" alt="" width="308" height="468" decoding="async" /></figure>
-        <span class="rm-chip at-chip--1" aria-hidden="true"><i></i>Content-first home</span>
-        <span class="rm-chip at-chip--2" aria-hidden="true"><i></i>Guided creation</span>
+        {browser("dashboard", "Authoring tool: a learning path dashboard with learners, revenue and drop-off risk", "aj-win--main", "", True)}
+        <figure class="aj-float aj-float--phone"><img src="{IMG}d-preview.webp" alt="" width="370" height="750" decoding="async" /></figure>
+        <span class="rm-chip at-chip--1" aria-hidden="true"><i></i>Live mobile preview</span>
+        <span class="rm-chip at-chip--2" aria-hidden="true"><i></i>4-step question builder</span>
         <span class="rm-chip at-chip--3" aria-hidden="true"><i></i>PDF → questions</span>
       </div>
       <nav class="rm-toc" aria-label="On this page">{toc_html}</nav>
@@ -577,7 +603,7 @@ def authoring_page(data, version, h):
 
     <section class="section section--flush-top" id="flows">
       <div class="container">
-        {head("Key flows", "Five journeys,", "designed end to end.")}
+        {head("Key flows", "Six journeys,", "designed end to end.")}
         <div class="aj-flows reveal">
           <div class="aj-tabs" role="tablist" aria-label="Key flows">{tabs}</div>
           <div class="aj-flows__stage">{flows}</div>
@@ -585,10 +611,21 @@ def authoring_page(data, version, h):
       </div>
     </section>
 
-    <section class="section section--flush-top" id="decisions">
+    <section class="section section--flush-top" id="moments">
       <div class="container">
-        {head("Design decisions", "The choices", "that shaped the tool.")}
-        <div class="aj-decs">{decisions}</div>
+        {head("Designing the core moments", "Ten moments", "that make or break a tutor's day.")}
+        <div class="am-list">{moments}</div>
+      </div>
+    </section>
+
+    <section class="section cs-gallery" id="ui-screens">
+      <div class="container">
+        <div class="cs-gallery__head reveal">
+          <p class="label">The product</p>
+          <h2 class="cs-gallery__title">Every screen, <span class="soft">in one place.</span></h2>
+          <p class="cs-gallery__lead">Twenty screens from the shipped tool. Drag, swipe or use the arrows.</p>
+        </div>
+        {gallery}
       </div>
     </section>
 
@@ -625,7 +662,9 @@ def authoring_page(data, version, h):
       </div>
     </section>
 """
-    scripts = f'  <script src="../assets/js/readyme.js?v={version}" defer></script>\n'
+    scripts = ('  <script src="../assets/js/vendor/Draggable.min.js?v=3.12.5" defer></script>\n'
+               f'  <script src="../assets/js/carousel.js?v={version}" defer></script>\n'
+               f'  <script src="../assets/js/readyme.js?v={version}" defer></script>\n')
     return shell(h, version, title="ReadyMe Authoring Tool — case study by Kavinda Weerasekara",
                  desc=a["lead"], path="shipped/authoring-tool.html", og_image="assets/img/shipped/authoring/new-home.webp",
                  body=body, scripts=scripts)
