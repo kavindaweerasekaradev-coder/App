@@ -564,7 +564,7 @@
   "authoring": {
     "title": "ReadyMe Authoring Tool",
     "subtitle": "Designing where tutors build learning",
-    "lead": "Every learning path, question set, note, video and study deck in ReadyMe starts here. I designed the authoring tool end to end: the tutor's journey from sign-up and verification to creating, reviewing and publishing content, and getting paid.",
+    "lead": "Every learning path, question set, study deck and video in ReadyMe is built here. I designed the authoring tool from the ground up: the tutor's whole journey from signing up and getting verified to building exam-ready content, pricing it, and seeing how students respond.",
     "facts": [
       [
         "Role",
@@ -801,43 +801,30 @@
             "Public profile"
           ]
         ]
+      ],
+      [
+        "Pricing",
+        [
+          [
+            "Subscribers"
+          ],
+          [
+            "Pricing & plans"
+          ],
+          [
+            "Create plan",
+            "Duration · base price"
+          ],
+          [
+            "Review the fee",
+            "30% platform fee"
+          ],
+          [
+            "Plan active",
+            "Locked for 3 months"
+          ]
+        ]
       ]
-    ],
-    "decisions": [
-      {
-        "title": "A teaching hub, not a dashboard",
-        "text": "Home opens on “Your teaching resources”: question sets, notes, videos and study decks in one place, with a labelled side menu for paths, subscribers, notifications and settings.",
-        "img": "new-home",
-        "w": 1512,
-        "h": 982
-      },
-      {
-        "title": "Guided creation with a review step",
-        "text": "Learning paths and question sets are built step by step, Set the details, then topics, then content, and always end in a review before publishing, with clear delete and publish confirmations.",
-        "icon": "check"
-      },
-      {
-        "title": "Questions from PDFs and images",
-        "text": "Instead of typing every question, tutors upload a PDF, run text extraction and turn it into a question set, or start from an image, with upload progress and file-type choices along the way.",
-        "icon": "upload"
-      },
-      {
-        "title": "Insight where it helps",
-        "text": "A topic-distribution overview shows how a set's questions spread across topics, so gaps are visible before students find them.",
-        "icon": "chart"
-      },
-      {
-        "title": "Trust and payouts built in",
-        "text": "Qualifications, professional experience and identity verification (NIC, driving licence or passport) feed a public tutor profile. Pending, approved and rejected states are designed for each step, and bank details unlock earnings.",
-        "icon": "shield"
-      },
-      {
-        "title": "A familiar welcome",
-        "text": "Sign-in uses the same warm language and patterns as the student app, so tutors and students meet one ReadyMe brand.",
-        "img": "new-login",
-        "w": 1512,
-        "h": 982
-      }
     ],
     "states": [
       "Empty states",
@@ -870,6 +857,288 @@
       [
         "Verified tutors",
         "Tutors who complete identity verification and add payout details."
+      ]
+    ],
+    "moments": [
+      {
+        "eyebrow": "Onboarding & trust",
+        "title": "Getting started,",
+        "soft": "with trust built in.",
+        "need": "Tutors need to start quickly, and students need to know a tutor is real before paying.",
+        "points": [
+          "Password rules check themselves as you type, so sign-up never fails at the last step",
+          "After sign-up, a clear “verification in progress” screen says what happens next and how to get help on WhatsApp or email",
+          "Identity and payout details live together in Settings, with a visible Pending status, so payouts are never a mystery"
+        ],
+        "screens": [
+          "signup",
+          "verify-progress",
+          "identity-review"
+        ],
+        "caps": [
+          "Create your account",
+          "Verification in progress",
+          "Identity & bank information"
+        ]
+      },
+      {
+        "eyebrow": "Learning paths",
+        "title": "Paths that look",
+        "soft": "ready to publish.",
+        "need": "A path is the tutor's storefront. It has to look credible before a single question is written.",
+        "points": [
+          "The library shows each path the way students will: cover, tutor, language, audience and summary",
+          "Setup tracks progress (“30% complete”) with one Complete the setup action, so nothing is forgotten",
+          "A live card preview sits beside the form, and details are split into Basic details, Keywords and Cover & intro"
+        ],
+        "screens": [
+          "paths",
+          "path-setup"
+        ],
+        "caps": [
+          "Learning path library",
+          "Path setup with live preview"
+        ]
+      },
+      {
+        "eyebrow": "Question builder",
+        "title": "Build 40 questions",
+        "soft": "without losing your place.",
+        "need": "Tutors turn whole past papers into question sets. The builder has to keep momentum and accuracy over dozens of questions.",
+        "points": [
+          "Four steps, Overview → Question → Answer → Explanation, with progress always visible",
+          "A live mobile preview beside every step shows exactly what students will see",
+          "The source paper opens beside the answer editor (Doc view / Live preview), so tutors transcribe without switching windows",
+          "“Create & jump into next question” carries them straight on to the next one"
+        ],
+        "screens": [
+          "q-overview",
+          "q-answer",
+          "q-explain"
+        ],
+        "caps": [
+          "Step 1 · Overview",
+          "Step 3 · Answer, with the source paper",
+          "Step 4 · Explanation"
+        ]
+      },
+      {
+        "eyebrow": "Balance",
+        "title": "See the balance",
+        "soft": "before students do.",
+        "need": "A set full of easy questions on one topic fails students. Tutors need to spot gaps while they build, not after publishing.",
+        "points": [
+          "A level and topic distribution chart opens from inside the builder",
+          "The set page lists topic counts per level beside the questions",
+          "Draft status and a clear Publish set action make going live a deliberate step",
+          "List and card views, with drag to reorder"
+        ],
+        "screens": [
+          "q-distribution",
+          "qset-list"
+        ],
+        "caps": [
+          "Level & topic distribution",
+          "Question set, with distribution beside it"
+        ],
+        "detail": "d-distribution"
+      },
+      {
+        "eyebrow": "AI assist",
+        "title": "AI as an assistant,",
+        "soft": "not the author.",
+        "need": "Writing two explanations for every question is the slowest part. AI can draft them, but tutors stay accountable for accuracy.",
+        "points": [
+          "Generate with AI drafts a brief explanation, a deep one, or both",
+          "Drafts land in normal editable fields, never straight in front of students",
+          "A Reviewed toggle keeps a human sign-off on every deep explanation"
+        ],
+        "screens": [
+          "q-explain"
+        ],
+        "caps": [
+          "Explanations with Generate with AI"
+        ],
+        "detail": "d-ai"
+      },
+      {
+        "eyebrow": "Bring your own material",
+        "title": "From past paper",
+        "soft": "to question set.",
+        "need": "Tutors already have their material as PDFs and photos. Retyping it is the biggest reason they give up.",
+        "points": [
+          "Upload PDFs or images, then review and arrange the pages before extraction starts",
+          "Each file shows its page count, and pages can be removed or added",
+          "If extraction fails, the error says why, the pages stay in place, and Re-try is one click"
+        ],
+        "screens": [
+          "extract-upload",
+          "extract-failed"
+        ],
+        "caps": [
+          "Upload & arrange pages",
+          "Extraction failed, with one-click retry"
+        ],
+        "detail": "d-failed"
+      },
+      {
+        "eyebrow": "Study decks",
+        "title": "Revision cards,",
+        "soft": "one familiar pattern.",
+        "need": "Students revise with flashcards. Tutors shouldn't have to learn a second tool to make them.",
+        "points": [
+          "Decks reuse the question builder's four steps (Overview, Statement, Responses, Explanation), so tutors learn the pattern once",
+          "Tutors pick a card colour, and the live preview flips to show both sides",
+          "Correct and additional responses are marked inline"
+        ],
+        "screens": [
+          "card-statement",
+          "card-responses"
+        ],
+        "caps": [
+          "Card statement & colour",
+          "Responses with flip preview"
+        ],
+        "detail": "d-preview"
+      },
+      {
+        "eyebrow": "Videos",
+        "title": "Videos, organised",
+        "soft": "into playlists.",
+        "need": "Tutors record lessons in pieces. Students need them in order.",
+        "points": [
+          "Pick videos from a searchable library on the left, see the playlist build on the right",
+          "Drag to reorder, remove in one click, and the count updates as you go"
+        ],
+        "screens": [
+          "playlist"
+        ],
+        "caps": [
+          "Add videos to a playlist"
+        ]
+      },
+      {
+        "eyebrow": "Pricing",
+        "title": "Pricing tutors",
+        "soft": "actually understand.",
+        "need": "Tutors set their own prices, so platform fees and rules must be clear before they commit.",
+        "points": [
+          "A live breakdown shows the base price, the 30% platform fee and what each purchase earns",
+          "The subscription policy (no changes for 3 months once active) is stated up front",
+          "Plans are grouped into recurring and one-time, each showing “You receive … after platform fees”"
+        ],
+        "screens": [
+          "plan-create",
+          "pricing"
+        ],
+        "caps": [
+          "Create a plan with fee breakdown",
+          "Pricing & subscription plans"
+        ],
+        "detail": "d-plan"
+      },
+      {
+        "eyebrow": "Insight",
+        "title": "Knowing how",
+        "soft": "a path is doing.",
+        "need": "Tutors want to know if students are learning, and where they drop off, not just how many signed up.",
+        "points": [
+          "Enrolled, active, completed and returned learners, each with its trend",
+          "Revenue breakdown by subscriptions, materials and bonuses",
+          "Drop-off risk by subject shows where to improve content",
+          "Milestones celebrate progress, and the learners table shows each student's plan and status, with export"
+        ],
+        "screens": [
+          "dashboard",
+          "learners"
+        ],
+        "caps": [
+          "Path dashboard",
+          "Learners & plans"
+        ],
+        "detail": "d-milestone"
+      }
+    ],
+    "gallery": [
+      [
+        "dashboard",
+        "Path dashboard"
+      ],
+      [
+        "paths",
+        "Learning path library"
+      ],
+      [
+        "path-setup",
+        "Path setup"
+      ],
+      [
+        "q-overview",
+        "Question · overview"
+      ],
+      [
+        "q-distribution",
+        "Level & topic distribution"
+      ],
+      [
+        "q-answer",
+        "Question · answer with source"
+      ],
+      [
+        "q-explain",
+        "Question · AI explanations"
+      ],
+      [
+        "qset-list",
+        "Question set"
+      ],
+      [
+        "extract-upload",
+        "Upload for extraction"
+      ],
+      [
+        "extract-failed",
+        "Extraction failed"
+      ],
+      [
+        "card-statement",
+        "Study card · statement"
+      ],
+      [
+        "card-responses",
+        "Study card · responses"
+      ],
+      [
+        "playlist",
+        "Playlist"
+      ],
+      [
+        "plan-create",
+        "Create plan"
+      ],
+      [
+        "pricing",
+        "Pricing & plans"
+      ],
+      [
+        "learners",
+        "Learners"
+      ],
+      [
+        "signup",
+        "Create account"
+      ],
+      [
+        "verify-progress",
+        "Verification in progress"
+      ],
+      [
+        "identity",
+        "Verify your identity"
+      ],
+      [
+        "identity-review",
+        "Documents under review"
       ]
     ]
   }

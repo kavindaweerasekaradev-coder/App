@@ -216,7 +216,7 @@
     // Authoring journey: hero window rises with the menu floating in
     var ajs = document.querySelector('.aj-stage');
     if (ajs) {
-      var mw = ajs.querySelector('.aj-win--main'), fm = ajs.querySelector('.aj-float--menu'), ch = ajs.querySelectorAll('.rm-chip');
+      var mw = ajs.querySelector('.aj-win--main'), fm = ajs.querySelector('.aj-float--menu') || ajs.querySelector('.aj-float--phone'), ch = ajs.querySelectorAll('.rm-chip');
       var jtl = gsap.timeline({ paused: true })
         .from(ajs, { autoAlpha: 0, y: 40, duration: 0.8, ease: 'power3.out' })
         .from(mw, { y: 160, autoAlpha: 0, scale: 0.94, duration: 1.1, ease: 'expo.out' }, 0.2)
@@ -290,5 +290,24 @@
     });
     var st = document.querySelectorAll('.aj-state');
     if (st.length) { gsap.set(st, { autoAlpha: 0, scale: 0.6 }); once('.aj-states', function () { gsap.to(st, { autoAlpha: 1, scale: 1, duration: 0.4, ease: 'back.out(2.5)', stagger: 0.05 }); }, 'top 88%'); }
+
+    // Core moments: text rises, the main screen lifts in, secondary screens and the detail crop slide in after
+    gsap.utils.toArray('.am').forEach(function (m) {
+      var txt = m.querySelectorAll('.am__num, .am__eyebrow, .am__title, .am__need, .am__label, .am__points li');
+      var main = m.querySelector('.am-shot--main'), subs = m.querySelectorAll('.am-shot--sub'), det = m.querySelector('.am-detail');
+      var flip = m.classList.contains('am--flip') ? -1 : 1;
+      gsap.set(txt, { autoAlpha: 0, y: 24 });
+      gsap.set(main, { autoAlpha: 0, y: 60, scale: 0.96 });
+      gsap.set(subs, { autoAlpha: 0, x: 80 * flip, y: 30 });
+      if (det) gsap.set(det, { autoAlpha: 0, scale: 0.6, rotation: 6 * flip });
+      once(m, function () {
+        var tl = gsap.timeline();
+        tl.to(txt, { autoAlpha: 1, y: 0, duration: 0.6, ease: 'power3.out', stagger: 0.06 }, 0)
+          .to(main, { autoAlpha: 1, y: 0, scale: 1, duration: 0.9, ease: 'expo.out' }, 0.1)
+          .to(subs, { autoAlpha: 1, x: 0, y: 0, duration: 0.9, ease: 'power3.out', stagger: 0.15 }, 0.4);
+        if (det) tl.to(det, { autoAlpha: 1, scale: 1, rotation: 0, duration: 0.8, ease: 'back.out(1.8)' }, 0.75)
+          .to(det, { y: -8, duration: 2.6, ease: 'sine.inOut', yoyo: true, repeat: -1 });
+      }, 'top 75%');
+    });
   });
 })();
