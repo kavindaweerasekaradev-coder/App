@@ -1870,3 +1870,71 @@ a.uf-node:hover .uf-node__go { color: var(--text); transform: translate(2px, -2p
   .ds-layer:not(:last-child)::after { display: none; }
 }
 @media (prefers-reduced-motion: reduce) { .ds-lab__preview *, .ds-switch i { transition: none; } }
+
+/* Design systems v2: web + mobile preview, anatomy, principles */
+.ds__hint { margin-top: 14px; font-size: 14px; font-weight: 500; color: var(--text); }
+.ds__hint span { display: inline-block; margin-right: 6px; animation: ds-bob 1.6s ease-in-out infinite; }
+@keyframes ds-bob { 50% { transform: translateY(3px); } }
+.ds-lab__preview { grid-template-columns: minmax(0, 1.3fr) minmax(0, .9fr); align-items: center; }
+.ds-web { display: grid; gap: calc(var(--ds-u) * 2); }
+.ds-plat { display: inline-flex; align-items: center; gap: 6px; margin-bottom: 2px; font: 600 11.5px/1 var(--font-sans); letter-spacing: .1em; text-transform: uppercase; color: #6b6b6b; }
+.ds-plat i { width: 7px; height: 7px; border-radius: 50%; background: var(--ds-accent); }
+.ds-phone { justify-self: center; width: 100%; max-width: 250px; }
+.ds-phone__frame { display: grid; gap: calc(var(--ds-u) * 1.5); padding: 12px 12px 10px; border-radius: 34px; background: #fff; box-shadow: 0 0 0 7px #0e0e0e, 0 30px 60px -20px rgba(14, 14, 14, .45); color: #0e0e0e; }
+.ds-phone__bar { display: flex; justify-content: space-between; align-items: center; padding: 0 8px; font-size: 10.5px; font-weight: 600; }
+.ds-phone__notch { width: 64px; height: 18px; border-radius: 999px; background: #0e0e0e; }
+.ds-phone__title { margin: 2px 4px 0; font-size: 18px; font-weight: 600; letter-spacing: -0.02em; }
+.ds-phone__bal { display: grid; gap: 6px; padding: calc(var(--ds-u) * 1.5); border-radius: min(var(--ds-r), 20px); background: color-mix(in srgb, var(--ds-accent) 16%, #fff); }
+.ds-phone__bal small { font-size: 11.5px; color: #6b6b6b; }
+.ds-phone__bal b { font-size: 20px; letter-spacing: -0.02em; }
+.ds-phone .ds-toggle, .ds-phone .ds-input { padding: calc(var(--ds-u) * 1.25); font-size: 12.5px; }
+.ds-phone .ds-input input { height: calc(var(--ds-u) * 4.5); font-size: 13px; }
+.ds-btn--block { flex: none; width: 100%; }
+.ds-phone__tabs { display: flex; justify-content: space-around; padding: 8px 6px 2px; border-top: 1px solid #f0f0ed; }
+.ds-phone__tabs i { width: 18px; height: 18px; border-radius: min(var(--ds-r), 6px); background: #e6e6e2; }
+.ds-phone__tabs i.is-on { background: var(--ds-accent); }
+
+.ds-anatomy { margin-top: 16px; display: grid; grid-template-columns: minmax(0, .9fr) minmax(0, 1.1fr); gap: 24px clamp(28px, 4vw, 64px); align-items: center;
+  padding: clamp(24px, 4vw, 48px); border-radius: var(--radius-xl); background: var(--gray); }
+.ds-anatomy__title { margin-top: 10px; font-size: clamp(24px, 2.6vw, 34px); letter-spacing: -0.035em; line-height: 1.12; }
+.ds-anatomy__text > p:last-child { margin-top: 14px; color: var(--text-muted); line-height: 1.65; }
+.ds-anatomy__stage { position: relative; display: grid; place-items: center; min-height: 300px; padding: 70px 20px 90px;
+  border-radius: var(--radius-lg); background: radial-gradient(circle at 1px 1px, rgba(14, 14, 14, .08) 1px, transparent 0) 0 0 / 16px 16px, var(--surface); box-shadow: inset 0 0 0 1px var(--border); }
+.ds-anatomy__btn { position: relative; display: inline-flex; align-items: center; gap: 12px; height: 56px; padding: 0 28px; border-radius: 999px; background: #5a5ede; color: #fff; font-size: 17px; font-weight: 600;
+  outline: 1.5px dashed rgba(90, 94, 222, .45); outline-offset: 10px; }
+.ds-anatomy__pad { position: absolute; inset: 0; border-radius: inherit; background: repeating-linear-gradient(45deg, rgba(212, 245, 92, .0) 0 6px, rgba(212, 245, 92, .0) 6px 12px); }
+.ds-anatomy__icon { display: grid; place-items: center; width: 26px; height: 26px; border-radius: 50%; background: rgba(255, 255, 255, .2); font-size: 14px; }
+.ds-tag { position: absolute; padding: 6px 10px; border-radius: 10px; background: var(--ink); color: #fff; font: 500 12px/1 ui-monospace, SFMono-Regular, Menlo, monospace; white-space: nowrap; }
+.ds-tag b { font-weight: 500; color: var(--lime); }
+.ds-tag::after { content: ""; position: absolute; width: 1.5px; background: var(--ink); opacity: .5; }
+.ds-tag--1 { top: 22px; left: 8%; } .ds-tag--1::after { left: 50%; top: 100%; height: 34px; }
+.ds-tag--2 { top: 22px; right: 8%; } .ds-tag--2::after { left: 30%; top: 100%; height: 34px; }
+.ds-tag--3 { bottom: 64px; left: 6%; } .ds-tag--3::after { left: 70%; bottom: 100%; height: 26px; }
+.ds-tag--4 { bottom: 64px; right: 10%; } .ds-tag--4::after { left: 30%; bottom: 100%; height: 26px; }
+.ds-states { position: absolute; left: 16px; right: 16px; bottom: 14px; display: flex; flex-wrap: wrap; justify-content: center; gap: 6px; }
+.ds-state { display: inline-flex; align-items: center; gap: 6px; height: 28px; padding: 0 12px; border-radius: 999px; background: #5a5ede; color: #fff; font-size: 12px; font-weight: 600; }
+.ds-state--hover { background: #4a4ec9; } .ds-state--focus { box-shadow: 0 0 0 2px var(--surface), 0 0 0 4px #5a5ede; }
+.ds-state--loading i { width: 10px; height: 10px; border-radius: 50%; border: 2px solid rgba(255, 255, 255, .4); border-top-color: #fff; animation: ds-spin .8s linear infinite; }
+.ds-state--off { background: #e4e4e0; color: #9a9a96; }
+@keyframes ds-spin { to { transform: rotate(360deg); } }
+
+.ds-principles { margin-top: 16px; display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 16px; }
+.ds-pr { padding: 26px; border-radius: var(--radius-lg); background: var(--ink); color: #fff; }
+.ds-pr__n { display: inline-grid; place-items: center; width: 34px; height: 34px; border-radius: 50%; background: var(--lime); color: var(--ink); font-size: 12.5px; font-weight: 600; }
+.ds-pr h3 { margin-top: 16px; font-size: 20px; letter-spacing: -0.02em; }
+.ds-pr p { margin-top: 8px; font-size: 14.5px; line-height: 1.6; color: rgba(255, 255, 255, .68); }
+.ds-pr code { padding: 1px 6px; border-radius: 6px; background: rgba(255, 255, 255, .1); color: var(--lime); font-size: 12.5px; }
+
+@media (max-width: 980px) {
+  .ds-anatomy { grid-template-columns: 1fr; }
+  .ds-principles { grid-template-columns: 1fr; }
+}
+@media (max-width: 640px) {
+  .ds-lab__preview { grid-template-columns: 1fr; }
+  .ds-tag { font-size: 10.5px; padding: 5px 8px; }
+  .ds-tag--1 { left: 4%; } .ds-tag--2 { right: 4%; } .ds-tag--3 { left: 3%; } .ds-tag--4 { right: 3%; }
+  .ds-anatomy__btn { height: 50px; padding: 0 20px; font-size: 15px; }
+  .ds-anatomy__stage { padding-bottom: 130px; }
+  .ds-tag--3, .ds-tag--4 { bottom: 104px; }
+}
+@media (prefers-reduced-motion: reduce) { .ds__hint span, .ds-state--loading i { animation: none; } }

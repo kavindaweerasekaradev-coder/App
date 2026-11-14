@@ -52,6 +52,23 @@
     var demo = [['accent', 'indigo'], ['radius', '999'], ['accent', 'coral'], ['radius', '8'], ['accent', 'lime'], ['radius', '16']];
     demo.forEach(function (d, i) { gsap.delayedCall(1.4 + i * 0.9, function () { if (!touched) set(d[0], d[1]); }); });
   } });
+  // Anatomy: the button lands, then each token tag snaps to it; principles rise
+  var tags = document.querySelectorAll('.ds-tag'), abtn = document.querySelector('.ds-anatomy__btn'), sts = document.querySelectorAll('.ds-state'), prs = document.querySelectorAll('.ds-pr');
+  if (abtn) {
+    gsap.set(abtn, { autoAlpha: 0, scale: 0.7 });
+    gsap.set(tags, { autoAlpha: 0, y: function (i) { return i < 2 ? -14 : 14; } });
+    gsap.set(sts, { autoAlpha: 0, y: 10 });
+    ScrollTrigger.create({ trigger: '.ds-anatomy', start: 'top 72%', once: true, onEnter: function () {
+      gsap.timeline()
+        .to(abtn, { autoAlpha: 1, scale: 1, duration: 0.7, ease: 'back.out(2)' })
+        .to(tags, { autoAlpha: 1, y: 0, duration: 0.45, ease: 'back.out(2.5)', stagger: 0.15 }, '-=0.1')
+        .to(sts, { autoAlpha: 1, y: 0, duration: 0.35, ease: 'power3.out', stagger: 0.07 }, '-=0.2');
+    } });
+  }
+  gsap.set(prs, { autoAlpha: 0, y: 40 });
+  ScrollTrigger.create({ trigger: '.ds-principles', start: 'top 82%', once: true, onEnter: function () {
+    gsap.to(prs, { autoAlpha: 1, y: 0, duration: 0.7, ease: 'power3.out', stagger: 0.12 });
+  } });
   ScrollTrigger.create({ trigger: '.ds-layers', start: 'top 82%', once: true, onEnter: function () {
     gsap.to(layers, { autoAlpha: 1, y: 0, duration: 0.7, ease: 'power3.out', stagger: 0.12 });
   } });
