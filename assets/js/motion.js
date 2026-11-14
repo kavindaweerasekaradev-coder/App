@@ -222,7 +222,7 @@
       });
       var ctitle = contact.querySelector('.contact__title');
       var cwords = splitWords(ctitle);
-      var rest = contact.querySelectorAll('.label, .cx-status, .contact__lead, .contact__actions .btn, .contact__links li, .cx-cards li, .contact__marquee');
+      var rest = contact.querySelectorAll('.label, .contact__lead, .contact__actions .btn, .contact__links li, .contact__marquee');
       gsap.timeline({ scrollTrigger: { trigger: contact, start: 'top 70%', once: true } })
         .from(cwords, { yPercent: 110, rotationX: -85, transformOrigin: '50% 100%', duration: 1.1, ease: 'power4.out', stagger: 0.07 })
         .from(rest, { y: 26, autoAlpha: 0, duration: 0.8, ease: 'power3.out', stagger: 0.08, clearProps: 'transform,opacity,visibility' }, 0.35);
