@@ -55,6 +55,33 @@
     });
   });
 
+  // Contact: live Colombo time and the rotating "feel ___" word
+  var cxTime = document.getElementById('cx-time');
+  if (cxTime && window.Intl) {
+    var cxFmt = new Intl.DateTimeFormat('en-GB', { hour: '2-digit', minute: '2-digit', hour12: false, timeZone: 'Asia/Colombo' });
+    var cxTick = function () { try { cxTime.textContent = cxFmt.format(new Date()); } catch (e) {} };
+    cxTick(); setInterval(cxTick, 20000);
+  }
+  var rot = document.querySelector('.cx-rot__in');
+  if (rot && !window.matchMedia('(prefers-reduced-motion: reduce)').matches) {
+    var words = rot.dataset.words.split('|'), wi = 0, box = rot.parentNode;
+    setInterval(function () {
+      if (document.hidden) return;
+      wi = (wi + 1) % words.length;
+      var next = words[wi];
+      if (window.gsap) {
+        gsap.timeline()
+          .to(rot, { yPercent: -110, duration: 0.35, ease: 'power2.in' })
+          .add(function () {
+            var w0 = box.offsetWidth; rot.textContent = next; var w1 = box.offsetWidth;
+            box.setAttribute('aria-label', next.replace('.', ''));
+            gsap.fromTo(box, { width: w0 }, { width: w1, duration: 0.45, ease: 'power3.out', clearProps: 'width' });
+          })
+          .fromTo(rot, { yPercent: 110 }, { yPercent: 0, duration: 0.5, ease: 'back.out(1.8)' });
+      } else { rot.textContent = next; }
+    }, 2600);
+  }
+
   // Mobile menu
   var burger = document.getElementById('nav-burger');
   var links = document.getElementById('nav-links');
