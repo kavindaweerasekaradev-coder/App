@@ -35,13 +35,13 @@
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet" />
-  <link rel="stylesheet" href="assets/css/style.css?v=20261110a" />
+  <link rel="stylesheet" href="assets/css/style.css?v=20261114a" />
   <script>document.documentElement.classList.add('js')</script>
   <link rel="preload" href="assets/js/vendor/gsap.min.js?v=3.12.5" as="script" />
   <link rel="preload" href="assets/js/vendor/ScrollTrigger.min.js?v=3.12.5" as="script" />
-  <link rel="preload" href="assets/js/motion.js?v=20261110a" as="script" />
+  <link rel="preload" href="assets/js/motion.js?v=20261114a" as="script" />
   <script src="assets/js/analytics.js" defer></script>
-  <script src="assets/js/chat.js?v=20261110a" defer></script>
+  <script src="assets/js/chat.js?v=20261114a" defer></script>
 </head>
 <body>
   <a class="skip-link" href="#main">Skip to content</a>
@@ -566,6 +566,84 @@
       </div>
     </section>
 
+    <!-- ===================== DESIGN SYSTEMS ===================== -->
+    <section class="section section--flush-top" id="systems">
+      <div class="container">
+        <div class="ds">
+          <div class="ds__head">
+            <p class="label">Design systems</p>
+            <h2 class="ds__title">I don't design screens. <span class="soft">I design the systems that make them.</span></h2>
+            <p class="ds__lead">Tokens, components and patterns that let a team ship faster and stay consistent across web and mobile. Change one decision, and every screen follows. Try it.</p>
+          </div>
+
+          <div class="ds-lab" data-accent="lime" data-radius="16" data-density="comfortable">
+            <div class="ds-lab__controls" aria-label="Design tokens">
+              <div class="ds-ctrl">
+                <p class="ds-ctrl__label">color.primary</p>
+                <div class="ds-ctrl__row" role="radiogroup" aria-label="Primary colour">
+                  <button type="button" class="ds-swatch is-on" role="radio" aria-checked="true" data-set="accent" data-value="lime" style="--c:#d4f55c" aria-label="Lime"></button>
+                  <button type="button" class="ds-swatch" role="radio" aria-checked="false" data-set="accent" data-value="indigo" style="--c:#5a5ede" aria-label="Indigo"></button>
+                  <button type="button" class="ds-swatch" role="radio" aria-checked="false" data-set="accent" data-value="coral" style="--c:#ff6b5a" aria-label="Coral"></button>
+                  <button type="button" class="ds-swatch" role="radio" aria-checked="false" data-set="accent" data-value="teal" style="--c:#14b8a6" aria-label="Teal"></button>
+                </div>
+              </div>
+              <div class="ds-ctrl">
+                <p class="ds-ctrl__label">radius.base</p>
+                <div class="ds-ctrl__row ds-seg" role="radiogroup" aria-label="Corner radius">
+                  <button type="button" role="radio" aria-checked="false" data-set="radius" data-value="0">0</button>
+                  <button type="button" role="radio" aria-checked="false" data-set="radius" data-value="8">8</button>
+                  <button type="button" class="is-on" role="radio" aria-checked="true" data-set="radius" data-value="16">16</button>
+                  <button type="button" role="radio" aria-checked="false" data-set="radius" data-value="999">Pill</button>
+                </div>
+              </div>
+              <div class="ds-ctrl">
+                <p class="ds-ctrl__label">space.density</p>
+                <div class="ds-ctrl__row ds-seg" role="radiogroup" aria-label="Density">
+                  <button type="button" role="radio" aria-checked="false" data-set="density" data-value="compact">Compact</button>
+                  <button type="button" class="is-on" role="radio" aria-checked="true" data-set="density" data-value="comfortable">Comfortable</button>
+                </div>
+              </div>
+              <pre class="ds-code" aria-live="polite"><code><span class="ds-code__k">--color-primary</span>: <span class="ds-code__v" data-token="accent">#d4f55c</span>;
+<span class="ds-code__k">--radius-base</span>: <span class="ds-code__v" data-token="radius">16px</span>;
+<span class="ds-code__k">--space-unit</span>: <span class="ds-code__v" data-token="density">8px</span>;</code></pre>
+            </div>
+
+            <div class="ds-lab__preview" aria-label="Components built from these tokens">
+              <div class="ds-card ds-piece">
+                <div class="ds-card__top">
+                  <span class="ds-avatar">KW</span>
+                  <div><strong>Monthly payroll</strong><small>Due in 3 days · 48 people</small></div>
+                  <span class="ds-badge">Ready</span>
+                </div>
+                <div class="ds-progress"><i></i></div>
+                <div class="ds-card__row"><span>Approved</span><b>42 / 48</b></div>
+                <div class="ds-actions"><button type="button" class="ds-btn ds-btn--primary">Run payroll</button><button type="button" class="ds-btn ds-btn--ghost">Review</button></div>
+              </div>
+              <div class="ds-stack">
+                <label class="ds-input ds-piece"><span>Search people</span><input type="text" placeholder="Name or team" /></label>
+                <div class="ds-chips ds-piece"><span class="ds-chip is-on">Design</span><span class="ds-chip">Product</span><span class="ds-chip">Engineering</span></div>
+                <div class="ds-toggle ds-piece"><span>Email alerts</span><button type="button" class="ds-switch is-on" role="switch" aria-checked="true" aria-label="Email alerts"><i></i></button></div>
+              </div>
+            </div>
+          </div>
+
+          <ol class="ds-layers">
+            <li class="ds-layer"><span class="ds-layer__n">01</span><h3>Foundations</h3><p>Colour, type, spacing, radius and elevation as named tokens, ready for light and dark.</p><span class="ds-layer__tag">Tokens</span></li>
+            <li class="ds-layer"><span class="ds-layer__n">02</span><h3>Components</h3><p>Buttons, inputs, cards, tables and charts with every state: hover, focus, disabled, error, empty.</p><span class="ds-layer__tag">100+ built</span></li>
+            <li class="ds-layer"><span class="ds-layer__n">03</span><h3>Patterns</h3><p>Forms, dashboards, onboarding and step-by-step flows that solve the same problem the same way.</p><span class="ds-layer__tag">Reusable flows</span></li>
+            <li class="ds-layer"><span class="ds-layer__n">04</span><h3>Products</h3><p>Shipped across web and mobile, with documentation and handoff so engineers build it exactly.</p><span class="ds-layer__tag">Web + mobile</span></li>
+          </ol>
+
+          <div class="ds-proof">
+            <div class="ds-stat"><b data-count="100">100</b><span>+</span><p>reusable components in one dashboard design system in Figma</p></div>
+            <div class="ds-stat"><b data-count="5">5</b><span>+</span><p>years building and scaling systems for product teams</p></div>
+            <div class="ds-stat"><b>AA</b><p>WCAG contrast and focus states built into every component</p></div>
+            <div class="ds-stat ds-stat--links"><p>See systems in action</p><a href="shipped/readyme.html#system">ReadyMe ↗</a><a href="case-studies/nestwork.html#system">nestwork ↗</a><a href="shipped/authoring-tool.html#system">Authoring tool ↗</a></div>
+          </div>
+        </div>
+      </div>
+    </section>
+
     <!-- ===================== EXPERIENCE ===================== -->
     <section class="section section--flush-top" id="experience">
       <div class="container">
@@ -826,9 +904,10 @@
   <script src="assets/js/vendor/gsap.min.js?v=3.12.5" defer></script>
   <script src="assets/js/vendor/ScrollTrigger.min.js?v=3.12.5" defer></script>
   <script src="assets/js/vendor/lenis.min.js?v=1.1.13" defer></script>
-  <script src="assets/js/smooth.js?v=20261110a" defer></script>
+  <script src="assets/js/smooth.js?v=20261114a" defer></script>
   <script src="assets/js/vendor/Draggable.min.js?v=3.12.5" defer></script>
-  <script src="assets/js/motion.js?v=20261110a" defer></script>
-  <script src="assets/js/main.js?v=20261110a" defer></script>
+  <script src="assets/js/motion.js?v=20261114a" defer></script>
+  <script src="assets/js/main.js?v=20261114a" defer></script>
+  <script src="assets/js/ds.js?v=20261114a" defer></script>
 </body>
 </html>
