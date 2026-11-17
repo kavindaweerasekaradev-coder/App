@@ -559,13 +559,15 @@ a, button, summary, label, [role="button"] { cursor: pointer; }
 .tool-logo { width: 46px; height: 46px; border-radius: 14px; display: grid; place-items: center; flex-shrink: 0; background: var(--gray); }
 .tool-logo svg { width: 26px; height: 26px; }
 .tool-logo--figma svg { width: 19px; height: 28px; }
-.tool-logo--framer, .tool-logo--cursor { background: var(--ink); }
-.tool-logo--framer svg { width: 22px; height: 22px; }
+.tool-logo--chatgpt, .tool-logo--cursor { background: var(--ink); }
+.tool-logo--chatgpt svg { width: 20px; height: 20px; }
 .tool-logo--claude { background: #faf0eb; }
 .tool-logo--miro { background: #ffd02f; }
 .tool-logo--miro svg { width: 22px; height: 22px; }
 .tool-logo--webflow { background: #146ef5; }
 .tool-logo--webflow svg { width: 25px; height: 25px; }
+.tool-logo--notion { background: #fff; box-shadow: inset 0 0 0 1px var(--border); }
+.tool-logo--notion svg { width: 20px; height: 20px; }
 @keyframes float { 50% { transform: translateY(-10px); } }
 /* Slowly orbiting rings behind the tool chips */
 .services__orbit {
@@ -616,6 +618,7 @@ details[open] .acc-icon::after { transform: rotate(0); }
 .pr h3 { position: relative; display: inline-block; margin: 8px 0 10px; font-size: 24px; letter-spacing: -0.03em; }
 .pr h3::after { content: ""; position: absolute; z-index: -1; left: -2px; right: -2px; bottom: .08em; height: .32em; border-radius: 3px;
   background: var(--lime); transform: scaleX(0); transform-origin: left; transition: transform .55s var(--ease); }
+.pr__step p.pr__q { margin-bottom: 8px; font-size: 15px; font-weight: 500; font-style: italic; color: var(--text); }
 .pr__step p { max-width: 32ch; color: var(--text-muted); font-size: 14.5px; }
 .pr__tags { margin-top: 16px; display: flex; flex-wrap: wrap; gap: 6px; }
 .pr__tags li { font-size: 12.5px; padding: 5px 11px; border-radius: 999px; background: #fff; border: 1px solid var(--border); }
