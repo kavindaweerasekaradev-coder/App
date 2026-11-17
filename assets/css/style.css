@@ -618,6 +618,7 @@ details[open] .acc-icon::after { transform: rotate(0); }
 .pr h3 { position: relative; display: inline-block; margin: 8px 0 10px; font-size: 24px; letter-spacing: -0.03em; }
 .pr h3::after { content: ""; position: absolute; z-index: -1; left: -2px; right: -2px; bottom: .08em; height: .32em; border-radius: 3px;
   background: var(--lime); transform: scaleX(0); transform-origin: left; transition: transform .55s var(--ease); }
+.pr__step p.pr__q { margin-bottom: 8px; font-size: 15px; font-weight: 500; font-style: italic; color: var(--text); }
 .pr__step p { max-width: 32ch; color: var(--text-muted); font-size: 14.5px; }
 .pr__tags { margin-top: 16px; display: flex; flex-wrap: wrap; gap: 6px; }
 .pr__tags li { font-size: 12.5px; padding: 5px 11px; border-radius: 999px; background: #fff; border: 1px solid var(--border); }
