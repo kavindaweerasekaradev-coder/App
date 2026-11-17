@@ -550,12 +550,13 @@ a, button, summary, label, [role="button"] { cursor: pointer; }
 }
 .float-chip:hover { box-shadow: 0 24px 50px rgba(10, 40, 100, .32); }
 .gsap .float-chip { animation: none; }
-.float-chip--1 { top: 8%; left: 7%; }
-.float-chip--2 { top: 5%; right: 8%; animation-delay: -1s; }
-.float-chip--3 { top: 24%; left: 36%; animation-delay: -2s; }
-.float-chip--4 { top: 39%; left: 6%; animation-delay: -4s; }
-.float-chip--5 { top: 45%; right: 6%; animation-delay: -3s; }
-.float-chip--6 { top: 60%; left: 30%; animation-delay: -5s; }
+.float-chip--1 { top: 6%; left: 6%; }
+.float-chip--2 { top: 4%; right: 7%; animation-delay: -1s; }
+.float-chip--3 { top: 20%; left: 33%; animation-delay: -2s; }
+.float-chip--4 { top: 34%; left: 4%; animation-delay: -4s; }
+.float-chip--5 { top: 33%; right: 5%; animation-delay: -3s; }
+.float-chip--6 { top: 48%; left: 26%; animation-delay: -5s; }
+.float-chip--7 { top: 62%; left: 5%; animation-delay: -2.5s; }
 .tool-logo { width: 46px; height: 46px; border-radius: 14px; display: grid; place-items: center; flex-shrink: 0; background: var(--gray); }
 .tool-logo svg { width: 26px; height: 26px; }
 .tool-logo--figma svg { width: 19px; height: 28px; }
@@ -564,8 +565,10 @@ a, button, summary, label, [role="button"] { cursor: pointer; }
 .tool-logo--claude { background: #faf0eb; }
 .tool-logo--miro { background: #ffd02f; }
 .tool-logo--miro svg { width: 22px; height: 22px; }
-.tool-logo--figjam { background: #f1eaff; }
-.tool-logo--figjam svg { width: 17px; height: 25px; }
+.tool-logo--figjam { background: #9747ff; }
+.tool-logo--figjam svg { width: 26px; height: 26px; }
+.tool-logo--webflow { background: #146ef5; }
+.tool-logo--webflow svg { width: 25px; height: 25px; }
 .tool-logo--notion { background: #fff; box-shadow: inset 0 0 0 1px var(--border); }
 .tool-logo--notion svg { width: 20px; height: 20px; }
 @keyframes float { 50% { transform: translateY(-10px); } }
@@ -1105,6 +1108,7 @@ html:not(.has-drag) .beyond__hint { display: none; }
   .float-chip { font-size: 14px; gap: 9px; padding: 6px 16px 6px 6px; }
   .tool-logo { width: 36px; height: 36px; border-radius: 11px; }
   .tool-logo svg { width: 20px; height: 20px; }
+  .tool-logo--figjam svg { width: 22px; height: 22px; }
   .tool-logo--figma svg { width: 15px; height: 22px; }
   .stat__viz { height: 96px; }
   .stat__viz { height: auto; min-height: 96px; }
