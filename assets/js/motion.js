@@ -114,7 +114,15 @@
           .to(words, { yPercent: 0, duration: 0.6, stagger: 0.06, ease: 'power3.out' }, 0.25)
           .to(rest, { autoAlpha: 1, y: 0, duration: 0.5, stagger: 0.05, ease: 'power3.out' }, 0.35);
         // hovering a card replays its illustration once the card has played
-        var hover = function () { if (tl.progress() === 1 && !artTl.isActive()) artTl.restart(); };
+        // (a fresh, standalone timeline each time: the original is nested in the finished entrance)
+        var replay = null;
+        var hover = function () {
+          if (tl.progress() < 1 || (replay && replay.isActive())) return;
+          if (replay) replay.kill();
+          replay = gsap.timeline();
+          Object.keys(arts).forEach(function (k) { if (art.classList.contains(k)) arts[k](art, replay, 0); });
+          replay.timeScale(0.8);
+        };
         s.addEventListener('mouseenter', hover);
         return { tl: tl, hover: hover, el: s };
       });
