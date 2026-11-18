@@ -5,7 +5,10 @@
   if (!window.Lenis) return;
   if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) return;
 
-  var lenis = new Lenis({ duration: 1.15, easing: function (t) { return Math.min(1, 1.001 - Math.pow(2, -10 * t)); }, smoothWheel: true });
+  // lerp-based inertia: each frame moves a fixed share of the remaining distance, so the wheel and
+  // trackpad feel weighty and continuous instead of stepping, and scrolling settles softly.
+  var ease = function (t) { return Math.min(1, 1.001 - Math.pow(2, -10 * t)); };
+  var lenis = new Lenis({ lerp: 0.075, smoothWheel: true, wheelMultiplier: 0.95, touchMultiplier: 1.4, syncTouch: false });
   window.lenis = lenis;
 
   if (window.gsap && window.ScrollTrigger) {
@@ -14,6 +17,12 @@
     gsap.ticker.lagSmoothing(0);
   } else {
     (function raf(t) { lenis.raf(t); requestAnimationFrame(raf); })(performance.now());
+  }
+
+  // Keep ScrollTrigger in step once late images and fonts change the page height
+  if (window.ScrollTrigger) {
+    window.addEventListener('load', function () { ScrollTrigger.refresh(); });
+    if (document.fonts && document.fonts.ready) document.fonts.ready.then(function () { ScrollTrigger.refresh(); });
   }
 
   function navOffset() {
@@ -31,7 +40,7 @@
     var target = url.hash === '#top' ? 0 : document.getElementById(decodeURIComponent(url.hash.slice(1)));
     if (target === null) return;
     e.preventDefault();
-    lenis.scrollTo(target, { offset: target === 0 ? 0 : navOffset() });
+    lenis.scrollTo(target, { offset: target === 0 ? 0 : navOffset(), duration: 1.4, easing: ease });
     history.replaceState(null, '', url.hash);
   });
 
