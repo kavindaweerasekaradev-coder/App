@@ -49,13 +49,89 @@
   var rt;
   window.addEventListener('resize', function () { clearTimeout(rt); rt = setTimeout(build, 150); });
 
-  // Entrance: header slides in, tiles rise column by column
+  // Entrance: back button and heading slide in; the title rises word by word
   if (hasGsap && !reduce) {
-    gsap.from('.ex-back, .ex-head', { y: -20, autoAlpha: 0, duration: 0.8, ease: 'power3.out', stagger: 0.1 });
-    gsap.utils.toArray('.ex-col').forEach(function (c, k) {
-      gsap.from(c.querySelectorAll('.ex-tile'), { y: 80, autoAlpha: 0, scale: 0.94, duration: 1, ease: 'power3.out',
-        stagger: 0.08, delay: 0.15 + k * 0.07, clearProps: 'transform,opacity,visibility' });
+    var h1 = document.querySelector('.ex-head h1');
+    if (h1 && !h1.querySelector('.ex-word')) {
+      h1.innerHTML = h1.textContent.trim().split(/\s+/).map(function (w) {
+        return '<span class="ex-word"><span>' + w + '</span></span>';
+      }).join(' ');
+    }
+    gsap.timeline({ defaults: { ease: 'power3.out' } })
+      .from('.ex-back', { x: -30, autoAlpha: 0, duration: 0.8 }, 0)
+      .from('.ex-head', { autoAlpha: 0, scale: 0.92, duration: 0.7 }, 0.05)
+      .from('.ex-word > span', { yPercent: 110, duration: 0.8, stagger: 0.08 }, 0.15)
+      .from('.ex-head p', { y: 10, autoAlpha: 0, duration: 0.6 }, 0.45);
+
+    // Tiles unmask from the bottom as they come into view, the image settling from a slight zoom
+    gsap.set(tiles, { clipPath: 'inset(100% 0% 0% 0% round 16px)' });
+    gsap.set(wall.querySelectorAll('.ex-tile img'), { scale: 1.25 });
+    ScrollTrigger.batch(tiles, {
+      start: 'top 96%', once: true,
+      onEnter: function (batch) {
+        gsap.to(batch, { clipPath: 'inset(0% 0% 0% 0% round 16px)', duration: 1.1, ease: 'expo.out', stagger: 0.07,
+          onComplete: function () { gsap.set(this.targets(), { clearProps: 'clipPath' }); } });
+        gsap.to(batch.map(function (t) { return t.querySelector('img'); }), { scale: 1, duration: 1.4, ease: 'expo.out', stagger: 0.07,
+          clearProps: 'transform' });
+      }
     });
+
+    // Columns lean slightly with scroll speed, then spring back upright
+    var proxy = { skew: 0 }, skewSet = gsap.quickSetter(wall, 'skewY', 'deg'), clampSkew = gsap.utils.clamp(-3, 3);
+    ScrollTrigger.create({
+      trigger: wall, start: 'top bottom', end: 'bottom top',
+      onUpdate: function (self) {
+        var sk = clampSkew(self.getVelocity() / -400);
+        if (Math.abs(sk) > Math.abs(proxy.skew)) {
+          proxy.skew = sk;
+          gsap.to(proxy, { skew: 0, duration: 0.8, ease: 'power3', overwrite: true, onUpdate: function () { skewSet(proxy.skew); } });
+        }
+      }
+    });
+  }
+
+  // Desktop pointer: tiles tilt toward the cursor and a "View" pill follows it
+  if (hasGsap && !reduce && window.matchMedia('(hover: hover) and (pointer: fine)').matches) {
+    var pill = document.createElement('div');
+    pill.className = 'ex-cursor'; pill.setAttribute('aria-hidden', 'true');
+    pill.innerHTML = '<span>View</span><svg viewBox="0 0 24 24" width="14" height="14" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M7 17 17 7M9 7h8v8"/></svg>';
+    document.body.appendChild(pill);
+    gsap.set(pill, { xPercent: -50, yPercent: -50, scale: 0, autoAlpha: 0 });
+    var px = gsap.quickTo(pill, 'x', { duration: 0.35, ease: 'power3.out' });
+    var py = gsap.quickTo(pill, 'y', { duration: 0.35, ease: 'power3.out' });
+    window.addEventListener('mousemove', function (e) { px(e.clientX); py(e.clientY); });
+
+    tiles.forEach(function (t) {
+      var rx = gsap.quickTo(t, 'rotationX', { duration: 0.5, ease: 'power3.out' });
+      var ry = gsap.quickTo(t, 'rotationY', { duration: 0.5, ease: 'power3.out' });
+      t.addEventListener('mouseenter', function () {
+        gsap.to(t, { y: -6, transformPerspective: 900, duration: 0.4, ease: 'power3.out' });
+        gsap.to(pill, { scale: 1, autoAlpha: 1, duration: 0.35, ease: 'back.out(2)' });
+      });
+      t.addEventListener('mousemove', function (e) {
+        var r = t.getBoundingClientRect();
+        ry(((e.clientX - r.left) / r.width - 0.5) * 8);
+        rx(((e.clientY - r.top) / r.height - 0.5) * -8);
+      });
+      t.addEventListener('mouseleave', function () {
+        rx(0); ry(0);
+        gsap.to(t, { y: 0, duration: 0.5, ease: 'power3.out' });
+        gsap.to(pill, { scale: 0, autoAlpha: 0, duration: 0.25, ease: 'power2.in' });
+      });
+      t.addEventListener('click', function () { gsap.to(pill, { scale: 0, autoAlpha: 0, duration: 0.2 }); });
+    });
+
+    // Back button leans toward the cursor
+    var back = document.querySelector('.ex-back');
+    if (back) {
+      var bx = gsap.quickTo(back, 'x', { duration: 0.4, ease: 'power3.out' });
+      var by = gsap.quickTo(back, 'y', { duration: 0.4, ease: 'power3.out' });
+      back.addEventListener('mousemove', function (e) {
+        var r = back.getBoundingClientRect();
+        bx((e.clientX - r.left - r.width / 2) * 0.25); by((e.clientY - r.top - r.height / 2) * 0.35);
+      });
+      back.addEventListener('mouseleave', function () { bx(0); by(0); });
+    }
   }
 
   // Viewer
