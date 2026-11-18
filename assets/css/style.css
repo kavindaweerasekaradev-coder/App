@@ -904,11 +904,14 @@ html:not(.gsap) .beyond__text .reveal.is-visible .beyond__mark::after, html:not(
 .snap--7 .snap__tape { rotate: 3deg; width: 104px; }
 .snap--1 { top: 0; left: 2%; z-index: 2; }
 .snap--3 { top: 3%; right: 6%; z-index: 1; }
-.snap--5 { top: 30%; left: 34%; z-index: 4; }
+.snap--5 { top: 2%; left: 37%; z-index: 0; }
 .snap--2 { top: 36%; left: -2%; z-index: 3; }
 .snap--6 { top: 37%; right: 0; z-index: 3; }
 .snap--7 { bottom: 0; left: 6%; z-index: 5; }
 .snap--4 { bottom: 1%; right: 5%; z-index: 2; }
+/* The portrait leads the wall: a touch larger, front and centre */
+.snap--me { width: clamp(196px, 17.5vw, 248px); top: 27%; left: 31%; z-index: 6; }
+.snap--me .snap__tape { width: 96px; rotate: -2deg; }
 .beyond__hint { position: absolute; right: 0; top: -34px; font-size: 13px; font-style: italic; color: var(--text-subtle); }
 .beyond__hint::before { content: "\2199  "; font-style: normal; }
 html:not(.has-drag) .beyond__hint { display: none; }
@@ -1068,6 +1071,7 @@ html:not(.has-drag) .beyond__hint { display: none; }
   .beyond__wall { height: auto; display: grid; grid-template-columns: 1fr 1fr; gap: 28px 16px; padding-top: 14px; }
   .snap { position: relative; inset: auto; width: auto; }
   .snap--wide { grid-column: 1 / -1; }
+  .snap--me { order: -1; grid-column: 1 / -1; width: min(72%, 300px); justify-self: center; }
   .snap__card { padding: 8px 8px 0; rotate: calc(var(--tilt, 0deg) * .5); }
   .doodle { display: none; }
   .beyond__wall { padding-inline: 10px; }
