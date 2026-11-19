@@ -116,3 +116,20 @@ The canonical address used for SEO lives in `SITE` in `scripts/build_projects.py
 
 **GitHub Pages (mirror):** Settings → Pages → Deploy from a branch → `main`, `/ (root)`. Its pages declare the
 Vercel address as canonical, so search engines index the Vercel site.
+
+## Driftway trip planner concept
+
+`trips/` is a standalone trip-planning landing page (no build step). Open `/trips/`.
+
+```
+trips/index.html        # Page: hero, destinations, why, planner, packages, stories, footer
+trips/style.css         # Styles; tokens at the top of the file
+trips/scene.js          # Three.js hero: low-poly island, cabin, shader water, clouds, birds; goes to dusk on scroll
+trips/app.js            # GSAP: loader, intro, Lenis smooth scroll, Flip filters, flight path, planner, carousel
+trips/illustrations.js  # Procedural SVG scenes for each destination and the traveller avatars
+trips/data.js           # Destinations, activities for the planner and traveller stories
+```
+
+It uses the vendored libraries in `assets/js/vendor/` (GSAP 3.12.5 with ScrollTrigger, Flip, MotionPath and
+Draggable, Lenis, and `three.module.min.js` r170).
+

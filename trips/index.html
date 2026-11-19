@@ -1,0 +1,417 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Driftway — Plan journeys that feel like stories</title>
+  <meta name="description" content="Driftway is a trip planning concept: explore destinations, build a day-by-day itinerary in seconds and book curated packages." />
+  <meta name="theme-color" content="#0e2c38" />
+  <link rel="icon" href="favicon.svg" type="image/svg+xml" />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&family=Caveat:wght@600&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="style.css?v=1" />
+</head>
+<body class="is-loading">
+
+  <!-- Loader -->
+  <div class="loader" aria-hidden="true">
+    <div class="loader__inner">
+      <svg class="loader__plane" viewBox="0 0 64 64" width="56" height="56"><path d="M6 30 58 8 44 56 32 38Z" fill="none" stroke="currentColor" stroke-width="3" stroke-linejoin="round"/><path d="M58 8 32 38v14l6-9" fill="none" stroke="currentColor" stroke-width="3" stroke-linejoin="round"/></svg>
+      <div class="loader__word">Driftway</div>
+      <div class="loader__bar"><span></span></div>
+      <div class="loader__count"><span>0</span>%</div>
+    </div>
+  </div>
+
+  <!-- Nav -->
+  <header class="nav" id="nav">
+    <a href="#top" class="logo" aria-label="Driftway home">
+      <svg viewBox="0 0 32 32" width="30" height="30" aria-hidden="true"><circle cx="16" cy="16" r="16" fill="#f5893b"/><path d="M7 15.5 25 8l-5 17-4.2-6.3Z" fill="#fff"/><path d="m25 8-9.2 10.7v5l2.3-3.3" fill="#ffd9bd"/></svg>
+      <span>Driftway</span>
+    </a>
+    <nav class="nav__links" aria-label="Main">
+      <a href="#destinations">Destinations</a>
+      <a href="#planner">Planner</a>
+      <a href="#packages">Packages</a>
+      <a href="#stories">Stories</a>
+    </nav>
+    <div class="nav__actions">
+      <button class="nav__trips" type="button" aria-label="Saved trips">
+        <svg viewBox="0 0 24 24" width="18" height="18" aria-hidden="true"><path d="M12 21s-7.5-4.6-9.4-9.4C1.3 8.2 3.4 4.5 7 4.5c2 0 3.6 1.1 5 3 1.4-1.9 3-3 5-3 3.6 0 5.7 3.7 4.4 7.1C19.5 16.4 12 21 12 21Z" fill="none" stroke="currentColor" stroke-width="2"/></svg>
+        <span class="nav__badge" data-trip-count>0</span>
+      </button>
+      <a href="#planner" class="btn btn--light btn--sm magnetic">Start planning</a>
+      <button class="nav__burger" type="button" aria-label="Open menu" aria-expanded="false"><span></span><span></span></button>
+    </div>
+  </header>
+
+  <div class="mobile-menu" aria-hidden="true">
+    <a href="#destinations">Destinations</a>
+    <a href="#planner">Planner</a>
+    <a href="#packages">Packages</a>
+    <a href="#stories">Stories</a>
+  </div>
+
+  <main>
+    <!-- HERO ------------------------------------------------------------- -->
+    <section class="hero" id="top">
+      <div class="hero__stage">
+        <canvas id="scene" aria-label="An illustrated 3D island with a cabin, trees and mountains"></canvas>
+        <div class="hero__fallback" aria-hidden="true"></div>
+
+        <!-- foreground foliage (SVG illustration over the 3D scene) -->
+        <svg class="foliage foliage--left" viewBox="0 0 320 420" aria-hidden="true">
+          <g class="leaf" style="transform-origin:40px 420px"><path d="M40 420C20 330 30 240 90 160c10 70 0 170-50 260Z" fill="#2f8f4e"/><path d="M40 420c20-80 34-170 50-260" stroke="#1f6e3a" stroke-width="3" fill="none"/></g>
+          <g class="leaf" style="transform-origin:60px 420px"><path d="M60 420c30-90 90-160 190-200-40 80-100 160-190 200Z" fill="#4caf50"/><path d="M60 420c50-70 110-140 190-200" stroke="#2e8b3e" stroke-width="3" fill="none"/></g>
+          <g class="leaf" style="transform-origin:20px 420px"><path d="M20 420C-10 360-20 290 0 230c40 50 50 120 20 190Z" fill="#6cc04a"/></g>
+          <g class="leaf" style="transform-origin:90px 420px"><path d="M90 420c60-40 140-60 220-40-60 50-140 70-220 40Z" fill="#3a9d48"/></g>
+          <g class="flower"><path d="M150 420c0-60 6-110 20-150" stroke="#2e8b3e" stroke-width="3" fill="none"/><ellipse cx="172" cy="262" rx="7" ry="16" fill="#f5893b" transform="rotate(15 172 262)"/><ellipse cx="164" cy="300" rx="6" ry="13" fill="#f7a35c" transform="rotate(-20 164 300)"/></g>
+        </svg>
+        <svg class="foliage foliage--right" viewBox="0 0 320 420" aria-hidden="true">
+          <g class="leaf" style="transform-origin:280px 420px"><path d="M280 420c20-90 10-180-50-260-10 70 0 170 50 260Z" fill="#2f8f4e"/></g>
+          <g class="leaf" style="transform-origin:260px 420px"><path d="M260 420c-30-90-90-160-190-200 40 80 100 160 190 200Z" fill="#4caf50"/><path d="M260 420c-50-70-110-140-190-200" stroke="#2e8b3e" stroke-width="3" fill="none"/></g>
+          <g class="leaf" style="transform-origin:300px 420px"><path d="M300 420c30-60 40-130 20-190-40 50-50 120-20 190Z" fill="#6cc04a"/></g>
+          <g class="flower"><path d="M200 420c-4-50-14-90-30-120" stroke="#2e8b3e" stroke-width="3" fill="none"/><ellipse cx="168" cy="292" rx="7" ry="16" fill="#f5893b" transform="rotate(-20 168 292)"/></g>
+        </svg>
+
+        <div class="hero__content">
+          <p class="eyebrow hero__eyebrow"><span class="dot"></span> 120+ hand-picked destinations</p>
+          <h1 class="hero__title" data-split>
+            <span class="line">Plan journeys that</span>
+            <span class="line">feel like <span class="mark">stories<svg class="brush" viewBox="0 0 300 30" preserveAspectRatio="none" aria-hidden="true"><path d="M4 20C70 8 160 6 296 14" fill="none" stroke="#f5893b" stroke-width="9" stroke-linecap="round"/></svg></span></span>
+          </h1>
+          <p class="hero__lead">Pick a place, choose your pace and Driftway turns it into a day-by-day plan with stays, food and hidden spots, ready to book.</p>
+
+          <form class="search" id="search" autocomplete="off">
+            <label class="search__field">
+              <span class="search__icon"><svg viewBox="0 0 24 24" width="18" height="18"><path d="M12 22s7-6.2 7-12a7 7 0 1 0-14 0c0 5.8 7 12 7 12Z" fill="none" stroke="currentColor" stroke-width="2"/><circle cx="12" cy="10" r="2.5" fill="currentColor"/></svg></span>
+              <span class="search__text"><small>Destination</small>
+                <select name="destination" id="search-destination"></select>
+              </span>
+            </label>
+            <label class="search__field">
+              <span class="search__icon"><svg viewBox="0 0 24 24" width="18" height="18"><rect x="3" y="5" width="18" height="16" rx="3" fill="none" stroke="currentColor" stroke-width="2"/><path d="M3 10h18M8 3v4M16 3v4" stroke="currentColor" stroke-width="2"/></svg></span>
+              <span class="search__text"><small>Departure</small><input type="date" name="date" id="search-date" /></span>
+            </label>
+            <div class="search__field">
+              <span class="search__icon"><svg viewBox="0 0 24 24" width="18" height="18"><circle cx="9" cy="8" r="3.5" fill="none" stroke="currentColor" stroke-width="2"/><path d="M2.5 20c.8-3.6 3.4-5.5 6.5-5.5s5.7 1.9 6.5 5.5M16 4.8a3.4 3.4 0 0 1 0 6.4M18 14.8c2 .6 3.1 2.4 3.5 5.2" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></svg></span>
+              <span class="search__text"><small>Travellers</small>
+                <span class="stepper"><button type="button" data-step="-1" aria-label="Fewer travellers">−</button><output id="search-people">2</output><button type="button" data-step="1" aria-label="More travellers">+</button></span>
+              </span>
+            </div>
+            <button class="btn btn--dark search__go magnetic" type="submit">Plan my trip <span class="arrow">→</span></button>
+          </form>
+        </div>
+
+        <div class="scroll-cue" aria-hidden="true"><span></span>Scroll to explore</div>
+      </div>
+    </section>
+
+    <!-- DESTINATIONS ------------------------------------------------------ -->
+    <section class="dest" id="destinations">
+      <svg class="dest__path" viewBox="0 0 1200 1100" preserveAspectRatio="none" aria-hidden="true">
+        <path id="flight-path" d="M1150 40C980 120 1000 300 820 330S520 250 420 420 560 700 420 790 120 760 60 1060" fill="none" stroke="rgba(255,255,255,.22)" stroke-width="2.5" stroke-dasharray="2 12" stroke-linecap="round"/>
+      </svg>
+      <svg class="plane" viewBox="0 0 40 40" width="36" height="36" aria-hidden="true"><path d="M3 19 37 5 28 35 20 24Z" fill="#fff"/><path d="m37 5-17 19v9l4-6" fill="#ffd9bd"/></svg>
+
+      <div class="wrap">
+        <div class="dest__head">
+          <div>
+            <p class="eyebrow eyebrow--dark">Destinations</p>
+            <h2 class="h2 reveal-words">Explore our most <span class="mark-text">loved</span> destinations</h2>
+            <p class="muted">From quiet lake cabins to sun-bleached coves. Every place is scouted by a local guide we actually know.</p>
+          </div>
+          <div class="stats">
+            <div><b data-count="120">0</b><span>+</span><small>destinations</small></div>
+            <div><b data-count="48">0</b><span>k</span><small>happy travellers</small></div>
+            <div><b data-count="4.9" data-decimals="1">0</b><small>average rating</small></div>
+          </div>
+        </div>
+
+        <div class="filters" role="tablist" aria-label="Filter destinations">
+          <button class="chip is-active" data-filter="all" role="tab" aria-selected="true">All</button>
+          <button class="chip" data-filter="beach" role="tab" aria-selected="false">Beaches</button>
+          <button class="chip" data-filter="mountain" role="tab" aria-selected="false">Mountains</button>
+          <button class="chip" data-filter="culture" role="tab" aria-selected="false">Culture</button>
+          <button class="chip" data-filter="adventure" role="tab" aria-selected="false">Adventure</button>
+        </div>
+
+        <div class="cards" id="cards"></div>
+      </div>
+    </section>
+
+    <!-- WHY ------------------------------------------------------------- -->
+    <section class="why" id="why">
+      <div class="wrap why__grid">
+        <div class="why__intro">
+          <p class="eyebrow eyebrow--dark">Why Driftway</p>
+          <h2 class="h2 reveal-words">Less planning stress, more <span class="mark-text">wandering</span></h2>
+          <p class="muted">We believe getting there should feel as good as being there. Driftway handles the boring parts so you can focus on the view.</p>
+          <a href="#planner" class="btn btn--orange magnetic">Try the planner <span class="arrow">→</span></a>
+          <span class="scribble">it's free, promise ✶</span>
+        </div>
+        <ol class="why__list">
+          <li class="why__item"><span class="why__num">01</span><div><h3>Seamless spontaneity</h3><p>Change your mind mid-trip. Swap a day, add a stop or reroute and every booking updates with it.</p></div></li>
+          <li class="why__item"><span class="why__num">02</span><div><h3>Curated by locals</h3><p>Stays, tables and trails picked by people who live there, not by whoever pays for the top slot.</p></div></li>
+          <li class="why__item"><span class="why__num">03</span><div><h3>Honest budgets</h3><p>See the full cost before you commit, including the coffee, the ferry and the tip you forgot about.</p></div></li>
+        </ol>
+      </div>
+
+      <!-- campsite illustration -->
+      <div class="camp" aria-hidden="true">
+        <svg class="camp__svg" viewBox="0 0 1440 560" preserveAspectRatio="xMidYMax slice">
+          <defs>
+            <linearGradient id="dusk" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#0e2c38"/><stop offset=".7" stop-color="#1d4a4a"/><stop offset="1" stop-color="#2e6a4a"/></linearGradient>
+            <radialGradient id="glow" cx=".5" cy=".5" r=".5"><stop offset="0" stop-color="#ffb35c" stop-opacity=".55"/><stop offset="1" stop-color="#ffb35c" stop-opacity="0"/></radialGradient>
+          </defs>
+          <rect width="1440" height="560" fill="url(#dusk)"/>
+          <g class="stars"></g>
+          <mask id="moonmask"><rect width="1440" height="560" fill="#fff"/><circle cx="1196" cy="100" r="30" fill="#000"/></mask><g class="moon"><circle cx="1180" cy="110" r="60" fill="#fdf3d8" opacity=".08"/><circle cx="1180" cy="110" r="34" fill="#fdf3d8" mask="url(#moonmask)"/></g>
+          <g class="camp__layer" data-depth="0.15"><path d="M0 330 140 250 260 300 420 200 560 290 700 230 860 300 1000 210 1160 290 1300 240 1440 300V560H0Z" fill="#1c4a55"/></g>
+          <g class="camp__layer" data-depth="0.3"><path d="M0 390C200 330 380 360 560 340S940 300 1100 340 1340 380 1440 350V560H0Z" fill="#236048"/>
+            <g fill="#1a4d38"><path d="M180 360l22-70 22 70Z"/><path d="M210 365l18-56 18 56Z"/><path d="M1240 355l24-76 24 76Z"/><path d="M1280 360l18-54 18 54Z"/><path d="M1320 362l14-44 14 44Z"/></g>
+          </g>
+          <g class="camp__layer" data-depth="0.5">
+            <path d="M0 470C240 410 520 420 760 440S1200 470 1440 430V560H0Z" fill="#3d8a43"/>
+            <!-- tent -->
+            <g transform="translate(560 330)">
+              <path d="M0 130 90 0l90 130Z" fill="#f5893b"/>
+              <path d="M90 0 60 130h60Z" fill="#c9631f"/>
+              <path d="M90 40 70 130h40Z" fill="#ffcf8a" class="tent-light"/>
+              <path d="M-10 132h200" stroke="#2b5d2f" stroke-width="5" stroke-linecap="round"/>
+            </g>
+            <!-- campfire -->
+            <g transform="translate(830 430)">
+              <circle r="120" fill="url(#glow)" class="fire-glow"/>
+              <path d="M-26 22 26 4M-26 4l52 18" stroke="#6b3d1f" stroke-width="8" stroke-linecap="round"/>
+              <path class="flame flame--a" d="M0 6C-18 -6-14-30 0-50c3 16 16 22 14 38C13 2 8 6 0 6Z" fill="#f5893b"/>
+              <path class="flame flame--b" d="M0 6c-10-6-8-20 0-30 3 10 10 14 8 22C7 5 4 6 0 6Z" fill="#ffd36b"/>
+              <g class="smoke"><circle cx="0" cy="-60" r="6"/><circle cx="4" cy="-60" r="8"/><circle cx="-3" cy="-60" r="7"/></g>
+            </g>
+            <!-- lantern on string -->
+            <path d="M380 300C520 340 680 330 760 300" stroke="#2b5d2f" stroke-width="2" fill="none"/>
+            <g class="bulbs" fill="#ffd36b"><circle cx="440" cy="318" r="5"/><circle cx="510" cy="328" r="5"/><circle cx="580" cy="330" r="5"/><circle cx="650" cy="324" r="5"/><circle cx="715" cy="312" r="5"/></g>
+            <!-- trees -->
+            <g transform="translate(330 250)"><rect x="40" y="150" width="14" height="70" fill="#5a3a22"/><circle cx="47" cy="110" r="62" fill="#2f8f4e"/><circle cx="20" cy="140" r="40" fill="#3fa35a"/><circle cx="80" cy="135" r="44" fill="#2a7f45"/></g>
+          </g>
+          <g class="camp__layer" data-depth="0.8">
+            <path d="M0 520C300 480 700 500 1000 510S1300 500 1440 480V560H0Z" fill="#6cc04a"/>
+            <g class="camp-leaf" style="transform-origin:60px 560px"><path d="M60 560C30 480 50 400 120 330c6 80-10 160-60 230Z" fill="#2f8f4e"/></g>
+            <g class="camp-leaf" style="transform-origin:1380px 560px"><path d="M1380 560c40-70 40-160-20-240-20 80-20 170 20 240Z" fill="#2f8f4e"/></g>
+            <g class="camp-leaf" style="transform-origin:1340px 560px"><path d="M1340 560c-50-60-130-90-220-80 50 60 130 90 220 80Z" fill="#4caf50"/></g>
+          </g>
+        </svg>
+      </div>
+    </section>
+
+    <!-- PLANNER ---------------------------------------------------------- -->
+    <section class="planner" id="planner">
+      <div class="wrap">
+        <div class="section-head">
+          <p class="eyebrow">Trip planner</p>
+          <h2 class="h2 reveal-words">Your itinerary, <span class="mark-text mark-text--light">in seconds</span></h2>
+          <p class="muted">Tell us where, how long and what you love. We'll lay out each day and price it honestly.</p>
+        </div>
+
+        <div class="planner__grid">
+          <form class="panel controls" id="planner-form">
+            <fieldset>
+              <legend>Where to?</legend>
+              <div class="pills" id="planner-dest"></div>
+            </fieldset>
+            <fieldset>
+              <legend>How long? <output id="days-out">5 days</output></legend>
+              <input type="range" id="days" min="3" max="10" value="5" />
+              <div class="range-scale"><span>3</span><span>10</span></div>
+            </fieldset>
+            <fieldset>
+              <legend>Pace</legend>
+              <div class="segmented" id="pace">
+                <button type="button" data-pace="relaxed">Relaxed</button>
+                <button type="button" data-pace="balanced" class="is-active">Balanced</button>
+                <button type="button" data-pace="packed">Packed</button>
+                <span class="segmented__thumb"></span>
+              </div>
+            </fieldset>
+            <fieldset>
+              <legend>What do you love?</legend>
+              <div class="tags" id="interests">
+                <label><input type="checkbox" value="nature" checked /><span>Nature</span></label>
+                <label><input type="checkbox" value="food" checked /><span>Food</span></label>
+                <label><input type="checkbox" value="culture" /><span>Culture</span></label>
+                <label><input type="checkbox" value="adventure" /><span>Adventure</span></label>
+                <label><input type="checkbox" value="relax" /><span>Slow days</span></label>
+              </div>
+            </fieldset>
+            <fieldset class="controls__row">
+              <legend>Travellers</legend>
+              <span class="stepper stepper--light"><button type="button" data-pstep="-1" aria-label="Fewer travellers">−</button><output id="planner-people">2</output><button type="button" data-pstep="1" aria-label="More travellers">+</button></span>
+            </fieldset>
+            <button type="submit" class="btn btn--dark btn--block magnetic">Build my itinerary <span class="arrow">→</span></button>
+          </form>
+
+          <div class="panel result" id="result" aria-live="polite">
+            <div class="result__head">
+              <div class="result__art" id="result-art"></div>
+              <div class="result__meta">
+                <p class="eyebrow" id="result-country">Indonesia</p>
+                <h3 id="result-title">5 days in Nusa Penida</h3>
+                <div class="result__facts">
+                  <span><b id="result-budget">$0</b> total</span>
+                  <span><b id="result-pp">$0</b> per person</span>
+                  <span><b id="result-weather">28°</b> avg</span>
+                </div>
+              </div>
+              <button class="btn btn--orange btn--sm" id="save-trip" type="button">Save trip</button>
+            </div>
+            <ol class="timeline" id="timeline"></ol>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- PACKAGES --------------------------------------------------------- -->
+    <section class="packages" id="packages">
+      <div class="wrap">
+        <div class="section-head section-head--center">
+          <p class="eyebrow">Packages</p>
+          <h2 class="h2 reveal-words">Discover your <span class="mark-text mark-text--light">perfect</span> journey</h2>
+          <p class="muted">Ready-made trips with stays, transfers and guides included. Just pack.</p>
+          <div class="toggle" id="price-toggle">
+            <button type="button" class="is-active" data-mult="1">Per person</button>
+            <button type="button" data-mult="1.85">For two</button>
+            <span class="toggle__thumb"></span>
+          </div>
+        </div>
+
+        <div class="price-grid">
+          <article class="price">
+            <div class="price__icon"><svg viewBox="0 0 48 48" width="44" height="44"><path d="M4 40 18 16l8 12 6-8 12 20Z" fill="#6cc04a"/><path d="m18 16 4 6-4 3-4-3Z" fill="#fff"/><circle cx="36" cy="10" r="5" fill="#f5893b"/></svg></div>
+            <h3>Wild Trails</h3>
+            <p class="price__tag">For thrill seekers</p>
+            <div class="price__amount"><sup>$</sup><b data-price="599">599</b></div>
+            <ul><li>Guided mountain treks</li><li>White-water rafting day</li><li>Camping under the stars</li><li>6 nights · small groups</li></ul>
+            <a href="#planner" class="btn btn--outline btn--block">Book Wild Trails</a>
+          </article>
+          <article class="price price--featured">
+            <span class="price__badge">Most loved</span>
+            <div class="price__icon"><svg viewBox="0 0 48 48" width="44" height="44"><path d="M24 4 34 14H14Z" fill="#f5893b"/><rect x="16" y="14" width="16" height="6" fill="#fff"/><path d="M12 20h24l-4 8H16Z" fill="#f5893b"/><rect x="18" y="28" width="12" height="14" fill="#fff"/><path d="M8 42h32" stroke="#fff" stroke-width="3"/></svg></div>
+            <h3>Old Cities</h3>
+            <p class="price__tag">Culture &amp; food</p>
+            <div class="price__amount"><sup>$</sup><b data-price="749">749</b></div>
+            <ul><li>Guided old-town walks</li><li>Cooking class with a local</li><li>Evening performance tickets</li><li>7 nights · boutique stays</li></ul>
+            <a href="#planner" class="btn btn--light btn--block">Start your journey</a>
+          </article>
+          <article class="price">
+            <div class="price__icon"><svg viewBox="0 0 48 48" width="44" height="44"><circle cx="34" cy="14" r="7" fill="#f5893b"/><path d="M2 34c8-4 14-4 22 0s14 4 22 0v10H2Z" fill="#5ec7d0"/><path d="M14 34c0-10 2-18 6-24" stroke="#4f9e36" stroke-width="3" fill="none"/><path d="M20 10c-6 0-10 3-12 6 5-1 8-1 12-6Zm0 0c5-2 10-1 13 2-5 0-8 0-13-2Z" fill="#6cc04a"/></svg></div>
+            <h3>Slow Coast</h3>
+            <p class="price__tag">Rest &amp; reset</p>
+            <div class="price__amount"><sup>$</sup><b data-price="899">899</b></div>
+            <ul><li>Beachfront villa</li><li>Daily yoga &amp; spa credit</li><li>Private sunset boat</li><li>8 nights · all breakfasts</li></ul>
+            <a href="#planner" class="btn btn--outline btn--block">Book Slow Coast</a>
+          </article>
+        </div>
+      </div>
+    </section>
+
+    <!-- MARQUEE ---------------------------------------------------------- -->
+    <div class="marquee" aria-hidden="true">
+      <div class="marquee__track">
+        <span>Banff</span><i>✶</i><span>Nusa Penida</span><i>✶</i><span>Hallstatt</span><i>✶</i><span>Maldives</span><i>✶</i><span>Ubud</span><i>✶</i><span>Wadi Rum</span><i>✶</i>
+        <span>Banff</span><i>✶</i><span>Nusa Penida</span><i>✶</i><span>Hallstatt</span><i>✶</i><span>Maldives</span><i>✶</i><span>Ubud</span><i>✶</i><span>Wadi Rum</span><i>✶</i>
+      </div>
+    </div>
+
+    <!-- STORIES ---------------------------------------------------------- -->
+    <section class="stories" id="stories">
+      <div class="wrap">
+        <div class="section-head section-head--center">
+          <p class="eyebrow">Stories</p>
+          <h2 class="h2 reveal-words">Told by our <span class="mark-text mark-text--light">explorers</span></h2>
+          <p class="muted">Don't take our word for it. Here's what travellers say after they get home.</p>
+        </div>
+        <div class="carousel">
+          <div class="carousel__track" id="track"></div>
+        </div>
+        <div class="carousel__nav">
+          <button class="round-btn" data-dir="-1" aria-label="Previous story">←</button>
+          <div class="dots" id="dots"></div>
+          <button class="round-btn" data-dir="1" aria-label="Next story">→</button>
+        </div>
+      </div>
+    </section>
+
+    <!-- CTA + FOOTER SCENE ---------------------------------------------- -->
+    <section class="cta">
+      <div class="cta__scene" aria-hidden="true">
+        <svg viewBox="0 0 1440 640" preserveAspectRatio="xMidYMax slice">
+          <defs>
+            <linearGradient id="fsky" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#ffffff"/><stop offset="1" stop-color="#d7f1f4"/></linearGradient>
+            <linearGradient id="flake" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#5ec7d0"/><stop offset="1" stop-color="#1f7f8f"/></linearGradient>
+          </defs>
+          <rect width="1440" height="640" fill="url(#fsky)"/>
+          <g class="f-layer" data-depth="0.1"><circle cx="1100" cy="180" r="60" fill="#ffe2b8"/></g>
+          <g class="f-layer" data-depth="0.2"><path d="M0 380 160 280 300 340 460 230 620 330 760 260 920 340 1080 250 1240 320 1440 260V640H0Z" fill="#9fd6dc"/></g>
+          <g class="f-layer" data-depth="0.35"><path d="M0 420C160 370 320 400 480 380S820 350 980 380 1300 410 1440 380V640H0Z" fill="#6cc04a"/>
+            <g fill="#3fa35a"><path d="M120 400l20-60 20 60Z"/><path d="M150 404l16-46 16 46Z"/><path d="M1180 396l22-66 22 66Z"/><path d="M1220 400l16-50 16 50Z"/></g>
+            <!-- cabin -->
+            <g transform="translate(940 262)">
+              <rect x="0" y="40" width="200" height="90" fill="#f4f6f3"/>
+              <path d="M-14 46 100 -12l114 58Z" fill="#2f6fd6"/>
+              <path d="M100 -12 214 46h-20L100 0Z" fill="#2459b4"/>
+              <rect x="20" y="62" width="110" height="68" fill="#bfe8ff"/><path d="M57 62v68M93 62v68" stroke="#f4f6f3" stroke-width="4"/>
+              <rect x="146" y="70" width="34" height="60" fill="#5a3a22"/>
+              <rect x="-20" y="130" width="240" height="10" fill="#c98f5a"/>
+            </g>
+          <g class="f-layer" data-depth="0.5"><path d="M0 470C300 440 600 450 900 455S1300 450 1440 440V640H0Z" fill="url(#flake)"/>
+            <g fill="#fff" opacity=".5"><rect x="380" y="500" width="80" height="3" rx="1.5"/><rect x="700" y="530" width="120" height="3" rx="1.5"/><rect x="1000" y="495" width="60" height="3" rx="1.5"/></g>
+</g>
+          </g>
+          <g class="f-layer" data-depth="0.75">
+            <path d="M0 560c200-30 420-20 620-10s500 10 820-20V640H0Z" fill="#0e2c38"/>
+            <g class="cta-leaf" style="transform-origin:90px 640px"><path d="M90 640C50 560 60 470 140 400c10 90-10 170-50 240Z" fill="#2f8f4e"/></g>
+            <g class="cta-leaf" style="transform-origin:40px 640px"><path d="M40 640C0 590-20 520 0 450c40 60 60 120 40 190Z" fill="#4caf50"/></g>
+            <g class="cta-leaf" style="transform-origin:1380px 640px"><path d="M1380 640c50-70 60-160 0-240-30 80-30 170 0 240Z" fill="#2f8f4e"/></g>
+            <g transform="translate(270 380)"><rect x="30" y="140" width="14" height="120" fill="#5a3a22"/><circle cx="37" cy="110" r="70" fill="#2f8f4e"/><circle cx="0" cy="140" r="44" fill="#3fa35a"/><circle cx="80" cy="130" r="50" fill="#2a7f45"/></g>
+          </g>
+        </svg>
+      </div>
+      <div class="cta__content">
+        <h2 class="h2 reveal-words">Your next story starts with a single tap</h2>
+        <a href="#planner" class="btn btn--dark magnetic">Plan a trip now <span class="arrow">→</span></a>
+      </div>
+    </section>
+  </main>
+
+  <footer class="footer">
+    <div class="wrap footer__grid">
+      <div class="footer__brand">
+        <a href="#top" class="logo"><svg viewBox="0 0 32 32" width="30" height="30" aria-hidden="true"><circle cx="16" cy="16" r="16" fill="#f5893b"/><path d="M7 15.5 25 8l-5 17-4.2-6.3Z" fill="#fff"/><path d="m25 8-9.2 10.7v5l2.3-3.3" fill="#ffd9bd"/></svg><span>Driftway</span></a>
+        <p>Your go-to companion for spontaneous, well-planned and honest travel. Made for people who'd rather be outside.</p>
+        <form class="newsletter" id="newsletter">
+          <input type="email" placeholder="you@example.com" aria-label="Email address" required />
+          <button class="btn btn--orange btn--sm" type="submit">Get travel notes</button>
+        </form>
+      </div>
+      <div class="footer__col"><h4>Explore</h4><a href="#destinations">Destinations</a><a href="#packages">Packages</a><a href="#planner">Planner</a></div>
+      <div class="footer__col"><h4>Company</h4><a href="#why">About</a><a href="#stories">Stories</a><a href="#top">Careers</a></div>
+      <div class="footer__col"><h4>Support</h4><a href="#top">Help centre</a><a href="#top">Cancellations</a><a href="#top">Contact</a></div>
+    </div>
+    <div class="wrap footer__base"><span>© 2026 Driftway. A design concept.</span><span>Illustrated in code with Three.js &amp; GSAP</span></div>
+  </footer>
+
+  <div class="toast" role="status" aria-live="polite"></div>
+
+  <script src="../assets/js/vendor/gsap.min.js" defer></script>
+  <script src="../assets/js/vendor/ScrollTrigger.min.js" defer></script>
+  <script src="../assets/js/vendor/Flip.min.js" defer></script>
+  <script src="../assets/js/vendor/MotionPathPlugin.min.js" defer></script>
+  <script src="../assets/js/vendor/Draggable.min.js" defer></script>
+  <script src="../assets/js/vendor/lenis.min.js" defer></script>
+  <script src="data.js?v=1" defer></script>
+  <script src="illustrations.js?v=1" defer></script>
+  <script src="app.js?v=1" defer></script>
+  <script type="module" src="scene.js?v=1"></script>
+</body>
+</html>
