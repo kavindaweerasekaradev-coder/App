@@ -1812,3 +1812,46 @@ a.uf-node:hover .uf-node__go { color: var(--text); transform: translate(2px, -2p
   .am-shot--sub { width: 52%; } .am-shot--sub2 { display: none; }
   .am-detail { width: 46%; } .am-detail--d-preview { width: 26%; } .am-detail--d-milestone { width: 70%; }
 }
+
+/* ===================== Nature vibe layer (scene3d.js + vibe.js) ===================== */
+/* Hero landscape band (Three.js) */
+.hero:has(.hero-land) { padding-bottom: 0; border-bottom: 0; }
+.hero-land {
+  position: relative; height: clamp(220px, 30vw, 420px); margin-top: clamp(8px, 2vw, 24px);
+  -webkit-mask-image: linear-gradient(to bottom, transparent 0%, #000 22%, #000 100%);
+  mask-image: linear-gradient(to bottom, transparent 0%, #000 22%, #000 100%);
+  opacity: 0; transition: opacity 1.2s var(--ease);
+}
+.hero-land.is-ready { opacity: 1; }
+.hero-land canvas { display: block; width: 100%; height: 100%; pointer-events: none; }
+.hero-land::after { content: ""; position: absolute; inset: auto 0 0; height: 40px; background: linear-gradient(to bottom, transparent, #fff); pointer-events: none; }
+
+/* Hand-drawn brush strokes under headings */
+.vb-brush { position: absolute; z-index: -1; overflow: visible; pointer-events: none; }
+.vb-stroke { fill: none; stroke: var(--orange); stroke-width: 5; stroke-linecap: round; vector-effect: non-scaling-stroke; opacity: .9; }
+.vb-stroke--2 { stroke-width: 3.5; opacity: .75; }
+
+/* Plant clusters peeking in at section edges */
+.vb-host { position: relative; isolation: isolate; }
+.vb-flora { position: absolute; z-index: -1; width: clamp(150px, 15vw, 230px); pointer-events: none; }
+.vb-flora--front { z-index: 2; }
+.vb-flora svg { width: 100%; height: auto; overflow: visible; }
+.vb-flora--br { right: -30px; bottom: -40px; }
+.vb-flora--bl { left: -30px; bottom: -40px; }
+.vb-flora--tr { right: -30px; top: 40px; }
+.vb-flora--cl { left: calc(var(--gutter) - 50px); bottom: -24px; }
+.vb-flora--cr { right: calc(var(--gutter) - 50px); bottom: -24px; }
+@media (max-width: 900px) {
+  .vb-flora:not(.vb-flora--keep) { display: none; }
+  .vb-flora--keep { width: 110px; }
+  .vb-flora--cl { left: -14px; bottom: -18px; }
+  .vb-flora--cr { right: -14px; bottom: -18px; }
+}
+
+/* Landscape above the footer, continuing into a deep-green footer */
+.vb-land { height: clamp(150px, 20vw, 300px); margin-top: clamp(-40px, -2vw, -8px); overflow: hidden; }
+.vb-land svg { display: block; width: 100%; height: 100%; }
+.footer--vb { background: #2f7d4f; color: rgba(255, 255, 255, .78); margin-top: -1px; }
+.footer--vb a, .footer--vb button { color: #fff; }
+.footer--vb .footer__mono { color: rgba(255, 255, 255, .6); }
+.footer--vb .footer__top:hover { color: var(--lime); }
