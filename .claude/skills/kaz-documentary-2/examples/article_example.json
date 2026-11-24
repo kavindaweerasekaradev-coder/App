@@ -1,0 +1,8 @@
+{"watermark":{"text":"Now you know"},"shots":[
+{"dur":3.0,"layout":"title","title":"LVMH &|THE ARNAULTS","bg_img":"img/07.jpg","transition":"blur"},
+{"dur":5.5,"layout":"article","title":"LVMH & THE|ARNAULTS","title_size":40,
+ "paras":[{"t":0.2,"text":"In 1989, Arnault became the *leading shareholder* of LVMH.","dur":1.8},
+          {"t":2.4,"text":"Over the following decades, the group expanded across fashion, champagne, jewelry and beauty.","dur":2.4}],
+ "strips":[{"t":0,"src":"img/07.jpg"},{"t":2.6,"src":"img/08.jpg"}],"transition":"blur"},
+{"dur":2.6,"layout":"article","center":true,"size":54,"paras":[{"t":0.1,"text":"What did he *understand* that others didn't?","dur":1.4}],"transition":"blur"}
+]}
