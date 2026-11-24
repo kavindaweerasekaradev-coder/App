@@ -74,7 +74,7 @@ function build() {
     sand: flat('#f2dca2'), grass: flat('#74c04f'), grass2: flat('#5fae45'), rock: flat('#8fa9ad'),
     pine1: flat('#2f8f4e'), pine2: flat('#3fa35a'), round: flat('#59b84a'), trunk: flat('#6b4527'),
     wall: flat('#f4f6f3'), roof: flat('#2f6fd6'), roofEdge: flat('#2459b4'), deck: flat('#c98f5a'),
-    glass: new THREE.MeshStandardMaterial({ color: col('#bfe8ff'), emissive: col('#ffcf8a'), emissiveIntensity: 0, roughness: 0.15, metalness: 0.1 }),
+    glass: new THREE.MeshStandardMaterial({ color: col('#bfe8ff'), emissive: col('#ffe58f'), emissiveIntensity: 0, roughness: 0.15, metalness: 0.1 }),
     cloud: new THREE.MeshStandardMaterial({ color: col('#ffffff'), flatShading: true, roughness: 1, emissive: col('#ffffff'), emissiveIntensity: 0.35 }),
   };
 
@@ -135,7 +135,7 @@ function build() {
   const roof = mesh(roofGeo, mats.roof); roof.position.y = 2; cabin.add(roof);
   const chimney = mesh(new THREE.BoxGeometry(.35, .9, .35), mats.roofEdge); chimney.position.set(1, 3.1, -.5); cabin.add(chimney);
   const deckM = mesh(new THREE.BoxGeometry(4.6, .18, 1.3), mats.deck); deckM.position.set(0, .09, 1.85); cabin.add(deckM);
-  const warm = new THREE.PointLight(col('#ffbe6b'), 0, 8, 2); warm.position.set(-.4, 1.2, 2.2); cabin.add(warm);
+  const warm = new THREE.PointLight(col('#ffe07a'), 0, 8, 2); warm.position.set(-.4, 1.2, 2.2); cabin.add(warm);
   cabin.position.set(0.6, 1.05, -0.2);
   cabin.rotation.y = -0.32;
   world.add(cabin);
@@ -144,7 +144,7 @@ function build() {
   const jetty = mesh(new THREE.BoxGeometry(1.1, .14, 4.2), mats.deck); jetty.position.set(4.6, .25, 7.6); jetty.rotation.y = .4; world.add(jetty);
   const boat = new THREE.Group();
   const hullShape = new THREE.Shape(); hullShape.moveTo(-1, .3); hullShape.lineTo(1, .3); hullShape.lineTo(.7, -.15); hullShape.lineTo(-.7, -.15);
-  const hull = mesh(new THREE.ExtrudeGeometry(hullShape, { depth: .7, bevelEnabled: false }), flat('#f5893b')); hull.position.z = -.35; boat.add(hull);
+  const hull = mesh(new THREE.ExtrudeGeometry(hullShape, { depth: .7, bevelEnabled: false }), flat('#f6c445')); hull.position.z = -.35; boat.add(hull);
   boat.position.set(6.6, .05, 9.6); boat.rotation.y = .4; world.add(boat);
 
   // ---------- trees ----------
@@ -272,7 +272,7 @@ function build() {
         vec4 mv = modelViewMatrix*vec4(p,1.); gl_Position = projectionMatrix*mv;
         gl_PointSize = (6. + 4.*sin(aSeed*3.)) * uPx * (12. / -mv.z); vA = .5 + .5*sin(uTime*1.5+aSeed*4.); }`,
     fragmentShader: `uniform float uDusk; varying float vA; void main(){ float d = length(gl_PointCoord-.5); if(d>.5) discard;
-      vec3 c = mix(vec3(1.,.98,.9), vec3(1.,.8,.4), uDusk); gl_FragColor = vec4(c, smoothstep(.5,.0,d)*vA*(.35+uDusk*.6)); }`
+      vec3 c = mix(vec3(1.,.98,.9), vec3(1.,.93,.55), uDusk); gl_FragColor = vec4(c, smoothstep(.5,.0,d)*vA*(.35+uDusk*.6)); }`
   }));
   scene.add(pollen);
 
@@ -309,9 +309,9 @@ function build() {
   }
 
   const skyMat = sky.material;
-  const dayTop = hv('#7fcfe0'), duskTop = hv('#2b5f78'), dayMid = hv('#c9eef0'), duskMid = hv('#f2b38a'), dayHor = hv('#f4fbf4'), duskHor = hv('#ffd9a8');
-  const fogDay = col(FOG), fogDusk = col('#e9b994'), fogVDay = hv(FOG), fogVDusk = hv('#e9b994');
-  const sunDay = col('#fff0d4'), sunDusk = col('#ffb070');
+  const dayTop = hv('#7fcfe0'), duskTop = hv('#2b5f78'), dayMid = hv('#c9eef0'), duskMid = hv('#c3b6e6'), dayHor = hv('#f4fbf4'), duskHor = hv('#f6dbe8');
+  const fogDay = col(FOG), fogDusk = col('#d8cde6'), fogVDay = hv(FOG), fogVDusk = hv('#d8cde6');
+  const sunDay = col('#fff0d4'), sunDusk = col('#ffe6c4');
   function applyDusk(t) {
     skyMat.uniforms.uTop.value.lerpVectors(dayTop, duskTop, t);
     skyMat.uniforms.uMid.value.lerpVectors(dayMid, duskMid, t);

@@ -45,7 +45,7 @@ window.DRIFT = {
       ] }
   ],
   stories: [
-    { name: 'Amaya Perera', from: 'Colombo, Sri Lanka', color: '#f5893b', date: 'Oct 2026', trip: 'Ubud',
+    { name: 'Amaya Perera', from: 'Colombo, Sri Lanka', color: '#e0a91f', date: 'Oct 2026', trip: 'Ubud',
       text: 'As a solo traveller, safety was my biggest worry. Driftway planned a gentle first day, then let the adventure build. The rafting guide is now a friend.' },
     { name: 'Lucas Moreau', from: 'Lyon, France', color: '#2f6fd6', date: 'Sep 2026', trip: 'Banff',
       text: 'We changed plans three times because of weather and the itinerary just reshuffled itself. Canoe at sunrise on day four was the best hour of my year.' },

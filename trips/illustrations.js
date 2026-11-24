@@ -54,10 +54,10 @@
 
   const scenes = {
     lake(r, id) {
-      const houses = [[150, '#f5893b'], [172, '#fff'], [190, '#f7c35c'], [210, '#fff'], [232, '#e8505b'], [250, '#fff']]
+      const houses = [[150, '#f6c445'], [172, '#fff'], [190, '#f7c35c'], [210, '#fff'], [232, '#e8505b'], [250, '#fff']]
         .map(([x, c], i) => `<g transform="translate(${x} ${178 - (i % 2) * 6})"><rect width="16" height="16" fill="${c}"/><path d="M-2 0 8-9l10 9Z" fill="#2f6fd6"/><rect x="5" y="6" width="5" height="5" fill="#bfe8ff"/></g>`).join('');
       return sky(id, '#bfe8ee', '#f2fbf8') +
-        L(0.05, `<circle cx="300" cy="64" r="22" fill="#ffe2b8"/>${cloud(90, 60, 1.2)}${cloud(320, 40, .8, .8)}`) +
+        L(0.05, `<circle cx="300" cy="64" r="22" fill="#ffeaa0"/>${cloud(90, 60, 1.2)}${cloud(320, 40, .8, .8)}`) +
         L(0.12, `<path d="${ridge(120, 70, 9, r)}" fill="#a9d6de"/>`) +
         L(0.2, `<path d="${ridge(160, 80, 7, r)}" fill="#5aa6a0"/><path d="M-10 200 L410 200 410 280 -10 280Z" fill="#3fb3c0"/>`) +
         L(0.3, `${houses}<path d="M268 178h10v-24l-5-12-5 12Z" fill="#fff"/><path d="M268 154h10l-5-18Z" fill="#2f6fd6"/>
@@ -66,7 +66,7 @@
     },
     cove(r, id) {
       return sky(id, '#c9eef3', '#f6fbf7') +
-        L(0.05, `<circle cx="90" cy="54" r="20" fill="#ffe2b8"/>${cloud(270, 50, 1)}${birds(160, 60)}`) +
+        L(0.05, `<circle cx="90" cy="54" r="20" fill="#ffeaa0"/>${cloud(270, 50, 1)}${birds(160, 60)}`) +
         L(0.12, `<path d="M-10 130H410V280H-10Z" fill="#2aa7b8"/><path d="M-10 130H410v16H-10Z" fill="#7fd3da" opacity=".5"/>`) +
         L(0.22, `<path d="M240 280C230 220 250 160 300 120c40-10 80 0 110 20v140Z" fill="#d9b98a"/><path d="M300 120c40-10 80 0 110 20v16c-30-14-70-24-110-14-20 10-40 30-48 50 0-30 18-56 48-72Z" fill="#6cc04a"/><path d="M262 280c0-30 10-60 30-90" stroke="#c5a172" stroke-width="3" fill="none"/>`) +
         L(0.32, `<path d="M-10 160C30 150 70 150 100 170s40 60 30 110H-10Z" fill="#cfa877"/><path d="M-10 160c40-10 80-10 110 10-30-4-70 0-110 14Z" fill="#5fb447"/>
@@ -100,21 +100,21 @@
         return `<path d="M-10 ${y + 40}C60 ${y - 6} 140 ${y + 22} 210 ${y + 4}S340 ${y - 10} 410 ${y + 10}V290H-10Z" fill="${c}"/><path d="M-10 ${y + 40}C60 ${y - 6} 140 ${y + 22} 210 ${y + 4}S340 ${y - 10} 410 ${y + 10}" stroke="#d8f0b8" stroke-width="1.6" fill="none" opacity=".8"/>`;
       });
       return sky(id, '#d4efe6', '#f7fbf2') +
-        L(0.05, `<circle cx="310" cy="58" r="20" fill="#ffe2b8"/>${birds(70, 70)}`) +
+        L(0.05, `<circle cx="310" cy="58" r="20" fill="#ffeaa0"/>${birds(70, 70)}`) +
         L(0.12, `<path d="${hills(110, 50, 5, r)}" fill="#a8d5b5"/>`) +
         L(0.2, tiers.slice(0, 2).join('') + `<ellipse cx="120" cy="140" rx="140" ry="12" fill="#fff" opacity=".45"/>`) +
         L(0.32, tiers.slice(2, 4).join('') + `<g transform="translate(250 170)"><rect width="34" height="20" fill="#f4e6cf"/><path d="M-8 2 17-16 42 2Z" fill="#8a5a34"/><rect x="13" y="8" width="8" height="12" fill="#5a3a22"/></g>`) +
         L(0.5, tiers[4] + `${palm(30, 280, 1.5)}${palm(370, 284, 1.3, true)}<ellipse cx="300" cy="250" rx="120" ry="8" fill="#fff" opacity=".3"/>`);
     },
     dunes(r, id) {
-      return sky(id, '#ffe0b5', '#fff4e3') +
-        L(0.05, `<circle cx="200" cy="120" r="46" fill="#ffb066" opacity=".9"/>${birds(280, 60)}`) +
-        L(0.14, `<path d="M-10 170 30 120h40l20 30 30-40h30l20 60Z" fill="#c8754a"/><path d="M280 170l20-56h26l14 26 20-30h20l30 60Z" fill="#b8643a"/>`) +
-        L(0.22, `<path d="M-10 200C80 150 160 170 220 190S340 160 410 170V280H-10Z" fill="#f0a65c"/>`) +
-        L(0.35, `<path d="M-10 240C70 200 150 210 230 236S360 220 410 210V280H-10Z" fill="#e58c45"/>
-          <g transform="translate(110 200)"><path d="M0 24 16 0l16 24Z" fill="#fff4e3"/><path d="M16 0l-4 24h8Z" fill="#c8754a"/></g><g transform="translate(150 206)"><path d="M0 20 13 0l13 20Z" fill="#fff4e3"/></g>
+      return sky(id, '#f7ecc4', '#fffaeb') +
+        L(0.05, `<circle cx="200" cy="120" r="46" fill="#ffd75e" opacity=".9"/>${birds(280, 60)}`) +
+        L(0.14, `<path d="M-10 170 30 120h40l20 30 30-40h30l20 60Z" fill="#a98563"/><path d="M280 170l20-56h26l14 26 20-30h20l30 60Z" fill="#94704f"/>`) +
+        L(0.22, `<path d="M-10 200C80 150 160 170 220 190S340 160 410 170V280H-10Z" fill="#ebcd85"/>`) +
+        L(0.35, `<path d="M-10 240C70 200 150 210 230 236S360 220 410 210V280H-10Z" fill="#ddb76a"/>
+          <g transform="translate(110 200)"><path d="M0 24 16 0l16 24Z" fill="#fffaeb"/><path d="M16 0l-4 24h8Z" fill="#a98563"/></g><g transform="translate(150 206)"><path d="M0 20 13 0l13 20Z" fill="#fffaeb"/></g>
           <g transform="translate(300 214)" fill="#6b3d1f"><ellipse cx="0" cy="-8" rx="14" ry="7"/><path d="M10-10c6-4 8-12 6-18h4c2 8 0 16-6 20Z"/><rect x="-10" y="-4" width="3" height="14"/><rect x="6" y="-4" width="3" height="14"/></g>`) +
-        L(0.55, `<path d="M-10 280c60-30 160-40 240-20s140 10 180-4v24Z" fill="#d9773a"/><g stroke="#f7c08a" stroke-width="2" fill="none" opacity=".7"><path d="M40 268c30-8 60-8 90 0"/><path d="M250 262c20-6 50-6 70 0"/></g>`);
+        L(0.55, `<path d="M-10 280c60-30 160-40 240-20s140 10 180-4v24Z" fill="#c9a052"/><g stroke="#f6e3b0" stroke-width="2" fill="none" opacity=".7"><path d="M40 268c30-8 60-8 90 0"/><path d="M250 262c20-6 50-6 70 0"/></g>`);
     }
   };
 

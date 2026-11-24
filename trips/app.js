@@ -298,7 +298,7 @@
     const r = el.getBoundingClientRect();
     for (let i = 0; i < 8; i++) {
       const p = document.createElement('span');
-      Object.assign(p.style, { position: 'fixed', left: r.left + r.width / 2 + 'px', top: r.top + r.height / 2 + 'px', width: '7px', height: '7px', borderRadius: '50%', background: i % 2 ? '#f5893b' : '#e8505b', zIndex: 90, pointerEvents: 'none' });
+      Object.assign(p.style, { position: 'fixed', left: r.left + r.width / 2 + 'px', top: r.top + r.height / 2 + 'px', width: '7px', height: '7px', borderRadius: '50%', background: i % 2 ? '#f6c445' : '#e8505b', zIndex: 90, pointerEvents: 'none' });
       document.body.append(p);
       const a = (i / 8) * Math.PI * 2;
       gsap.to(p, { x: Math.cos(a) * 34, y: Math.sin(a) * 34, opacity: 0, scale: .3, duration: .7, ease: 'power3.out', onComplete: () => p.remove() });
@@ -309,7 +309,7 @@
   if (!reduce) {
     const path = $('#flight-path');
     const trail = path.cloneNode(); trail.removeAttribute('id');
-    trail.setAttribute('stroke', '#f5893b'); trail.setAttribute('stroke-dasharray', '');
+    trail.setAttribute('stroke', '#f6c445'); trail.setAttribute('stroke-dasharray', '');
     trail.setAttribute('stroke-width', '3');
     path.after(trail);
     const len = trail.getTotalLength();
