@@ -192,7 +192,7 @@
     });
   }
 
-  /* ---------- Landscape above the footer ---------- */
+  /* ---------- Landscape above the footer: day turns to dusk, then night, as you arrive ---------- */
   var footer = document.querySelector('.footer');
   if (footer) {
     var land = document.createElement('div');
@@ -208,33 +208,148 @@
     function spikes(xs, base) {
       return xs.map(function (x, i) { return spike(x, base, 44 + (i % 3) * 12, (i % 2 ? 6 : -6)); }).join('');
     }
+    var stars = '';
+    for (var si = 0; si < 46; si++) {
+      stars += '<circle class="vb-star" cx="' + Math.round(r(10, 1430)) + '" cy="' + Math.round(r(12, 190)) + '" r="' + f(r(0.8, 2)) + '" fill="#fff"/>';
+    }
+    var flies = '';
+    for (var fi = 0; fi < 16; fi++) {
+      flies += '<circle class="vb-fly" cx="' + Math.round(r(60, 1380)) + '" cy="' + Math.round(r(230, 300)) + '" r="2.6" fill="#e9ff8a" filter="url(#vbGlow)"/>';
+    }
     land.innerHTML =
-      '<svg viewBox="0 0 1440 320" preserveAspectRatio="xMidYMax slice">' +
-        '<defs><linearGradient id="vbSky" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#fff"/><stop offset="1" stop-color="#eef8f1"/></linearGradient></defs>' +
-        '<rect width="1440" height="320" fill="url(#vbSky)"/>' +
-        '<g class="vb-l vb-l--sun"><circle cx="1110" cy="120" r="70" fill="#ffe2c2" opacity=".6"/><circle cx="1110" cy="120" r="44" fill="#ffc58a"/></g>' +
-        '<g class="vb-l" data-d="70"><path d="M0,200 C160,130 300,150 420,170 S700,110 860,150 S1180,120 1440,170 L1440,320 L0,320Z" fill="#cfe8db"/></g>' +
-        '<g class="vb-l" data-d="45"><path d="M0,230 C200,180 360,200 520,215 S820,170 1000,200 S1300,190 1440,215 L1440,320 L0,320Z" fill="#8fcaa6"/>' +
-          trees([90, 130, 170, 1240, 1280, 1330, 1370], 214, '#5aa97c') + '</g>' +
-        '<g class="vb-l" data-d="25"><path d="M0,260 C180,225 360,240 560,250 S900,220 1080,240 S1320,245 1440,250 L1440,320 L0,320Z" fill="#4f9d74"/>' +
-          trees([260, 300, 980, 1020, 1062], 246, '#2f7d4f') +
-          '<g transform="translate(640 206)"><rect x="0" y="12" width="64" height="34" fill="#f6f6f2"/><rect x="10" y="22" width="44" height="18" fill="#2f6bff" opacity=".85"/>' +
+      '<svg viewBox="0 0 1440 360" preserveAspectRatio="xMidYMax slice">' +
+        '<defs><linearGradient id="vbSky" x1="0" y1="0" x2="0" y2="1">' +
+          '<stop class="vb-sky0" offset="0" stop-color="#ffffff"/><stop class="vb-sky1" offset="1" stop-color="#eef8f1"/></linearGradient>' +
+          '<filter id="vbGlow" x="-200%" y="-200%" width="500%" height="500%"><feGaussianBlur stdDeviation="3" result="b"/><feMerge><feMergeNode in="b"/><feMergeNode in="SourceGraphic"/></feMerge></filter></defs>' +
+        '<rect width="1440" height="360" fill="url(#vbSky)"/>' +
+        '<g class="vb-stars" opacity="0">' + stars + '</g>' +
+        '<g class="vb-moon" opacity="0"><circle cx="300" cy="110" r="34" fill="#fff6d8"/><circle cx="314" cy="102" r="30" fill="#2a2f63" class="vb-moon-cut"/></g>' +
+        '<g class="vb-l vb-l--sun"><circle cx="1110" cy="150" r="70" fill="#ffe2c2" opacity=".6"/><circle cx="1110" cy="150" r="44" fill="#ffc58a"/></g>' +
+        '<g class="vb-l" data-d="70"><path class="vb-h1" d="M0,240 C160,170 300,190 420,210 S700,150 860,190 S1180,160 1440,210 L1440,360 L0,360Z" fill="#cfe8db"/></g>' +
+        '<g class="vb-l" data-d="45"><path class="vb-h2" d="M0,270 C200,220 360,240 520,255 S820,210 1000,240 S1300,230 1440,255 L1440,360 L0,360Z" fill="#8fcaa6"/>' +
+          trees([90, 130, 170, 1240, 1280, 1330, 1370], 254, '#5aa97c') + '</g>' +
+        '<g class="vb-l" data-d="25"><path class="vb-h3" d="M0,300 C180,265 360,280 560,290 S900,260 1080,280 S1320,285 1440,290 L1440,360 L0,360Z" fill="#4f9d74"/>' +
+          trees([260, 300, 980, 1020, 1062], 286, '#2f7d4f') +
+          '<g transform="translate(640 246)"><rect x="0" y="12" width="64" height="34" fill="#f6f6f2"/><rect class="vb-win" x="10" y="22" width="44" height="18" fill="#2f6bff"/>' +
           '<path d="M-6,14 L32,-12 L70,14Z" fill="#d4f55c"/></g></g>' +
-        '<g class="vb-l" data-d="8"><path d="M0,290 C220,268 420,282 720,284 S1200,270 1440,286 L1440,320 L0,320Z" fill="#2f7d4f"/>' +
-          spikes([150, 166, 182, 1180, 1196, 1214, 1230], 292) + '</g>' +
+        '<g class="vb-l" data-d="8"><path class="vb-h4" d="M0,330 C220,308 420,322 720,324 S1200,310 1440,326 L1440,360 L0,360Z" fill="#2f7d4f"/>' +
+          spikes([150, 166, 182, 1180, 1196, 1214, 1230], 332) + '</g>' +
+        '<g class="vb-flies" opacity="0">' + flies + '</g>' +
       '</svg>';
     footer.parentNode.insertBefore(land, footer);
     footer.classList.add('footer--vb');
 
     if (hasGsap && !reduce) {
+      var st = { trigger: land, start: 'top bottom', end: 'bottom bottom', scrub: 0.6 };
       land.querySelectorAll('.vb-l[data-d]').forEach(function (l) {
-        gsap.fromTo(l, { y: +l.dataset.d }, { y: 0, ease: 'none', scrollTrigger: { trigger: land, start: 'top bottom', end: 'bottom bottom', scrub: 0.6 } });
+        gsap.fromTo(l, { y: +l.dataset.d }, { y: 0, ease: 'none', scrollTrigger: st });
       });
-      gsap.fromTo(land.querySelector('.vb-l--sun'), { y: 80 }, { y: 0, ease: 'none', scrollTrigger: { trigger: land, start: 'top bottom', end: 'bottom bottom', scrub: 0.6 } });
+      // the day-to-night timeline, scrubbed by scroll
+      var night = gsap.timeline({ scrollTrigger: { trigger: land, start: 'top 75%', end: 'bottom bottom', scrub: 0.8 } });
+      night
+        .to(land.querySelector('.vb-sky0'), { attr: { 'stop-color': '#ffb48c' }, duration: 1 }, 0)
+        .to(land.querySelector('.vb-sky1'), { attr: { 'stop-color': '#ffe0b0' }, duration: 1 }, 0)
+        .to(land.querySelector('.vb-l--sun'), { y: 200, duration: 2 }, 0)
+        .to(land.querySelector('.vb-sky0'), { attr: { 'stop-color': '#1a2150' }, duration: 1 }, 1)
+        .to(land.querySelector('.vb-sky1'), { attr: { 'stop-color': '#4a3f78' }, duration: 1 }, 1)
+        .to(land.querySelector('.vb-h1'), { attr: { fill: '#3d4a7a' }, duration: 1 }, 1)
+        .to(land.querySelector('.vb-h2'), { attr: { fill: '#2c4a5a' }, duration: 1 }, 1)
+        .to(land.querySelector('.vb-h3'), { attr: { fill: '#1f3d36' }, duration: 1 }, 1)
+        .to(land.querySelector('.vb-h4'), { attr: { fill: '#173528' }, duration: 1 }, 1)
+        .to(land.querySelector('.vb-win'), { attr: { fill: '#ffd166' }, duration: 0.6 }, 1.2)
+        .to(land.querySelector('.vb-stars'), { opacity: 1, duration: 0.8 }, 1.2)
+        .fromTo(land.querySelector('.vb-moon'), { opacity: 0, y: 60 }, { opacity: 1, y: 0, duration: 0.9 }, 1.1)
+        .to(land.querySelector('.vb-flies'), { opacity: 1, duration: 0.6 }, 1.4)
+        .to(footer, { backgroundColor: '#173528', duration: 1 }, 1);
+      land.querySelectorAll('.vb-star').forEach(function (s) {
+        gsap.to(s, { opacity: r(0.2, 0.6), duration: r(0.8, 2), yoyo: true, repeat: -1, ease: 'sine.inOut', delay: r(0, 2) });
+      });
+      land.querySelectorAll('.vb-fly').forEach(function (fl) {
+        gsap.to(fl, { x: r(-40, 40), y: r(-30, 10), opacity: r(0.3, 1), duration: r(2, 4), yoyo: true, repeat: -1, ease: 'sine.inOut' });
+      });
       land.querySelectorAll('.vb-sway').forEach(function (g) {
         gsap.to(g, { rotation: r(-5, 5), svgOrigin: g.dataset.ox + ' ' + g.dataset.oy, duration: r(2, 3.5), ease: 'sine.inOut', yoyo: true, repeat: -1 });
       });
     }
+  }
+
+  /* ---------- Scroll journey: a paper plane leaves the hero island and flies down the page ---------- */
+  var journeyOK = hasGsap && !reduce && window.matchMedia('(min-width: 1200px) and (hover: hover)').matches;
+  if (journeyOK) {
+    var jWrap = document.createElement('div');
+    jWrap.className = 'vb-journey';
+    jWrap.setAttribute('aria-hidden', 'true');
+    jWrap.innerHTML = '<svg><defs><mask id="vbTrailMask" maskUnits="userSpaceOnUse"><path class="vb-trail-reveal" fill="none" stroke="#fff" stroke-width="8"/></mask></defs>' +
+      '<path class="vb-trail" fill="none" mask="url(#vbTrailMask)"/>' +
+      '<g class="vb-plane"><path d="M0,0 L34,12 L0,24 L8,12Z" fill="#fff" stroke="#0e0e0e" stroke-width="1.6" stroke-linejoin="round"/>' +
+      '<path d="M8,12 L34,12 L12,19Z" fill="#ff7a45" stroke="#0e0e0e" stroke-width="1.6" stroke-linejoin="round"/></g></svg>';
+    document.body.appendChild(jWrap);
+    var jSvg = jWrap.querySelector('svg'), trail = jWrap.querySelector('.vb-trail'), reveal = jWrap.querySelector('.vb-trail-reveal'),
+        plane = jWrap.querySelector('.vb-plane'), jTrig = null;
+
+    function buildJourney() {
+      if (jTrig) jTrig.kill();
+      var W = document.documentElement.clientWidth, Hd = document.documentElement.scrollHeight;
+      jSvg.setAttribute('width', W); jSvg.setAttribute('height', Hd); jSvg.setAttribute('viewBox', '0 0 ' + W + ' ' + Hd);
+      var heroEl = document.querySelector('.hero'), band = document.querySelector('.hero-land');
+      var top = function (el) { return el.getBoundingClientRect().top + window.scrollY; };
+      var sx = W * 0.62, sy = band ? top(band) + band.offsetHeight * 0.45 : top(heroEl) + heroEl.offsetHeight - 200;
+      var d = 'M' + f(sx) + ',' + f(sy), px = sx, py = sy, side = 1;
+      var ids = ['about', 'work', 'shots', 'services', 'experience', 'beyond', 'contact'];
+      var margin = Math.max(26, (W - Math.min(W, 1280)) / 4);
+      ids.forEach(function (id) {
+        var el = document.getElementById(id);
+        if (!el) return;
+        var y0 = top(el) + 40, y1 = top(el) + el.offsetHeight - 40, x = side > 0 ? W - margin : margin;
+        d += ' C' + f(px) + ',' + f(py + 160) + ' ' + f(x) + ',' + f(y0 - 160) + ' ' + f(x) + ',' + f(y0);
+        var seg = Math.max(1, Math.round((y1 - y0) / 260)), step = (y1 - y0) / seg;
+        for (var k = 1; k <= seg; k++) {
+          var wob = (k % 2 ? 1 : -1) * Math.min(18, margin * 0.5) * side;
+          d += ' Q' + f(x - wob) + ',' + f(y0 + step * (k - 0.5)) + ' ' + f(x) + ',' + f(y0 + step * k);
+        }
+        px = x; py = y1; side = -side;
+      });
+      var landEl = document.querySelector('.vb-land');
+      if (landEl) {
+        var ly = top(landEl) + landEl.offsetHeight * 0.55, lx = W * 0.47;
+        d += ' C' + f(px) + ',' + f(py + 200) + ' ' + f(lx) + ',' + f(ly - 220) + ' ' + f(lx) + ',' + f(ly);
+      }
+      trail.setAttribute('d', d); reveal.setAttribute('d', d);
+      var len = reveal.getTotalLength();
+      reveal.style.strokeDasharray = len; reveal.style.strokeDashoffset = len;
+      // sample the path so the plane can sit at the point matching the viewport, not a linear progress
+      var samples = [], N = Math.ceil(len / 12);
+      for (var q = 0; q <= N; q++) { var pt = trail.getPointAtLength((q / N) * len); samples.push(pt.y); }
+      for (var q2 = 1; q2 < samples.length; q2++) samples[q2] = Math.max(samples[q2], samples[q2 - 1]);
+      function lenForY(y) {
+        var lo = 0, hi = samples.length - 1;
+        if (y <= samples[0]) return 0;
+        if (y >= samples[hi]) return len;
+        while (hi - lo > 1) { var mid = (lo + hi) >> 1; if (samples[mid] < y) lo = mid; else hi = mid; }
+        return (hi / N) * len;
+      }
+      var cur = { l: 0 };
+      function place() {
+        var l = cur.l, p1 = trail.getPointAtLength(l), p2 = trail.getPointAtLength(Math.min(len, l + 2));
+        var ang = Math.atan2(p2.y - p1.y, p2.x - p1.x) * 180 / Math.PI;
+        plane.setAttribute('transform', 'translate(' + f(p1.x) + ' ' + f(p1.y) + ') rotate(' + f(ang) + ') translate(-17 -12)');
+        reveal.style.strokeDashoffset = len - l;
+      }
+      jTrig = ScrollTrigger.create({
+        start: 0, end: 'max',
+        onUpdate: function () {
+          var target = lenForY(window.scrollY + window.innerHeight * 0.62);
+          gsap.to(cur, { l: target, duration: 0.8, ease: 'power2.out', overwrite: true, onUpdate: place });
+        }
+      });
+      cur.l = lenForY(window.scrollY + window.innerHeight * 0.62); place();
+    }
+    var jt;
+    function queueJourney() { clearTimeout(jt); jt = setTimeout(buildJourney, 200); }
+    window.addEventListener('load', queueJourney);
+    window.addEventListener('resize', queueJourney);
+    if ('ResizeObserver' in window) new ResizeObserver(queueJourney).observe(document.getElementById('main') || document.body);
+    buildJourney();
   }
 
   if (hasGsap) window.addEventListener('load', function () { ScrollTrigger.refresh(); });

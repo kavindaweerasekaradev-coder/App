@@ -1814,17 +1814,23 @@ a.uf-node:hover .uf-node__go { color: var(--text); transform: translate(2px, -2p
 }
 
 /* ===================== Nature vibe layer (scene3d.js + vibe.js) ===================== */
-/* Hero landscape band (Three.js) */
-.hero:has(.hero-land) { padding-bottom: 0; border-bottom: 0; }
-.hero-land {
-  position: relative; height: clamp(220px, 30vw, 420px); margin-top: clamp(8px, 2vw, 24px);
-  -webkit-mask-image: linear-gradient(to bottom, transparent 0%, #000 22%, #000 100%);
-  mask-image: linear-gradient(to bottom, transparent 0%, #000 22%, #000 100%);
-  opacity: 0; transition: opacity 1.2s var(--ease);
+/* Immersive hero world (Three.js) behind the hero content */
+.hero:has(.hero-scene) {
+  position: relative; isolation: isolate; overflow: hidden; padding-bottom: 0; border-bottom: 0;
+  background: linear-gradient(180deg, #e8f4ff 0%, #f5faff 34%, #fff8ef 62%, #fff3e4 74%, #ffffff 100%);
 }
-.hero-land.is-ready { opacity: 1; }
-.hero-land canvas { display: block; width: 100%; height: 100%; pointer-events: none; }
-.hero-land::after { content: ""; position: absolute; inset: auto 0 0; height: 40px; background: linear-gradient(to bottom, transparent, #fff); pointer-events: none; }
+.hero > .container { position: relative; z-index: 1; }
+.hero-scene {
+  position: absolute; inset: 0; z-index: 0; pointer-events: none; opacity: 0; transition: opacity 1.4s var(--ease);
+  -webkit-mask-image: linear-gradient(to bottom, #000 88%, transparent 100%); mask-image: linear-gradient(to bottom, #000 88%, transparent 100%);
+}
+.hero-scene.is-ready { opacity: 1; }
+.hero-scene canvas { display: block; width: 100%; height: 100%; }
+.hero-land { position: relative; height: clamp(240px, 32vw, 460px); pointer-events: none; }
+/* keep hero copy crisp over the sky */
+.hero__lead, .hero__intro { text-shadow: 0 0 18px rgba(255, 255, 255, .9); }
+.hero__intro { background: rgba(255, 255, 255, .7); -webkit-backdrop-filter: blur(8px); backdrop-filter: blur(8px); }
+.hero .soc, .hero .btn--outline { background: rgba(255, 255, 255, .75); -webkit-backdrop-filter: blur(8px); backdrop-filter: blur(8px); }
 
 /* Hand-drawn brush strokes under headings */
 .vb-brush { position: absolute; z-index: -1; overflow: visible; pointer-events: none; }
@@ -1849,9 +1855,14 @@ a.uf-node:hover .uf-node__go { color: var(--text); transform: translate(2px, -2p
 }
 
 /* Landscape above the footer, continuing into a deep-green footer */
-.vb-land { height: clamp(150px, 20vw, 300px); margin-top: clamp(-40px, -2vw, -8px); overflow: hidden; }
+.vb-land { height: clamp(200px, 24vw, 360px); margin-top: clamp(-40px, -2vw, -8px); overflow: hidden; }
 .vb-land svg { display: block; width: 100%; height: 100%; }
 .footer--vb { background: #2f7d4f; color: rgba(255, 255, 255, .78); margin-top: -1px; }
 .footer--vb a, .footer--vb button { color: #fff; }
 .footer--vb .footer__mono { color: rgba(255, 255, 255, .6); }
 .footer--vb .footer__top:hover { color: var(--lime); }
+/* Paper-plane scroll journey */
+.vb-journey { position: absolute; top: 0; left: 0; z-index: 3; pointer-events: none; overflow: hidden; width: 100%; }
+.vb-journey svg { display: block; overflow: visible; }
+.vb-trail { stroke: var(--orange); stroke-width: 2; stroke-dasharray: 2 9; stroke-linecap: round; opacity: .55; }
+.vb-plane { filter: drop-shadow(0 6px 8px rgba(14, 14, 14, .18)); }
