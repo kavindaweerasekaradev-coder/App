@@ -1,0 +1,12 @@
+{
+ "style": "cinematic digital painting inspired by ancient Ajanta murals, ancient India, highly detailed, rich textures, soft volumetric light, sacred and peaceful mood, masterpiece, no text",
+ "chars": {
+  "QUEEN": "Queen Maha Maya, serene dignified Indian queen in her thirties, modestly dressed in a traditional white and gold saree covering her shoulders and arms, gold crown-like headpiece, gentle peaceful face",
+  "KING": "King Suddhodana, dignified middle-aged Indian king with a short black beard, tall golden crown, long maroon and gold royal robes"
+ },
+ "images": {
+  "02": "a king and a queen seen from behind, standing side by side on a carved stone palace terrace watching the sunset, wide shot, small figures, long royal robes and crowns, the queen fully covered by a long white veil and saree, oil lamps",
+  "10": "a queen seen from behind standing on a palace balcony at dawn, fully covered by a long flowing white veil and saree, looking at the sunrise over a lotus pond, wide shot, peaceful and hopeful",
+  "11": "view from high above the clouds at night, majestic snowy Himalayan peaks glowing in moonlight, full moon, a soft golden trail of light across the sky, heavenly atmosphere, no people"
+ }
+}

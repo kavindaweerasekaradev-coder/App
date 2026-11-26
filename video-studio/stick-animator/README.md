@@ -35,7 +35,7 @@ To preview a single frame, run `python3 studio.py episodes/ep02_texting --still 
 | `episodes/ep03_alone` | Why does he need time alone? |
 | `episodes/ep04_jokes` | Why does he joke when things get serious? |
 | `episodes/ep05_iloveyou` | Why doesn't he say "I love you" very often? |
-| `episodes/buddha01_dream` | The Path to Awakening, Ep 1: Queen Maha Maya's dream (silhouette style) |
+| `episodes/buddha01_dream` | The Path to Awakening, Ep 1: Queen Maha Maya's dream (painted illustrations) |
 
 ## Silhouette style (Buddha series)
 
@@ -45,6 +45,19 @@ Episodes in this style also set:
 - `CAPTION_STYLE = "soft"`: serif captions where the spoken key word turns gold, on a soft dark band.
 - `MUSIC = "ambient"`: a generated calm drone with singing-bowl strikes, mixed under the voice.
 - `VOICE = "bm_george"`, with `"speed": 0.9` per line for calm narration.
+
+## Painted illustrations
+
+`gen_images.py` generates scene paintings with the free Pollinations image API (no key; the host `image.pollinations.ai` must be allowed in the environment's network settings):
+
+```bash
+python3 gen_images.py episodes/buddha01_dream/prompts.json            # all images
+python3 gen_images.py episodes/buddha01_dream/prompts.json only=02,10 seed=60   # redo some
+```
+
+`prompts.json` holds a shared style line, character descriptions (`[QUEEN]`, `[KING]`) and one prompt per image. Images are saved in the episode's `img/` folder. In a scene, `painting(c, path, z, fx, fy)` draws an image with a slow zoom and pan and keeps the generator's watermark corner out of frame. `motes`, `mist`, `light_rays`, `petals` and `lotus` add life on top.
+
+The free model is inconsistent between images and tends to dress women immodestly. For sacred stories, show people from behind or in wide shots, and check every image before using it.
 
 ## Making a new episode
 

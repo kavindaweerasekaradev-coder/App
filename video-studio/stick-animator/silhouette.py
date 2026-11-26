@@ -301,3 +301,48 @@ def title_card(c, t, t0, t1, top, main, sub=None):
         c.set_font_size(26); e = c.text_extents(sub); c.move_to(W / 2 - e.width / 2 - e.x_bearing, 440)
         c.set_source_rgba(1, 0.92, 0.8, a); c.show_text(sub)
     c.restore()
+
+
+# ------------------------------------------------------------------ painted backgrounds (AI illustrations)
+_IMG = {}
+def _load(path):
+    """Load an illustration once, upscale to 1.5x with sharpening, return a cairo surface."""
+    if path not in _IMG:
+        from PIL import Image as _I, ImageFilter as _F
+        import numpy as _np
+        im = _I.open(path).convert("RGB")
+        im = im.resize((int(im.width * 1.5), int(im.height * 1.5)), _I.LANCZOS).filter(_F.UnsharpMask(2, 60, 2))
+        a = _np.dstack([_np.asarray(im)[..., ::-1], _np.full((im.height, im.width, 1), 255, _np.uint8)]).copy()
+        surf = cairo.ImageSurface.create_for_data(memoryview(a), cairo.FORMAT_ARGB32, im.width, im.height)
+        _IMG[path] = (surf, a)
+    return _IMG[path][0]
+
+def painting(c, path, z=1.12, fx=0.5, fy=0.45, a=1.0):
+    """Draw an illustration covering the frame, zoomed by z around focus (fx, fy) in image fractions.
+    The bottom 6% of the image (where a generator watermark sits) is always kept out of frame."""
+    s = _load(path); iw, ih = s.get_width(), s.get_height()
+    sc = max(W / iw, H / ih) * max(z, 1.08)
+    dw, dh = iw * sc, ih * sc
+    x = W / 2 - fx * dw; y = H / 2 - fy * dh
+    x = min(0, max(W - dw, x)); y = min(0, max(H - dh * 0.94, y))
+    c.save(); c.translate(x, y); c.scale(sc, sc); c.set_source_surface(s, 0, 0)
+    c.get_source().set_filter(cairo.FILTER_GOOD); c.paint_with_alpha(a); c.restore()
+
+def motes(c, t, n=40, seed=4, col=(1, 0.92, 0.7), a=0.5):
+    """Floating dust / light motes."""
+    rnd = random.Random(seed)
+    for i in range(n):
+        x = (rnd.uniform(0, W) + math.sin(t * 0.3 + i) * 30) % W; y = (rnd.uniform(0, H) - t * rnd.uniform(5, 18)) % H
+        r = rnd.uniform(1.2, 3.2); tw = 0.5 + 0.5 * math.sin(t * rnd.uniform(1, 2.5) + i)
+        glow(c, x, y, r * 4, col, a * tw * 0.4); c.arc(x, y, r, 0, TAU); c.set_source_rgba(*col, a * tw); c.fill()
+
+def mist(c, t, y, a=0.35, seed=1, col=(0.92, 0.94, 1.0)):
+    """Soft drifting mist band: wide, blurry elliptical glows (no hard cloud edges)."""
+    rnd = random.Random(seed)
+    for k in range(9):
+        x = ((rnd.uniform(0, W) + t * rnd.uniform(6, 16)) % (W + 700)) - 350
+        yy = y + rnd.uniform(-70, 70); rx = rnd.uniform(260, 420); ry = rx * 0.22
+        c.save(); c.translate(x, yy); c.scale(1, ry / rx)
+        g = cairo.RadialGradient(0, 0, 0, 0, 0, rx)
+        g.add_color_stop_rgba(0, *col, a * rnd.uniform(0.5, 0.9)); g.add_color_stop_rgba(1, *col, 0)
+        c.set_source(g); c.arc(0, 0, rx, 0, TAU); c.fill(); c.restore()
