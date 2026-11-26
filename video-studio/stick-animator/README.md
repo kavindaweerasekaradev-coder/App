@@ -3,7 +3,8 @@
 Makes short vertical explainer videos (720×1280, 30 fps, ready for Reels) completely in code, with no paid AI services:
 
 - **Characters and rooms:** original round-head characters plus rooms (living room, study, kitchen, office), drawn with pycairo.
-- **Props and effects:** phone chat screen, laptop, to-do clipboard, thought clouds, speech and scribble bubbles, a puzzle brain, storm cloud, hearts and broken hearts.
+- **Props and effects:** phone chat screen, laptop, to-do clipboard, battery meter, door, armchair, mug, shopping bags, wrench, calendar, theatre mask, feeling blobs, shield, spotlight, thought clouds, speech and scribble bubbles, a puzzle brain, storm cloud, hearts and broken hearts.
+- **Poses:** sitting and standing, walking, and arms that wave, carry, give, use a tool or hold a mask. `HANDS` holds the last-drawn man's hand positions, so props can be attached to his hands.
 - **Voice:** the free Kokoro voice model, which runs locally.
 - **Captions:** karaoke style, with the spoken word boxed and key words in yellow.
 
@@ -31,6 +32,9 @@ To preview a single frame, run `python3 studio.py episodes/ep02_texting --still 
 |---|---|
 | `episodes/ep01_quiet` | Why does he go quiet when something is wrong? |
 | `episodes/ep02_texting` | Why does he stop texting back? |
+| `episodes/ep03_alone` | Why does he need time alone? |
+| `episodes/ep04_jokes` | Why does he joke when things get serious? |
+| `episodes/ep05_iloveyou` | Why doesn't he say "I love you" very often? |
 
 ## Making a new episode
 

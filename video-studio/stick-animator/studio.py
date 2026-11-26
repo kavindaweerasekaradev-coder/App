@@ -91,11 +91,16 @@ def is_blink(t, seed):
     return p < 0.12
 
 # ------------------------------------------------------------------ characters
+HANDS = []   # world positions of the last drawn man's hands: [back, front]
+
 def man(c, x, y, t, pose="sit", dir=1, expr="neutral", turn=None, tilt=0.0, look_down=0.0,
-        arms="lap", s=1.0, alpha=1.0):
-    """Round white head, charcoal capsule body, thin limbs. (x,y)=hip for sit, feet for stand."""
+        arms="lap", s=1.0, alpha=1.0, walk=False):
+    """Round white head, charcoal capsule body, thin limbs. (x,y)=hip for sit, feet for stand.
+    Standing arms: down, carry, give, tool, wave, mask, head, both_head. walk=True swings the legs."""
+
     c.save(); c.translate(x, y); c.scale(s, s)
     br = math.sin(t * 2.2) * 2
+    if walk: br = -abs(math.sin(t * 8)) * 8
     if turn is None: turn = 0.5 * dir
     if pose == "sit":
         hip = (0, 0); top = (dir * 6, -118 + br)
@@ -105,15 +110,33 @@ def man(c, x, y, t, pose="sit", dir=1, expr="neutral", turn=None, tilt=0.0, look
         line(c, [(dir * -8, 0), (dir * 80, 8), (dir * 84, 114)], 10)
         line(c, [(dir * 96, 112), (dir * 116, 114)], 10); line(c, [(dir * 84, 114), (dir * 104, 116)], 10)
     else:
-        hip = (0, -150); top = (0, -275 + br); shadow(c, 0, 0, 60)
-        line(c, [(-8, -150), (-16, 0)], 10); line(c, [(8, -150), (16, 0)], 10)
-        line(c, [(-16, 0), (-16 + dir * 18, 0)], 10); line(c, [(16, 0), (16 + dir * 18, 0)], 10)
+        hip = (0, -150 + br * 0.5); top = (0, -275 + br); shadow(c, 0, 0, 60)
+        sw = math.sin(t * 8) * 38 if walk else 0
+        for sd, k in ((-1, 1), (1, -1)):
+            fx = sd * 16 + k * sw; lift = max(0, k * math.sin(t * 8)) * 14 if walk else 0
+            line(c, [(sd * 8, hip[1]), (fx, -lift)], 10); line(c, [(fx, -lift), (fx + dir * 18, -lift)], 10)
     line(c, [hip, top], 48, INK)                              # torso capsule
     line(c, [(hip[0], hip[1] - 4), (top[0], top[1] + 2)], 38, (0.20, 0.20, 0.23))
     sh = (top[0], top[1] + 14)
     hr = 64; hc = (top[0] + dir * 4 + tilt * 30, top[1] - hr - 6 + abs(tilt) * 10)
     # arms
-    if arms == "lap":
+    if pose == "stand" or arms == "mask":
+        A = {"down": ((-30, -200), (-42, -138), (30, -200), (42, -138)),
+             "lap": ((-30, -200), (-42, -138), (30, -200), (42, -138)),
+             "carry": ((-34, -196), (-50, -126), (34, -196), (50, -126)),
+             "give": ((-30, -200), (-42, -138), (dir * 55, -228), (dir * 104, -214)),
+             "tool": ((-30, -200), (-42, -138), (dir * 52, -214), (dir * 96, -232 + math.sin(t * 12) * 9)),
+             "wave": ((-30, -200), (-42, -138), (dir * 78, -282), (dir * 84 + math.sin(t * 10) * 12, -372)),
+             "mask": ((-30, -200), (-42, -138), (dir * 70, -232), (hc[0] + dir * 30, hc[1] + 52))}
+        if pose == "sit" and arms == "mask":
+            A["mask"] = ((dir * 30, sh[1] + 64), (dir * 70, -8), (dir * 72, sh[1] + 30), (hc[0] + dir * 30, hc[1] + 52))
+        if arms in A:
+            e1, h1, e2, h2 = A[arms]
+            line(c, [sh, e1, h1], 8); line(c, [sh, e2, h2], 8)
+            HANDS[:] = [(x + h1[0] * s, y + h1[1] * s), (x + h2[0] * s, y + h2[1] * s)]
+    if arms == "mask" or (pose == "stand" and arms in ("down", "lap", "carry", "give", "tool", "wave")):
+        pass                                                   # drawn above
+    elif arms == "lap":
         for o in (0, 10):
             line(c, [sh, (sh[0] + dir * (22 + o), sh[1] + 62), (dir * (64 + o), -8)], 8)
     elif arms == "head":      # one hand on forehead, other on lap
@@ -564,6 +587,134 @@ def storm_cloud(c, x, y, s, t, a=1.0):
     if int(t * 4) % 7 == 0:
         c.move_to(0, 30); c.line_to(-16, 70); c.line_to(2, 70); c.line_to(-12, 110); c.line_to(24, 60); c.line_to(6, 60); c.line_to(18, 30); c.close_path()
         c.set_source_rgba(1, 0.92, 0.3, a); c.fill()
+    c.restore()
+
+# ------------------------------------------------------------------ props (episodes 3-5)
+def battery(c, x, y, level, t, charging=False, sc=1.0):
+    """Battery icon. level 0..1; colour goes red -> yellow -> green."""
+    if sc <= 0: return
+    c.save(); c.translate(x, y); c.scale(sc, sc)
+    rrect(c, -62, -30, 124, 60, 12); fill_stroke(c, (1, 1, 1), 5)
+    rrect(c, 62, -12, 12, 24, 4); c.set_source_rgb(*INK); c.fill()
+    col = (0.86, 0.2, 0.22) if level < 0.25 else (0.95, 0.75, 0.15) if level < 0.6 else (0.25, 0.7, 0.35)
+    if level < 0.25 and int(t * 4) % 2 == 0 and not charging: col = (1, 0.5, 0.5)
+    w = max(4, 108 * max(0, min(1, level))); rrect(c, -54, -22, w, 44, 7); c.set_source_rgb(*col); c.fill()
+    if charging:
+        c.move_to(6, -26); c.line_to(-14, 4); c.line_to(0, 4); c.line_to(-6, 26); c.line_to(16, -6); c.line_to(2, -6); c.close_path()
+        c.set_source_rgb(1, 0.92, 0.3); c.fill_preserve(); c.set_source_rgb(*INK); c.set_line_width(2.5); c.stroke()
+    text(c, 0, 62, f"{int(round(level * 100))}%", 26, align="center")
+    c.restore()
+
+def door(c, x, y, w=150, h=300, open_amt=0.0):
+    """Door on the back wall; (x, y) = bottom-left. open_amt 0 closed .. 1 wide open."""
+    rrect(c, x - 10, y - h - 10, w + 20, h + 14, 4); fill_stroke(c, (0.55, 0.53, 0.52), 4)
+    c.rectangle(x, y - h, w, h); c.set_source_rgb(0.12, 0.12, 0.13); c.fill()
+    ww = w * (1 - 0.8 * open_amt)
+    c.rectangle(x, y - h, ww, h); fill_stroke(c, (0.62, 0.58, 0.55), 4)
+    if ww > 30:
+        rrect(c, x + 14, y - h + 20, ww - 28, h * 0.38, 4); fill_stroke(c, (0.66, 0.62, 0.59), 2.5)
+        rrect(c, x + 14, y - h * 0.52, ww - 28, h * 0.42, 4); fill_stroke(c, (0.66, 0.62, 0.59), 2.5)
+        c.arc(x + ww - 18, y - h * 0.5, 7, 0, TAU); fill_stroke(c, (0.85, 0.75, 0.4), 2)
+
+def armchair(c, x, y):
+    """y = seat line; x = centre."""
+    rrect(c, x - 95, y - 170, 190, 180, 30); fill_stroke(c, (0.40, 0.38, 0.40), 4)
+    rrect(c, x - 110, y - 14, 220, 64, 18); fill_stroke(c, (0.34, 0.32, 0.34), 4)
+    for ax in (x - 130, x + 90): rrect(c, ax, y - 80, 40, 136, 16); fill_stroke(c, (0.30, 0.28, 0.30), 4)
+    for lx in (x - 90, x + 80): c.rectangle(lx, y + 50, 12, 26); fill_stroke(c, (0.15, 0.15, 0.16), 3)
+
+def mug(c, x, y, t, steam=True, s=1.0):
+    c.save(); c.translate(x, y); c.scale(s, s)
+    rrect(c, -20, -40, 40, 42, 6); fill_stroke(c, (0.97, 0.97, 0.98), 3.5)
+    c.arc(22, -20, 11, -1.4, 1.4); c.set_source_rgb(*INK); c.set_line_width(3.5); c.stroke()
+    if steam:
+        for k in (-8, 8):
+            c.move_to(k, -48)
+            for j in range(4): c.line_to(k + math.sin(t * 4 + j + k) * 6, -48 - j * 12)
+            c.set_source_rgba(*INK, 0.35); c.set_line_width(2.5); c.stroke()
+    c.restore()
+
+def bag(c, x, y, s=1.0, shade=0.85):
+    """Shopping bag hanging from a hand at (x, y)."""
+    c.save(); c.translate(x, y); c.scale(s, s)
+    c.arc(0, 16, 14, math.pi, 0); c.set_source_rgb(*INK); c.set_line_width(3.5); c.stroke()
+    c.move_to(-30, 16); c.line_to(30, 16); c.line_to(36, 96); c.line_to(-36, 96); c.close_path(); fill_stroke(c, (shade, shade * 0.95, shade * 0.88), 3.5)
+    for k, (ox, col) in enumerate(((-14, (0.3, 0.6, 0.3)), (10, (0.9, 0.6, 0.2)))):
+        c.arc(ox, 12, 12, 0, TAU); c.set_source_rgb(*col); c.fill()
+    c.restore()
+
+def wrench(c, x, y, rot, s=1.0):
+    c.save(); c.translate(x, y); c.rotate(rot); c.scale(s, s)
+    line(c, [(0, 0), (0, -62)], 12, (0.55, 0.57, 0.6)); line(c, [(0, 0), (0, -62)], 4, (0.75, 0.77, 0.8))
+    c.arc(0, -70, 16, 0, TAU); c.set_source_rgb(0.55, 0.57, 0.6); c.fill()
+    c.rectangle(-6, -92, 12, 16); c.set_source_rgb(1, 1, 1); c.fill()
+    c.restore()
+
+def calendar(c, x, y, sc=1.0, circled=0.0, note="Her mum's birthday"):
+    if sc <= 0: return
+    c.save(); c.translate(x, y); c.scale(sc, sc)
+    rrect(c, -130, -120, 260, 240, 12); fill_stroke(c, (1, 1, 1), 4)
+    rrect(c, -130, -120, 260, 50, 12); c.set_source_rgb(0.86, 0.22, 0.27); c.fill()
+    text(c, 0, -86, "SATURDAY", 24, (1, 1, 1), align="center")
+    for r in range(3):
+        for k in range(5):
+            text(c, -100 + k * 50, -30 + r * 46, str(8 + r * 5 + k), 20, INK, bold=False, align="center")
+    if circled > 0:
+        c.save(); c.translate(0, 16); c.scale(1.2, 1); c.new_sub_path()
+        c.arc(0, -8, 26, -1.5, -1.5 + TAU * circled); c.set_source_rgb(0.86, 0.22, 0.27); c.set_line_width(5); c.stroke(); c.restore()
+    text(c, 0, 108, note, 18, (0.86, 0.22, 0.27), align="center")
+    c.restore()
+
+def mask(c, x, y, r, sc=1.0, rot=0.0, a=1.0):
+    """Big smiling theatre mask held in front of a face (centre x, y)."""
+    if sc <= 0: return
+    c.save(); c.translate(x, y); c.rotate(rot); c.scale(sc, sc)
+    c.save(); c.scale(1, 1.15); c.arc(0, 0, r, 0, TAU); c.restore()
+    c.set_source_rgba(0.99, 0.97, 0.9, a); c.fill_preserve(); c.set_source_rgba(*INK, a); c.set_line_width(4.5); c.stroke()
+    for sd in (-1, 1):
+        c.save(); c.translate(sd * r * 0.36, -r * 0.18); c.scale(1.3, 0.8); c.arc(0, 0, r * 0.15, math.pi, TAU); c.restore()
+        c.set_source_rgba(*INK, a); c.set_line_width(5); c.stroke()
+        c.arc(sd * r * 0.62, r * 0.28, r * 0.13, 0, TAU); c.set_source_rgba(0.95, 0.55, 0.55, 0.6 * a); c.fill()
+    c.move_to(-r * 0.5, r * 0.25); c.curve_to(-r * 0.3, r * 0.8, r * 0.3, r * 0.8, r * 0.5, r * 0.25); c.close_path()
+    c.set_source_rgba(*INK, a); c.fill()
+    c.restore()
+
+def sweat(c, x, y, sc=1.0):
+    if sc <= 0: return
+    c.save(); c.translate(x, y); c.scale(sc, sc)
+    c.move_to(0, -16); c.curve_to(10, 0, 12, 10, 0, 12); c.curve_to(-12, 10, -10, 0, 0, -16); c.close_path()
+    fill_stroke(c, (0.7, 0.85, 1.0), 2.5); c.restore()
+
+def blob(c, x, y, r, label, t, seed, a=1.0):
+    """Dark scribbly feeling blob with a label (FEAR, WORRY...)."""
+    rnd = random.Random(seed)
+    c.save(); c.translate(x, y)
+    pts = []
+    for k in range(10):
+        ang = k * TAU / 10; rr = r * (0.85 + 0.25 * math.sin(t * 3 + k * 1.7 + seed))
+        pts.append((math.cos(ang) * rr, math.sin(ang) * rr))
+    c.move_to(*pts[0])
+    for k in range(1, 11): p0 = pts[k % 10]; c.line_to(*p0)
+    c.close_path(); c.set_source_rgba(0.18, 0.18, 0.2, 0.92 * a); c.fill()
+    for sd in (-1, 1): c.arc(sd * r * 0.3, -r * 0.15, r * 0.12, 0, TAU); c.set_source_rgba(1, 1, 1, a); c.fill()
+    c.restore()
+    text(c, x, y + r * 0.45, label, max(14, int(r * 0.3)), (1, 1, 1), align="center", alpha=a)
+
+def shield_arc(c, x, y, r, a):
+    if a <= 0: return
+    c.arc(x, y, r, 0, TAU); c.set_source_rgba(1, 0.95, 0.6, 0.18 * a); c.fill_preserve()
+    c.set_source_rgba(1, 0.85, 0.3, 0.8 * a); c.set_line_width(5); c.stroke()
+
+def spotlight(c, x, a=1.0):
+    c.move_to(x - 40, -100); c.line_to(x + 40, -100); c.line_to(x + 220, 1000); c.line_to(x - 220, 1000); c.close_path()
+    c.set_source_rgba(1, 1, 0.9, 0.16 * a); c.fill()
+
+def big_heart_jar(c, x, y, n, sc=1.0):
+    """Hearts collecting into a big heart outline."""
+    if sc <= 0: return
+    c.save(); c.translate(x, y); c.scale(sc * 4.2, sc * 4.2)
+    c.move_to(0, 18); c.curve_to(-40, -10, -22, -42, 0, -22); c.curve_to(22, -42, 40, -10, 0, 18); c.close_path()
+    c.set_source_rgba(1, 1, 1, 0.5); c.fill_preserve(); c.set_source_rgba(*INK, 1); c.set_line_width(1.2); c.stroke()
     c.restore()
 
 # ------------------------------------------------------------------ camera
