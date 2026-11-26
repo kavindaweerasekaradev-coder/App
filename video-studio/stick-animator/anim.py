@@ -1,0 +1,551 @@
+#!/usr/bin/env python3
+"""Code-drawn 2D explainer animation: original round-head characters, rooms,
+metaphor effects and karaoke captions. Renders 720x1280 @30fps and pipes to ffmpeg."""
+import json, math, os, random, subprocess, sys
+import numpy as np, cairo
+from PIL import Image, ImageDraw, ImageFont
+
+W, H, FPS = 720, 1280, 30
+HERE = os.path.dirname(os.path.abspath(__file__))
+FONT = os.path.join(HERE, "..", "..", ".claude", "skills", "kaz-documentary-2", "scripts", "fonts", "ArchivoBlack-Regular.ttf")
+INK = (0.12, 0.12, 0.13)
+TAU = 2 * math.pi
+
+def ease(x): x = max(0, min(1, x)); return x * x * (3 - 2 * x)
+def lerp(a, b, t): return a + (b - a) * t
+def seg(t, a, b): return ease((t - a) / (b - a)) if b > a else float(t >= a)
+def pop(t, t0, d=0.25):  # overshoot scale-in
+    x = (t - t0) / d
+    if x <= 0: return 0.0
+    if x >= 1: return 1.0
+    return 1 + 0.25 * math.sin(x * math.pi) - (1 - x) ** 3
+
+# ------------------------------------------------------------------ primitives
+def rrect(c, x, y, w, h, r):
+    c.new_sub_path()
+    c.arc(x + w - r, y + r, r, -math.pi / 2, 0); c.arc(x + w - r, y + h - r, r, 0, math.pi / 2)
+    c.arc(x + r, y + h - r, r, math.pi / 2, math.pi); c.arc(x + r, y + r, r, math.pi, 1.5 * math.pi)
+    c.close_path()
+
+def fill_stroke(c, fill, lw=4, stroke=INK, alpha=1):
+    c.set_source_rgba(*fill, alpha); c.fill_preserve()
+    c.set_source_rgba(*stroke, alpha); c.set_line_width(lw); c.stroke()
+
+def line(c, pts, lw, col=INK, alpha=1):
+    c.set_line_cap(cairo.LINE_CAP_ROUND); c.set_line_join(cairo.LINE_JOIN_ROUND)
+    c.move_to(*pts[0])
+    if len(pts) == 3: c.curve_to(*pts[1], *pts[1], *pts[2])
+    else:
+        for p in pts[1:]: c.line_to(*p)
+    c.set_source_rgba(*col, alpha); c.set_line_width(lw); c.stroke()
+
+def glow(c, x, y, r, col, a):
+    g = cairo.RadialGradient(x, y, 0, x, y, r)
+    g.add_color_stop_rgba(0, *col, a); g.add_color_stop_rgba(1, *col, 0)
+    c.set_source(g); c.arc(x, y, r, 0, TAU); c.fill()
+
+def shadow(c, x, y, w, a=0.18):
+    c.save(); c.translate(x, y); c.scale(1, 0.18)
+    g = cairo.RadialGradient(0, 0, 0, 0, 0, w)
+    g.add_color_stop_rgba(0, 0, 0, 0, a); g.add_color_stop_rgba(1, 0, 0, 0, 0)
+    c.set_source(g); c.arc(0, 0, w, 0, TAU); c.fill(); c.restore()
+
+# ------------------------------------------------------------------ faces
+def face(c, cx, cy, r, expr, turn, look_down, blink, scale=1):
+    ex = 0.30 * r; fx = cx + turn * 0.28 * r; ey = cy - 0.05 * r + look_down * 0.22 * r
+    c.set_source_rgb(*INK)
+    for s in (-1, 1):
+        x = fx + s * ex
+        if blink: line(c, [(x - 6 * scale, ey), (x + 6 * scale, ey)], 3 * scale)
+        else:
+            c.save(); c.translate(x, ey); c.scale(1, 1.35); c.arc(0, 0, 5.2 * scale, 0, TAU); c.restore(); c.fill()
+            c.set_source_rgb(1, 1, 1); c.arc(x + 1.6 * scale, ey - 2.5 * scale, 1.5 * scale, 0, TAU); c.fill(); c.set_source_rgb(*INK)
+        # brows
+        by = ey - 0.24 * r
+        if expr in ("sad", "worried"):   inner, outer = by - 7 * scale, by + 2 * scale
+        elif expr == "angry":            inner, outer = by + 5 * scale, by - 4 * scale
+        elif expr == "surprised":        inner, outer = by - 8 * scale, by - 8 * scale
+        else:                            inner, outer = by - 1 * scale, by - 1 * scale
+        line(c, [(x - s * 3 * scale, inner), (x + s * 11 * scale, outer)], 3 * scale)
+    my = cy + 0.38 * r + look_down * 0.15 * r; mw = 0.22 * r
+    if expr == "smile":
+        c.arc(fx, my - 0.12 * r, mw, 0.15 * math.pi, 0.85 * math.pi); c.set_line_width(3.2 * scale); c.stroke()
+    elif expr in ("sad", "angry"):
+        c.arc(fx, my + 0.14 * r, mw * 0.8, 1.2 * math.pi, 1.8 * math.pi); c.set_line_width(3.2 * scale); c.stroke()
+    elif expr == "surprised":
+        c.save(); c.translate(fx, my); c.scale(1, 1.3); c.arc(0, 0, 0.07 * r, 0, TAU); c.restore(); c.fill()
+    elif expr == "worried":
+        pts = [(fx - mw + i * mw / 4, my + (2.5 if i % 2 else -1.5) * scale) for i in range(9)]
+        line(c, pts, 3 * scale)
+    else:
+        line(c, [(fx - mw * 0.7, my), (fx + mw * 0.7, my)], 3.2 * scale)
+
+def is_blink(t, seed):
+    p = (t + seed * 1.37) % 3.3
+    return p < 0.12
+
+# ------------------------------------------------------------------ characters
+def man(c, x, y, t, pose="sit", dir=1, expr="neutral", turn=None, tilt=0.0, look_down=0.0,
+        arms="lap", s=1.0, alpha=1.0):
+    """Round white head, charcoal capsule body, thin limbs. (x,y)=hip for sit, feet for stand."""
+    c.save(); c.translate(x, y); c.scale(s, s)
+    br = math.sin(t * 2.2) * 2
+    if turn is None: turn = 0.5 * dir
+    if pose == "sit":
+        hip = (0, 0); top = (dir * 6, -118 + br)
+        knee = (dir * 88, 4); foot = (dir * 96, 112)
+        shadow(c, dir * 45, 115, 95)
+        line(c, [hip, knee, foot], 10)                        # leg (far)
+        line(c, [(dir * -8, 0), (dir * 80, 8), (dir * 84, 114)], 10)
+        line(c, [(dir * 96, 112), (dir * 116, 114)], 10); line(c, [(dir * 84, 114), (dir * 104, 116)], 10)
+    else:
+        hip = (0, -150); top = (0, -275 + br); shadow(c, 0, 0, 60)
+        line(c, [(-8, -150), (-16, 0)], 10); line(c, [(8, -150), (16, 0)], 10)
+        line(c, [(-16, 0), (-16 + dir * 18, 0)], 10); line(c, [(16, 0), (16 + dir * 18, 0)], 10)
+    line(c, [hip, top], 48, INK)                              # torso capsule
+    line(c, [(hip[0], hip[1] - 4), (top[0], top[1] + 2)], 38, (0.20, 0.20, 0.23))
+    sh = (top[0], top[1] + 14)
+    hr = 64; hc = (top[0] + dir * 4 + tilt * 30, top[1] - hr - 6 + abs(tilt) * 10)
+    # arms
+    if arms == "lap":
+        for o in (0, 10):
+            line(c, [sh, (sh[0] + dir * (22 + o), sh[1] + 62), (dir * (64 + o), -8)], 8)
+    elif arms == "head":      # one hand on forehead, other on lap
+        line(c, [sh, (dir * 30, sh[1] + 64), (dir * 70, -8)], 8)
+        line(c, [sh, (sh[0] + dir * 62, sh[1] - 20), (hc[0] + dir * 22, hc[1] - hr * 0.78)], 8)
+    elif arms == "both_head":
+        for sd in (-1, 1):
+            line(c, [sh, (sh[0] + sd * 62, sh[1] + 4), (hc[0] + sd * 58, hc[1] + 6)], 8)
+    elif arms == "write":
+        line(c, [sh, (dir * 40, sh[1] + 50), (dir * 92, -38 + math.sin(t * 9) * 3)], 8)
+        line(c, [sh, (dir * 30, sh[1] + 60), (dir * 70, -40)], 8)
+    elif arms == "hold":
+        line(c, [sh, (dir * 28, sh[1] + 60), (dir * 76, -14)], 8)
+    # head
+    c.save(); c.translate(*hc); c.rotate(tilt)
+    g = cairo.RadialGradient(-hr * 0.35, -hr * 0.4, hr * 0.1, 0, 0, hr * 1.05)
+    g.add_color_stop_rgb(0, 1, 1, 1); g.add_color_stop_rgb(0.75, 0.93, 0.93, 0.94); g.add_color_stop_rgb(1, 0.80, 0.80, 0.82)
+    c.arc(0, 0, hr, 0, TAU); c.set_source(g); c.fill_preserve(); c.set_source_rgb(*INK); c.set_line_width(4.5); c.stroke()
+    face(c, 0, 0, hr, expr, turn, look_down, is_blink(t, 1))
+    c.restore()
+    if arms in ("head", "both_head"):   # hands drawn over head
+        for sd in ((dir,) if arms == "head" else (-1, 1)):
+            hx = hc[0] + sd * (22 if arms == "head" else 58); hy = hc[1] + (-hr * 0.78 if arms == "head" else 6)
+            c.arc(hx, hy, 9, 0, TAU); c.set_source_rgb(*INK); c.fill()
+    c.restore()
+    return (x + hc[0] * s, y + hc[1] * s, hr * s)
+
+def woman(c, x, y, t, pose="stand", dir=-1, expr="neutral", turn=None, tilt=0.0, look_down=0.0,
+          arms="down", s=1.0, alpha=1.0):
+    """Bob-haired character, soft grey dress."""
+    c.save(); c.translate(x, y); c.scale(s, s)
+    br = math.sin(t * 2.0 + 1) * 2
+    if turn is None: turn = 0.5 * dir
+    dress = (0.86, 0.86, 0.88)
+    if pose == "stand":
+        shadow(c, 0, 0, 55)
+        line(c, [(-10, -140), (-14, 0)], 7); line(c, [(10, -140), (14, 0)], 7)
+        line(c, [(-14, 0), (-14 + dir * 14, 0)], 7); line(c, [(14, 0), (14 + dir * 14, 0)], 7)
+        top = (0, -268 + br)
+        c.move_to(-24, top[1] + 10); c.line_to(24, top[1] + 10); c.line_to(52, -130); c.line_to(-52, -130); c.close_path()
+        fill_stroke(c, dress, 4)
+        sh = (0, top[1] + 20)
+        if arms == "down":
+            line(c, [(sh[0] - 22, sh[1]), (-40, sh[1] + 60), (-44, sh[1] + 118)], 7)
+            line(c, [(sh[0] + 22, sh[1]), (40, sh[1] + 60), (44, sh[1] + 118)], 7)
+        elif arms == "reach":
+            line(c, [(sh[0] - 22, sh[1]), (-40, sh[1] + 60), (-44, sh[1] + 118)], 7)
+            line(c, [(sh[0] + dir * 22, sh[1]), (dir * 70, sh[1] + 40), (dir * 112, sh[1] + 30)], 7)
+        elif arms == "hug":
+            line(c, [(sh[0] - 22, sh[1]), (-30, sh[1] + 70), (8, sh[1] + 96)], 7)
+            line(c, [(sh[0] + 22, sh[1]), (30, sh[1] + 70), (-8, sh[1] + 96)], 7)
+    else:  # sit, hip at (0,0)
+        shadow(c, dir * 40, 112, 80)
+        line(c, [(0, 0), (dir * 76, 4), (dir * 82, 110)], 7); line(c, [(dir * -8, 2), (dir * 68, 8), (dir * 72, 112)], 7)
+        top = (dir * 4, -112 + br)
+        c.move_to(top[0] - 22, top[1] + 10); c.line_to(top[0] + 22, top[1] + 10)
+        c.line_to(dir * 90 if dir > 0 else 30, 18); c.line_to(-30 if dir > 0 else dir * 90, 18); c.close_path()
+        fill_stroke(c, dress, 4)
+        sh = (top[0], top[1] + 22)
+        line(c, [sh, (dir * 34, sh[1] + 56), (dir * 66 if arms != "hold" else dir * -26, -6)], 7)
+    hr = 52; hc = (top[0] + dir * 3 + tilt * 26, top[1] - hr - 4)
+    c.save(); c.translate(*hc); c.rotate(tilt)
+    hair = (0.32, 0.32, 0.35)
+    c.save(); c.scale(1.12, 1.08); c.arc(0, 4, hr, math.pi * 0.85, math.pi * 2.15); c.restore()
+    c.line_to(hr * 1.12, hr * 0.95); c.line_to(-hr * 1.12, hr * 0.95); c.close_path()
+    fill_stroke(c, hair, 4)
+    g = cairo.RadialGradient(-hr * 0.3, -hr * 0.35, hr * 0.1, 0, 0, hr * 1.05)
+    g.add_color_stop_rgb(0, 1, 1, 1); g.add_color_stop_rgb(1, 0.85, 0.85, 0.87)
+    c.arc(0, 6, hr * 0.9, 0, TAU); c.set_source(g); c.fill_preserve(); c.set_source_rgb(*INK); c.set_line_width(4); c.stroke()
+    # bangs
+    c.move_to(-hr * 0.95, -hr * 0.05); c.curve_to(-hr * 0.6, -hr * 1.05, hr * 0.6, -hr * 1.05, hr * 0.95, -hr * 0.05)
+    c.curve_to(hr * 0.5, -hr * 0.55, -hr * 0.1 + turn * 20, -hr * 0.45, -hr * 0.95, -hr * 0.05)
+    fill_stroke(c, hair, 4)
+    face(c, 0, hr * 0.12, hr * 0.9, expr, turn, look_down, is_blink(t, 2), 0.9)
+    c.restore(); c.restore()
+    return (x + hc[0] * s, y + hc[1] * s, hr * s)
+
+# ------------------------------------------------------------------ rooms
+def floor_wall(c, wall_top, wall_bot, floor_col, horizon=880, planks=True):
+    g = cairo.LinearGradient(0, 0, 0, horizon); g.add_color_stop_rgb(0, *wall_top); g.add_color_stop_rgb(1, *wall_bot)
+    c.rectangle(-400, -400, W + 800, horizon + 400); c.set_source(g); c.fill()
+    g = cairo.LinearGradient(0, horizon, 0, H + 300); g.add_color_stop_rgb(0, *floor_col); g.add_color_stop_rgb(1, *(v * 0.7 for v in floor_col))
+    c.rectangle(-400, horizon, W + 800, H); c.set_source(g); c.fill()
+    line(c, [(-400, horizon), (W + 400, horizon)], 5, (0.2, 0.2, 0.22), 0.6)  # skirting
+    if planks:
+        for i in range(-8, 16):
+            line(c, [(W / 2 + i * 30, horizon), (W / 2 + i * 120, H + 300)], 2, (0, 0, 0), 0.10)
+        for yy in (960, 1060, 1190):
+            line(c, [(-400, yy), (W + 400, yy)], 2, (0, 0, 0), 0.08)
+
+def window(c, x, y, w, h, light=0.5):
+    rrect(c, x - 10, y - 10, w + 20, h + 20, 6); fill_stroke(c, (0.55, 0.55, 0.58), 4)
+    g = cairo.LinearGradient(x, y, x + w, y + h); g.add_color_stop_rgb(0, 0.97, 0.97, 0.98); g.add_color_stop_rgb(1, 0.80, 0.82, 0.86)
+    c.rectangle(x, y, w, h); c.set_source(g); c.fill()
+    for k in range(1, 3): line(c, [(x + w * k / 3, y), (x + w * k / 3, y + h)], 6, (0.5, 0.5, 0.53))
+    line(c, [(x, y + h / 2), (x + w, y + h / 2)], 6, (0.5, 0.5, 0.53))
+    c.rectangle(x, y, w, h); c.set_source_rgb(*INK); c.set_line_width(4); c.stroke()
+    # curtains
+    for sx in (x - 46, x + w + 6):
+        c.rectangle(sx, y - 30, 40, h + 70); fill_stroke(c, (0.40, 0.40, 0.43), 3)
+        for k in range(1, 4): line(c, [(sx + k * 10, y - 26), (sx + k * 10, y + h + 36)], 2, (0, 0, 0), 0.25)
+    # light beam
+    c.move_to(x, y + h); c.line_to(x + w, y + h); c.line_to(x + w - 140, 1240); c.line_to(x - 260, 1240); c.close_path()
+    c.set_source_rgba(1, 1, 1, 0.10 * light); c.fill()
+
+def picture(c, x, y, w, h):
+    c.rectangle(x, y, w, h); fill_stroke(c, (0.30, 0.30, 0.32), 5)
+    c.rectangle(x + 12, y + 12, w - 24, h - 24); fill_stroke(c, (0.88, 0.88, 0.90), 2)
+    c.move_to(x + 16, y + h - 20); c.curve_to(x + w * 0.3, y + h * 0.3, x + w * 0.5, y + h * 0.9, x + w - 16, y + h * 0.35)
+    c.set_source_rgba(0.3, 0.3, 0.33, 0.8); c.set_line_width(5); c.stroke()
+
+def floor_lamp(c, x, y, on=1.0):
+    glow(c, x, y - 300, 260, (1.0, 0.86, 0.6), 0.35 * on)
+    line(c, [(x, y), (x, y - 270)], 6); line(c, [(x - 40, y), (x + 40, y)], 8)
+    c.move_to(x - 55, y - 270); c.line_to(x + 55, y - 270); c.line_to(x + 36, y - 350); c.line_to(x - 36, y - 350); c.close_path()
+    fill_stroke(c, (0.97, 0.94, 0.86), 4)
+
+def couch(c, x, y, w, front=True):
+    """y = seat height line."""
+    rrect(c, x, y - 150, w, 140, 26); fill_stroke(c, (0.45, 0.45, 0.48), 4)            # back
+    rrect(c, x + 14, y - 135, w / 2 - 20, 115, 18); fill_stroke(c, (0.52, 0.52, 0.55), 3)
+    rrect(c, x + w / 2 + 6, y - 135, w / 2 - 20, 115, 18); fill_stroke(c, (0.52, 0.52, 0.55), 3)
+    rrect(c, x - 10, y - 14, w + 20, 70, 18); fill_stroke(c, (0.40, 0.40, 0.43), 4)    # seat
+    for ax in (x - 34, x + w - 10):
+        rrect(c, ax, y - 80, 44, 150, 18); fill_stroke(c, (0.36, 0.36, 0.39), 4)       # arms
+    for lx in (x + 10, x + w - 20): c.rectangle(lx, y + 56, 12, 26); fill_stroke(c, (0.15, 0.15, 0.16), 3)
+
+def coffee_table(c, x, y, w):
+    rrect(c, x, y, w, 26, 6); fill_stroke(c, (0.30, 0.28, 0.27), 4)
+    for lx in (x + 16, x + w - 30): c.rectangle(lx, y + 26, 14, 70); fill_stroke(c, (0.25, 0.23, 0.22), 3)
+    rrect(c, x + 30, y - 14, 90, 14, 3); fill_stroke(c, (0.75, 0.75, 0.78), 3)            # book
+    c.rectangle(x + w - 90, y - 26, 30, 26); fill_stroke(c, (0.95, 0.95, 0.96), 3)       # mug
+
+def living_room(c, t, lamp=1.0):
+    floor_wall(c, (0.80, 0.80, 0.82), (0.70, 0.70, 0.73), (0.52, 0.50, 0.49))
+    window(c, 440, 300, 210, 320)
+    picture(c, 140, 330, 150, 120)
+    floor_lamp(c, 90, 880, lamp)
+
+def study(c, t, lamp=1.0):
+    floor_wall(c, (0.20, 0.20, 0.23), (0.16, 0.16, 0.18), (0.25, 0.24, 0.24))
+    for row in range(4):                                  # bookshelf
+        y = 260 + row * 120
+        c.rectangle(380, y, 300, 10); c.set_source_rgb(0.12, 0.12, 0.13); c.fill()
+        rnd = random.Random(row); bx = 390
+        while bx < 660:
+            bw = rnd.randint(14, 26); bh = rnd.randint(70, 104); shade = rnd.uniform(0.22, 0.42)
+            c.rectangle(bx, y - bh, bw, bh); fill_stroke(c, (shade, shade, shade + 0.02), 2); bx += bw + 2
+    glow(c, 210, 700, 420, (1.0, 0.85, 0.55), 0.40 * lamp)
+
+def desk(c, t, lamp=1.0):
+    rrect(c, 60, 790, 600, 34, 6); fill_stroke(c, (0.32, 0.29, 0.27), 4)
+    for lx in (80, 620): c.rectangle(lx, 824, 20, 220); fill_stroke(c, (0.26, 0.23, 0.22), 3)
+    # lamp
+    line(c, [(150, 790), (150, 770)], 8); line(c, [(150, 770), (110, 690), (170, 640)], 7)
+    c.save(); c.translate(170, 640); c.rotate(0.5)
+    c.move_to(-30, 0); c.line_to(30, 0); c.line_to(18, -40); c.line_to(-18, -40); c.close_path(); fill_stroke(c, (0.25, 0.25, 0.27), 4)
+    c.restore()
+    c.move_to(150, 650); c.line_to(200, 650); c.line_to(420, 790); c.line_to(120, 790); c.close_path()
+    c.set_source_rgba(1, 0.9, 0.65, 0.18 * lamp); c.fill()
+    # notebook
+    c.move_to(260, 786); c.line_to(470, 786); c.line_to(450, 762); c.line_to(280, 762); c.close_path(); fill_stroke(c, (0.93, 0.93, 0.92), 3)
+    line(c, [(365, 762), (365, 786)], 2)
+    c.rectangle(560, 744, 40, 46); fill_stroke(c, (0.5, 0.5, 0.53), 3)              # pen cup
+    for k in range(3): line(c, [(566 + k * 12, 744), (562 + k * 14, 712)], 4, (0.85, 0.85, 0.88))
+
+def kitchen(c, t):
+    floor_wall(c, (0.86, 0.86, 0.87), (0.78, 0.78, 0.80), (0.70, 0.70, 0.72), planks=False)
+    for gx in range(-2, 14):
+        line(c, [(gx * 60, 880), (gx * 60, 0)], 1.5, (0, 0, 0), 0.06)
+    for gy in range(0, 15): line(c, [(-100, gy * 60), (W + 100, gy * 60)], 1.5, (0, 0, 0), 0.06)
+    for gx in range(-4, 16): line(c, [(W / 2 + gx * 40, 880), (W / 2 + gx * 150, H + 300)], 2, (0, 0, 0), 0.08)
+    # pendant lamp
+    line(c, [(360, -200), (360, 250)], 3)
+    c.move_to(300, 310); c.line_to(420, 310); c.line_to(385, 250); c.line_to(335, 250); c.close_path(); fill_stroke(c, (0.25, 0.25, 0.27), 4)
+    glow(c, 360, 330, 300, (1, 0.9, 0.7), 0.35)
+    c.move_to(300, 310); c.line_to(420, 310); c.line_to(600, 860); c.line_to(120, 860); c.close_path()
+    c.set_source_rgba(1, 1, 0.95, 0.10); c.fill()
+
+def kitchen_table(c):
+    rrect(c, 130, 800, 460, 30, 6); fill_stroke(c, (0.22, 0.21, 0.21), 4)
+    for lx in (160, 550): c.rectangle(lx, 830, 18, 210); fill_stroke(c, (0.18, 0.17, 0.17), 3)
+    c.save(); c.translate(270, 792); c.scale(1, 0.3); c.arc(0, 0, 40, 0, TAU); c.restore(); fill_stroke(c, (0.95, 0.95, 0.96), 3)
+    c.save(); c.translate(450, 792); c.scale(1, 0.3); c.arc(0, 0, 40, 0, TAU); c.restore(); fill_stroke(c, (0.95, 0.95, 0.96), 3)
+
+def chair(c, x, y, dir):
+    rrect(c, x - 40, y - 4, 80, 18, 4); fill_stroke(c, (0.18, 0.17, 0.17), 3)
+    bx = x - dir * 40
+    c.rectangle(bx - 6, y - 170, 12, 175); fill_stroke(c, (0.18, 0.17, 0.17), 3)
+    for lx in (x - 34, x + 26): c.rectangle(lx, y + 14, 10, 110); fill_stroke(c, (0.18, 0.17, 0.17), 3)
+
+# ------------------------------------------------------------------ effects
+def bubble(c, x, y, text, tail_x, tail_y, sc=1.0, size=34):
+    if sc <= 0: return
+    c.save(); c.translate(x, y); c.scale(sc, sc)
+    c.select_font_face("DejaVu Sans", cairo.FONT_SLANT_NORMAL, cairo.FONT_WEIGHT_BOLD); c.set_font_size(size)
+    ext = c.text_extents(text); w = ext.width + 44; h = size + 34
+    rrect(c, -w / 2, -h / 2, w, h, h / 2)
+    c.move_to(tail_x * 0.2 - 14, h / 2 - 4); c.line_to(tail_x / sc, tail_y / sc); c.line_to(tail_x * 0.2 + 14, h / 2 - 4)
+    fill_stroke(c, (1, 1, 1), 4)
+    rrect(c, -w / 2 + 3, -h / 2 + 3, w - 6, h - 6, h / 2 - 3); c.set_source_rgb(1, 1, 1); c.fill()
+    c.set_source_rgb(*INK); c.move_to(-ext.width / 2 - ext.x_bearing, size * 0.36); c.show_text(text)
+    c.restore()
+
+def scribble_bubble(c, x, y, w, h, sc, seed, t):
+    if sc <= 0: return
+    c.save(); c.translate(x, y + math.sin(t * 3 + seed) * 4); c.scale(sc, sc)
+    rrect(c, -w / 2, -h / 2, w, h, h / 2)
+    c.move_to(-10, h / 2 - 2); c.line_to(-26 + (seed % 3) * 18, h / 2 + 26); c.line_to(12, h / 2 - 2)
+    fill_stroke(c, (0.97, 0.97, 0.97), 3.5)
+    rrect(c, -w / 2 + 3, -h / 2 + 3, w - 6, h - 6, h / 2 - 3); c.set_source_rgb(0.97, 0.97, 0.97); c.fill()
+    rnd = random.Random(seed); pts = []
+    for i in range(26):
+        pts.append((rnd.uniform(-w * 0.32, w * 0.32), rnd.uniform(-h * 0.22, h * 0.22)))
+    c.move_to(*pts[0])
+    for i in range(1, len(pts) - 2, 2): c.curve_to(*pts[i], *pts[i], *pts[i + 1])
+    c.set_source_rgba(*INK, 0.85); c.set_line_width(2.6); c.stroke()
+    c.restore()
+
+BRAIN_LOBES = [(-60, -10, 52), (-20, -38, 56), (34, -36, 54), (70, -4, 46), (-34, 28, 48), (24, 26, 52), (66, 34, 34), (-76, 30, 30)]
+def brain_path(c, x, y, s):
+    for bx, by, r in BRAIN_LOBES:
+        c.new_sub_path(); c.arc(x + bx * s, y + by * s, r * s, 0, TAU)
+
+def puzzle_brain(c, x, y, s, t, t0, t1, glow_amt):
+    glow(c, x, y, 230 * s, (0.75, 0.88, 1.0), 0.55 * glow_amt + 0.12)
+    c.save(); brain_path(c, x, y, s); c.set_fill_rule(cairo.FILL_RULE_WINDING); c.clip()
+    cols, rows = 4, 3; x0, y0 = x - 130 * s, y - 95 * s; cw, ch = 260 * s / cols, 190 * s / rows
+    for j in range(rows):
+        for i in range(cols):
+            k = j * cols + i; rnd = random.Random(k)
+            ts = lerp(t0, t1, k / (cols * rows)); p = seg(t, ts, ts + 0.45)
+            ox = (rnd.uniform(-1, 1) * 160) * (1 - p) * s; oy = (rnd.uniform(-1, 1) * 120 - 60) * (1 - p) * s
+            rot = rnd.uniform(-1, 1) * 0.9 * (1 - p)
+            px, py = x0 + i * cw + ox, y0 + j * ch + oy
+            c.save(); c.translate(px + cw / 2, py + ch / 2); c.rotate(rot); c.translate(-cw / 2, -ch / 2)
+            c.rectangle(0, 0, cw, ch)
+            if i < cols - 1: c.new_sub_path(); c.arc(cw, ch / 2, ch * 0.16, 0, TAU)
+            if j < rows - 1: c.new_sub_path(); c.arc(cw / 2, ch, cw * 0.16, 0, TAU)
+            shade = 0.80 + 0.12 * rnd.random()
+            c.set_source_rgba(shade, shade + 0.04, 1.0, 0.25 + 0.75 * p); c.fill_preserve()
+            c.set_source_rgba(0.25, 0.35, 0.5, 0.7 * p); c.set_line_width(2.5); c.stroke()
+            c.restore()
+    c.restore()
+    c.save(); brain_path(c, x, y, s); c.set_source_rgba(0.85, 0.93, 1, 0.9); c.set_line_width(4); c.stroke(); c.restore()
+    # folds
+    for bx, by, r in BRAIN_LOBES[:6]:
+        c.arc(x + bx * s, y + by * s, r * s * 0.55, 3.6, 5.4); c.set_source_rgba(0.4, 0.5, 0.7, 0.35); c.set_line_width(3); c.stroke()
+
+def space_bubble(c, x, y, r, a, t):
+    if a <= 0: return
+    r = r * (1 + 0.015 * math.sin(t * 3))
+    g = cairo.RadialGradient(x - r * 0.3, y - r * 0.3, r * 0.1, x, y, r)
+    g.add_color_stop_rgba(0, 1, 1, 1, 0.05 * a); g.add_color_stop_rgba(0.85, 0.9, 0.95, 1, 0.18 * a); g.add_color_stop_rgba(1, 0.8, 0.9, 1, 0.45 * a)
+    c.arc(x, y, r, 0, TAU); c.set_source(g); c.fill_preserve()
+    c.set_source_rgba(1, 1, 1, 0.75 * a); c.set_line_width(3); c.stroke()
+    c.arc(x, y, r * 0.86, 3.6, 4.4); c.set_source_rgba(1, 1, 1, 0.8 * a); c.set_line_width(7); c.stroke()
+
+def heart(c, x, y, s, a):
+    if s <= 0: return
+    c.save(); c.translate(x, y); c.scale(s, s)
+    c.move_to(0, 18); c.curve_to(-40, -10, -22, -42, 0, -22); c.curve_to(22, -42, 40, -10, 0, 18); c.close_path()
+    c.set_source_rgba(0.88, 0.22, 0.27, a); c.fill_preserve(); c.set_source_rgba(*INK, a); c.set_line_width(3.5); c.stroke()
+    c.restore()
+
+def particles(c, t, n=24, a=0.25, seed=0):
+    rnd = random.Random(seed)
+    for i in range(n):
+        x = (rnd.uniform(0, W) + t * rnd.uniform(-8, 8)) % W; y = (rnd.uniform(0, H) - t * rnd.uniform(6, 20)) % H
+        c.arc(x, y, rnd.uniform(1, 2.6), 0, TAU); c.set_source_rgba(1, 1, 1, a * rnd.uniform(0.3, 1)); c.fill()
+
+# ------------------------------------------------------------------ scenes
+def cam(c, z, cx, cy, dx=0, dy=0):
+    c.translate(W / 2 + dx, H / 2 + dy); c.scale(z, z); c.translate(-cx, -cy)
+
+def sc_intro(c, t, T):          # living room: she stands, he sits head down
+    lt = t - T[0]; d = T[1] - T[0]
+    cam(c, lerp(1.0, 1.10, seg(lt, 0, d)), 360, 700)
+    living_room(c, t); couch(c, 300, 840, 330); coffee_table(c, 250, 960, 260)
+    woman(c, 170, 1000, t, dir=1, expr="worried", turn=0.6, tilt=-0.05 * seg(lt, 0.8, 1.6))
+    man(c, 450, 830, t, dir=-1, expr="sad", look_down=1, tilt=0.18, arms="head")
+
+def sc_ask(c, t, T):            # closer: "What's up?" / "Nothing."
+    lt = t - T[0]; d = T[1] - T[0]
+    cam(c, lerp(1.38, 1.46, seg(lt, 0, d)), 380, 680)
+    living_room(c, t); couch(c, 300, 840, 330); coffee_table(c, 250, 960, 260)
+    woman(c, 190, 1000, t, dir=1, expr="worried", turn=0.7, arms="reach" if lt < 1.1 else "down")
+    man(c, 460, 830, t, dir=-1, expr="neutral" if lt > 1.2 else "sad", turn=-0.2 if lt > 1.2 else -0.5,
+        look_down=0.3 if lt > 1.2 else 1, tilt=0.06, arms="lap")
+    bubble(c, 230, 600, "What's up?", -20, 70, pop(lt, 0.05) * (1 - seg(lt, 1.15, 1.3)))
+    bubble(c, 520, 540, "Nothing.", -30, 80, pop(lt, 1.25))
+
+def sc_away(c, t, T):           # he turns away, she is sad; gap widens
+    lt = t - T[0]; d = T[1] - T[0]
+    sp = seg(lt, 0.2, 1.4)
+    cam(c, lerp(1.25, 1.12, seg(lt, 0, d)), 360, 700)
+    living_room(c, t, 0.6); couch(c, 300, 840, 330)
+    c.save(); c.translate(0, 0)
+    woman(c, 170 - sp * 30, 1000, t, dir=1, expr="sad", turn=0.5, look_down=0.4)
+    man(c, 470 + sp * 70, 830, t, dir=1, expr="neutral", turn=0.6, look_down=0.6, arms="lap")
+    c.restore()
+    # crack in the floor between them
+    p = seg(lt, 0.5, 1.6)
+    if p > 0:
+        pts = [(300, 880), (320, 930), (295, 985), (330, 1040), (305, 1110), (340, 1200)]
+        n = max(2, int(len(pts) * p)); line(c, pts[:n], 5, (0.1, 0.1, 0.1), 0.8)
+    c.set_source_rgba(0, 0, 0, 0.15 * sp); c.paint()
+
+def sc_brain(c, t, T):          # dark study, puzzle brain assembles
+    lt = t - T[0]; d = T[1] - T[0]
+    cam(c, lerp(1.0, 1.12, seg(lt, 0, d)), 360, 640)
+    study(c, t);
+    man(c, 380, 780, t, dir=-1, expr="worried" if lt < 2.2 else "surprised", look_down=0.8 if lt < 2.2 else -0.3,
+        tilt=0.12 if lt < 2.2 else -0.04, arms="head" if lt < 1.8 else "write")
+    desk(c, t)
+    hx, hy = 395, 520
+    for k, (ox, oy, r) in enumerate([(-14, -84, 8), (-30, -110, 12), (-40, -146, 16)]):
+        if lt > 0.2 + k * 0.12:
+            c.arc(hx + ox, hy + oy, r, 0, TAU); fill_stroke(c, (0.85, 0.92, 1), 3)
+    bs = 0.9 * pop(lt, 0.45, 0.4)
+    if bs > 0: puzzle_brain(c, 360, 300, bs, lt, 0.7, 3.2, seg(lt, 3.3, 3.8))
+    particles(c, t, 30, 0.18, 3)
+
+def sc_pressure(c, t, T):       # kitchen table, scribble bubbles multiply
+    lt = t - T[0]; d = T[1] - T[0]
+    cam(c, lerp(1.05, 1.22, seg(lt, 0, d)), 360, 640, dx=math.sin(lt * 30) * 2 * seg(lt, 2.2, 3.0))
+    kitchen(c, t); chair(c, 210, 840, -1); chair(c, 520, 840, 1)
+    man(c, 210, 830, t, dir=1, expr="worried", look_down=0.7, tilt=0.1, arms="both_head" if lt > 1.0 else "lap", s=0.92)
+    woman(c, 520, 830, t, pose="sit", dir=-1, expr="worried", turn=-0.6, s=0.95)
+    kitchen_table(c)
+    spots = [(170, 330, 170, 90), (330, 250, 150, 80), (90, 470, 130, 76), (480, 330, 160, 86), (260, 160, 140, 74),
+             (560, 200, 130, 70), (420, 450, 120, 64), (130, 190, 120, 64), (600, 470, 110, 60), (360, 380, 120, 66)]
+    for k, (x, y, w, h) in enumerate(spots):
+        scribble_bubble(c, x, y, w, h, pop(lt, 0.15 + k * 0.28, 0.22), k + 7, t)
+
+def sc_space(c, t, T):          # he sits in a bubble, she gives space
+    lt = t - T[0]; d = T[1] - T[0]
+    cam(c, lerp(1.15, 1.25, seg(lt, 0, d)), 400, 700)
+    living_room(c, t, 0.8); couch(c, 300, 840, 330)
+    woman(c, 160 - 40 * seg(lt, 0.2, 1.2), 1000, t, dir=1, expr="smile" if lt > 0.8 else "neutral", turn=0.5, s=0.95)
+    man(c, 490, 830, t, dir=-1, expr="neutral", look_down=0.5, arms="lap")
+    space_bubble(c, 470, 690, 220 * pop(lt, 0.1, 0.4), 1.0, t)
+
+def sc_together(c, t, T):       # bubble pops, they sit together, heart
+    lt = t - T[0]; d = T[1] - T[0]
+    cam(c, lerp(1.30, 1.42, seg(lt, 0, d)), 420, 680)
+    living_room(c, t, 1.0); couch(c, 300, 840, 330)
+    woman(c, 410, 830, t, pose="sit", dir=-1, expr="smile", turn=0.6, tilt=0.07, s=0.95)
+    man(c, 510, 830, t, dir=1, expr="smile", turn=-0.6, tilt=-0.06, arms="lap")
+    pb = 1 - seg(lt, 0, 0.25)
+    if pb > 0: space_bubble(c, 500, 690, 220 * (1 + 0.3 * (1 - pb)), pb, t)
+    heart(c, 465 + math.sin(lt * 2) * 6, 440 - 30 * seg(lt, 1.0, 2.2), 1.3 * pop(lt, 1.0, 0.35), 1)
+    particles(c, t, 18, 0.3, 9)
+
+# ------------------------------------------------------------------ captions
+def build_words(timing):
+    words = []
+    for ph in timing:
+        ws = ph["text"].replace(",", "").replace(".", "").replace("?", "").split()
+        wts = [len(w) + 2 for w in ws]; tot = sum(wts); t = ph["start"]; span = ph["end"] - ph["start"]
+        group = []
+        for w, wt in zip(ws, wts):
+            d = span * wt / tot; group.append({"w": w.upper(), "s": t, "e": t + d}); t += d
+        # chunk into <= 3 words / 16 chars
+        chunk = []
+        for g in group:
+            if chunk and (len(chunk) >= 3 or sum(len(x["w"]) + 1 for x in chunk) + len(g["w"]) > 16):
+                words.append(chunk); chunk = []
+            chunk.append(g)
+        if chunk: words.append(chunk)
+    for i, ch in enumerate(words):
+        ch_end = words[i + 1][0]["s"] if i + 1 < len(words) else ch[-1]["e"] + 0.6
+        for g in ch: g["chunk_end"] = min(ch_end, ch[-1]["e"] + 0.45)
+    return words
+
+HIGHLIGHT = {"QUIET", "NOTHING", "PULLING", "AWAY", "BRAIN", "BUSY", "FIX", "OWN", "PRESSURE", "SPACE", "TALK"}
+def draw_caption(img, chunks, t, font):
+    cur = None
+    for ch in chunks:
+        if ch[0]["s"] - 0.05 <= t < ch[0]["chunk_end"]: cur = ch
+    if not cur: return
+    d = ImageDraw.Draw(img); sp = 16
+    sizes = [d.textbbox((0, 0), g["w"], font=font, stroke_width=5) for g in cur]
+    ws = [b[2] - b[0] for b in sizes]; total = sum(ws) + sp * (len(cur) - 1)
+    x = (W - total) / 2; y = int(H * 0.60)
+    for g, w in zip(cur, ws):
+        active = g["s"] <= t < g["e"] + 0.05 or (g is cur[-1] and t >= g["s"])
+        key = g["w"] in HIGHLIGHT
+        if active:
+            k = min(1, (t - g["s"]) / 0.08); grow = int(4 * (1 - abs(1 - 2 * min(1, (t - g["s"]) / 0.16))))
+            d.rounded_rectangle((x - 9 - grow, y - 6 - grow, x + w + 9 + grow, y + 56 + grow), radius=8,
+                                fill=(255, 225, 0) if key else (255, 255, 255), outline=(20, 20, 20), width=4)
+            d.text((x, y), g["w"], font=font, fill=(18, 18, 18))
+        else:
+            d.text((x, y), g["w"], font=font, fill=(255, 255, 255), stroke_width=5, stroke_fill=(15, 15, 15))
+        x += w + sp
+
+# ------------------------------------------------------------------ main
+def main():
+    timing = json.load(open("timing.json")); chunks = build_words(timing)
+    total = float(subprocess.check_output(["ffprobe", "-v", "error", "-show_entries", "format=duration", "-of", "csv=p=0", "vo.wav"]))
+    # scene list: (start, end, fn)
+    S = [(0.0, 3.10, sc_intro), (3.10, 5.75, sc_ask), (5.75, 8.0, sc_away), (8.0, 12.2, sc_brain),
+         (12.2, 15.42, sc_pressure), (15.42, 17.12, sc_space), (17.12, total, sc_together)]  # scene timings match script.json; retime when the script changes
+    XF = 0.2
+    font = ImageFont.truetype(FONT, 46)
+    yy, xx = np.mgrid[0:H, 0:W]; vig = 1 - 0.38 * (((xx - W / 2) / (W * 0.75)) ** 2 + ((yy - H / 2) / (H * 0.7)) ** 2)
+    vig = np.clip(vig, 0, 1)[..., None].astype(np.float32)
+    out = sys.argv[1] if len(sys.argv) > 1 else "anim.mp4"
+    ff = subprocess.Popen(["ffmpeg", "-y", "-v", "error", "-f", "rawvideo", "-pix_fmt", "rgb24", "-s", f"{W}x{H}", "-r", str(FPS),
+                           "-i", "-", "-i", "vo.wav", "-c:v", "libx264", "-preset", "medium", "-crf", "20", "-pix_fmt", "yuv420p",
+                           "-c:a", "aac", "-b:a", "160k", "-shortest", "-movflags", "+faststart", out], stdin=subprocess.PIPE)
+    surf = cairo.ImageSurface(cairo.FORMAT_ARGB32, W, H); rng = np.random.default_rng(1)
+    nfr = int(total * FPS)
+    for f in range(nfr):
+        t = f / FPS
+        def render(fn, T):
+            c = cairo.Context(surf); c.set_source_rgb(1, 1, 1); c.paint(); c.save(); fn(c, t, T); c.restore()
+            surf.flush(); return np.ndarray((H, W, 4), np.uint8, surf.get_data())[..., [2, 1, 0]].astype(np.float32)
+        idx = max(i for i, s in enumerate(S) if s[0] <= t)
+        frame = render(S[idx][2], S[idx][:2])
+        if idx > 0 and t - S[idx][0] < XF:           # crossfade from previous scene
+            a = (t - S[idx][0]) / XF; prev = render(S[idx - 1][2], S[idx - 1][:2]); frame = prev * (1 - a) + frame * a
+        frame = frame * vig + rng.normal(0, 4, (H, W, 1)).astype(np.float32)
+        img = Image.fromarray(np.clip(frame, 0, 255).astype(np.uint8))
+        draw_caption(img, chunks, t, font)
+        ff.stdin.write(img.tobytes())
+        if f % 60 == 0: print(f"{t:5.1f}s", flush=True)
+    ff.stdin.close(); ff.wait(); print("wrote", out)
+
+if __name__ == "__main__":
+    if len(sys.argv) > 2 and sys.argv[1] == "--still":   # quick still: --still t out.png
+        t = float(sys.argv[2]); surf = cairo.ImageSurface(cairo.FORMAT_ARGB32, W, H)
+        S = [(0.0, 3.10, sc_intro), (3.10, 5.75, sc_ask), (5.75, 8.0, sc_away), (8.0, 12.2, sc_brain),
+             (12.2, 15.42, sc_pressure), (15.42, 17.12, sc_space), (17.12, 99.0, sc_together)]
+        idx = max(i for i, s in enumerate(S) if s[0] <= t); c = cairo.Context(surf); c.set_source_rgb(1, 1, 1); c.paint()
+        S[idx][2](c, t, S[idx][:2]); surf.flush()
+        img = Image.fromarray(np.ndarray((H, W, 4), np.uint8, surf.get_data())[..., [2, 1, 0]].copy())
+        draw_caption(img, build_words(json.load(open("timing.json"))), t, ImageFont.truetype(FONT, 46)); img.save(sys.argv[3])
+    else:
+        main()
