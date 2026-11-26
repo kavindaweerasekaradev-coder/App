@@ -35,6 +35,16 @@ To preview a single frame, run `python3 studio.py episodes/ep02_texting --still 
 | `episodes/ep03_alone` | Why does he need time alone? |
 | `episodes/ep04_jokes` | Why does he joke when things get serious? |
 | `episodes/ep05_iloveyou` | Why doesn't he say "I love you" very often? |
+| `episodes/buddha01_dream` | The Path to Awakening, Ep 1: Queen Maha Maya's dream (silhouette style) |
+
+## Silhouette style (Buddha series)
+
+`silhouette.py` is a second, respectful art style: dark silhouettes against glowing skies, with lotuses, light rays and sacred symbols. People have no cartoon faces, and sacred moments are shown with light and symbols. It includes skies (`SUNSET`, `NIGHT`, `DAWN`, `HEAVEN`), moon, sun, stars, mountains, palace, palms, lake reflections, clouds, birds, figures (king, queen, sage, guardian), seated sages, bed, a glowing white elephant, lotus, petals, a crown, the Dharma wheel, a Bodhi leaf and title cards.
+
+Episodes in this style also set:
+- `CAPTION_STYLE = "soft"`: serif captions where the spoken key word turns gold, on a soft dark band.
+- `MUSIC = "ambient"`: a generated calm drone with singing-bowl strikes, mixed under the voice.
+- `VOICE = "bm_george"`, with `"speed": 0.9` per line for calm narration.
 
 ## Making a new episode
 

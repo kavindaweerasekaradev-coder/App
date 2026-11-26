@@ -724,18 +724,18 @@ def cam(c, z, cx, cy, dx=0, dy=0):
 
 # ------------------------------------------------------------------ captions
 # ------------------------------------------------------------------ captions
-def build_words(timing):
+def build_words(timing, upper=True, max_words=3, max_chars=16):
     words = []
     for ph in timing:
         ws = ph["text"].replace(",", "").replace(".", "").replace("?", "").replace("!", "").split()
         wts = [len(w) + 2 for w in ws]; tot = sum(wts); t = ph["start"]; span = ph["end"] - ph["start"]
         group = []
         for w, wt in zip(ws, wts):
-            d = span * wt / tot; group.append({"w": w.upper(), "s": t, "e": t + d}); t += d
+            d = span * wt / tot; group.append({"w": w.upper() if upper else w, "s": t, "e": t + d}); t += d
         # chunk into <= 3 words / 16 chars
         chunk = []
         for g in group:
-            if chunk and (len(chunk) >= 3 or sum(len(x["w"]) + 1 for x in chunk) + len(g["w"]) > 16):
+            if chunk and (len(chunk) >= max_words or sum(len(x["w"]) + 1 for x in chunk) + len(g["w"]) > max_chars):
                 words.append(chunk); chunk = []
             chunk.append(g)
         if chunk: words.append(chunk)
@@ -745,7 +745,40 @@ def build_words(timing):
     return words
 
 HIGHLIGHT = set()
+CAPTION_STYLE = "pop"          # "pop" = bold uppercase with boxes; "soft" = serif, gold active word
+SOFT_FONT = os.path.join(HERE, "..", "..", ".claude", "skills", "kaz-documentary-2", "scripts", "fonts", "PlayfairDisplay.ttf")
+
+def draw_caption_soft(img, chunks, t, font):
+    """Calm cinematic captions: serif words, the spoken word turns gold, gentle fade."""
+    from PIL import ImageFilter
+    cur = None
+    for ch in chunks:
+        if ch[0]["s"] - 0.05 <= t < ch[0]["chunk_end"]: cur = ch
+    if not cur: return
+    fade = min(1, (t - cur[0]["s"] + 0.05) / 0.2) * min(1, max(0, (cur[0]["chunk_end"] - t) / 0.15))
+    global _BAND
+    if "_BAND" not in globals():                      # soft dark band behind the caption line
+        yy = np.arange(H, dtype=np.float32)[:, None]
+        band = np.exp(-((yy - H * 0.745) / (H * 0.07)) ** 2) * 150
+        _BAND = Image.fromarray(np.dstack([np.zeros((H, W, 3), np.uint8), np.repeat(band, W, 1).astype(np.uint8)]), "RGBA")
+    img.paste(_BAND, (0, 0), _BAND)
+    layer = Image.new("RGBA", img.size, (0, 0, 0, 0)); sh = Image.new("RGBA", img.size, (0, 0, 0, 0))
+    d = ImageDraw.Draw(layer); ds = ImageDraw.Draw(sh); sp = 14
+    ws = [d.textbbox((0, 0), g["w"], font=font)[2] for g in cur]
+    total = sum(ws) + sp * (len(cur) - 1); x = (W - total) / 2; y = int(H * 0.73)
+    for g, w in zip(cur, ws):
+        active = g["s"] <= t
+        key = g["w"].strip(".,?!").upper() in HIGHLIGHT
+        col = (255, 214, 130) if (active and key) else (255, 246, 228) if active else (255, 246, 228)
+        a = int(255 * fade * (1.0 if active else 0.45))
+        ds.text((x + 2, y + 3), g["w"], font=font, fill=(0, 0, 0, int(200 * fade)))
+        d.text((x, y), g["w"], font=font, fill=col + (a,))
+        x += w + sp
+    sh = sh.filter(ImageFilter.GaussianBlur(4))
+    img.paste(sh, (0, 0), sh); img.paste(layer, (0, 0), layer)
+
 def draw_caption(img, chunks, t, font):
+    if CAPTION_STYLE == "soft": return draw_caption_soft(img, chunks, t, font)
     cur = None
     for ch in chunks:
         if ch[0]["s"] - 0.05 <= t < ch[0]["chunk_end"]: cur = ch
@@ -788,6 +821,28 @@ def synth_voice(lines, outdir, voice):
     json.dump(timing, open(os.path.join(outdir, "timing.json"), "w"), indent=1)
     return timing
 
+# ------------------------------------------------------------------ music bed
+def ambient_bed(total, sr=24000, root=146.83, seed=0):
+    """Generated calm drone (root, fifth, octave) with slow breathing and soft singing-bowl strikes."""
+    n = int(total * sr); tt = np.arange(n) / sr; rnd = np.random.default_rng(seed)
+    out = np.zeros(n, np.float64)
+    for f, a in ((root, 1.0), (root * 1.5, 0.55), (root * 2, 0.45), (root * 3, 0.12), (root / 2, 0.5)):
+        lfo = 0.75 + 0.25 * np.sin(TAU * tt / rnd.uniform(6, 11) + rnd.uniform(0, TAU))
+        out += a * lfo * np.sin(TAU * f * tt + 0.3 * np.sin(TAU * 0.2 * tt))
+    out *= 0.018
+    for st in np.arange(1.0, total - 2, 7.5):                       # singing bowl
+        k = tt >= st; x = tt[k] - st
+        bowl = sum(a * np.sin(TAU * f * x) * np.exp(-x / d) for f, a, d in ((587.3, 1, 4.5), (1592, 0.35, 2.5), (2995, 0.15, 1.2)))
+        out[k] += 0.035 * bowl
+    fade = np.minimum(1, np.minimum(tt / 2.0, (total - tt) / 2.5)); return (out * np.clip(fade, 0, 1)).astype(np.float32)
+
+def mix_music(wav, out_wav, kind):
+    import soundfile as sf
+    v, sr = sf.read(wav, dtype="float32")
+    if v.ndim > 1: v = v.mean(axis=1)
+    bed = ambient_bed(len(v) / sr, sr)
+    sf.write(out_wav, np.clip(v * 0.95 + bed, -1, 1), sr); return out_wav
+
 # ------------------------------------------------------------------ render
 def load_episode(path):
     import importlib.util
@@ -815,20 +870,29 @@ def render_frame(surf, S, t, XF=0.2):
 def main():
     global TIMING, HIGHLIGHT
     epdir = sys.argv[1]; ep = load_episode(epdir)
+    global CAPTION_STYLE
     HIGHLIGHT = set(w.upper() for w in getattr(ep, "HIGHLIGHT", []))
+    CAPTION_STYLE = getattr(ep, "CAPTION_STYLE", "pop")
     still = "--still" in sys.argv
     tpath = os.path.join(epdir, "timing.json")
     if still and os.path.exists(tpath): TIMING = json.load(open(tpath))
     else: TIMING = synth_voice(ep.LINES, epdir, getattr(ep, "VOICE", os.environ.get("VOICE", "am_michael")))
     wav = os.path.join(epdir, "vo.wav")
     total = float(subprocess.check_output(["ffprobe", "-v", "error", "-show_entries", "format=duration", "-of", "csv=p=0", wav]))
-    S = scene_table(ep, total); chunks = build_words(TIMING); font = ImageFont.truetype(FONT, 46)
+    soft = CAPTION_STYLE == "soft"
+    S = scene_table(ep, total)
+    chunks = build_words(TIMING, upper=False, max_words=4, max_chars=24) if soft else build_words(TIMING)
+    font = ImageFont.truetype(SOFT_FONT, 50) if soft else ImageFont.truetype(FONT, 46)
+    if soft:
+        try: font.set_variation_by_name("Bold")
+        except Exception: pass
     surf = cairo.ImageSurface(cairo.FORMAT_ARGB32, W, H)
     if still:
         i = sys.argv.index("--still"); t = float(sys.argv[i + 1])
         img = Image.fromarray(np.clip(render_frame(surf, S, t), 0, 255).astype(np.uint8)); draw_caption(img, chunks, t, font)
         img.save(sys.argv[i + 2]); return
     out = sys.argv[2] if len(sys.argv) > 2 else os.path.join(epdir, "out.mp4")
+    if getattr(ep, "MUSIC", None): wav = mix_music(wav, os.path.join(epdir, "mix.wav"), ep.MUSIC)
     yy, xx = np.mgrid[0:H, 0:W]; vig = 1 - 0.38 * (((xx - W / 2) / (W * 0.75)) ** 2 + ((yy - H / 2) / (H * 0.7)) ** 2)
     vig = np.clip(vig, 0, 1)[..., None].astype(np.float32); rng = np.random.default_rng(1)
     ff = subprocess.Popen(["ffmpeg", "-y", "-v", "error", "-f", "rawvideo", "-pix_fmt", "rgb24", "-s", f"{W}x{H}", "-r", str(FPS),
