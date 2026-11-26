@@ -1,7 +1,0 @@
-[{"say":"Why does he go quiet, when something is wrong?"},
- {"say":"You ask what's up.","gap":0.2},{"say":"He says, nothing.","gap":0.4},
- {"say":"And it feels like he's pulling away."},
- {"say":"But inside, his brain is busy,","gap":0.15},{"say":"trying to fix the problem on his own."},
- {"say":"Talking too early,","gap":0.1},{"say":"just feels like more pressure."},
- {"say":"So give him a little space.","gap":0.3},
- {"say":"He'll come back,","gap":0.15},{"say":"and he'll talk.","gap":0.6}]

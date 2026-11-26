@@ -1,6 +1,12 @@
 #!/usr/bin/env python3
-"""Code-drawn 2D explainer animation: original round-head characters, rooms,
-metaphor effects and karaoke captions. Renders 720x1280 @30fps and pipes to ffmpeg."""
+"""Stick Animator studio: shared drawing library + renderer.
+
+Usage:  python3 studio.py episodes/ep02_texting [out.mp4]
+        python3 studio.py episodes/ep02_texting --still 4.5 frame.png
+
+An episode folder holds episode.py with LINES (voiceover), SCENES ([(line_index, fn)])
+and HIGHLIGHT (caption words that get the yellow box). Scene start times come from the
+voiceover timing, so changing the script re-times the video automatically."""
 import json, math, os, random, subprocess, sys
 import numpy as np, cairo
 from PIL import Image, ImageDraw, ImageFont
@@ -167,7 +173,14 @@ def woman(c, x, y, t, pose="stand", dir=-1, expr="neutral", turn=None, tilt=0.0,
         c.line_to(dir * 90 if dir > 0 else 30, 18); c.line_to(-30 if dir > 0 else dir * 90, 18); c.close_path()
         fill_stroke(c, dress, 4)
         sh = (top[0], top[1] + 22)
-        line(c, [sh, (dir * 34, sh[1] + 56), (dir * 66 if arms != "hold" else dir * -26, -6)], 7)
+        if arms == "phone":     # both hands hold a glowing phone in front of her chest
+            px, py = dir * 52, -62
+            for o in (-10, 10): line(c, [sh, (dir * 18 + o, sh[1] + 64), (px + o * 0.6, py + 8)], 7)
+            glow(c, px, py - 10, 70, (0.85, 0.92, 1.0), 0.45)
+            c.save(); c.translate(px, py); c.rotate(-0.25 * dir); rrect(c, -16, -28, 32, 56, 6); fill_stroke(c, (0.15, 0.15, 0.17), 3)
+            rrect(c, -12, -24, 24, 46, 4); c.set_source_rgb(0.85, 0.92, 1.0); c.fill(); c.restore()
+        else:
+            line(c, [sh, (dir * 34, sh[1] + 56), (dir * 66 if arms != "hold" else dir * -26, -6)], 7)
     hr = 52; hc = (top[0] + dir * 3 + tilt * 26, top[1] - hr - 4)
     c.save(); c.translate(*hc); c.rotate(tilt)
     hair = (0.32, 0.32, 0.35)
@@ -379,94 +392,191 @@ def particles(c, t, n=24, a=0.25, seed=0):
         x = (rnd.uniform(0, W) + t * rnd.uniform(-8, 8)) % W; y = (rnd.uniform(0, H) - t * rnd.uniform(6, 20)) % H
         c.arc(x, y, rnd.uniform(1, 2.6), 0, TAU); c.set_source_rgba(1, 1, 1, a * rnd.uniform(0.3, 1)); c.fill()
 
-# ------------------------------------------------------------------ scenes
+
+# ------------------------------------------------------------------ props (phone, office)
+def text(c, x, y, s, size, col=INK, bold=True, align="left", alpha=1):
+    c.select_font_face("DejaVu Sans", cairo.FONT_SLANT_NORMAL, cairo.FONT_WEIGHT_BOLD if bold else cairo.FONT_WEIGHT_NORMAL)
+    c.set_font_size(size); e = c.text_extents(s)
+    dx = {"left": 0, "center": -e.width / 2, "right": -e.width}[align] - e.x_bearing
+    c.move_to(x + dx, y); c.set_source_rgba(*col, alpha); c.show_text(s); return e.width
+
+def heart_shape(c, x, y, s, col=(0.88, 0.22, 0.27), a=1):
+    if s <= 0.001: return
+    c.save(); c.translate(x, y); c.scale(s, s)
+    c.move_to(0, 18); c.curve_to(-40, -10, -22, -42, 0, -22); c.curve_to(22, -42, 40, -10, 0, 18); c.close_path()
+    c.set_source_rgba(*col, a); c.fill(); c.restore()
+
+def phone_screen(c, t, msgs, name="Him", clock="9:41", status=None, typing=None, top=150, bg=(0.93, 0.93, 0.95)):
+    """Full-screen phone close-up. msgs: [{side:'me'|'them', text, t, heart?}] appear at time t (absolute).
+    Messages stack upwards from y=690, leaving the caption band clear."""
+    X, Y, PW, PH = 130, top, 460, 980
+    shadow(c, W / 2, Y + PH + 10, 260, 0.25)
+    rrect(c, X, Y, PW, PH, 56); fill_stroke(c, (0.12, 0.12, 0.13), 5)
+    rrect(c, X + 16, Y + 16, PW - 32, PH - 32, 44); c.set_source_rgb(*bg); c.fill()
+    rrect(c, X + PW / 2 - 60, Y + 26, 120, 30, 15); c.set_source_rgb(0.12, 0.12, 0.13); c.fill()       # notch
+    text(c, X + 50, Y + 52, clock, 20)
+    c.rectangle(X + 16, Y + 70, PW - 32, 90); c.set_source_rgb(0.98, 0.98, 0.99); c.fill()
+    line(c, [(X + 16, Y + 160), (X + PW - 16, Y + 160)], 2, INK, 0.15)
+    c.arc(X + 80, Y + 115, 30, 0, TAU); fill_stroke(c, (0.95, 0.95, 0.96), 3)                          # avatar
+    for sx in (-9, 9): c.arc(X + 80 + sx, Y + 112, 3, 0, TAU); c.set_source_rgb(*INK); c.fill()
+    c.arc(X + 80, Y + 118, 8, 0.2 * math.pi, 0.8 * math.pi); c.set_line_width(2.5); c.stroke()
+    text(c, X + 125, Y + 124, name, 26)
+    rrect(c, X + 40, Y + PH - 110, PW - 80, 60, 30); fill_stroke(c, (1, 1, 1), 2.5, (0.6, 0.6, 0.62))   # input bar
+    text(c, X + 66, Y + PH - 72, "Message...", 20, (0.6, 0.6, 0.62), bold=False)
+    shown = [m for m in msgs if t >= m["t"]]
+    y = 690
+    if typing and typing[0] <= t < typing[1]:
+        rrect(c, X + 40, y - 52, 96, 52, 26); c.set_source_rgb(0.80, 0.80, 0.83); c.fill()
+        for k in range(3):
+            b = 0.5 + 0.5 * math.sin(t * 10 - k * 0.9); c.arc(X + 64 + k * 24, y - 26 - b * 5, 7, 0, TAU); c.set_source_rgba(*INK, 0.4 + 0.5 * b); c.fill()
+        y -= 70
+    if status and shown:
+        text(c, X + PW - 44, y, status, 17, (0.45, 0.45, 0.48), bold=False, align="right"); y -= 30
+    for m in reversed(shown):
+        c.select_font_face("DejaVu Sans", cairo.FONT_SLANT_NORMAL, cairo.FONT_WEIGHT_NORMAL); c.set_font_size(25)
+        tw = c.text_extents(m["text"]).width + (34 if m.get("heart") else 0); bw = tw + 44; bh = 58
+        sc = max(0.001, pop(t, m["t"], 0.22)); me = m["side"] == "me"
+        bx = X + PW - 40 - bw if me else X + 40
+        c.save(); c.translate(bx + (bw if me else 0), y - bh / 2); c.scale(sc, sc); c.translate(-(bx + (bw if me else 0)), -(y - bh / 2))
+        rrect(c, bx, y - bh, bw, bh, 26)
+        c.set_source_rgb(*((0.22, 0.22, 0.25) if me else (1, 1, 1))); c.fill_preserve()
+        c.set_source_rgba(*INK, 0 if me else 0.25); c.set_line_width(2); c.stroke()
+        text(c, bx + 22, y - 19, m["text"], 25, (1, 1, 1) if me else INK, bold=False)
+        if m.get("heart"): heart_shape(c, bx + bw - 36, y - 30, 0.55)
+        c.restore()
+        y -= bh + 16
+        if y < Y + 190: break
+
+def office(c, t, clock_speed=0.0):
+    floor_wall(c, (0.84, 0.84, 0.86), (0.74, 0.74, 0.77), (0.46, 0.45, 0.45))
+    # window with skyline
+    x, y, w, h = 400, 230, 260, 380
+    rrect(c, x - 10, y - 10, w + 20, h + 20, 6); fill_stroke(c, (0.55, 0.55, 0.58), 4)
+    g = cairo.LinearGradient(0, y, 0, y + h); g.add_color_stop_rgb(0, 0.95, 0.95, 0.97); g.add_color_stop_rgb(1, 0.78, 0.80, 0.85)
+    c.rectangle(x, y, w, h); c.set_source(g); c.fill()
+    rnd = random.Random(4); bx = x
+    while bx < x + w:
+        bw = rnd.randint(28, 56); bh = rnd.randint(90, 260)
+        c.rectangle(bx, y + h - bh, bw, bh); c.set_source_rgb(0.62, 0.63, 0.67); c.fill()
+        for wy in range(int(y + h - bh + 14), int(y + h - 6), 22):
+            for wx in range(bx + 6, bx + bw - 8, 14): c.rectangle(wx, wy, 6, 9); c.set_source_rgb(0.80, 0.81, 0.85); c.fill()
+        bx += bw + 4
+    c.rectangle(x, y, w, h); c.set_source_rgb(*INK); c.set_line_width(4); c.stroke()
+    line(c, [(x + w / 2, y), (x + w / 2, y + h)], 6, (0.5, 0.5, 0.53))
+    wall_clock(c, 190, 300, 62, t * clock_speed)
+
+def wall_clock(c, x, y, r, spin):
+    c.arc(x, y, r, 0, TAU); fill_stroke(c, (0.98, 0.98, 0.98), 5)
+    for k in range(12):
+        a = k * TAU / 12; line(c, [(x + math.cos(a) * r * 0.78, y + math.sin(a) * r * 0.78), (x + math.cos(a) * r * 0.9, y + math.sin(a) * r * 0.9)], 3)
+    a1 = -math.pi / 2 + spin; a2 = -math.pi / 2 + spin / 12 + 1.2
+    line(c, [(x, y), (x + math.cos(a1) * r * 0.75, y + math.sin(a1) * r * 0.75)], 4)
+    line(c, [(x, y), (x + math.cos(a2) * r * 0.5, y + math.sin(a2) * r * 0.5)], 6)
+    c.arc(x, y, 5, 0, TAU); c.set_source_rgb(*INK); c.fill()
+
+def laptop(c, x, y, glow_on=1.0):
+    """x,y = centre of the base on the desk top."""
+    c.move_to(x - 120, y); c.line_to(x + 120, y); c.line_to(x + 100, y - 14); c.line_to(x - 100, y - 14); c.close_path()
+    fill_stroke(c, (0.55, 0.55, 0.58), 3)
+    c.move_to(x - 96, y - 14); c.line_to(x + 96, y - 14); c.line_to(x + 108, y - 150); c.line_to(x - 84, y - 150); c.close_path()
+    fill_stroke(c, (0.20, 0.20, 0.22), 4)
+    glow(c, x + 6, y - 80, 150, (0.8, 0.9, 1), 0.25 * glow_on)
+
+def paper_stack(c, x, y, n, seed=0):
+    rnd = random.Random(seed)
+    for k in range(n):
+        dx = rnd.uniform(-8, 8); c.save(); c.translate(x + dx, y - k * 7); c.rotate(rnd.uniform(-0.05, 0.05))
+        c.rectangle(-55, -7, 110, 7); fill_stroke(c, (0.97, 0.97, 0.96), 2); c.restore()
+
+def flying_paper(c, x0, y0, x1, y1, p, seed):
+    if p <= 0: return
+    rnd = random.Random(seed); x = lerp(x0, x1, p); y = lerp(y0, y1, p) - math.sin(p * math.pi) * 120
+    c.save(); c.translate(x, y); c.rotate((1 - p) * rnd.uniform(-3, 3))
+    c.rectangle(-36, -46, 72, 92); fill_stroke(c, (0.98, 0.98, 0.97), 2.5)
+    for k in range(5): line(c, [(-24, -30 + k * 14), (18 - (k % 2) * 14, -30 + k * 14)], 2, INK, 0.4)
+    c.restore()
+
+def todo_board(c, x, y, items, t, checks, sc=1.0):
+    """Clipboard with a to-do list. checks[i] = time item i gets ticked (absolute) or None."""
+    if sc <= 0: return
+    c.save(); c.translate(x, y); c.scale(sc, sc); c.rotate(0.04)
+    rrect(c, -150, -230, 300, 470, 18); fill_stroke(c, (0.45, 0.38, 0.32), 4)
+    c.rectangle(-128, -200, 256, 420); fill_stroke(c, (0.99, 0.99, 0.98), 2.5)
+    rrect(c, -50, -246, 100, 40, 10); fill_stroke(c, (0.7, 0.7, 0.73), 3)
+    text(c, 0, -160, "TO DO", 28, align="center")
+    for i, it in enumerate(items):
+        iy = -110 + i * 46
+        c.rectangle(-108, iy - 20, 24, 24); fill_stroke(c, (1, 1, 1), 2.5)
+        last = i == len(items) - 1
+        text(c, -72, iy, it, 22 if not last else 22, (0.85, 0.2, 0.25) if last else INK, bold=last)
+        ck = checks[i] if i < len(checks) else None
+        if ck is not None and t >= ck:
+            p = seg(t, ck, ck + 0.18)
+            pts = [(-104, iy - 9), (-97, iy), (-80, iy - 26)]
+            n = 2 if p < 0.5 else 3; line(c, pts[:n], 4.5, (0.15, 0.55, 0.3))
+    c.restore()
+
+def thought_cloud(c, x, y, w, h, sc=1.0, a=1.0):
+    if sc <= 0: return
+    c.save(); c.translate(x, y); c.scale(sc, sc)
+    rnd = random.Random(11)
+    for k in range(14):
+        ang = k * TAU / 14; r = rnd.uniform(0.18, 0.26) * w
+        c.new_sub_path(); c.arc(math.cos(ang) * w * 0.40, math.sin(ang) * h * 0.38, r, 0, TAU)
+    c.new_sub_path(); c.arc(0, 0, min(w, h) * 0.42, 0, TAU)
+    c.set_fill_rule(cairo.FILL_RULE_WINDING); c.set_source_rgba(1, 1, 1, a); c.fill_preserve()
+    c.set_source_rgba(*INK, a); c.set_line_width(4); c.stroke()
+    c.restore()
+    # re-fill interior to hide inner strokes
+    c.save(); c.translate(x, y); c.scale(sc, sc)
+    rnd = random.Random(11)
+    for k in range(14):
+        ang = k * TAU / 14; r = rnd.uniform(0.18, 0.26) * w - 4
+        c.new_sub_path(); c.arc(math.cos(ang) * w * 0.40, math.sin(ang) * h * 0.38, r, 0, TAU)
+    c.new_sub_path(); c.arc(0, 0, min(w, h) * 0.42 - 4, 0, TAU)
+    c.set_source_rgba(1, 1, 1, a); c.fill(); c.restore()
+
+def tag(c, x, y, s, size=24, sc=1.0, fill=(1, 1, 1), col=INK, rot=0.0):
+    if sc <= 0: return
+    c.save(); c.translate(x, y); c.scale(sc, sc); c.rotate(rot)
+    c.select_font_face("DejaVu Sans", cairo.FONT_SLANT_NORMAL, cairo.FONT_WEIGHT_BOLD); c.set_font_size(size)
+    e = c.text_extents(s); w = e.width + 30; h = size + 22
+    rrect(c, -w / 2, -h / 2, w, h, 10); fill_stroke(c, fill, 3.5)
+    text(c, 0, size * 0.36, s, size, col, align="center"); c.restore()
+
+def broken_heart(c, x, y, s, sc=1.0):
+    if sc <= 0: return
+    c.save(); c.translate(x, y); c.scale(s * sc, s * sc)
+    for side, off in ((-1, -5), (1, 5)):
+        c.save(); c.translate(off, 0); c.rotate(side * 0.12)
+        c.move_to(0, -22)
+        if side < 0: c.curve_to(-22, -42, -40, -10, 0, 18)
+        else: c.curve_to(22, -42, 40, -10, 0, 18)
+        c.line_to(-6 * side, 4); c.line_to(6 * side, -8); c.close_path()
+        c.set_source_rgb(0.88, 0.22, 0.27); c.fill_preserve(); c.set_source_rgb(*INK); c.set_line_width(3); c.stroke(); c.restore()
+    c.restore()
+
+def storm_cloud(c, x, y, s, t, a=1.0):
+    c.save(); c.translate(x + math.sin(t * 1.5) * 6, y); c.scale(s, s)
+    for bx, by, r in ((-50, 0, 40), (-10, -24, 50), (40, -6, 42), (70, 12, 30), (-80, 16, 28)):
+        c.new_sub_path(); c.arc(bx, by, r, 0, TAU)
+    c.set_source_rgba(0.35, 0.35, 0.38, a); c.fill()
+    if int(t * 4) % 7 == 0:
+        c.move_to(0, 30); c.line_to(-16, 70); c.line_to(2, 70); c.line_to(-12, 110); c.line_to(24, 60); c.line_to(6, 60); c.line_to(18, 30); c.close_path()
+        c.set_source_rgba(1, 0.92, 0.3, a); c.fill()
+    c.restore()
+
+# ------------------------------------------------------------------ camera
 def cam(c, z, cx, cy, dx=0, dy=0):
     c.translate(W / 2 + dx, H / 2 + dy); c.scale(z, z); c.translate(-cx, -cy)
 
-def sc_intro(c, t, T):          # living room: she stands, he sits head down
-    lt = t - T[0]; d = T[1] - T[0]
-    cam(c, lerp(1.0, 1.10, seg(lt, 0, d)), 360, 700)
-    living_room(c, t); couch(c, 300, 840, 330); coffee_table(c, 250, 960, 260)
-    woman(c, 170, 1000, t, dir=1, expr="worried", turn=0.6, tilt=-0.05 * seg(lt, 0.8, 1.6))
-    man(c, 450, 830, t, dir=-1, expr="sad", look_down=1, tilt=0.18, arms="head")
 
-def sc_ask(c, t, T):            # closer: "What's up?" / "Nothing."
-    lt = t - T[0]; d = T[1] - T[0]
-    cam(c, lerp(1.38, 1.46, seg(lt, 0, d)), 380, 680)
-    living_room(c, t); couch(c, 300, 840, 330); coffee_table(c, 250, 960, 260)
-    woman(c, 190, 1000, t, dir=1, expr="worried", turn=0.7, arms="reach" if lt < 1.1 else "down")
-    man(c, 460, 830, t, dir=-1, expr="neutral" if lt > 1.2 else "sad", turn=-0.2 if lt > 1.2 else -0.5,
-        look_down=0.3 if lt > 1.2 else 1, tilt=0.06, arms="lap")
-    bubble(c, 230, 600, "What's up?", -20, 70, pop(lt, 0.05) * (1 - seg(lt, 1.15, 1.3)))
-    bubble(c, 520, 540, "Nothing.", -30, 80, pop(lt, 1.25))
-
-def sc_away(c, t, T):           # he turns away, she is sad; gap widens
-    lt = t - T[0]; d = T[1] - T[0]
-    sp = seg(lt, 0.2, 1.4)
-    cam(c, lerp(1.25, 1.12, seg(lt, 0, d)), 360, 700)
-    living_room(c, t, 0.6); couch(c, 300, 840, 330)
-    c.save(); c.translate(0, 0)
-    woman(c, 170 - sp * 30, 1000, t, dir=1, expr="sad", turn=0.5, look_down=0.4)
-    man(c, 470 + sp * 70, 830, t, dir=1, expr="neutral", turn=0.6, look_down=0.6, arms="lap")
-    c.restore()
-    # crack in the floor between them
-    p = seg(lt, 0.5, 1.6)
-    if p > 0:
-        pts = [(300, 880), (320, 930), (295, 985), (330, 1040), (305, 1110), (340, 1200)]
-        n = max(2, int(len(pts) * p)); line(c, pts[:n], 5, (0.1, 0.1, 0.1), 0.8)
-    c.set_source_rgba(0, 0, 0, 0.15 * sp); c.paint()
-
-def sc_brain(c, t, T):          # dark study, puzzle brain assembles
-    lt = t - T[0]; d = T[1] - T[0]
-    cam(c, lerp(1.0, 1.12, seg(lt, 0, d)), 360, 640)
-    study(c, t);
-    man(c, 380, 780, t, dir=-1, expr="worried" if lt < 2.2 else "surprised", look_down=0.8 if lt < 2.2 else -0.3,
-        tilt=0.12 if lt < 2.2 else -0.04, arms="head" if lt < 1.8 else "write")
-    desk(c, t)
-    hx, hy = 395, 520
-    for k, (ox, oy, r) in enumerate([(-14, -84, 8), (-30, -110, 12), (-40, -146, 16)]):
-        if lt > 0.2 + k * 0.12:
-            c.arc(hx + ox, hy + oy, r, 0, TAU); fill_stroke(c, (0.85, 0.92, 1), 3)
-    bs = 0.9 * pop(lt, 0.45, 0.4)
-    if bs > 0: puzzle_brain(c, 360, 300, bs, lt, 0.7, 3.2, seg(lt, 3.3, 3.8))
-    particles(c, t, 30, 0.18, 3)
-
-def sc_pressure(c, t, T):       # kitchen table, scribble bubbles multiply
-    lt = t - T[0]; d = T[1] - T[0]
-    cam(c, lerp(1.05, 1.22, seg(lt, 0, d)), 360, 640, dx=math.sin(lt * 30) * 2 * seg(lt, 2.2, 3.0))
-    kitchen(c, t); chair(c, 210, 840, -1); chair(c, 520, 840, 1)
-    man(c, 210, 830, t, dir=1, expr="worried", look_down=0.7, tilt=0.1, arms="both_head" if lt > 1.0 else "lap", s=0.92)
-    woman(c, 520, 830, t, pose="sit", dir=-1, expr="worried", turn=-0.6, s=0.95)
-    kitchen_table(c)
-    spots = [(170, 330, 170, 90), (330, 250, 150, 80), (90, 470, 130, 76), (480, 330, 160, 86), (260, 160, 140, 74),
-             (560, 200, 130, 70), (420, 450, 120, 64), (130, 190, 120, 64), (600, 470, 110, 60), (360, 380, 120, 66)]
-    for k, (x, y, w, h) in enumerate(spots):
-        scribble_bubble(c, x, y, w, h, pop(lt, 0.15 + k * 0.28, 0.22), k + 7, t)
-
-def sc_space(c, t, T):          # he sits in a bubble, she gives space
-    lt = t - T[0]; d = T[1] - T[0]
-    cam(c, lerp(1.15, 1.25, seg(lt, 0, d)), 400, 700)
-    living_room(c, t, 0.8); couch(c, 300, 840, 330)
-    woman(c, 160 - 40 * seg(lt, 0.2, 1.2), 1000, t, dir=1, expr="smile" if lt > 0.8 else "neutral", turn=0.5, s=0.95)
-    man(c, 490, 830, t, dir=-1, expr="neutral", look_down=0.5, arms="lap")
-    space_bubble(c, 470, 690, 220 * pop(lt, 0.1, 0.4), 1.0, t)
-
-def sc_together(c, t, T):       # bubble pops, they sit together, heart
-    lt = t - T[0]; d = T[1] - T[0]
-    cam(c, lerp(1.30, 1.42, seg(lt, 0, d)), 420, 680)
-    living_room(c, t, 1.0); couch(c, 300, 840, 330)
-    woman(c, 410, 830, t, pose="sit", dir=-1, expr="smile", turn=0.6, tilt=0.07, s=0.95)
-    man(c, 510, 830, t, dir=1, expr="smile", turn=-0.6, tilt=-0.06, arms="lap")
-    pb = 1 - seg(lt, 0, 0.25)
-    if pb > 0: space_bubble(c, 500, 690, 220 * (1 + 0.3 * (1 - pb)), pb, t)
-    heart(c, 465 + math.sin(lt * 2) * 6, 440 - 30 * seg(lt, 1.0, 2.2), 1.3 * pop(lt, 1.0, 0.35), 1)
-    particles(c, t, 18, 0.3, 9)
-
+# ------------------------------------------------------------------ captions
 # ------------------------------------------------------------------ captions
 def build_words(timing):
     words = []
     for ph in timing:
-        ws = ph["text"].replace(",", "").replace(".", "").replace("?", "").split()
+        ws = ph["text"].replace(",", "").replace(".", "").replace("?", "").replace("!", "").split()
         wts = [len(w) + 2 for w in ws]; tot = sum(wts); t = ph["start"]; span = ph["end"] - ph["start"]
         group = []
         for w, wt in zip(ws, wts):
@@ -483,7 +593,7 @@ def build_words(timing):
         for g in ch: g["chunk_end"] = min(ch_end, ch[-1]["e"] + 0.45)
     return words
 
-HIGHLIGHT = {"QUIET", "NOTHING", "PULLING", "AWAY", "BRAIN", "BUSY", "FIX", "OWN", "PRESSURE", "SPACE", "TALK"}
+HIGHLIGHT = set()
 def draw_caption(img, chunks, t, font):
     cur = None
     for ch in chunks:
@@ -505,47 +615,82 @@ def draw_caption(img, chunks, t, font):
             d.text((x, y), g["w"], font=font, fill=(255, 255, 255), stroke_width=5, stroke_fill=(15, 15, 15))
         x += w + sp
 
-# ------------------------------------------------------------------ main
+
+# ------------------------------------------------------------------ timing helpers for scenes
+TIMING = []
+def ls(i): return TIMING[i]["start"]     # line i starts (absolute seconds)
+def le(i): return TIMING[i]["end"]       # line i ends
+
+# ------------------------------------------------------------------ voice
+def synth_voice(lines, outdir, voice):
+    import soundfile as sf
+    from kokoro_onnx import Kokoro
+    md = os.environ.get("KOKORO_DIR", os.path.join(HERE, "models"))
+    k = Kokoro(os.path.join(md, "kokoro-v1.0.int8.onnx"), os.path.join(md, "voices-v1.0.bin"))
+    sr = 24000; t = 0.35; out = [np.zeros(int(sr * t), np.float32)]; timing = []
+    for ln in lines:
+        a, sr = k.create(ln["say"], voice=ln.get("voice", voice), speed=ln.get("speed", 1.0), lang="en-us")
+        idx = np.where(np.abs(a) > 0.01)[0]; a = a[max(idx[0] - 200, 0): idx[-1] + 400]
+        d = len(a) / sr; timing.append({"text": ln.get("caption", ln["say"]), "start": round(t, 3), "end": round(t + d, 3)})
+        gap = ln.get("gap", 0.35); out += [a.astype(np.float32), np.zeros(int(sr * gap), np.float32)]; t += d + gap
+    sf.write(os.path.join(outdir, "vo.wav"), np.concatenate(out), sr)
+    json.dump(timing, open(os.path.join(outdir, "timing.json"), "w"), indent=1)
+    return timing
+
+# ------------------------------------------------------------------ render
+def load_episode(path):
+    import importlib.util
+    spec = importlib.util.spec_from_file_location("episode", os.path.join(path, "episode.py"))
+    ep = importlib.util.module_from_spec(spec); spec.loader.exec_module(ep); return ep
+
+def scene_table(ep, total, lead=0.12):
+    S = []
+    for k, (li, fn) in enumerate(ep.SCENES):
+        st = 0.0 if k == 0 else max(0.0, ls(li) - lead)
+        S.append([st, None, fn])
+    for k in range(len(S)): S[k][1] = S[k + 1][0] if k + 1 < len(S) else total
+    return S
+
+def render_frame(surf, S, t, XF=0.2):
+    def one(k):
+        c = cairo.Context(surf); c.set_source_rgb(1, 1, 1); c.paint(); c.save(); S[k][2](c, t, S[k][:2]); c.restore()
+        surf.flush(); return np.ndarray((H, W, 4), np.uint8, surf.get_data())[..., [2, 1, 0]].astype(np.float32)
+    idx = max(i for i, s in enumerate(S) if s[0] <= t)
+    fr = one(idx)
+    if idx > 0 and t - S[idx][0] < XF:
+        a = (t - S[idx][0]) / XF; fr = one(idx - 1) * (1 - a) + fr * a
+    return fr
+
 def main():
-    timing = json.load(open("timing.json")); chunks = build_words(timing)
-    total = float(subprocess.check_output(["ffprobe", "-v", "error", "-show_entries", "format=duration", "-of", "csv=p=0", "vo.wav"]))
-    # scene list: (start, end, fn)
-    S = [(0.0, 3.10, sc_intro), (3.10, 5.75, sc_ask), (5.75, 8.0, sc_away), (8.0, 12.2, sc_brain),
-         (12.2, 15.42, sc_pressure), (15.42, 17.12, sc_space), (17.12, total, sc_together)]  # scene timings match script.json; retime when the script changes
-    XF = 0.2
-    font = ImageFont.truetype(FONT, 46)
+    global TIMING, HIGHLIGHT
+    epdir = sys.argv[1]; ep = load_episode(epdir)
+    HIGHLIGHT = set(w.upper() for w in getattr(ep, "HIGHLIGHT", []))
+    still = "--still" in sys.argv
+    tpath = os.path.join(epdir, "timing.json")
+    if still and os.path.exists(tpath): TIMING = json.load(open(tpath))
+    else: TIMING = synth_voice(ep.LINES, epdir, getattr(ep, "VOICE", os.environ.get("VOICE", "am_michael")))
+    wav = os.path.join(epdir, "vo.wav")
+    total = float(subprocess.check_output(["ffprobe", "-v", "error", "-show_entries", "format=duration", "-of", "csv=p=0", wav]))
+    S = scene_table(ep, total); chunks = build_words(TIMING); font = ImageFont.truetype(FONT, 46)
+    surf = cairo.ImageSurface(cairo.FORMAT_ARGB32, W, H)
+    if still:
+        i = sys.argv.index("--still"); t = float(sys.argv[i + 1])
+        img = Image.fromarray(np.clip(render_frame(surf, S, t), 0, 255).astype(np.uint8)); draw_caption(img, chunks, t, font)
+        img.save(sys.argv[i + 2]); return
+    out = sys.argv[2] if len(sys.argv) > 2 else os.path.join(epdir, "out.mp4")
     yy, xx = np.mgrid[0:H, 0:W]; vig = 1 - 0.38 * (((xx - W / 2) / (W * 0.75)) ** 2 + ((yy - H / 2) / (H * 0.7)) ** 2)
-    vig = np.clip(vig, 0, 1)[..., None].astype(np.float32)
-    out = sys.argv[1] if len(sys.argv) > 1 else "anim.mp4"
+    vig = np.clip(vig, 0, 1)[..., None].astype(np.float32); rng = np.random.default_rng(1)
     ff = subprocess.Popen(["ffmpeg", "-y", "-v", "error", "-f", "rawvideo", "-pix_fmt", "rgb24", "-s", f"{W}x{H}", "-r", str(FPS),
-                           "-i", "-", "-i", "vo.wav", "-c:v", "libx264", "-preset", "medium", "-crf", "20", "-pix_fmt", "yuv420p",
+                           "-i", "-", "-i", wav, "-c:v", "libx264", "-preset", "medium", "-crf", "20", "-pix_fmt", "yuv420p",
                            "-c:a", "aac", "-b:a", "160k", "-shortest", "-movflags", "+faststart", out], stdin=subprocess.PIPE)
-    surf = cairo.ImageSurface(cairo.FORMAT_ARGB32, W, H); rng = np.random.default_rng(1)
-    nfr = int(total * FPS)
-    for f in range(nfr):
+    for f in range(int(total * FPS)):
         t = f / FPS
-        def render(fn, T):
-            c = cairo.Context(surf); c.set_source_rgb(1, 1, 1); c.paint(); c.save(); fn(c, t, T); c.restore()
-            surf.flush(); return np.ndarray((H, W, 4), np.uint8, surf.get_data())[..., [2, 1, 0]].astype(np.float32)
-        idx = max(i for i, s in enumerate(S) if s[0] <= t)
-        frame = render(S[idx][2], S[idx][:2])
-        if idx > 0 and t - S[idx][0] < XF:           # crossfade from previous scene
-            a = (t - S[idx][0]) / XF; prev = render(S[idx - 1][2], S[idx - 1][:2]); frame = prev * (1 - a) + frame * a
-        frame = frame * vig + rng.normal(0, 4, (H, W, 1)).astype(np.float32)
-        img = Image.fromarray(np.clip(frame, 0, 255).astype(np.uint8))
-        draw_caption(img, chunks, t, font)
+        fr = render_frame(surf, S, t) * vig + rng.normal(0, 4, (H, W, 1)).astype(np.float32)
+        img = Image.fromarray(np.clip(fr, 0, 255).astype(np.uint8)); draw_caption(img, chunks, t, font)
         ff.stdin.write(img.tobytes())
-        if f % 60 == 0: print(f"{t:5.1f}s", flush=True)
+        if f % 90 == 0: print(f"{t:5.1f}s / {total:.1f}s", flush=True)
     ff.stdin.close(); ff.wait(); print("wrote", out)
 
 if __name__ == "__main__":
-    if len(sys.argv) > 2 and sys.argv[1] == "--still":   # quick still: --still t out.png
-        t = float(sys.argv[2]); surf = cairo.ImageSurface(cairo.FORMAT_ARGB32, W, H)
-        S = [(0.0, 3.10, sc_intro), (3.10, 5.75, sc_ask), (5.75, 8.0, sc_away), (8.0, 12.2, sc_brain),
-             (12.2, 15.42, sc_pressure), (15.42, 17.12, sc_space), (17.12, 99.0, sc_together)]
-        idx = max(i for i, s in enumerate(S) if s[0] <= t); c = cairo.Context(surf); c.set_source_rgb(1, 1, 1); c.paint()
-        S[idx][2](c, t, S[idx][:2]); surf.flush()
-        img = Image.fromarray(np.ndarray((H, W, 4), np.uint8, surf.get_data())[..., [2, 1, 0]].copy())
-        draw_caption(img, build_words(json.load(open("timing.json"))), t, ImageFont.truetype(FONT, 46)); img.save(sys.argv[3])
-    else:
-        main()
+    sys.modules["studio"] = sys.modules[__name__]   # episodes import this same module
+    main()
